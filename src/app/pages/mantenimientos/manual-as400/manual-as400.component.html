@@ -1,0 +1,262 @@
+<!-- <div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    [formGroup]="OrdenAs400Form"
+    novalidate
+    (ngSubmit)="guardarOrden()"
+    id="OrdenAs400Form"
+  >
+    <div class="button">
+      <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+      &nbsp;
+
+      <button type="reset" (click)="reset()" class="btn btn-danger btn-sm">
+        Cancelar
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Datos del paciente</h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName"># Orden</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLNUOR"
+                  [class.is-invalid]="DLNUOR"
+                  (keyup.enter)="buscarHis(OrdenAs400Form.value.DLNUOR)"
+                  placeholder="Ingrese su orden"
+                />
+
+                <small *ngIf="" class="text-danger">Campo obligatorio </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Historia Clinica</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLHIST"
+                  [class.is-invalid]="DLHIST"
+                  placeholder="Ingrese su historia"
+                />
+
+                <small *ngIf="" class="text-danger">Campo obligatorio </small>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="" class="form-ItemName">Paciente</label>
+                <div class="input-group">
+                  <input
+                    appUppercase
+                    type="text"
+                    class="form-control appUppercase"
+                    formControlName="DLAPEL"
+                    [class.is-invalid]="DLAPEL"
+                    placeholder="Ingrese paciente"
+                  />
+                  <div class="input-group-append"></div>
+                </div>
+
+                <small *ngIf="" class="text-danger">Campo obligatorio</small>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Cédula</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLCEDU"
+                  [class.is-invalid]="DLCEDU"
+                  placeholder="Ingrese su cédula"
+                />
+
+                <small *ngIf="" class="text-danger">Campo obligatorio </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Fecha nacimiento</label>
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="DLFECN"
+                    [class.is-invalid]="DLFECN"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="" class="form-ItemName">Sexo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLSEXO"
+                  [class.is-invalid]="DLSEXO"
+                />
+
+                <small *ngIf="" class="text-danger"
+                  >Debe de escoger una opción
+                </small>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="" class="form-ItemName">Email</label>
+                <input
+                  appUppercase
+                  type="text"
+                  class="form-control"
+                  formControlName="EMAIL"
+                  [class.is-invalid]=""
+                  placeholder="example@gmail.com"
+                />
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Telefono</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="TELEFONO"
+                  [class.is-invalid]=""
+                  placeholder="Ingrese numero de télefono"
+                />
+                <small *ngIf="" class="text-danger">campo obligatorio </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Datos demograficos</h6>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Tipo Orden</label>
+                <div class="col-">
+                  <input
+                    class="form-control"
+                    formControlName="DLTIDO"
+                    [class.is-invalid]="DLTIDO"                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Procedencia</label>
+                <div class="col-">
+                  <input
+                    class="form-control"
+                    formControlName="DLCPRO"
+                    [class.is-invalid]="DLCPRO"  
+                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Servicio</label>
+                <div class="col-">
+                  <input
+                    class="form-control"
+                    formControlName="DLCSER"
+                    [class.is-invalid]="DLCSER"  
+                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">DOCTOR</label>
+                <div class="col-">
+                  <input
+                    class="form-control"
+                    formControlName="DLCMED"
+                    [class.is-invalid]="DLCMED"  
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Pruebas</h6>
+          </div>
+
+          <div class="card-body scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+
+                  <th>PROCESAR</th>
+                  <th>NOMBRE_EXAMEN</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="DLCEXAS">
+                <tr
+                  *ngFor="
+                    let d of OrdenAs400Form.controls['DLCEXAS']?.value;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <td>
+                    <div class="">
+                      {{ i + 1 }}
+                    </div>
+                  </td>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="checkbox__input"
+                      formControlName="ESTADO"
+                    />
+                  </td>
+                  <td>{{ d.ItemName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content3">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+ <pre>
+    {{ OrdenAs400Form.value | json }}
+</pre> 
+ -->

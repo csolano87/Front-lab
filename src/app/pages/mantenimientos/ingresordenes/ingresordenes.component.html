@@ -1,0 +1,1298 @@
+<div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    [formGroup]="ingresoForm"
+    novalidate
+    (ngSubmit)="guardarOrden()"
+    id="ingresoForm"
+  >
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Datos del paciente</h6>
+
+            <div class="button">
+              <a class="btn btn-primary btn-sm" (click)="cambioestado()">
+                {{ btnVal }}
+              </a>
+              &nbsp;
+
+              <button
+                type="reset"
+                (click)="onreset()"
+                class="btn btn-danger btn-sm"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label for="" class="form-ItemName"
+                  >Identificación paciente *</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="numero"
+                    [class.is-invalid]="pacienteId"
+                    placeholder="Ingrese su cédula"
+                  />
+
+                  <input type="hidden" formControlName="pacienteId" />
+                  <div class="input-group-append">
+                    <span
+                      data-toggle="modal"
+                      data-target="#modal-info"
+                      class="input-group-text"
+                      ><i class="fas fa-plus"></i
+                    ></span>
+                    <!-- <span class="input-group-text"
+                      ><i class="fas fa-edit"></i
+                    ></span> -->
+                    <span
+                      data-toggle="modal"
+                      data-target="#modal-paciente"
+                      class="input-group-text"
+                      ><i class="fas fa-search"></i
+                    ></span>
+                  </div>
+                </div>
+                <small *ngIf="pacienteId" class="text-danger"
+                  >Campo obligatorio
+                </small>
+              </div>
+
+              <div class="form-group col-md-8">
+                <label for="">Datos del paciente </label>
+                <div class="input-group datapciente" *ngIf="pacientes">
+                  <i class="bx bx-user bx-sm sm">
+                    {{ pacientes?.nombres }} {{ pacientes?.apellidos }}</i
+                  >
+                  <i class="fa fa-birthday-cake bx-sm sm">
+                    {{ pacientes?.fechanac | utcDate: "yyyy-MM-dd" }}
+                  </i>
+                  <br />
+                  <i class="bx bx-male-sign bx-sm sm"> {{ pacientes?.sexo }}</i>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="" class="form-ItemName">Medico</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="doctor"
+                    [class.is-invalid]="medicoId"
+                    placeholder="Buscar medico"
+                  />
+                  <input type="hidden" formControlName="medicoId" />
+                  <div class="input-group-append">
+                    <span
+                      data-toggle="modal"
+                      data-target="#modal-doctor"
+                      class="input-group-text"
+                      ><i class="fas fa-plus"></i
+                    ></span>
+
+                    <span
+                      data-toggle="modal"
+                      data-target="#modal-medico"
+                      class="input-group-text"
+                      ><i class="fas fa-search"></i
+                    ></span>
+                  </div>
+                </div>
+
+                <small *ngIf="medicoId" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+
+              <div class="form-group col-md-2">
+                <label class="form-ItemName">Tipo de atencion</label>
+
+                <select
+                  class="form-control"
+                  formControlName="tipoatencionId"
+                  [class.is-invalid]="tipoatencionId"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let atencion of listatipoatencion"
+                    [value]="atencion.id"
+                  >
+                    {{ atencion.nombre }}
+                  </option>
+                </select>
+
+                <small *ngIf="tipoatencionId" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+              <div class="form-group col-md-2">
+                <label class="form-ItemName">Servicio</label>
+
+                <select
+                  class="form-control"
+                  formControlName="tiposervicioId"
+                  [class.is-invalid]="tiposervicioId"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let servicio of listatiposervicio"
+                    [value]="servicio.id"
+                  >
+                    {{ servicio.nombre }}
+                  </option>
+                </select>
+
+                <small *ngIf="tiposervicioId" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+
+              <div class="form-group col-md-2">
+                <label class="form-ItemName">F.U.M</label>
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    formControlName="fum"
+                    type="date"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group clearfix check-margin">
+                <input
+                  type="checkbox"
+                  formControlName="embarazada"
+                  class="check_item"
+                />
+                <label class="">Embarazada</label>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label class="">Diagnostico</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="diagnostico"
+                    [class.is-invalid]=""
+                    placeholder="Buscar diagnostico"
+                  />
+                  <input type="hidden" formControlName="diagnosticoId" />
+                  <div class="input-group-append">
+                    <span
+                      data-toggle="modal"
+                      data-target="#modal-diagnostico"
+                      class="input-group-text"
+                      ><i class="fas fa-search"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-8">
+                <label class="">Observaciones</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="observaciones"
+                    [class.is-invalid]=""
+                    placeholder="Buscar medico"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card-header">
+                  <button
+                    type="button"
+                    class="btn btn-default btn-sm btnd"
+                    data-toggle="modal"
+                    data-target="#modal-default"
+                  >
+                    <i class="bx bxs-plus-circle bx-xs"></i>
+                  </button>
+                  <h6 class="card-title">EXAMENES</h6>
+
+                  <!--  <button
+                    type="button"
+                    class="btn btn-default btn-sm btnd"
+                    data-toggle="modal"
+                    data-target="#modal-muestras"
+                  >
+                    Muestras
+                    <i class="bx bx-test-tube bx-xs"></i>
+                  </button> -->
+                </div>
+
+                <div class="card-body scroll" *ngIf="pruebas.length > 0">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Pruebas</th>
+
+                        <th>Muestras</th>
+                        <th>Recibida</th>
+                        <th>Pendiente</th>
+                        <th>Rechazado</th>
+                      </tr>
+                    </thead>
+                    <!--  <tbody formArrayName="pruebas">
+                     
+                      <tr
+                        *ngFor="
+                          let d of pruebas.controls;
+                          let i = index
+                        "
+                        [formGroupName]="i"
+                      
+                      >
+                        <td >
+                          {{d.value.nomExam }}
+                          <i class="bx bx-message-square-dots"></i>
+                          <i
+                            class="bx bxs-time"
+                            title="{{ d.value.tiempo }} horas"
+                          ></i>
+                        </td>
+                        <td>{{ d.value.muestra }}</td>
+
+                        <td>
+                          <input
+                            type="radio"
+                            value="1"
+                            formControlName="estado"
+                          />
+                        </td>
+
+                        <td>
+                          <input
+                            type="radio"
+                            value="2"
+                            formControlName="estado"
+                          />
+                        </td>
+
+                        <td>
+                          <input
+                            type="radio"
+                            value="3"
+                            formControlName="estado"
+                          />
+                        </td>
+
+                        <td>
+                          <i
+                            (click)="borrarPasatiempo(i)"
+                            class="bx bxs-trash"
+                            aria-hidden="true "
+                          ></i>
+                        </td>
+                      </tr>
+                     
+                    </tbody> -->
+                    <tbody formArrayName="pruebas">
+                      <ng-container
+                        *ngFor="let d of pruebas.controls; let i = index"
+                      >
+                        <tr
+                          *ngIf="d.value.etq === 3 || !d.value.etq"
+                          [formGroupName]="i"
+                        >
+                          <td>
+                            {{ d.value.nomExam }}
+                            <i class="bx bx-message-square-dots"></i>
+                            <i
+                              class="bx bxs-time"
+                              title="{{ d.value.tiempo }} horas"
+                            ></i>
+                          </td>
+                          <td>{{ d.value.muestra }}</td>
+
+                          <td>
+                            <input
+                              type="radio"
+                              value="1"
+                              formControlName="estado"
+                            />
+                          </td>
+
+                          <td>
+                            <input
+                              type="radio"
+                              value="2"
+                              formControlName="estado"
+                            />
+                          </td>
+
+                          <td>
+                            <input
+                              type="radio"
+                              value="3"
+                              formControlName="estado"
+                            />
+                          </td>
+
+                          <td>
+                            <i
+                              (click)="borrarPasatiempo(i)"
+                              class="bx bxs-trash"
+                              aria-hidden="true "
+                            ></i>
+                          </td>
+                          <!-- Add other <td> elements as needed -->
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <pre>
+      {{ ingresoForm.value | json }}
+    </pre>
+  </form>
+</div>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear paciente</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="container-fluid">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <form
+                  autocomplete="off"
+                  [formGroup]="pacienteForm"
+                  (ngSubmit)="guardarPaciente()"
+                  autocomplete="false"
+                  id="pacienteForm"
+                >
+                  <div class="row">
+                    <div class="form-group col-md-3">
+                      <label for="" class="form-ItemName">Tipo *</label>
+                      <select class="form-control" formControlName="tipo" id="">
+                        <option value="">--Seleccione--</option>
+                        <option value="CC">CC</option>
+                        <option value="RUC">RUC</option>
+                      </select>
+
+                      <small *ngIf="" class="text-danger"
+                        >Campo obligatorio
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="" class="form-ItemName">Numero *</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="numero"
+                        [class.is-invalid]=""
+                        placeholder="Ingrese  apellido "
+                      />
+                      <small *ngIf="" class="text-danger"
+                        >Campo obligatorio
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="" class="form-ItemName">Apellidos *</label>
+                      <input
+                        appUppercase
+                        type="text"
+                        class="form-control"
+                        formControlName="apellidos"
+                        [class.is-invalid]=""
+                        placeholder="Ingrese  apellido "
+                      />
+                      <small *ngIf="" class="text-danger"
+                        >Campo obligatorio
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="" class="form-ItemName">Nombres *</label>
+                      <div class="input-group">
+                        <input
+                          appUppercase
+                          type="text"
+                          class="form-control appUppercase"
+                          formControlName="nombres"
+                          [class.is-invalid]=""
+                          placeholder="Ingreseup los nombres"
+                        />
+                        <div class="input-gro-append"></div>
+                      </div>
+
+                      <small *ngIf="" class="text-danger"
+                        >Campo obligatorio</small
+                      >
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="" class="form-ItemName"
+                        >Fecha nacimiento</label
+                      >
+                      <div class="input-group date" id="reservationdate">
+                        <input
+                          type="date"
+                          class="form-control"
+                          formControlName="fechanac"
+                          [class.is-invalid]=""
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="text" class="form-ItemName">Edad</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="edad"
+                        placeholder=" "
+                      />
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="" class="form-ItemName">Email</label>
+                      <input
+                        appUppercase
+                        type="text"
+                        class="form-control"
+                        formControlName="email"
+                        [class.is-invalid]=""
+                        placeholder="example@gmail.com"
+                      />
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="" class="form-ItemName">Sexo</label>
+
+                      <select
+                        class="form-control"
+                        formControlName="sexo"
+                        [class.is-invalid]=""
+                      >
+                        <option value="1">--Seleccione--</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                        <option value="3">Otros</option>
+                      </select>
+
+                      <small *ngIf="" class="text-danger"
+                        >Debe de escoger una opción
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card-header">
+                        <h6 class="card-title">Teléfonos</h6>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName"
+                        >Teléfono convecional</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="convencional"
+                        [class.is-invalid]=""
+                        placeholder="example@gmail.com"
+                      />
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName"
+                        >Telefono celular</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="celular"
+                        [class.is-invalid]=""
+                        placeholder="example@gmail.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card-header">
+                        <h6 class="card-title">Direciones</h6>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Provincia</label>
+
+                      <select
+                        class="form-control"
+                        formControlName="provinciaId"
+                        [class.is-invalid]=""
+                        id="modelo-select"
+                        (change)="onSelectProvincia($event)"
+                      >
+                        <option value="1">--Seleccione--</option>
+                        <option
+                          *ngFor="let provincia of listprovincia"
+                          [value]="provincia.id"
+                        >
+                          {{ provincia.provincia }}
+                        </option>
+                      </select>
+
+                      <small *ngIf="" class="text-danger"
+                        >Debe de escoger una opción
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Cantón</label>
+
+                      <select
+                        class="form-control"
+                        formControlName="cantonId"
+                        (change)="onSelectCanton($event)"
+                      >
+                        <option value="1">--Seleccione--</option>
+                        <option
+                          *ngFor="let canton of cantones"
+                          [value]="canton.id"
+                        >
+                          {{ canton.canton }}
+                        </option>
+                      </select>
+
+                      <small *ngIf="" class="text-danger"
+                        >Debe de escoger una opción
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Parroquia</label>
+
+                      <select
+                        class="form-control"
+                        formControlName="parroquiaId"
+                        [class.is-invalid]=""
+                      >
+                        <option value="1">--Seleccione--</option>
+                        <option
+                          *ngFor="let parroq of parroquia"
+                          [value]="parroq.id"
+                        >
+                          {{ parroq.parroquia }}
+                        </option>
+                      </select>
+
+                      <small *ngIf="" class="text-danger"
+                        >Debe de escoger una opción
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Barrio</label>
+                      <input
+                        appUppercase
+                        type="text"
+                        class="form-control"
+                        formControlName="barrio"
+                        [class.is-invalid]=""
+                        placeholder="example@gmail.com"
+                      />
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Numeracíon</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="numeracion"
+                        [class.is-invalid]=""
+                        placeholder="example@gmail.com"
+                      />
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="bx bx-save"></i>
+                      Guardar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Doctor -->
+
+<div class="modal fade" id="modal-doctor">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear Medico</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="container-fluid">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <form
+                  autocomplete="off"
+                  [formGroup]="medicoForm"
+                  (ngSubmit)="guardarMedico()"
+                  id="medicoForm"
+                >
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName"
+                        >Numero Identificación *</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="numero"
+                        [class.is-invalid]=""
+                        placeholder="Ingrese numero cedula "
+                      />
+                      <small *ngIf="" class="text-danger"
+                        >Campo obligatorio
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Apellidos *</label>
+                      <input
+                        appUppercase
+                        type="text"
+                        class="form-control"
+                        formControlName="apellidos"
+                        [class.is-invalid]="apellidos"
+                        placeholder="Ingrese  apellidos "
+                      />
+                      <small *ngIf="apellidos" class="text-danger"
+                        >Campo obligatorio
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Nombres *</label>
+                      <div class="input-group">
+                        <input
+                          appUppercase
+                          type="text"
+                          class="form-control"
+                          formControlName="nombres"
+                          [class.is-invalid]="nombres"
+                          placeholder="Ingreseup los nombres"
+                        />
+                        <div class="input-gro-append"></div>
+                      </div>
+
+                      <small *ngIf="nombres" class="text-danger"
+                        >Campo obligatorio</small
+                      >
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Email</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="email"
+                        [class.is-invalid]=""
+                        placeholder="example@gmail.com"
+                      />
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Especialidad</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="especialidadId"
+                        [class.is-invalid]=""
+                        placeholder=""
+                      />
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <label for="" class="form-ItemName">Sexo</label>
+
+                      <select
+                        class="form-control"
+                        formControlName="sexo"
+                        [class.is-invalid]="sexo"
+                      >
+                        <option value="1">--Seleccione--</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                        <option value="3">Otros</option>
+                      </select>
+
+                      <small *ngIf="sexo" class="text-danger"
+                        >Debe de escoger una opción
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card-header">
+                        <h6 class="card-title">Teléfonos</h6>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="" class="">Teléfono convecional</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="convencional"
+                        [class.is-invalid]=""
+                        placeholder=""
+                      />
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName"
+                        >Telefono celular</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="celular"
+                        [class.is-invalid]=""
+                        placeholder=""
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card-header">
+                        <h6 class="card-title">Direciones</h6>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Provincia</label>
+
+                      <select
+                        class="form-control"
+                        formControlName="provinciaId"
+                        [class.is-invalid]="provinciaId"
+                        id="modelo-select"
+                        (change)="onSelectProvincia($event)"
+                      >
+                        >
+                        <option value="1">--Seleccione--</option>
+                        <option
+                          *ngFor="let provincia of listprovincia"
+                          [value]="provincia.id"
+                        >
+                          {{ provincia.provincia }}
+                        </option>
+                      </select>
+
+                      <small *ngIf="provinciaId" class="text-danger"
+                        >Debe de escoger una opción
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Cantón</label>
+
+                      <select
+                        class="form-control"
+                        formControlName="cantonId"
+                        (change)="onSelectCanton($event)"
+                      >
+                        <option value="1">--Seleccione--</option>
+                        <option
+                          *ngFor="let canton of cantones"
+                          [value]="canton.id"
+                        >
+                          {{ canton.canton }}
+                        </option>
+                      </select>
+
+                      <small *ngIf="cantonId" class="text-danger"
+                        >Debe de escoger una opción
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Parroquia</label>
+
+                      <select
+                        class="form-control"
+                        formControlName="parroquiaId"
+                        [class.is-invalid]="parroquiaId"
+                      >
+                        <option value="1">--Seleccione--</option>
+                        <option
+                          *ngFor="let parroq of parroquia"
+                          [value]="parroq.id"
+                        >
+                          {{ parroq.parroquia }}
+                        </option>
+                      </select>
+
+                      <small *ngIf="parroquiaId" class="text-danger"
+                        >Debe de escoger una opción
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Barrio</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="barrio"
+                        [class.is-invalid]=""
+                        placeholder=""
+                      />
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Numeracíon</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="numeracion"
+                        [class.is-invalid]=""
+                        placeholder=""
+                      />
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="bx bx-save"></i>
+                      Guardar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">+ Cargar pruebas</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-">
+        <div class="container-fluid">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="wrapper">
+                  <div class="tabs">
+                    <div class="tab">
+                      <input
+                        type="radio"
+                        name="css-tabs"
+                        id="tab-1"
+                        checked
+                        class="tab-switch"
+                      />
+                      <label for="tab-1" class="tab-label">Lab General</label>
+                      <div class="tab-content">
+                        <div class="tt">
+                          <div class="card" *ngFor="let q of listaquimica">
+                            <div class="card-header card-title colorquimi">
+                              <p class="tittle">{{ q.CATEGORIA }}</p>
+                            </div>
+
+                            <div class="card-body">
+                              <div class="caso" *ngFor="let d of q.CODIGO">
+                                <input
+                                  type="checkbox"
+                                  name="checkbox"
+                                  [(ngModel)]="d.isChecked"
+                                  (change)="onchangePruebas($event, d)"
+                                  [checked]
+                                />
+                               
+                                <label class="margin">
+                                  {{ d.NOMBRE }}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab">
+                      <input
+                        type="radio"
+                        name="css-tabs"
+                        id="tab-2"
+                        class="tab-switch"
+                      />
+                      <label for="tab-2" class="tab-label">MICROBIOLOGIA</label>
+                      <div class="tab-content">
+                        <div class="tt">
+                          <div class="card">
+                            <div class="card-header card-title colorotros">
+                              <p class="tittle">PRUEBAS</p>
+                            </div>
+                            <div class="card-body"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="tab">
+                      <input
+                        type="radio"
+                        name="css-tabs"
+                        id="tab-3"
+                        class="tab-switch"
+                      />
+                      <label for="tab-3" class="tab-label">PERFILES</label>
+
+                      <div class="tab-content">
+                        <div class="tt">
+                          <div class="card">
+                            <div class="card-header card-title colorquimi">
+                              <p class="tittle">Perfiles</p>
+                            </div>
+
+                            <div class="card-body">
+                              <div
+                                class="caso"
+                                *ngFor="let perfil of listgrupoperfil"
+                              >
+                                <input
+                                  type="checkbox"
+                                  name="checkbox"
+                                  [(ngModel)]="perfil.isChecked"
+                                  (change)="onchangePerfil($event, perfil)"
+                                  [checked]
+                                />
+                                <label class="margin">
+                                  {{ perfil.nombre }}
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal-paciente">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Pacientes</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="container-fluid">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Identificacion</th>
+                      <th>Nombres</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let paciente of listapacientes">
+                      <td><i class="bx bx-user bx-sm"></i></td>
+                      <td>{{ paciente.numero }}</td>
+
+                      <td>
+                        {{ paciente.apellidos }}
+                        {{ paciente.nombres }}
+                      </td>
+                      <td>
+                        <i
+                          (click)="pacienteseleccionado(paciente)"
+                          class="bx bx-check-square bx-sm"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-medico">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Medico</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Identificacion</th>
+                      <th>Nombres</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let paciente of listadoctores">
+                      <td><i class="bx bx-user bx-sm"></i></td>
+                      <td>{{ paciente.numero }}</td>
+                      <td>
+                        {{ paciente.apellidos }}
+                        {{ paciente.nombres }}
+                      </td>
+                      <td>
+                        <i
+                          (click)="doctorseleccionado(paciente)"
+                          class="bx bx-check-square bx-sm"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 
+<div class="modal fade" id="modal-muestras">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Muestras</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <table class="table"  [formGroup]="ingresoForm">
+                  <thead>
+                    <tr>
+                      <th>Examen</th>
+                      <th>Muestra</th>
+
+                      <th>Recibida</th>
+                      <th>Pendiente</th>
+                      <th>Rechazada</th>
+                    </tr>
+                  </thead>
+                  <tbody  >
+                    <tr
+                      *ngFor="
+                        let paciente of ingresoForm.controls['pruebas']?.value;
+                        let i = index"
+                       
+                      
+                    >
+                      <td>{{ paciente.nombre }}</td>
+                      <td>
+                        {{ paciente.muestra }}
+                      </td>
+
+                      <td>
+                      <div>
+                        <input
+                        type="checkbox"
+                     
+                        formControlName="pruebas.estado"
+                       [(ngModel)]="paciente.estado"
+                      />
+                      </div>
+                      </td>
+                      <td>
+
+                        <input
+                          type="checkbox"
+                         
+                         
+                        
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                       
+                    
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="card-footer">
+                  <button class="btn btn-secondary btn-sm">
+                    Marcar todas como pendiente
+                  </button>
+                  &nbsp;
+                  <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="bx bx-save"></i>
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="modal fade" id="modal-diagnostico">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Diagnostico</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+
+                      <th>Diagnostico</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let diagnostico of listatipodiagnostico">
+                      <td>{{ diagnostico.nombre }}</td>
+
+                      <td>
+                        <i
+                          (click)="diagnosticoseleccionado(diagnostico)"
+                          class="bx bx-check-square bx-sm"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

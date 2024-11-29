@@ -1,0 +1,57 @@
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+     <!--  <div class="col-lg-3 col-6">
+       
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{ totalIngresada }}</h3>
+
+            <p>Procesos</p>
+          </div>
+          <div class="icon">
+            <i class="bx bx-receipt"></i>
+          </div>
+         
+        </div>
+      </div> -->
+      <!-- ./col -->
+
+      <div class="col-12 col-sm-6 col-md-3" *ngFor="let equipo of conteoPorEstadoArray">
+        <div class="info-box">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+          <div class="info-box-content" >
+            <span class="info-box-text">{{equipo.nombre}}</span>
+            <span class="info-box-number">{{equipo.total}}
+            
+          
+            </span>
+          </div>
+         
+        </div>
+        
+      </div>
+   
+    
+      
+
+      <div>
+        <canvas id="myChart" width="600"></canvas>
+      </div>
+
+
+     
+
+
+
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+
+    <!-- /.row (main row) -->
+  </div>
+
+  <!-- /.container-fluid -->
+</section>

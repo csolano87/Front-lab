@@ -1,0 +1,317 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off">
+            <!--  <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por nombre"
+            (keyup)="buscar(txtTermino.value.toUpperCase())"
+            #txtTermino
+          /> -->
+            <div class="row">
+              <div class="form-group col-md-2">
+                <label for="text " class="form-ItemName">Equipo</label>
+
+                <select class="form-control" #equipo>
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let equipo of listacategoria"
+                    [value]="equipo.id"
+                  >
+                    {{ equipo.NOMBRE }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="text " class="form-ItemName">Marca</label>
+                <select class="form-control" #marca>
+                  <option value="">--Seleccione--</option>
+                  <option *ngFor="let marca of listamarca" [value]="marca.id">
+                    {{ marca.NOMBRE }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="text " class="form-ItemName">Categoria</label>
+                <select class="form-control" #modelo>
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let modelo of listamodelo"
+                    [value]="modelo.id"
+                  >
+                    {{ modelo.NOMBRE }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="text " class="form-ItemName">Ubicacion</label>
+
+                <select class="form-control" #ubicacion>
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let ubicacion of listaubicacion"
+                    [value]="ubicacion.id"
+                  >
+                    {{ ubicacion.NOMBRE }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="text " class="form-ItemName">Serie</label>
+
+                <input type="text" class="form-control" #serie />
+              </div>
+
+              <div class="button">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-sm"
+                  (click)="
+                    buscar(
+                      marca.value,
+                      equipo.value,
+                      modelo.value,
+                      serie.value,
+                      ubicacion.value
+                    )
+                  "
+                >
+                  CONSULTAR
+                </button>
+                &nbsp;
+                <button
+                  (click)="
+                    borrarFiltro(marca, equipo, modelo, serie, ubicacion)
+                  "
+                  class="btn btn-primary btn-sm cursor"
+                >
+                  limpiar filtros
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <div
+              *ngIf="cargando"
+              class="alert alert-info text-center mt-3 animated fadeIn faster"
+            >
+              <h4 class="alert-heading">Cargando</h4>
+              <p>
+                <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+              </p>
+              <p class="mb-0">Espere por favor</p>
+            </div>
+
+            <div *ngIf="!cargando" class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Equipo</th>
+                    <th>Categoria</th>
+                    <th>Marca</th>
+                    <th>Serie</th>
+                    <th>Vigencia</th>
+                    <!--  <th>Modalidad proveedor</th>
+                    <th>Modalidad cliente</th> -->
+                    <!--  <th>Condición</th>
+                    <th>Ubicación</th> -->
+                    <th>Condición</th>
+                    <th>Ubicación</th>
+                    <th>Estado</th>
+                    <!--     <th>Usuario</th> -->
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <ng-container
+                    *ngFor="
+                      let equipo of listaequipos
+                        | paginate: { itemsPerPage: 10, currentPage: page };
+                      let i = index
+                    "
+                  >
+                    <tr class="table-row-not-expanded">
+                      <td>{{ equipo.id }}</td>
+                      <td>{{ equipo.instrumento.NOMBRE }}</td>
+                      <td>{{ equipo.modelo.NOMBRE }}</td>
+                      <td>{{ equipo.marca.NOMBRE }}</td>
+                      <td>{{ equipo.SERIE }}</td>
+                      <td>{{ getEdad(equipo.fecha) }} AÑOS</td>
+                      <!--  <td>{{ equipo.estadoproveedor.NOMBRE }}</td>
+                      <td>{{ equipo.estadocliente.NOMBRE }}</td> -->
+                      <!--  [ngStyle]="{ 'border-left': '5px solid ' + equipo.estado.color }" -->
+
+                      <!--      <ng-container
+                        *ngFor="let estados of equipo.historicoestado"
+                      >
+                        <td>
+                          <div
+                            [ngStyle]="{
+                              'border-left':
+                                '5px solid ' + estados.estado.color,
+                              padding: '10px',
+                              'border-radius': '5px',
+
+                              display: 'inline-block',
+                              transition:
+                                'border-left 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)'
+                            }"
+                          >
+                            {{ estados.estado.NOMBRE }}
+                          </div>
+                        </td>
+                      </ng-container> -->
+
+                      <ng-container
+                        *ngIf="
+                          equipo.historicoestado?.length > 0;
+                          else emptyCell
+                        "
+                      >
+                        <ng-container
+                          *ngFor="let estados of equipo.historicoestado"
+                        >
+                          <td>
+                            <div
+                              [ngStyle]="{
+                                'border-left':
+                                  '5px solid ' + estados.estado.color,
+                                padding: '10px',
+                                'border-radius': '5px',
+                                display: 'inline-block',
+                                transition:
+                                  'border-left 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)'
+                              }"
+                            >
+                              {{ estados.estado.NOMBRE }}
+                            </div>
+                          </td>
+                        </ng-container>
+                      </ng-container>
+
+                      <ng-template #emptyCell>
+                        <td>
+                          <div style="padding: 10px">
+                            <!-- Ajusta el padding aquí para mantener el espacio -->
+                            <!-- Celda vacía para mantener el espacio -->
+                          </div>
+                        </td>
+                      </ng-template>
+
+                      <ng-container
+                        *ngIf="
+                          equipo.historicoubicacion?.length > 0;
+                          else emptyCell
+                        "
+                      >
+                        <ng-container
+                          *ngFor="let ubicaciones of equipo.historicoubicacion"
+                        >
+                          <td>
+                            {{ ubicaciones.ubicacion.NOMBRE | slice: 0 : 32 }}
+                          </td>
+                        </ng-container>
+                      </ng-container>
+                      <ng-template #emptyCell>
+                        <td>
+                          <div style="padding: 10px">
+                            <!-- Ajusta el padding aquí para mantener el espacio -->
+                            <!-- Celda vacía para mantener el espacio -->
+                          </div>
+                        </td>
+                      </ng-template>
+
+                      <td>
+                        <div [ngSwitch]="equipo.ESTADO">
+                          <div *ngSwitchCase="1">Activo</div>
+                          <div *ngSwitchDefault>Inactivo</div>
+                        </div>
+                      </td>
+                      <!--  <td>{{ equipo.usuario.doctor }}</td> -->
+                      <td>
+                        <span class="cursor">
+                          <a
+                            [ngClass]="{ 'disabled-icon': equipo.ESTADO !== 1 }"
+                            [routerLink]="['/dashboard', 'equipo', equipo.id]"
+                          >
+                            <i
+                              class="bx bxs-edit"
+                              data-toggle="modal"
+                              data-target="#modal-info"
+                            ></i> </a
+                        ></span>
+
+                        <span (click)="borrarequipo(equipo)" class="cursor">
+                          <i class="bx bxs-trash"></i
+                        ></span>
+
+                        <span
+                          *ngIf="equipo.acc.length"
+                          (click)="toggleDetails(i)"
+                        >
+                          <i
+                            class="bx"
+                            [ngClass]="{
+                              'bxs-down-arrow': showDetails[i],
+                              'bxs-right-arrow': !showDetails[i]
+                            }"
+                          ></i
+                        ></span>
+                      </td>
+                    </tr>
+                    <ng-container *ngIf="showDetails[i]">
+                      <tr>
+                        <th colspan="3">Categoria</th>
+
+                        <th>Marca</th>
+                        <th colspan="2">Modelo</th>
+                        <th colspan="2">Serie</th>
+                        <th>Fecha</th>
+                      </tr>
+                      <ng-container *ngFor="let item of equipo.acc">
+                        <tr>
+                          <td colspan="3">
+                            {{ item.equipocomplementarios.equipo }}
+                          </td>
+
+                          <td>{{ item.SERIEACC }}</td>
+                          <td colspan="2">{{ item.DESCRIPCION }}</td>
+                          <td colspan="2">{{ item.MARCA }}</td>
+                          <td colspan="2">
+                            {{ item.fechacom | utcDate: "yyyy-MM-dd" }}
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+            <pagination-controls
+              (pageChange)="page = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="container-fluid rounded shadow">
+    <div class="row py-4 animated fadeIn fast">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar institucion..."
+              (keyup)="buscar(txtTermino.value.toUpperCase())"
+              #txtTermino
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div
+      *ngIf="cargando"
+      class="alert alert-info text-center mt-3 animated fadeIn faster"
+    >
+      <h4 class="alert-heading">Cargando</h4>
+      <p>
+        <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+      </p>
+      <p class="mb-0">Espere por favor</p>
+    </div>
+  
+    <div class="row animated fadeIn fast" *ngIf="!cargando">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="title">Listado de procesos</h6>
+  
+            <div class="col-md-3 button"></div>
+  
+            <div class="table-responsive">
+              <table *ngIf="!cargando && listacotizacion.length > 0" class="table">
+                <thead>
+                  <tr>
+                 
+                    <th class="text-table">RAZONSOCIAL</th>
+                    <th class="text-table3">RUC</th>
+                    <th class="text-table">CORREO</th>
+                    <th class="text-table2">MODALIDAD</th>
+                    <th class="text-table2">Estadistica</th>
+                    <th class="text-table2">Estado</th>
+                    <th class="text-table2">Actions</th>
+                    
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let cotizacion of listacotizacion
+                        | paginate: { itemsPerPage: 5, currentPage: page }
+                    "
+                  >
+                    <td>{{ cotizacion.RAZONSOCIAL }}</td>
+                    <td>{{ cotizacion.RUC }}</td>
+                    <td>{{ cotizacion.CORREO }}</td>
+                    <td>{{cotizacion.modalidad.NOMBRE}}</td>
+                
+                    <td> <div [ngSwitch]="cotizacion.ESTADISTICA">
+                      <div *ngSwitchCase="true" >
+                        Si
+                      </div>
+                      <div *ngSwitchDefault>No</div>
+                    </div></td>
+                    <td>
+                      <div [ngSwitch]="cotizacion.ESTADO">
+                        <div *ngSwitchCase="1" class="rounded shadow bg-creada">
+                          Generado
+                        </div>
+                        <div *ngSwitchDefault>Enviado</div>
+                      </div>
+                    </td> 
+                    <!-- <td>
+                      <div *ngIf="proces.status">
+                        {{ proces.status.tipocontrato.NOMBRE }}
+                      </div>
+                    </td> -->
+  
+                  <!--   <td>
+                      <div *ngIf="proces.aprobar">
+                        <div [ngSwitch]="proces.aprobar.ESTADOBI">
+                          <div
+                            *ngSwitchCase="1"
+                            class="rounded shadow bg-procesando"
+                          >
+                            RENTABLE
+                          </div>
+                          <div
+                            *ngSwitchCase="0"
+                            class="rounded shadow bg-pendiente"
+                          >
+                            NO RENTABLE
+                          </div>
+                          <div *ngSwitchDefault class="rounded shadow"></div>
+                        </div>
+                      </div>
+                    </td> -->
+                    <td class="text-nowrap">
+                       <span>
+                        <a [routerLink]="['/dashboard', 'cotizacion', cotizacion.id]">
+                          <i class="bx bx-edit-alt bx-sm"></i>
+                        </a>
+                      </span> 
+  
+                      <span class="cursor" (click)="pdf2()">
+                        <i class="bx bxs-file-pdf bx-sm text-danger"></i>
+                      </span>
+  
+                  
+                   
+                       
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pagination-controls
+        (pageChange)="page = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      ></pagination-controls>
+    </div>
+  
+
+  
+  
+  </div>
+  
+

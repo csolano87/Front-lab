@@ -1,0 +1,77 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <input type="file" class="input-file" accept=".json" />
+
+          <button class="btn btn-primary">Subir archivo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="title">Lista de Productos</h6>
+
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <form>
+              <div
+                *ngIf="cargando"
+                class="alert alert-info text-center mt-3 animated fadeIn faster"
+              >
+                <h4 class="alert-heading">Cargando</h4>
+                <p>
+                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                </p>
+                <p class="mb-0">Espere por favor</p>
+              </div>
+
+              <div *ngIf="!cargando" class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>SampleID</th>
+                      <th># HIS</th>
+
+                      <th>Pruebas</th>
+                      <th>Fecha Validacion</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr
+                                       >
+                      <td>2408301000</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <i class='bx bx-test-tube bx-sm'></i>
+                        <i class='bx bx-test-tube bx-sm'></i>
+                        <i class='bx bx-test-tube bx-sm'></i>
+
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <pagination-controls
+                (pageChange)="page = $event"
+                previousLabel="Anterior"
+                nextLabel="Siguiente"
+              ></pagination-controls>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

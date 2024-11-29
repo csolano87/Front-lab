@@ -1,0 +1,979 @@
+<div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    [formGroup]="OrdenForm"
+    novalidate
+    (ngSubmit)="guardarOrden()"
+    id="OrdenForm"
+  >
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Datos del paciente</h6>
+            <div class="button">
+              <a class="btn btn-primary btn-sm" (click)="cambioestado()">
+                {{ btnVal }}
+              </a>
+              &nbsp;
+
+              <a
+                type=""
+                *ngIf="usuario.rol !== 'DOCTOR' && this.btnVal != 'Guardar'"
+                (click)="enviarorden()"
+                type=""
+                class="btn btn-warning btn-sm"
+                [ngClass]="{ 'disabled-link': isFormValid() }"
+              >
+                Enviar </a
+              >&nbsp;
+
+              <button
+                type="reset"
+                (click)="onreset()"
+                class="btn btn-danger btn-sm"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Cédula</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="IDENTIFICADOR"
+                  [class.is-invalid]="IDENTIFICADOR"
+                  placeholder="Ingrese su cédula"
+                  (keyup.enter)="buscarHis(OrdenForm.value.IDENTIFICADOR)"
+                />
+
+                <small *ngIf="IDENTIFICADOR" class="text-danger"
+                  >Campo obligatorio
+                </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Apellidos</label>
+                <input
+                  appUppercase
+                  type="text"
+                  class="form-control"
+                  formControlName="APELLIDO"
+                  [class.is-invalid]="APELLIDO"
+                  placeholder="Ingrese  apellido "
+                />
+                <small *ngIf="APELLIDO" class="text-danger"
+                  >Campo obligatorio
+                </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Nombres</label>
+                <div class="input-group">
+                  <input
+                    appUppercase
+                    type="text"
+                    class="form-control appUppercase"
+                    formControlName="NOMBRES"
+                    [class.is-invalid]="NOMBRES"
+                    placeholder="Ingrese los nombres"
+                  />
+                  <div class="input-group-append"></div>
+                </div>
+
+                <small *ngIf="NOMBRES" class="text-danger"
+                  >Campo obligatorio</small
+                >
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Fecha nacimiento</label>
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="FECHANACIMIENTO"
+                    [class.is-invalid]="FECHANACIMIENTO"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="text" class="form-ItemName">Edad</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="EDAD"
+                  [value]="CalculateAge()"
+                  placeholder=" "
+                />
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Telefono</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="TELEFONO"
+                  [class.is-invalid]="TELEFONO"
+                  placeholder="Ingrese numero de télefono"
+                />
+                <small *ngIf="TELEFONO" class="text-danger"
+                  >campo obligatorio
+                </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Email</label>
+                <input
+                  appUppercase
+                  type="text"
+                  class="form-control"
+                  formControlName="EMAIL"
+                  [class.is-invalid]=""
+                  placeholder="example@gmail.com"
+                />
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Sexo</label>
+
+                <select
+                  class="form-control"
+                  formControlName="SEXO"
+                  [class.is-invalid]="SEXO"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
+                  <option value="3">Otros</option>
+                </select>
+
+                <small *ngIf="SEXO" class="text-danger"
+                  >Debe de escoger una opción
+                </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">HIS</label>
+                <div class="col-">
+                  <input class="form-control" formControlName="HIS" value="" />
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Doctor</label>
+
+                <select
+                  class="form-control"
+                  formControlName="CODDOCTOR"
+                  [class.is-invalid]="CODDOCTOR"
+                >
+                  <option value="">--Seleccione</option>
+
+                  <option
+                    *ngFor="let origin of listadoctor"
+                    [value]="origin.ValueCode"
+                  >
+                    {{ origin.Description }}
+                  </option>
+                </select>
+
+                <small *ngIf="CODDOCTOR" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Sala</label>
+
+                <select
+                  class="form-control"
+                  formControlName="CODTIPOORDEN"
+                  [class.is-invalid]="CODTIPOORDEN"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let sala of listaorigin"
+                    [value]="sala.ValueCode"
+                  >
+                    {{ sala.Description }}
+                  </option>
+                </select>
+
+                <small *ngIf="CODTIPOORDEN" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+
+              <div class="form-group col-md-3">
+                <label class="form-ItemName">Prioridad</label>
+
+                <select
+                  class="form-control"
+                  formControlName="PRIORIDAD"
+                  [class.is-invalid]="PRIORIDAD"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option value="2">RUTINA</option>
+                  <option value="1">URGENTE</option>
+                  <option value="3">CONTROL</option>
+                </select>
+
+                <small *ngIf="PRIORIDAD" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+
+              <div class="form-group col-md-6">
+                <label for="" class="form-ItemName">Direccion</label>
+                <input
+                  appUppercase
+                  type="text "
+                  class="form-control"
+                  formControlName="DIRECCION"
+                  [class.is-invalid]="DIRECCION"
+                  placeholder="Ingrese  direccion "
+                />
+              </div>
+
+              <div
+                *ngIf="OrdenForm.value.SEXO === 'F'"
+                class="form-group col-md-3"
+              >
+                <label class="form-ItemName">Embarazada</label>
+
+                <select
+                  class="form-control"
+                  formControlName="CODEMBARAZADA"
+                  [class.is-invalid]=""
+                >
+                  <option value="">--Seleccione--</option>
+                  <option value="SI">SI</option>
+                  <option value="NO">NO</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div *ngIf="usuario.rol == 'OPERADOR' || usuario.rol == 'ADMIN'"> -->
+
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Datos demograficos</h6>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label class="form-ItemName">Operador</label>
+
+                <select
+                  class="form-control"
+                  formControlName="OPERADOR"
+                  [class.is-invalid]="OPERADOR"
+                >
+                  <option value="">--Seleccione--</option>
+
+                  <option
+                    *ngFor="let operador of listaOperador"
+                    [value]="operador.ValueCode"
+                  >
+                    {{ operador.Description }}
+                  </option>
+                </select>
+                <small *ngIf="OPERADOR" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for=" " class="form-ItemName">Flebotomista</label>
+
+                <select
+                  class="form-control"
+                  formControlName="CODFLEBOTOMISTA"
+                  [class.is-invalid]="CODFLEBOTOMISTA"
+                >
+                  <option value="">--Seleccione--</option>
+
+                  <!--  <option
+                    *ngFor="let fle of listaFlebotomista"
+                    [value]="fle.ValueCode"
+                  >
+                    {{ fle.Description }}
+                  </option> -->
+                  <option
+                    *ngFor="let operador of listaOperador"
+                    [value]="operador.ValueCode"
+                  >
+                    {{ operador.Description }}
+                  </option>
+                </select>
+                <small *ngIf="CODFLEBOTOMISTA" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for=" " class="form-ItemName">Impresora</label>
+
+                <select
+                  class="form-control"
+                  formControlName="CODIMPRESORA"
+                  [class.is-invalid]="CODIMPRESORA"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option *ngFor="let impresora of listaImpresora">
+                    {{ impresora.NOMBRE }}
+                  </option>
+                </select>
+                <small *ngIf="CODIMPRESORA" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+              <div class="form-group col-md-4">
+                <label for="text " class="form-ItemName">Centro Salud</label>
+
+                <select
+                  class="form-control"
+                  formControlName="CODCENTROSALUD"
+                  [class.is-invalid]="CODCENTROSALUD"
+                >
+                  <option value="">--Seleccione--</option>
+
+                  <!--   <option
+                    *ngFor="let listacentro of listaCentrosalud"
+                    [value]="listacentro.ValueCode"
+                  >
+                    {{ listacentro.Description }}
+                  </option> -->
+                  <option
+                    *ngFor="let operador of listaOperador"
+                    [value]="operador.ValueCode"
+                  >
+                    {{ operador.Description }}
+                  </option>
+                </select>
+                <small *ngIf="CODCENTROSALUD" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="inputPassword3" class="form-ItemName"
+                  >Correla.</label
+                >
+
+                <input
+                  type="text "
+                  class="form-control"
+                  formControlName="CORRELATIVO"
+                  [class.is-invalid]=""
+                  placeholder="1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-info">
+          <div class="card-header">
+            <button
+              type="button"
+              class="btn btn-default btn-sm btnd"
+              data-toggle="modal"
+              data-target="#modal-default"
+            >
+              <i class="bx bxs-plus-circle bx-xs"></i>AGREGAR PRUEBAS
+            </button>
+          </div>
+
+          <div class="card-body scroll">
+            <small
+              class="text-danger"
+              *ngIf="
+                OrdenForm.hasError('noPruebas') &&
+                (OrdenForm.get('pruebas')?.dirty ||
+                  OrdenForm.get('pruebas')?.touched)
+              "
+            >
+              No hay pruebas agregadas. Debe agregar al menos una prueba.
+            </small>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>N.-</th>
+
+                  <th>Estado</th>
+                  <th>prueba</th>
+                  <th>Borrar</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="pruebas">
+                <tr
+                  *ngFor="
+                    let d of OrdenForm.controls['pruebas']?.value;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <td>
+                    <div class="">
+                      {{ i + 1 }}
+                    </div>
+                  </td>
+
+                  <td>
+                    <select
+                      class="form-control"
+                      formControlName="ESTADO"
+                      [disabled]="isFormDisabled"
+                    >
+                      <option value="">-</option>
+                      <option value="1">A</option>
+                      <option value="2">P</option>
+                      <option value="3">R</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [attr.disabled]="true"
+                      formControlName="ItemName"
+                    />
+                  </td>
+
+                  <td>
+                    <i
+                      (click)="borrarPasatiempo(i)"
+                      class="bx bxs-trash bx-sm"
+                      aria-hidden="true "
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content3">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="container-fluid rounded shadow">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <form autocomplete="off" class="form-inline">
+                  <div class="form-group">
+                    <div class="form-group col-md-4 espacio">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Ingrese apellidos..."
+                        #NOMBRE
+                      />
+                    </div>
+
+                    <div class="form-group col-md-4 espacio">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Ingrese  cédula.."
+                        #CEDULA
+                      />
+                    </div>
+                  </div>
+
+                  <div class="esboton">
+                    <a
+                      class="btn btn-primary"
+                      (click)="buscar(NOMBRE.value, CEDULA.value)"
+                    >
+                      CONSULTAR</a
+                    >
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="row animated fadeIn fast">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="title">Busqueda Pacientes</h6>
+
+                    <div class="col-md-3 button"></div>
+
+                    <div class="row py-2">
+                      <div class="col-12"></div>
+                    </div>
+
+                    <div *ngIf="cargando" class="row animated fadeIn fast">
+                      <div class="col-12">
+                        <div class="alert alert-info text-center">
+                          <h4 class="alert-heading">Cargando</h4>
+                          <i class="fa fa-refresh fa-spin fa-2x"></i>
+                          <p class="mb-0">Por favor espere</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="!cargando" class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="text-table">Cédula</th>
+                            <th class="text-table">Apellidos</th>
+                            <th class="text-table">Nombres</th>
+                            <th class="text-table">Edad</th>
+
+                            <th class="text-table">Sexo</th>
+
+                            <th class="text-table">FechaNacimiento</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let paciente of listaordene
+                                | paginate
+                                  : { itemsPerPage: 5, currentPage: page }
+                            "
+                            (click)="seleccionarPaciente(paciente)"
+                          >
+                            <td>{{ paciente.PA_ID1 }}</td>
+                            <td>{{ paciente.PA_LASTNAME }}</td>
+                            <td>{{ paciente.PA_FIRSTNAME }}</td>
+                            <td>{{ paciente.PA_AGE }}</td>
+                            <td>{{ paciente.PA_SEX }}</td>
+                            <td>{{ paciente.PA_BIRTHDATE }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <pagination-controls
+                      (pageChange)="page = $event"
+                      previousLabel="Anterior"
+                      nextLabel="Siguiente"
+                    ></pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade show" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content2">
+      <div class="modal-header">
+        <h4 class="modal-title">+ Cargar pruebas</h4>
+        <button
+          type="button"
+          class="btn btn-success"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          Cerrar
+        </button>
+      </div>
+
+      <div class="modal- re">
+        <div class="wrapper">
+          <div class="tabs">
+            <div class="tab">
+              <input
+                type="radio"
+                name="css-tabs"
+                id="tab-1"
+                checked
+                class="tab-switch"
+              />
+              <label for="tab-1" class="tab-label">Lab General</label>
+              <div class="tab-content">
+                <div class="tt">
+                  <div class="se">
+                    <div class="card">
+                      <div class="card-header card-title colorsero">
+                        <p class="tittle">SEROLOGIA</p>
+                      </div>
+                      <div class="card-body">
+                        <div class="caso" *ngFor="let s of listaserologia">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [(ngModel)]="s.isChecked"
+                            [value]="s.CODIGO + '-' + s.NOMBRE"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ s.CODIGO }} {{ s.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ot">
+                    <div class="card">
+                      <div class="card-header card-title colorotros">
+                        <p class="tittle">OTROS</p>
+                      </div>
+                      <div class="card-body">
+                        <div class="" *ngFor="let ot of listaotros">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [(ngModel)]="ot.isChecked"
+                            [value]="ot.CODIGO + '-' + ot.NOMBRE"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ ot.CODIGO }} {{ ot.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tumo">
+                    <div class="card">
+                      <div class="card-header card-title colormarca">
+                        <p class="tittle">M. TUMORALES</p>
+                      </div>
+                      <div class="card-body">
+                        <div class="" *ngFor="let timo of listatumorales">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [(ngModel)]="timo.isChecked"
+                            [value]="timo.CODIGO + ' - ' + timo.NOMBRE"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ timo.CODIGO }} {{ timo.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="uro">
+                    <div class="card">
+                      <div class="card-header card-title coloruro">
+                        <p class="tittle">UROANALISIS</p>
+                      </div>
+                      <div class="card-body">
+                        <div class="" *ngFor="let ur of listauroanalisis">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [(ngModel)]="ur.isChecked"
+                            [value]="ur.CODIGO + ' - ' + ur.NOMBRE"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ ur.CODIGO }} {{ ur.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="horm">
+                    <div class="card">
+                      <div class="card-header card-title colorhormo">
+                        <p class="tittle">HORMONAL</p>
+                      </div>
+                      <div class="card-body">
+                        <div class="" *ngFor="let ho of listahormonal">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [(ngModel)]="ho.isChecked"
+                            [value]="ho.CODIGO + '-' + ho.NOMBRE"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ ho.CODIGO }}{{ ho.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="cop">
+                    <div class="card">
+                      <div class="card-header card-title colorvirales">
+                        <p class="tittle">PRUEBAS VIRALES</p>
+                      </div>
+                      <div class="card-body">
+                        <div class="" *ngFor="let pv of listapruebasVirales">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [(ngModel)]="pv.isChecked"
+                            [value]="pv.CODIGO + '-' + pv.NOMBRE"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ pv.CODIGO }} {{ pv.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="qc">
+                    <div class="card">
+                      <div class="card-header card-title colorquimi">
+                        <p class="tittle">QUIMICA SANGUINEA</p>
+                      </div>
+
+                      <div class="card-body">
+                        <div class="caso" *ngFor="let q of listaquimica">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [value]="q.CODIGO + ' - ' + q.NOMBRE"
+                            [(ngModel)]="q.isChecked"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ q.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dddd">
+                    <div class="card">
+                      <div class="wrapper">
+                        <div class="card">
+                          <div class="card-header card-title colora">
+                            <p class="tittle">PRUEBAS ADICIONALES</p>
+                          </div>
+
+                          <div class="card-body">
+                            <div class="form-group" #asBoxInput>
+                              <input
+                                class="input-src form-control"
+                                [ngClass]="{ loading: isLoading }"
+                                [spellcheck]="false"
+                                placeholder="pruebas"
+                                type="text"
+                                (ngModelChange)="search($event)"
+                                [(ngModel)]="src"
+                              />
+
+                              <div class="card-body scroll2">
+                                <ul class="ullist">
+                                  <li
+                                    class="li"
+                                    (click)="seleccionarCategoria(item)"
+                                    *ngFor="let item of data$ | async"
+                                  >
+                                    {{ item.TestName }}
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="hemat">
+                    <div class="card">
+                      <div class="card-header card-title colorhema">
+                        <p class="tittle">HEMATOLOGIA</p>
+                      </div>
+                      <div class="card-body">
+                        <div class="caso" *ngFor="let h of listahematologia">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [(ngModel)]="h.isChecked"
+                            [value]="h.CODIGO + '- ' + h.NOMBRE"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ h.CODIGO }} {{ h.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pto">
+                    <div class="card">
+                      <div class="card-header card-title colorcopro">
+                        <p class="tittle">COPROLOGIA</p>
+                      </div>
+                      <div class="card-body">
+                        <div class="caso" *ngFor="let co of listacoprologia">
+                          <input
+                            type="checkbox"
+                            name="checkbox"
+                            [(ngModel)]="co.isChecked"
+                            [value]="co.CODIGO + '-' + co.NOMBRE"
+                            (change)="onchange($event)"
+                          />
+                          <label class="margin">
+                            {{ co.CODIGO }} {{ co.NOMBRE }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab">
+              <input
+                type="radio"
+                name="css-tabs"
+                id="tab-2"
+                class="tab-switch"
+              />
+              <label for="tab-2" class="tab-label">MICROBIOLOGIA</label>
+              <div class="tab-content">
+                <div class="tt2">
+                  <div class="card">
+                    <div class="card-header card-title colorotros">
+                      <p class="tittle">PRUEBAS</p>
+                    </div>
+                    <div class="card-body">
+                      <div class="caso" *ngFor="let pr of prueba">
+                        <input
+                          type="checkbox"
+                          [(ngModel)]="pr.isChecked"
+                          [value]="pr.ItemID"
+                          (change)="onchange($event)"
+                        />
+                        <label class="margin">
+                          {{ pr.ItemName }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-header card-title coloruro">
+                      <p class="tittle">LIQUIDOS</p>
+                    </div>
+                    <div class="card-body">
+                      <div class="caso" *ngFor="let li of liquido">
+                        <input
+                          type="checkbox"
+                          [(ngModel)]="li.isChecked"
+                          [value]="li.ItemID"
+                          (change)="onchange($event)"
+                        />
+                        <label class="margin">
+                          {{ li.ItemName }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-header card-title colorvirales">
+                      <p class="tittle">MICROBACTERIAS</p>
+                    </div>
+                    <div class="card-body">
+                      <div class="caso" *ngFor="let micro of microbacterias">
+                        <input
+                          type="checkbox"
+                          name="checkbox"
+                          [(ngModel)]="micro.isChecked"
+                          [value]="micro.ItemID"
+                          (change)="onchange($event)"
+                        />
+                        <label class="margin">
+                          {{ micro.ItemName }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="wrapper">
+                      <div class="card">
+                        <div class="card-header card-title colorprueba">
+                          <p class="tittle">PRUEBAS ADICIONALES</p>
+                        </div>
+                        <div class="card-body">
+                          <div
+                            class="limit-width form-group col-md-12"
+                            #asBoxInput
+                          >
+                            <input
+                              #inputRef
+                              class="input-src form-control"
+                              [ngClass]="{ loading: isLoading }"
+                              [spellcheck]="false"
+                              placeholder="pruebas"
+                              type="text"
+                              (ngModelChange)="searchMicro($event)"
+                              [(ngModel)]="src"
+                            />
+
+                            <div class="card-body scroll2">
+                              <ul class="ullist">
+                                <li
+                                  class="li"
+                                  (click)="seleccionarCategoria(item)"
+                                  *ngFor="let item of data$ | async"
+                                >
+                                  {{ item.TestName }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer justify-content-between"></div>
+</div>

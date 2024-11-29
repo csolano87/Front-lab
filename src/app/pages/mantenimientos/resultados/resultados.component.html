@@ -1,0 +1,124 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-3">
+              <input
+                type="date"
+                formControlName="fechaIn"
+                class="form-control"
+              />
+            </div>
+
+            <div class="form-group col-md-3">
+              <input
+                type="date"
+                formControlName="fechaOut"
+                class="form-control"
+              />
+            </div>
+
+            <div class="form-group col-md-4">
+              <input
+                type="file"
+                (change)="onFileSelected($event)"
+                class="input-file"
+                accept=".csv"
+              />
+            </div>
+
+            <div class="button">
+              <button (click)="enviarArchivo()" class="btn btn-primary btn-sm">
+                Subir archivo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="title">Lista de Productos</h6>
+
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <form [formGroup]="resultadoForm">
+              <div
+                *ngIf="cargando"
+                class="alert alert-info text-center mt-3 animated fadeIn faster"
+              >
+                <h4 class="alert-heading">Cargando</h4>
+                <p>
+                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                </p>
+                <p class="mb-0">Espere por favor</p>
+              </div>
+
+              <div *ngIf="!cargando" class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>SampleID</th>
+                      <th># HIS</th>
+                      <ng-container *ngIf="showPruebasHeader">
+                        <th>Pruebas</th>
+                        <th>Fecha Validacion</th>
+                      </ng-container>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <ng-container
+                      *ngFor="
+                        let result of listaresultados
+                          | paginate: { itemsPerPage: 10, currentPage: page };
+                        let i = index
+                      "
+                    >
+                      <tr>
+                        <td>{{ result.SampleID }}</td>
+                        <td (click)="toggleDetails(i)">
+                          {{ result.HIS }}
+                          <i
+                            class="bx"
+                            [ngClass]="{
+                              'bxs-down-arrow': showDetails[i],
+                              'bxs-right-arrow': !showDetails[i]
+                            }"
+                          ></i>
+                        </td>
+                      </tr>
+                      <ng-container *ngIf="showDetails[i]">
+                        <ng-container *ngFor="let test of result.TestID">
+                          <tr>
+                            <td colspan="2"></td>
+                            <td>{{ test.TestID }}</td>
+                            <td>
+                              {{ test.TechValDate }} {{ test.TechValHour }}
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+              <pagination-controls
+                (pageChange)="page = $event"
+                previousLabel="Anterior"
+                nextLabel="Siguiente"
+              ></pagination-controls>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

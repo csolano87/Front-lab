@@ -1,0 +1,119 @@
+.table_text {
+  display: flex;
+  flex-direction: column;
+
+  align-items: initial;
+}
+.title_orden{
+  width: 7%;
+}
+.title_fecha{
+  width: 13%;
+}
+.title_paciente{
+  width: 80%;
+}
+.disabled-icon {
+  opacity: 0.5;
+
+  pointer-events: none;
+}
+
+.bg-pen {
+  background-color: #eee52b;
+  background-position: center;
+  padding: 5px 5px;
+}
+
+.espacio {
+  margin: 5 auto;
+  margin-left: 5px;
+}
+
+.esboton {
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.bxs-bell-plus {
+  color: red;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animated-icon {
+  animation: pulse 1s infinite;
+}
+.acciones {
+  display: flex;
+}
+
+.acciones .span_btn {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.table-row:hover .acciones .span_btn {
+  opacity: 1;
+}
+
+.span-btn:hover {
+  background-color: #3498db;
+  color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.demographic-card {
+  background-color: #f8f9fa; /* Fondo claro */
+  border: 1px solid #ddd; /* Borde suave */
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  margin-bottom: 10px;
+}
+
+.demographic-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.demographic-content {
+  display: flex;
+ 
+  justify-content: space-between;
+}
+
+.demographic-column {
+  width: 50%; /* Ancho de cada columna */
+}
+
+.demographic-column p {
+  font-size: 0.95em;
+  color: #555;
+  line-height: 1.6;
+  margin: 5px 0;
+}
+
+.demographic-column p strong {
+  color: #333; /* Resaltar títulos */
+}

@@ -1,0 +1,90 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+         <!--  <input
+            type="file"
+            (change)="onFileSelected($event)"
+            class="input-file"
+          /> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="title">Lista de Productos</h6>
+
+          <button *ngIf="dataStore.length > 0 " class="btn btn-info" (click)="exportTable()">
+            Exportar a CSV
+          </button>
+      <!--     <p *ngFor="let item of dataStore">{{ item | json }}</p> -->
+          <!--        (ngSubmit)="onSubmit()" -->
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <form [formGroup]="stockForm">
+              <input
+                type="text"
+                #barcodeInput
+                (keydown)="onBarcodeInput($event)"
+                autofocus
+              />
+
+              <div
+                *ngIf="cargando"
+                class="alert alert-info text-center mt-3 animated fadeIn faster"
+              >
+                <h4 class="alert-heading">Cargando</h4>
+                <p>
+                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                </p>
+                <p class="mb-0">Espere por favor</p>
+              </div>
+
+              <div *ngIf="!cargando" class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Referencia</th>
+                    <!--   <th>Nombre</th> -->
+                      <th>Lote</th>
+                      <th>F. caducidad</th>
+                      <th>Cantidad</th>
+                    </tr>
+                  </thead>
+                  <!--   let producto of stockForm.controls['productos']?.value -->
+                  <tbody formArrayName="productos">
+                    <tr
+                      *ngFor="
+                        let producto of dataStore
+                          
+                        let i = index
+                      "
+                      [formGroupName]="i"
+                    >
+                      <td>{{ producto.ref }}</td>
+                     <!--  <td>{{ producto.descripcion }}</td> -->
+                      <td>{{ producto.lote }}</td>
+                      <td>{{ producto.fecha }}</td>
+                      <td>{{ producto.cant }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <pagination-controls
+                (pageChange)="page = $event"
+                previousLabel="Anterior"
+                nextLabel="Siguiente"
+              ></pagination-controls>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

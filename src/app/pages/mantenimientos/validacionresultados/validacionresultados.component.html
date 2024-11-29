@@ -1,0 +1,144 @@
+<div *ngIf="listaordenesid" class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-md-12">
+      <form
+        id="validarfrom"
+        [formGroup]="validarfrom"
+        (ngSubmit)="GuadarResultados()"
+      >
+        <div class="demographic-card">
+          <h2 class="demographic-title">Datos Demográficos</h2>
+          <div class="demographic-content">
+            <div class="demographic-column">
+              <p>
+                <strong>Número de petición:</strong>
+                {{ listaordenesid?.numeroorden }}
+              </p>
+              <p>
+                <strong>Origen:</strong>
+                {{ listaordenesid?.tipoatencion?.nombre }}
+              </p>
+              <p>
+                <strong>Tipo Orden:</strong>
+                {{ listaordenesid?.tiposervicio?.nombre }}
+              </p>
+              <p>
+                <strong>Observaciones:</strong>
+                {{ listaordenesid?.observaciones }}
+              </p>
+            </div>
+            <div class="demographic-column">
+              <p>
+                <strong>Apellidos, Nombres:</strong>
+                {{ listaordenesid?.paciente?.apellidos }} ,
+                {{ listaordenesid?.paciente?.nombres }}
+              </p>
+              <p>
+                <strong>Cédula:</strong> {{ listaordenesid?.paciente?.numero }}
+              </p>
+              <p><strong>Sexo:</strong> {{ listaordenesid?.paciente?.sexo }}</p>
+              <p>
+                <strong>Fecha de nacimiento:</strong>
+                {{ listaordenesid?.paciente?.fechanac | utcDate: "YYYY-MM-dd" }}
+              </p>
+            </div>
+          </div>
+
+          <div class="table-responsible">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Resultado</th>
+
+                  <th>Referencia</th>
+                  <th>Unidad</th>
+                  <th>Alarma</th>
+                <!--   <th>Comentario</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let modelo of agrupadas">
+                  <tr>
+                    <th colspan="7">
+                      {{ modelo.categoria }}
+                      <span class="badge badge-info right">{{
+                        modelo.item.total
+                      }}</span>
+                    </th>
+                  </tr>
+
+                  <ng-container
+                    *ngFor="let prueba of modelo.item.pruebas; let i = index"
+                  >
+                    <tr>
+                    
+                      <td>{{ prueba.panelprueba.NOMBRE }}</td>
+
+                      <td>
+                        <div>
+                          <input
+                            class="form-control"
+                            #resultado
+                          
+                            type="text"
+                            [value]="prueba.resultado"
+                            (keyup)="resultados($event, prueba)"
+                            autofocus
+                          />
+                        </div>
+                      </td>
+                       <td>{{ prueba.panelprueba?.rango?.rangos }}</td>
+                      <td>
+                        {{ prueba.panelprueba?.rango?.unidad.DESCRIPCION }}
+                      </td> 
+
+                      <td>
+                          <ng-container
+                      [ngSwitch]="validarResultadoConRango(prueba)"
+                    >
+                      <i
+                        *ngSwitchCase="'alto'"
+                        class="bx bxs-up-arrow bx-sm text-danger"
+                      ></i>
+                      <i
+                        *ngSwitchCase="'bajo'"
+                        class="bx bxs-down-arrow bx-sm text-warning"
+                      ></i>
+                      <i
+                        *ngSwitchCase="'normal'"
+                        class="bx bx-check bx-sm text-success"
+                      ></i>
+                    </ng-container> 
+                      </td> 
+                      <!-- <td>
+                        <i class="bx bx-comment-detail bx-sm"
+                        (click)="comments(i)"></i>
+                      </td> -->
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+
+          <button
+            class="btn btn-secondary btn-sm"
+            [ngClass]="{ 'disabled-icon': isResultadoValido }"
+            [disabled]="isResultadoValido"
+            (click)="validarOrden(listaordenesid)"
+          >
+            Validar
+          </button>
+        </div>
+      </form>
+      <hr />
+      <pre>
+        {{ validarfrom.value | json }}
+      </pre>
+    </div>
+  </div>
+</div>

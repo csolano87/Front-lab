@@ -1,0 +1,21 @@
+.logout-link {
+  text-decoration: none;
+  color: #f00;
+  list-style: none;
+  margin-top: 50px;
+  /* Color de texto para el enlace "Cerrar sesión" */
+}
+
+.logout-link:hover {
+  color: rgb(47, 96, 169);
+  /* Cambia el color de texto en el hover */
+}
+
+#logout-container {
+  z-index: -999;
+  /* Coloca este contenedor al final */
+}
+
+.info {
+  color: white;
+}

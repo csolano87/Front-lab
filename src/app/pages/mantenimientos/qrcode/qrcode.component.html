@@ -1,0 +1,112 @@
+<div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    (ngSubmit)="guardar(forma)"
+    #forma="ngForm"
+  >
+    <div class="col-md-12">
+      <div class="card card-info">
+        <div class="card-header">
+          <h6 class="card-title">Generador de codigo QR</h6>
+        </div>
+
+        <div class="card-body">
+          
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-ItemName" for="">Codigo de referencia: </label>
+                <input
+                  type="text"
+                  name="referencia"
+                  class="form-control"
+                  [ngModel]=""
+                  [class.is-invalid]="referencia.oninvalid"
+                  placeholder="Ingrese referencia.."
+                  required
+                  #referencia
+                />
+                <small *ngIf="referencia.oninvalid" class="text-danger"
+                  >Ingrese un nombre de equipo</small
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="">Lote: </label>
+                <input
+                  name="lote"
+                  type="text"
+                  class="form-control"
+                  [ngModel]=""
+                  [class.is-invalid]="lote.oninvalid"
+                  placeholder="Ingrese lote ..."
+                  required
+                  #lote
+                />
+                <small *ngIf="lote.oninvalid" class="text-danger"
+                  >Ingrese la serie del equipo</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="">Fecha caducidad:</label>
+                <input
+                  name="fecha"
+                  type="date"
+                  class="form-control"
+                  [ngModel]=""
+                  [class.is-invalid]="fecha.oninvalid"
+                  placeholder="Ingrese fecha caducidad   ..."
+                  required
+                  #fecha
+                />
+                <small *ngIf="" class="text-danger"
+                  >Ingrese la serie del equipo</small
+                >
+              </div>
+              <div>
+               <!--  <input type="text"   name="tamano"  [ngModel]="" required #tamano> -->
+                 <label for="">Tamano</label> 
+               <button class="btn btn-default" (click)="enviarValor(50)"> 50</button>
+               <button class="btn btn-default" (click)="enviarValor(100)"> 100</button>
+               <button class="btn btn-default" (click)="enviarValor(300)"> 300</button>
+             <!--   <button class="btn btn-default" (click)="enviarValor(500)"> 500</button> -->
+              </div>
+            </div>
+
+            <div class="col-md-8 ">
+                <div >
+                    <h6 class="qr_title" >QR Code</h6>
+                  </div>
+                <div class="qrcodeImage">
+
+                  
+
+                    <qrcode
+                    (qrCodeURL)="onChangeURL($event)"
+                    [qrdata]="myAngularxQrCode"
+                    [width]="obtenertamano"
+                    [margin]="4"
+                    [scale]="1"
+               
+                    [errorCorrectionLevel]="'M'"
+                  ></qrcode>
+                </div>
+                
+
+                <div *ngIf="myAngularxQrCode" class="code">
+                <a class="btn btn-primary" [href]="qrCodeDownloadLink" download="qrcode">Download QR Code </a>
+              </div>
+              
+              
+            </div>
+          </div>
+        </div>
+       <!--  <div class="btn-button">
+            <button class="btn btn-primary btn-md">Guardar</button>
+        
+          </div> -->
+      </div>
+    </div>
+  </form>
+</div>

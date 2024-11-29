@@ -1,0 +1,178 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por nombre"
+            (keyup)="buscar(txtTermino.value.toUpperCase())"
+            #txtTermino
+          />
+
+          <!--  <button (click)="enviarArchivo()" class="btn btn-primary">
+              Subir archivo
+            </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="button">
+            <button
+              class="btn btn-primary btn-sm"
+              data-toggle="modal"
+              data-target="#modal-info"
+            >
+              <i class="bx bxs-plus-circle"></i>
+              Agregar
+            </button>
+          </div>
+          <!--  <h6 class="title">Lista de equipos</h6> -->
+
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <div
+              *ngIf="cargando"
+              class="alert alert-info text-center mt-3 animated fadeIn faster"
+            >
+              <h4 class="alert-heading">Cargando</h4>
+              <p>
+                <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+              </p>
+              <p class="mb-0">Espere por favor</p>
+            </div>
+
+            <div *ngIf="!cargando" class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+
+                    <th>Estado</th>
+
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let bodega of listabodega
+                        | paginate: { itemsPerPage: 10, currentPage: page }
+                    "
+                  >
+                    <td>{{ bodega.NOMBRE }}</td>
+                    <td>
+                      <div [ngSwitch]="bodega.ESTADO">
+                        <div *ngSwitchCase="1">Activo</div>
+                        <div *ngSwitchDefault>Inactivo</div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <span class="cursor">
+                        <a
+                          [ngClass]="{ 'disabled-icon': bodega.ESTADO != 1 }"
+                          [routerLink]="['/dashboard', 'bodega', bodega.id]"
+                        >
+                          <i
+                            class="bx bxs-edit bx-sm"
+                            data-toggle="modal"
+                            data-target="#modal-info"
+                          ></i>
+                        </a>
+                      </span>
+                      <span
+                        [ngClass]="{ 'disabled-icon': bodega.ESTADO != 1 }"
+                        (click)="borrarbodega(bodega)"
+                        class="cursor"
+                      >
+                        <i class="bx bxs-trash bx-sm"></i
+                      ></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination-controls
+              (pageChange)="page = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear Bodega</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span (click)="reset()" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="container-fluid rounded shadow">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <form
+                  autocomplete="off"
+                  [formGroup]="bodegaForm"
+                  (ngSubmit)="crearbodega()"
+                  id="bodegaForm"
+                >
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="">NOMBRE</label>
+                        <input
+                          appUppercase
+                          type="text"
+                          class="form-control"
+                          formControlName="NOMBRE"
+                          [class.is-invalid]="NOMBRE"
+                          placeholder="Ingrese un nombre.."
+                        />
+                        <small *ngIf="NOMBRE" class="text-danger"
+                          >Ingrese un nombre</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-footer">
+                    <a
+                      (click)="cambiobodega()"
+                      type="submit"
+                      class="btn btn-primary"
+                    >
+                      <i class="bx bx-save"></i>
+                      {{ btnVal }}</a
+                    >
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

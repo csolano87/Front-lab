@@ -1,0 +1,342 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off" class="form-inline">
+            <div class="form-group col-md-3">
+              <label for="text " class="form-ItemName">Identificador</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar numero de cédula ..."
+                #IDENTIFICADOR
+              />
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="text " class="form-ItemName"
+                >Apellidos del paciente</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar por apellidos ..."
+                #APELLIDO
+              />
+            </div>
+
+            <!--     <div class="form-group">
+                <label for="text " class="form-ItemName">estado</label>
+                <div class="col-12">
+                  <select class="form-control" #estado>
+                    <option value="">--Seleccione--</option>
+                    <option value="1">Creada</option>
+                    <option value="2">Procesada</option>
+                    <option value="3">Pendiente</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="text " class="form-ItemName"># ORDEN</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar his..."
+                  #HIS
+                />
+              </div> -->
+
+            <!--   <button
+              type="submit"
+              class="btn btn-primary btn-md rounded shadow"
+              (click)="
+                buscar(
+                  IDENTIFICADOR.value,
+                  estado.value,
+                  HIS.value,
+                  SALA.value,
+                  PRIORIDAD.value,
+                  APELLIDO.value
+                )
+              "
+            >
+              CONSULTAR
+            </button> -->
+
+            <button type="submit" class="btn btn-primary btn-md rounded shadow">
+              CONSULTAR
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="cargando"
+    class="alert alert-info text-center mt-3 animated fadeIn faster"
+  >
+    <h4 class="alert-heading">Cargando</h4>
+    <p>
+      <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">Espere por favor</p>
+  </div>
+
+  <div class="row animated fadeIn fast" *ngIf="!cargando">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <!--     <h6 class="title">Listado de ordenes ingresdas</h6> -->
+
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <table
+              *ngIf="!cargando && listaordenesingresdas.length > 0"
+              class="table"
+            >
+              <thead>
+                <tr>
+                  <th class="title_orden">#. Orden</th>
+                  <th class="title_fecha">Fecha</th>
+                  <!--   <th>Cédula</th> -->
+                  <th class="title_paciente">Paciente</th>
+                  <th></th>
+
+                  <th>Estado</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  *ngFor="
+                    let orden of listaordenesingresdas
+                      | paginate: { itemsPerPage: 10, currentPage: page }
+                  "
+                  class="table-row"
+                >
+                  <td class="">
+                    {{ orden.numeroorden }}
+                    <i
+                      [ngClass]="{
+                        'bx bxs-bell-plus animated-icon bx-xs':
+                          orden.tipoatencion.nombre === 'EMERGENCIA'
+                      }"
+                    >
+                    </i>
+
+                    <i
+                      *ngIf="orden.observaciones.length > 0"
+                      class="bx bxs-first-aid"
+                      title="{{ orden.observaciones }}"
+                    ></i>
+                  </td>
+                  <td>
+                    <i class="bx bxs-calendar"> {{ orden.fechaorden }}</i>
+                    <br />
+
+                    <i class="bx bxs-time"> {{ orden.horaorden }}</i>
+                  </td>
+
+                  <td class="">
+                    {{ orden.paciente.numero }} <br />
+                    {{ orden.paciente.nombres }} {{ orden.paciente.apellidos }}
+                  </td>
+                  <td>
+                    <div
+                      class="acciones"
+                      [ngClass]="{ 'disabled-icon': orden.estado == 0 }"
+                    >
+                      <span class="span_btn">
+                        <a
+                          [routerLink]="[
+                            '/dashboard',
+                            'ingresordenes',
+                            orden.id
+                          ]"
+                          data-toggle="tooltip"
+                          data-original-title="Editar"
+                        >
+                          <i class="bx bx-edit-alt bx-sm"></i>
+                        </a>
+                      </span>
+
+                      <!--    <span class="span_btn" (click)="pdf2(orden)">
+                        <i class="bx bxs-file-pdf bx-sm text-danger"></i>
+                      </span> -->
+
+                      <span class="span_btn" (click)="deleteOrden(orden)">
+                        <i class="bx bxs-trash bx-sm text-danger"></i>
+                      </span>
+                      <span class="span_btn">
+                        <i
+                          [routerLink]="['/dashboard', 'validacion', orden.id]"
+                          class="bx bx-bar-chart bx-sm"
+                        ></i>
+                      </span>
+                    </div>
+                  </td>
+                  <!--         <td>{{ orden.tipoatencion.nombre }}</td> -->
+                  <!--   <td>{{ orden.tiposervicio.nombre }}</td> -->
+                  <td
+                    data-toggle="modal"
+                    data-target="#modal-default"
+                    (click)="OrdenId(orden)"
+                  >
+                    <div [ngSwitch]="orden.estado">
+                      <div *ngSwitchCase="1">Generado</div>
+                      <div *ngSwitchCase="true">Generado</div>
+
+                      <div *ngSwitchCase="2">Procesado</div>
+                      <div *ngSwitchCase="3">Validado</div>
+                      <div *ngSwitchDefault>Eliminada</div>
+                    </div>
+                  </td>
+                  <!--   <td>
+                    <span
+                      *ngIf="orden.estado == 1"
+                      class="rounded shadow bg-pen"
+                      >Generada</span
+                    >
+                    <span *ngIf="orden.estado ==0" class="rounded shadow "
+                      >Eliminada</span
+                    >
+                  </td> -->
+
+                  <!--   <td class="text-nowrap">
+                    <a
+                      [routerLink]="['/dashboard', 'ingresordenes', orden.id]"
+                      data-toggle="tooltip"
+                      data-original-title="Editar"
+                    >
+                      <i class="bx bx-edit-alt bx-sm"></i>
+                    </a>
+
+                      <span class="rounded shadow cursor" (click)="pdf2(orden)">
+                      <i class="bx bxs-file-pdf bx-sm text-danger"></i>
+                    </span> 
+                    <span>
+                      <i
+                        [routerLink]="['/dashboard', 'validacion', orden.id]"
+                        class="bx bx-health bx-sm"
+                      ></i>
+                    </span>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls
+      (pageChange)="page = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+    ></pagination-controls>
+  </div>
+
+  <div class="modal fade show" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-">
+          <div class="container-fluid">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="demographic-card">
+                    <div class="demographic-content">
+                      <div class="demographic-column">
+                        <p>
+                          <i class="bx bxs-notepad bx-sm"></i>
+                          {{ listaOrdenId?.numeroorden }}
+                        </p>
+
+                        <p>
+                          <i class="bx bxs-user-circle bx-sm"></i>
+                          {{ listaOrdenId?.paciente.apellidos }},
+                          {{ listaOrdenId?.paciente.nombres }}
+                        </p>
+                        <p>
+                          <i class="bx bxs-user-pin bx-sm"></i>
+                          {{ listaOrdenId?.paciente.numero }}
+                        </p>
+                      </div>
+                      <div class="demographic-column">
+                        <p>
+                          <i class="bx bxs-calendar bx-sm"></i>
+                          {{ listaOrdenId?.fechaorden }}
+
+                          {{ listaOrdenId?.horaorden }}
+                        </p>
+
+                        <p>
+                          <i class="bx bxs-bell-plus bx-sm"></i>
+                          {{ listaOrdenId?.tipoatencion.nombre }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <table class="table">
+                    <thead>
+                    <tr>
+                      <th >Examen</th>
+                      <th >Estado</th>
+                      <th >Recepción muestra</th>
+                      <th>Usuario Reporta</th>
+                      <th>Fecha Reporta</th>
+                      <th>Usuario Valida</th>
+                      <th>Fecha Valida</th>
+                    </tr>
+                  </thead>
+                    <tbody>
+                      <tr *ngFor="let prueba of listaOrdenId?.prueba">
+                        <ng-container *ngIf="prueba.panelprueba.ORDEN != '2'">
+                          <td>
+                            {{ prueba.panelprueba.NOMBRE }}
+                          </td>
+                          <td>
+                            <div [ngSwitch]="prueba.estado">
+                              <div *ngSwitchCase="1">Generado</div>
+                              <div *ngSwitchCase="2">Pendiente</div>
+                              <!--   <div *ngSwitchCase="3">rechazo</div> -->
+
+                              <div *ngSwitchDefault>Rechazo</div>
+                            </div>
+                          </td>
+                          <td>
+                            {{ prueba.fechaorden }} <br />{{ prueba.horaorden }}
+                          </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </ng-container>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer justify-content-between"></div>
+      </div>
+    </div>
+  </div>
+</div>

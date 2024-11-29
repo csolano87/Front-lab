@@ -1,0 +1,238 @@
+<div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    [formGroup]="importForm"
+    novalidate
+    (ngSubmit)="guardar()"
+    id="importForm"
+  >
+    <div class="col-md-12">
+      <div class="card card-info">
+        <div class="card-header">
+          <h6 class="card-title">Ingreso manual productos</h6>
+        </div>
+        <div class="card-body">
+          <div class="button">
+            <a
+              type="submit"
+              class="btn btn-primary btn-sm"
+              (click)="cambioEstado()"
+            >
+              {{ btnVal }}
+            </a>
+            &nbsp;
+
+            <button
+              type="reset"
+              (click)="onreset()"
+              class="btn btn-danger btn-sm"
+            >
+              Cancelar
+            </button>
+            <!--   &nbsp;
+            <a
+              type="button"
+              (click)="comprobarCantidad(pedidoseleccionado)"
+              class="btn btn-secondary btn-sm"
+            >
+              comprobar disponiblidad
+            </a> -->
+          </div>
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="">Guia</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="guia"
+                [class.is-invalid]="guia"
+                placeholder="Ingrese guia.."
+              />
+              <small *ngIf="guia" class="text-danger"
+                >Ingrese un caracter</small
+              >
+            </div>
+
+
+            <div class="form-group col-md-3">
+              <label for="">Bodega</label>
+              <select class="form-control"
+              formControlName="bodegaId">
+                <option value="">--selecione--</option>
+                <option
+                  *ngFor="let bodega of listabodega"
+                  [value]="bodega.id"
+                >
+                  {{ bodega.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="guia" class="text-danger"
+                >Ingrese un caracter</small
+              >
+            </div>
+
+
+            <div class="form-group col-md-3">
+              <label for="">Bodega</label>
+             <input type="email"  class="form-control" formControlName="correo" placeholder="correo@gmail.com">
+              <small *ngIf="guia" class="text-danger"
+                >Ingrese un correo</small
+              >
+            </div>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Referencia</th>
+                  <th>Descripcion</th>
+
+                  <th>Lote</th>
+                  <th>F. caducidad</th>
+                  <th>Cantidad</th>
+                  <th>Cantidad Recibida</th>
+                  <th>Fabricante</th>
+                  <th>Registro Sanitario</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="productos">
+                <tr
+                  *ngFor="
+                    let d of importForm.controls['productos']?.value
+                      | paginate: { itemsPerPage: 10, currentPage: page };
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ d.referencia }}</td>
+                  <td>
+                    {{ d.descripcion }}
+                  </td>
+                  <td><input
+                    class="form-control"
+                    type="text"
+                    formControlName="lote"
+                  /></td>
+                  <td>
+                    <input
+                      class="form-control"
+                      type="date"
+                      formControlName="caducidad"
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      class="form-control"
+                      type="number"
+                      formControlName="cantidad"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      type="number"
+                      formControlName="cantidad_recibida"
+                    />
+                  </td>
+                  <td><input
+                    class="form-control"
+                    type="text"
+                    formControlName="fabricante"
+                  /></td>
+                  <td>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="sanitario"
+                    />
+                  </td>
+
+                  <td>
+                    <i class="bx bx-comment-detail bx-sm" (click)="comments(i)">
+                    </i>
+                    <span *ngIf="d.comentario.length >0" class="badge badge-danger comment-badge">
+                    1
+                     </span
+                    
+                  >
+                  </td>
+                  <td>
+                    <i
+                      class="bx bxs-trash bx-sm"
+                      (click)="borrarProducto(i)"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+             
+            </table>
+            <a
+            type="button"
+            class="agregar"
+            data-toggle="modal"
+            data-target="#modal-info"
+            (click)="agregarproductos()"
+            >Agregar producto</a
+          >
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- <hr />
+<pre>{{ importForm.valid }}</pre>
+<pre>{{ importForm.value | json }}</pre> -->
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Buscar Productos</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="container-fluid rounded shadow">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <input
+                  #inputRef
+                  class="input-src form-control"
+                  [ngClass]="{ loading: isLoading }"
+                  [spellcheck]="false"
+                  placeholder="reactivos"
+                  type="text"
+                  (ngModelChange)="searchReactivos($event)"
+                  [(ngModel)]="src"
+                />
+                <div class="card-body scroll2">
+                  <ul class="ullist">
+                    <li
+                      (click)="actualizarInputs(item, selectedProductIndex)"
+                      class="li"
+                      *ngFor="let item of data$ | async"
+                    >
+                      {{ item.NOMBRE }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

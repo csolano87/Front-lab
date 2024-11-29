@@ -1,0 +1,190 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por nombre"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="button">
+            <a
+              [routerLink]="'/dashboard/grupoexamen/Nuevo'"
+              class="btn btn-primary btn-sm"
+              data-toggle="modal"
+              data-target="#modal-info"
+            >
+              <i class="bx bxs-plus-circle"></i>
+              Agregar
+            </a>
+          </div>
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <div
+              *ngIf="cargando"
+              class="alert alert-info text-center mt-3 animated fadeIn faster"
+            >
+              <h4 class="alert-heading">Cargando</h4>
+              <p>
+                <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+              </p>
+              <p class="mb-0">Espere por favor</p>
+            </div>
+
+            <div *ngIf="!cargando" class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+
+                    <!--   <th>Categoria</th> -->
+
+                    <th>Estado</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let grupo of listagrupo
+                        | paginate: { itemsPerPage: 10, currentPage: page }
+                    "
+                    class="table-row-not-expanded"
+                  >
+                    <td>{{ grupo.codigo }}</td>
+                    <td>{{ grupo.nombre }}</td>
+
+                    <td>
+                      <div [ngSwitch]="grupo.estado">
+                        <div *ngSwitchCase="true">Activo</div>
+                        <div *ngSwitchDefault>Inactivo</div>
+                      </div>
+                    </td>
+
+                    <td>
+                        
+                      <span class="span_btn">
+                        <a
+                          [routerLink]="[
+                            '/dashboard',
+                            'grupoexamen',
+                            grupo.id
+                          ]"
+                          data-toggle="tooltip"
+                          data-original-title="Editar"
+                        >
+                          <i class="bx bx-edit-alt bx-sm"></i>
+                        </a>
+                      </span>
+                      <span (click)="borrarequipo(grupo)" class="cursor">
+                        <i class="bx bxs-trash bx-sm"></i
+                      ></span>
+
+                      <span>
+                        <i
+                          data-toggle="modal"
+                          data-target="#modal-pruebas"
+                          class="bx bxs-show bx-sm"
+                        >
+                        </i>
+                      </span>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination-controls
+              (pageChange)="page = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-pruebas">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Examenes</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="borrarPruebas()"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <form #form="ngForm">
+              <div class="form-group col-md-4">
+                <label for="">Examenes</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar examen"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!--       <div class=""> -->
+      <div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let pruebas of listapruebas
+                        | paginate: { itemsPerPage: 10, currentPage: page }
+                    "
+                    class="table-row-not-expanded"
+                  >
+                    <td><i class="bx bx-test-tube bx-sm"></i></td>
+                    <td>{{ pruebas.CODIGO }}</td>
+                    <td>{{ pruebas.NOMBRE }}</td>
+                    <td>
+                      <i class="bx bx-check-square bx-sm"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

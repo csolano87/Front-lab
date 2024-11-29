@@ -1,0 +1,187 @@
+
+.alerta-rojo {
+ color: red;
+  animation: parpadeo-rojo 1s infinite; 
+}
+
+.alerta-verde {
+ color:  green;
+  animation: parpadeo-verde 1s infinite; 
+}
+
+.alerta-amarillo {
+ color:  #FFC000;
+  animation: parpadeo-amarillo 1s infinite; 
+}
+
+@keyframes parpadeo-verde {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: green;
+  }
+  100% {
+    color: transparent;
+  }
+}
+
+@keyframes parpadeo-rojo {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: transparent;
+  }
+}
+
+@keyframes parpadeo-amarillo {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: #FFC000;
+  }
+  100% {
+    color: transparent;
+  }
+}
+
+/* .container {
+  width: 50%;
+  min-height: 550px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.actualizar {
+  margin: 0 auto;
+}
+.rg {
+  color: #ff8970;
+  background: #fff;
+  
+  text-align: center;
+}
+
+.text-table {
+  width: 20%;
+}
+
+.bg-com {
+  background-color: #06d641;
+  background-position: center;
+  padding: 5px 5px;
+}
+
+table {
+  width: 100%;
+  
+  border-collapse: collapse;
+}
+
+thead th {
+  font-size: 1rem;
+}
+tbody td {
+  font-size: 0.9rem;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+tr:hover {
+  background-color: #ddd;
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #006cae;
+}
+th,
+td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.disabled-icon {
+  opacity: 0.5;
+
+  pointer-events: none;
+}
+.bg-pen {
+  background-color: #eee52b;
+  background-position: center;
+  padding: 5px 5px;
+}
+
+.espacio {
+  margin: 10 auto;
+  margin-left: 30px;
+}
+
+.esboton {
+  margin: 0 auto;
+  margin-left: 80px;
+}
+.bxs-key {
+  color: #efb810;
+}
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.alerta-rojo {
+  border-left: 5px solid red;
+  animation: parpadeo-rojo 1s infinite; 
+}
+
+.alerta-verde {
+  border-left: 5px solid green;
+  animation: parpadeo-verde 1s infinite; 
+}
+
+.alerta-amarillo {
+  border-left: 5px solid yellow;
+  animation: parpadeo-amarillo 1s infinite; 
+}
+
+@keyframes parpadeo-verde {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: green;
+  }
+  100% {
+    color: transparent;
+  }
+}
+
+@keyframes parpadeo-rojo {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: transparent;
+  }
+}
+
+@keyframes parpadeo-amarillo {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: yellow;
+  }
+  100% {
+    color: transparent;
+  }
+}
+ */

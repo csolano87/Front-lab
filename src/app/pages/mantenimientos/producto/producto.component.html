@@ -1,0 +1,121 @@
+<div class="container-fluid rounded shadow">
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title"> {{tittle}} producto</h3>
+    </div>
+
+    <form
+      autocomplete="off"
+      [formGroup]="productoForm"
+      novalidate
+      (ngSubmit)="guardar()"
+      id="productoForm"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="">REFERENCIA</label>
+            <input
+              type="text"
+              class="form-control"
+              [class.is-invalid]="REFERENCIA"
+              formControlName="REFERENCIA"
+              placeholder="Ingrese referencia.."
+            />
+            <small *ngIf="REFERENCIA" class="text-danger"
+          >Campo obligatorio
+        </small>
+          </div>
+
+          
+          <div class="form-group col-md-6">
+            <label for="">DESCRIPCION</label>
+            <input
+            appUppercase
+              type="text"
+              class="form-control"
+              [class.is-invalid]="NOMBRE"
+              formControlName="NOMBRE"
+              placeholder="Ingrese descrpcion ..."
+            />
+            <small *ngIf="NOMBRE" class="text-danger"
+            >Campo obligatorio
+          </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="">CATEGORIA</label>
+            <input
+            appUppercase
+              type="text"
+              class="form-control"
+              formControlName="CATEGORIA"
+              [class.is-invalid]="CATEGORIA"
+              placeholder="Ingrese categoria .."
+            />
+            <small *ngIf="CATEGORIA" class="text-danger"
+            >Campo obligatorio
+          </small>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="">UNIDAD</label>
+            <input
+            appUppercase
+              type="text"
+              class="form-control"
+              formControlName="UNIDAD"
+              [class.is-invalid]="UNIDAD"
+              placeholder="Ingrese unidad .."
+            />
+            <small *ngIf="UNIDAD" class="text-danger"
+            >Campo obligatorio
+          </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="">GENERACION</label>
+            <input
+            appUppercase
+              type="text"
+              class="form-control"
+              formControlName="GENERACION"
+              [class.is-invalid]="GENERACION"
+              placeholder="Ingrese generacion..."
+            />
+            <small *ngIf="GENERACION" class="text-danger"
+            >Campo obligatorio
+          </small>
+          </div>
+
+          <div class=" form-group col-md-4">
+            <label for="">Valor $</label>          
+          
+            <input
+              type="text"
+              class="form-control"
+              formControlName="VALOR"
+              [class.is-invalid]="VALOR"
+              placeholder="Ingrese valor ..."
+            />
+            <small *ngIf="VALOR" class="text-danger"
+          >Campo obligatorio
+        </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- /.card-body -->
+
+      <div class="card-footer">
+        <a  class="btn btn-primary" (click)="cambioestado()">{{btnVal}}</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<hr />
+<pre> {{ productoForm.value | json }}</pre>

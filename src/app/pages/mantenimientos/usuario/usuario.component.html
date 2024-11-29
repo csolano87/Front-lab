@@ -1,0 +1,119 @@
+
+<div class="container-fluid rounded shadow">
+  <div class="card card-outline card-primary">
+    <div class="card-body">
+      <h2 class="login-box-msg">Registro de usuarios</h2>
+
+      <form
+        autocomplete="off"
+        [formGroup]="registerform"
+        (ngSubmit)="crearUsuario()"
+        id="registerform"
+      >
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="text" class="form-label">Rol</label>
+            
+              <select
+                class="form-control"
+                formControlName="rol"
+                [class.is-invalid]="rolNoValido"
+              >
+                <option value="">--Seleccione una opcion--</option>
+                <option *ngFor="let rol of listaroles" [value]="rol.rol">
+                  {{ rol.rol }}
+                </option>
+              </select>
+              <small *ngIf="doctorNoValido" class="text-danger"
+              >Escoge una opcion</small
+            >
+            
+          </div>
+        
+
+          <div class="form-group col-md-6">
+            <label class="form-label">Nombres</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="doctor"
+              [class.is-invalid]="doctorNoValido"
+              placeholder="Ingrese un nombre de nombres"
+            />
+            <small *ngIf="doctorNoValido" class="text-danger"
+              >Ingrese los nombres</small
+            >
+            <!-- <div class="col">
+            <select
+              name=""
+              class="form-control"
+              formControlName="doctor"
+              [class.is-invalid]="doctorNoValido"
+            >
+              <option ngValue="">-Seleccione</option>
+              <option *ngFor="let lista of listadoctor" [ngValue]="lista">
+                {{ lista.Description }}
+              </option>
+            </select>
+            <small *ngIf="doctorNoValido" class="text-danger"
+              >Escoge una opcion</small
+            >
+          </div>-->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="text" class="form-label">Usuario</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="usuario"
+              [class.is-invalid]="usuarioNoValido"
+              placeholder="Ingrese un nombre de usuario"
+            />
+            <small *ngIf="usuarioNoValido" class="text-danger"
+              >Ingrese un usuario</small
+            >
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="text" class="form-label">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              [class.is-invalid]="passwordNoValido"
+              placeholder="Ingrese una contraseña"
+            />
+            <small *ngIf="passwordNoValido" class="text-danger"
+              >Ingrese una contraseña</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="text" class="form-label">Confirmar Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password2"
+            [class.is-invalid]="password2NoValido"
+            placeholder="Repita constrasena"
+          />
+          <small *ngIf="password2NoValido" class="text-danger">
+            Las contraseña no son iguales</small
+          >
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
+      </form>
+     
+    </div>
+  </div>
+</div>
+<!--   </div>
+</div> -->

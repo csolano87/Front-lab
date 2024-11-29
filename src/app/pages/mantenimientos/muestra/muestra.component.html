@@ -1,0 +1,169 @@
+<div class="container-fluid rounded shadow">
+  <div class="row center animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off" class="form-inline">
+            <div class="form-group">
+              <!-- <input type="text" class="form-control" placeholder="Buscar numero de cedula ..." (keyup)="buscar(txtTermino.value.toUpperCase() )" #txtTermino /> -->
+
+              <div class="form-group col-md-3">
+                <label for="text" class="form-ItemName">Tipo de Tubo</label>
+                <select class="form-control" [class.is-invalid]="" #tipoTubo>
+                  <option value=" ">-Seleccione</option>
+                  <option
+                    *ngFor="let envase of listaenvase"
+                    [value]="envase.codigo"
+                  >
+                    {{ envase.descripcion }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="text" class="form-ItemName">Estado</label>
+                <select class="form-control" [class.is-invalid]="" #estado>
+                  <option value=" ">-Seleccione</option>
+                  <option value="1">Aceptada</option>
+                  <option value="2">Rechazada</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="text " class="form-ItemName">Fecha inicio</label>
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control datetimepicker-input"
+                    [class.is-invalid]=""
+                    data-target="#reservationdate"
+                    #fechaToma
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="text " class="form-ItemName">Fecha fin</label>
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control datetimepicker-input"
+                    [class.is-invalid]=""
+                    data-target="#reservationdate"
+                    #fechafin
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="">
+              <button
+                type="submit"
+                class="btn btn-primary btn-sm mt-3"
+                (click)="
+                  buscar(
+                    fechaToma.value,
+                    fechafin.value,
+                    tipoTubo.value,
+                    estado.value
+                  )
+                "
+              >
+                FILTROS
+              </button>
+              &nbsp;
+
+              <button
+                class="btn btn-danger btn-sm mt-3"
+                (click)="imprimirLista()"
+              >
+                PDF
+              </button>
+              &nbsp;
+              <button
+                class="btn btn-success btn-sm mt-3"
+                (click)="exportToExcel()"
+              >
+                EXCEL
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div id="frmMuestras" class="card-body">
+          <h6 class="title">Lista de muestras {{ totalTemp }}</h6>
+          <!-- <h6 class="title"> Total de muestras {{totalTemp}}</h6> -->
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Fecha Rechazo</th>
+                  <th>Tipo Tubo</th>
+                  <th>Nombre Muestra</th>
+                  <th>Procedencia</th>
+                  <th>Numero Orden</th>
+                  <th>Causa Rechazo</th>
+
+                  <th>Personal responsable recoletar muestras</th>
+
+                  <th>responsable Rechaza</th>
+                  <th>responsable Re-Ingreso</th>
+                  <th>Comentario</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let tubo of muestrasTemp">
+                  <td>{{ tubo.fechaRechaza | date: "yyyy-MM-dd" }}</td>
+
+                  <!-- <td>{{tubo.numeroorden}}</td> -->
+                  <td>{{ tubo.tipoTubo }}</td>
+                  <td>
+                    <span *ngIf="tubo.tipoTubo == '89'">SUERO QUIMICA</span>
+                    <span *ngIf="tubo.tipoTubo == '90'">SUERO MEDIA HORA</span>
+                    <span *ngIf="tubo.tipoTubo == '91'">SUERO DOS HORA</span>
+                  </td>
+                  <td>{{ tubo.pacientes.CODSALA }}</td>
+
+                  <td>{{ tubo.numeroorden }}</td>
+
+                  <td>{{ tubo.comentario }}</td>
+                  <td>{{ tubo.usuarioIngresa }}</td>
+
+                  <td>{{ tubo.usuarioRechaza }}</td>
+                  <td>{{ tubo.usuarioUpdate }}</td>
+                  <td>{{ tubo.comentarioUpdate }}</td>
+
+                  <!--  <td>{{tubo.pacientes.FECHATOMA | date:"yyyy-MM-dd"}}</td>
+                                    <td>{{tubo.pacientes.HORATOMA}}</td>
+                                    <td>{{tubo.usuarioIngresa}}</td> -->
+
+                  <td>
+                    <span
+                      *ngIf="tubo.estado == '1'"
+                      class="rounded shadow bg-pen"
+                      >aceptada</span
+                    >
+                    <span
+                      *ngIf="tubo.estado == '2'"
+                      class="rounded shadow bg-pe"
+                      >rechazo</span
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

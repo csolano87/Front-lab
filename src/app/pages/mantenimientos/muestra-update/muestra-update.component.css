@@ -1,0 +1,46 @@
+.center {
+  height: 97vh;
+}
+
+.fer {
+  width: 100%;
+  height: 40vh;
+  position: absolute;
+  top: 50%;
+
+  left: 50%;
+  transform: translate(50%, -50%);
+}
+
+.titilo {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.buton {
+  display: inline;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card2 {
+  height: 65vh;
+}
+
+.text {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.card-title {
+  padding: 20px;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.margin {
+  display: inline-block;
+  margin: 2px 5px;
+  text-align: center;
+  font-size: 0.9em;
+}

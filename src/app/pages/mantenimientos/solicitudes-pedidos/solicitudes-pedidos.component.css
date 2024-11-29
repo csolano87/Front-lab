@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+table {
+    width: 100%;
+  }
+  
+  .table tr {
+    cursor: pointer;
+  }
+  
+  thead th {
+    padding-left: 0px;
+    font-size: 1rem;
+  }
+  
+  tbody td {
+    font-size: 1rem;
+  }
+  
+  th,
+  td {
+   /*  border: 1px solid #dddddd; */
+    padding: 12px 20px;
+    padding-left: 0;
+  }
+  
+  tr:nth-child(even){
+    background-color: #dddddd;
+  }
+  .bxs-trash {
+    color: red;
+  }
+  
+  .select-box {
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    line-height: 22px;
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  .disabled-link {
+    pointer-events: none;
+    opacity: 0.6;
+    /* Add any other styles to visually indicate that the link is disabled */
+  }
+  
+  .bg-pen {
+    background-color: #eee52b;
+    background-position: center;
+    padding: 5px 5px;
+  }
+  
+  .title {
+    text-align: center;
+    font-weight: 700;
+  }
+  
+  .disabled-icon {
+    opacity: 0.5;
+    /* Opacidad reducida para desactivar visualmente el ícono */
+    pointer-events: none;
+    /* Evitar eventos de clic en el ícono desactivado */
+  }
+  
+  .button {
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+  
+  }
+  .bg-pen{
+    padding: 10px 10px;
+    margin: 5px;
+    border: 1px solid black;
+    background-color: yellow;
+}
+  .bg-com{
+    padding: 10px 10px;
+    margin: 5px;
+    border: 1px solid black;
+    background-color: green;
+}

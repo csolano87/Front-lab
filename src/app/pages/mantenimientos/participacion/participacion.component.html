@@ -1,0 +1,281 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por nombre"
+          />
+
+          <!--  <button (click)="enviarArchivo()" class="btn btn-primary">
+            Subir archivo
+          </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="button">
+            <button
+              class="btn btn-primary btn-sm"
+              data-toggle="modal"
+              data-target="#modal-info"
+            >
+            <i class='bx bxs-plus-circle'></i>
+               Agregar
+            </button>
+          </div>
+          <!--  <h6 class="title">Lista de equipos</h6> -->
+
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <div
+              *ngIf="cargando"
+              class="alert alert-info text-center mt-3 animated fadeIn faster"
+            >
+              <h4 class="alert-heading">Cargando</h4>
+              <p>
+                <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+              </p>
+              <p class="mb-0">Espere por favor</p>
+            </div>
+
+            <div *ngIf="!cargando" class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                   <!--  <th>Categoria</th>
+                    <th>Marca</th>
+                   
+                    <th>Serie</th> -->
+                    <th>Estado</th>
+
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let contrato of listacontrato
+                        | paginate: { itemsPerPage: 10, currentPage: page }
+                    "
+                  >
+                    <td>{{ contrato.NOMBRE }}</td>
+                   <td>
+                     <div [ngSwitch]="contrato.ESTADO">
+                      <div *ngSwitchCase="1">Activo</div>
+                      <div *ngSwitchDefault>Inactivo</div>
+                    </div> 
+                   </td>
+                   <!--  <td>
+                      <span
+                        *ngIf="marca.ESTADO == '1'"
+                        class="rounded shadow bg-pen"
+                        >Activo
+                      </span>
+                    </td> -->
+                     <!--  <td>
+                    <span class="cursor">
+                        <a
+                          [ngClass]="{ 'disabled-icon': marca.ESTADO == '2' }"
+                          [routerLink]="['/dashboard', 'marca', marca.id]"
+                        >
+                          <i
+                            class="bx bxs-edit bx-sm"
+                            data-toggle="modal"
+                            data-target="#modal-info"
+                          ></i> </a
+                      ></span> -->
+                      <td>
+                        <span (click)="borrarMarca()" class="cursor">
+                          <i class="bx bxs-edit bx-sm"></i
+                        ></span>
+                      <span (click)="borrarMarca()" class="cursor">
+                        <i class="bx bxs-trash bx-sm"></i
+                      ></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination-controls
+              (pageChange)="page = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear tipo contrato</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="container-fluid rounded shadow">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <form  autocomplete="off"
+                [formGroup]="contratoForm"
+                (ngSubmit)="crearContrato()"
+                id="contratoForm">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="">NOMBRE</label>
+                        <input 
+                        appUppercase
+                          type="email"
+                          class="form-control"
+                          formControlName="NOMBRE"
+                          [class.is-invalid]="NOMBRE"
+                          placeholder="Ingrese un nombre.."
+                        />
+                        <small *ngIf="NOMBRE" class="text-danger"
+                        >Ingrese un nombre</small
+                      >
+                      </div>
+                     
+                    </div>
+          
+                
+                  </div>
+                 
+          
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">
+                      <i class='bx bx-save'></i>
+                      Guardar</button>
+                  </div>
+                </form>
+              </div> 
+              <!-- <div class="container-fluid rounded shadow">
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Crear Equipos</h3>
+    </div>
+
+    <form
+      autocomplete="off"
+      [formGroup]="equipoForm"
+      (ngSubmit)="crearEquipo()"
+      id="panelform"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="">NOMBRE</label>
+            <input
+            
+
+
+
+            
+              type="text"
+              class="form-control"
+              formControlName="NOMBRE"
+              [class.is-invalid]="NOMBRE"
+              placeholder="Ingrese referencia.."
+            />
+            <small *ngIf="NOMBRE" class="text-danger"
+              >Ingrese un caracter</small
+            >
+          </div>
+          <div class="form-group col-md-6">
+            <label for="">CATEGORIA</label>
+            <input
+              appUppercase
+              type="text"
+              class="form-control"
+              formControlName="CATEGORIA"
+              [class.is-invalid]="CATEGORIA"
+              placeholder="Ingrese descrpcion ..."
+            />
+            <small *ngIf="CATEGORIA" class="text-danger"
+              >Ingrese un caracter</small
+            >
+          </div>
+        </div>
+      </div>
+     
+
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+ -->
+
+
+
+
+
+
+
+<!-- <div class="container-fluid rounded shadow">
+          
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Crear marca</h3>
+      </div>
+
+      <form  autocomplete="off"
+      [formGroup]="marcaForm"
+      (ngSubmit)="crearMarca()"
+      id="marcaForm">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="">NOMBRE</label>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="NOMBRE"
+                [class.is-invalid]="NOMBRE"
+                placeholder="Ingrese referencia.."
+              />
+              <small *ngIf="NOMBRE" class="text-danger"
+              >Ingrese un caracter</small
+            >
+            </div>
+           
+          </div>
+
+      
+        </div>
+       
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  
+</div> -->
+
+

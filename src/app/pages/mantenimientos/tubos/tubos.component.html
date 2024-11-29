@@ -1,0 +1,343 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por nombre"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="button">
+            <button
+              class="btn btn-primary btn-sm"
+              data-toggle="modal"
+              data-target="#modal-info"
+            >
+              <i class="bx bxs-plus-circle"></i>
+              Agregar
+            </button>
+          </div>
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <div
+              *ngIf="cargando"
+              class="alert alert-info text-center mt-3 animated fadeIn faster"
+            >
+              <h4 class="alert-heading">Cargando</h4>
+              <p>
+                <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+              </p>
+              <p class="mb-0">Espere por favor</p>
+            </div>
+
+            <div *ngIf="!cargando" class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Abreviatura</th>
+
+                    <th>Tipo muestra</th>
+                    <th>Volumen Neto</th>
+                    <th>Volumen Pruebas</th>
+                    <th>Estado</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let tubo of listatubo
+                        | paginate: { itemsPerPage: 10, currentPage: page }
+                    "
+                    class="table-row-not-expanded"
+                  >
+                    <!-- <td class="cell" (click)="equipo.isExpanded = !equipo.isExpanded"> -->
+                    <td>{{ tubo.codigo }}</td>
+                    <td>{{ tubo.descripcion }}</td>
+                    <td>{{ tubo.abreviatura }}</td>
+                    <td>{{ tubo.muestra.nombre }}</td>
+                    <td>{{ tubo.volumenneto }}</td>
+                    <td>{{ tubo.volumenprueba }}</td>
+
+                    <td>
+                      <div [ngSwitch]="tubo.estado">
+                        <div *ngSwitchCase="true">Activo</div>
+                        <div *ngSwitchDefault>Inactivo</div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <!--  <span class="cursor">
+                          <a
+                            [ngClass]="{ 'disabled-icon': pruebas.ESTADO == '2' }"
+                            [routerLink]="['/dashboard', 'equipo', pruebas.id]"
+                          >
+                            <i
+                              class="bx bxs-edit bx-sm"
+                              data-toggle="modal"
+                              data-target="#modal-info"
+                            ></i> </a
+                        ></span> -->
+                      <span (click)="borrartubo(tubo)" class="cursor">
+                        <i class="bx bxs-trash bx-sm"></i
+                      ></span>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination-controls
+              (pageChange)="page = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear tubos</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--       <div class=""> -->
+      <div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <form
+                autocomplete="off"
+                [formGroup]="tuboform"
+                (ngSubmit)="crearPanel()"
+                id="tuboform"
+              >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <label for="">CODIGO</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="codigo"
+                        [class.is-invalid]="codigo"
+                        placeholder="Ingrese codigo .."
+                      />
+                      <small *ngIf="codigo" class="text-danger"
+                        >Ingrese un codigo de la muestra</small
+                      >
+                    </div>
+                    <div class="form-group col-md-8">
+                      <label for="">NOMBRE</label>
+                      <input
+                        type="text"
+                        appUppercase
+                        class="form-control"
+                        formControlName="nombre"
+                        [class.is-invalid]="nombre"
+                        placeholder="Ingrese nombre de la muestra ..."
+                      />
+                      <small *ngIf="nombre" class="text-danger"
+                        >Ingrese un nombre</small
+                      >
+                    </div>
+
+                    <div class="form-group col-md-8">
+                      <label for="">TIPO MUESTRA</label>
+                      <select
+                        [class.is-invalid]="tipomuestraId"
+                        formControlName="tipomuestraId"
+                        class="form-control"
+                      >
+                        <option
+                          *ngFor="let muestra of listatipomuestra"
+                          [value]="muestra.id"
+                        >
+                          {{ muestra.nombre }}
+                        </option>
+                      </select>
+                      <small *ngIf="tipomuestraId" class="text-danger"
+                        >Ingrese un nombre</small
+                      >
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <label for="">ABREVIATURA</label>
+                      <input
+                        appUppercase
+                        type="text"
+                        class="form-control"
+                        formControlName="abreviatura"
+                        [class.is-invalid]="abreviatura"
+                        placeholder="Ingrese abreviatura de la muestra .."
+                      />
+                      <small *ngIf="abreviatura" class="text-danger"
+                        >Ingrese una abrviatura de la muestra</small
+                      >
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="">VOLUMEN NETO</label>
+                      <input
+                        type="number"
+                        formControlName="volumenneto"
+                        class="form-control"
+                        [class.is-invalid]="volumenneto"
+                        id=""
+                        placeholder="Ingrese tiempo de la prueba .."
+                      />
+                      <small *ngIf="volumenneto" class="text-danger"
+                        >Ingrese un tiempo de duracion</small
+                      >
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label for="">VOLUMEN DE PRUEBA</label>
+                      <input
+                        formControlName="volumenprueba"
+                        type="text"
+                        class="form-control"
+                        [class.is-invalid]="volumenprueba"
+                        id=""
+                        placeholder="Ingrese valor de prueba..."
+                      />
+                      <small *ngIf="volumenprueba" class="text-danger"
+                        >Ingrese un valor</small
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!--   <hr>
+              <pre>{{tuboform.valid}}</pre>
+              <pre>{{tuboform.value |json}}</pre> -->
+          <!--      </div> -->
+        </div>
+
+        <!-- <div class="container-fluid rounded shadow">
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Crear Panel de pruebas</h3>
+      </div>
+  
+      <form
+        autocomplete="off"
+        [formGroup]="tuboform"
+        (ngSubmit)="crearPanel()"
+        id="tuboform"
+      >
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-2">
+              <label for="">CODIGO</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="CODIGO"
+                [class.is-invalid]="CODIGO"
+                placeholder="Ingrese codigo de la prueba.."
+              />
+              <small *ngIf="CODIGO" class="text-danger"
+                >Ingrese un caracter</small
+              >
+            </div>
+            <div class="form-group col-md-10">
+              <label for="">NOMBRE</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="NOMBRE"
+                [class.is-invalid]="NOMBRE"
+                placeholder="Ingrese nombre de al prueba ..."
+              />
+              <small *ngIf="NOMBRE" class="text-danger"
+                >Ingrese un caracter</small
+              >
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="">CATEGORIA</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="CATEGORIA"
+                [class.is-invalid]="CATEGORIA"
+                placeholder="Ingrese categoria de al prueba .."
+              />
+              <small *ngIf="CATEGORIA" class="text-danger"
+                >Ingrese un caracter</small
+              >
+            </div>
+          <div class="form-group col-md-2">
+              <label for="">Tiempo duracion</label>
+              <input
+                type="number"
+                class="form-control"
+                id=""
+                placeholder="Ingrese tiempo de la prueba .."
+              />
+            </div> 
+  
+            <div class="form-group col-md-2">
+              <label for="">Valor</label>
+              <input
+                type="text"
+                class="form-control"
+                id=""
+                placeholder="Ingrese valor de prueba..."
+                
+              />
+            
+            </div> 
+          
+          </div>
+         
+        </div>
+  
+  
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+   -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,211 @@
+table {
+  width: 100%;
+}
+
+.table tr {
+  cursor: pointer;
+}
+
+thead th {
+  padding-left: 0px;
+  /*   font-size: 1rem; */
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+tbody td {
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  /*  padding: 12px 20px; */
+  padding-left: 0;
+}
+.bxs-key {
+  color: #efb810;
+}
+.bxs-file-pdf {
+  color: red;
+}
+.bxs-trash {
+  color: red;
+}
+
+.select-box {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  line-height: 22px;
+  font-size: 16px;
+  width: 100%;
+}
+ul {
+  left: 0;
+}
+li {
+  list-style: none;
+  left: 0;
+}
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.6;
+  /* Add any other styles to visually indicate that the link is disabled */
+}
+.bg-creada {
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px;
+  background-color: #eee52b;
+  background-position: center;
+
+  font-weight: 600;
+}
+.bg-desactivado {
+  /*   background-color: #bcbab4;
+  background-position: center;
+  padding: 5px 5px; */
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px;
+  background-color: #bcbab4;
+  border: 1px solid #bcbab4;
+  font-weight: 600;
+}
+.title {
+  text-align: center;
+  font-weight: 700;
+}
+.disabled-icon {
+  opacity: 0.5;
+  /* Opacidad reducida para desactivar visualmente el ícono */
+  pointer-events: none;
+  /* Evitar eventos de clic en el ícono desactivado */
+}
+/* .bg-pen{
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px;
+
+  border: 1px solid black;
+  background-color: yellow;
+} */
+.bg-pendiente {
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px;
+
+  border: 1px solid black;
+  background-color: #ff7a33;
+  font-weight: 600;
+}
+.bg-procesando {
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px;
+
+  border: 1px solid black;
+  background-color: green;
+  font-weight: 600;
+}
+.bg-red {
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px;
+
+  border: 1px solid black;
+  background-color: #bcbab4;
+}
+
+.comment-badge {
+  position: absolute;
+  padding: 2px 4px;
+  margin: -5px -10px;
+}
+.button {
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+}
+/* 
+
+table {
+  width: 100%;
+}
+
+.table tr {
+  cursor: pointer;
+}
+
+thead th {
+  padding-left: 0px;
+  font-size: 1rem;
+}
+
+tbody td {
+  font-size: 1rem;
+}
+
+th,
+td {
+
+  padding: 12px 20px;
+  padding-left: 0;
+}
+
+tr:nth-child(even){
+  background-color: #dddddd;
+}
+.bxs-trash {
+  color: red;
+}
+
+.select-box {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  line-height: 22px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.6;
+
+}
+
+.bg-pen {
+  background-color: #eee52b;
+  background-position: center;
+  padding: 5px 5px;
+}
+
+.title {
+  text-align: center;
+  font-weight: 700;
+}
+
+.disabled-icon {
+  opacity: 0.5;
+
+  pointer-events: none;
+
+}
+
+.button {
+  display: flex;
+  justify-content: end;
+  gap: 5px;
+
+}
+.bg-pen{
+  padding: 10px 10px;
+  margin: 5px;
+  border: 1px solid black;
+  background-color: yellow;
+}
+.bg-com{
+  padding: 10px 10px;
+  margin: 5px;
+  border: 1px solid black;
+  background-color: green;
+} */

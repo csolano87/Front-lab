@@ -1,0 +1,299 @@
+<div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    [formGroup]="equipoForm"
+    novalidate
+    (ngSubmit)="crearEquipo()"
+    id="equipoForm"
+  >
+    <div class="col-md-12">
+      <div class="card card-info">
+        <div class="card-header">
+          <h6 class="card-title">Crear Equipo</h6>
+        </div>
+
+        <div class="card-body">
+          <div class="button">
+            <a
+              type="submit"
+              (click)="cambioEstado()"
+              class="btn btn-primary btn-sm"
+            >
+              {{ btnVal }}</a
+            >
+            &nbsp;
+
+            <button
+              type="reset"
+              (click)="onreset()"
+              class="btn btn-danger btn-sm"
+            >
+              Cancelar
+            </button>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label class="form-ItemName">Marca</label>
+              <select
+                (change)="onSelectMarca($event)"
+                class="form-control"
+                formControlName="marcaId"
+                [class.is-invalid]="marcaId"
+              >
+                <option value="">--Seleccione--</option>
+                <option *ngFor="let marca of listamarca" [value]="marca.id">
+                  {{ marca.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="marcaId" class="text-danger"
+                >Seleccione una marca</small
+              >
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="">Categoria</label>
+              <select
+                (change)="onSelectModelo($event)"
+                class="form-control"
+                formControlName="modeloId"
+                [class.is-invalid]="modeloId"
+              >
+                <option value="">--Seleccione--</option>
+                <option
+                  *ngFor="let modelo of listacategoria"
+                  [value]="modelo.id"
+                >
+                  {{ modelo.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="modeloId" class="text-danger"
+                >Seleccione una modelo</small
+              >
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="">Modelo </label>
+              <select
+                class="form-control"
+                formControlName="analizadorId"
+                [class.is-invalid]="analizadorId"
+              >
+                <option value="">--Seleccione--</option>
+                <option *ngFor="let equipo of listaeq" [value]="equipo.id">
+                  {{ equipo.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="analizadorId" class="text-danger"
+                >Seleccione una categoria</small
+              >
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="">Serie</label>
+              <input
+                appUppercase
+                type="text"
+                class="form-control"
+                formControlName="SERIE"
+                [class.is-invalid]="SERIE"
+                placeholder="Ingrese serie ..."
+              />
+              <small *ngIf="SERIE" class="text-danger"
+                >Ingrese la serie del equipo</small
+              >
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="">Fecha Fabricacion</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="fecha"
+                placeholder="Ingrese serie ..."
+              />
+              <!--  <small *ngIf="SERIE" class="text-danger"
+                >Ingrese la serie del equipo</small
+              > -->
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="">Estado</label>
+              <select
+                class="form-control"
+                formControlName="ESTADO_ID"
+                [class.is-invalid]="ESTADO_ID"
+              >
+                <option value="">--Seleccione--</option>
+                <option *ngFor="let estado of listaestado" [value]="estado.id">
+                  {{ estado.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="ESTADO_ID" class="text-danger"
+                >Seleccione una estado</small
+              >
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="">Ubicacion</label>
+              <select
+                class="form-control"
+                formControlName="UBICACION_ID"
+                [class.is-invalid]="UBICACION_ID"
+              >
+                <option value="">--Seleccione--</option>
+                <option
+                  *ngFor="let ubicacion of listaubicacion"
+                  [value]="ubicacion.id"
+                >
+                  {{ ubicacion.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="UBICACION_ID" class="text-danger"
+                >Seleccione una ubicacion</small
+              >
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="">Estado financiero cliente</label>
+              <select
+                class="form-control"
+                formControlName="ESTADOCLIENTE"
+                [class.is-invalid]="ESTADOCLIENTE"
+              >
+                <option value="">--Seleccione--</option>
+                <option
+                  *ngFor="let cliente of listaestadocliente"
+                  [value]="cliente.id"
+                >
+                  {{ cliente.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="ESTADOCLIENTE" class="text-danger"
+                >Seleccione un estado cliente
+              </small>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="">Estado financiero proveedor</label>
+              <select
+                name=""
+                id=""
+                class="form-control"
+                formControlName="ESTADOPROVEEDOR"
+                [class.is-invalid]="ESTADOPROVEEDOR"
+              >
+                <option value="">--Seleccione--</option>
+                <option
+                  *ngFor="let proveedor of listaestadoproveedor"
+                  [value]="proveedor.id"
+                >
+                  {{ proveedor.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="ESTADOPROVEEDOR" class="text-danger"
+                >Seleccione un estado cliente
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card card-info">
+        <div class="card-header">
+          <h6 class="card-title">Equipos complementarios</h6>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="table-camposmedium">Categoria</th>
+
+              <th>Modelo</th>
+              <th>Marca</th>
+              <th>Serie</th>
+              <th *ngIf="mostrarColumnaFecha()">Fecha</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="ACC">
+            <tr
+              *ngFor="let eqform of ACC.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <td>
+                <select
+                  class="form-control"
+                  (click)="toggleDetails(i)"
+                  formControlName="equipocomplementariosId"
+                  (ngModelChange)="actualizarInputs(i, $event)"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let equipocom of listaequipocomplementario"
+                    [value]="equipocom.id"
+                  >
+                    {{ equipocom.equipo }}
+                  </option>
+                </select>
+              </td>
+
+              <td>
+                <div class="form-group">
+                  <input
+                    appUppercase
+                    type="text"
+                    class="form-control"
+                    formControlName="DESCRIPCION"
+                  />
+                </div>
+              </td>
+
+              <td>
+                <input
+                  appUppercase
+                  type="text"
+                  class="form-control"
+                  formControlName="SERIEACC"
+                />
+              </td>
+              <td>
+                <input
+                  appUppercase
+                  type="text"
+                  class="form-control"
+                  formControlName="MARCA"
+                />
+              </td>
+
+              <td>
+                <input
+                  *ngIf="
+                    eqform.get('equipocomplementariosId')?.value == 42 ||
+                    eqform.get('equipocomplementariosId')?.value == 2
+                  "
+                  type="date"
+                  class="form-control"
+                  formControlName="fechacom"
+                />
+              </td>
+              <td>
+                <i class="bx bxs-trash" (click)="borrarAccesorio(i)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <td>
+          <a type="button" class="btn btn-primary btn-xs" (click)="addACC()"
+            >Agregar
+          </a>
+        </td>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- <hr />
+{{ equipoForm.valid | json }}
+<pre>
+ {{ equipoForm.value | json }}
+</pre> -->

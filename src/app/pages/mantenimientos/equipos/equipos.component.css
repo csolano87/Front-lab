@@ -1,0 +1,16 @@
+.alerta-disponible {
+  border-left: 5px solid green;
+  margin: 15px auto;
+  padding: 15px;
+}
+
+.alerta-reparacion {
+  border-left: 5px solid RED;
+  margin: 15px auto;
+  padding: 5px;
+}
+
+.alerta-obsoleto {
+  border-left: 5px solid gray;
+  margin: 15px auto;
+}

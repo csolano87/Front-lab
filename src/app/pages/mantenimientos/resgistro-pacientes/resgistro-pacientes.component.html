@@ -1,0 +1,179 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off" class="form-inline">
+            <div class="form-group">
+           
+
+              <div class="form-group col-md-4 espacio">
+                <label for="text" class="form-ItemName">Fecha desde</label>
+
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control datetimepicker-input"
+                    #FECHADESDE
+                    data-target="#reservationdate"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-4 espacio">
+                <label for="text " class="form-ItemName">Fecha hasta</label>
+
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control datetimepicker-input"
+                    #FECHAHASTA
+                    data-target="#reservationdate"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="esboton">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="registroPacientes(FECHADESDE.value, FECHAHASTA.value)"
+              >
+                CONSULTAR
+              </button>
+            </div>
+
+         
+
+            <div class="esboton">
+              <button class="btn btn-info" (click)="exportTable()">
+                Exportar a CSV
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="cargando"
+    class="alert alert-info text-center mt-3 animated fadeIn faster"
+  >
+    <h4 class="alert-heading">Cargando</h4>
+    <p>
+      <i class="fa fa-refresh fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">Espere por favor</p>
+  </div>
+
+  <div class="row animated fadeIn fast" *ngIf="!cargando">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="title">
+            REGISTRO DIARIO DE INGRESO DE MUESTRAS DE LABORATORIO EN LA FASE DE
+            PRE-ANÁLISIS
+          </h6>
+
+          <div class="col-md-3 button"></div>
+
+     
+
+          <div class="table-responsive">
+            <table #table class="table">
+              <thead>
+                <tr>
+                  <th class="text-table2">Fecha registro</th>
+                  <th class="text-table2">Colocar 1</th>
+
+                  <th class="text-table">Identificación</th>
+                  <th class="text-table">Edad</th>
+
+                  <th class="text-table2">Télefono</th>
+                  <th class="text-table">Código único</th>
+
+                  <th class="text-table3">H (hematologico)</th>
+                  <th class="text-table3">IQS (Inmuno quimica serologia)</th>
+                  <th class="text-table3">G(gasometria)</th>
+                  <th class="text-table3">C(Coagulacion)</th>
+                  <th class="text-table3">O (Orina)</th>
+                  <th class="text-table3">H (heces)</th>
+                  <th class="text-table3">BAC(bacteriologia)</th>
+
+                  <th class="text-table2">Total muestras</th>
+                  <th class="text-table2">Hora ingreso</th>
+                  <th class="text-table2">Responsable de ingreso</th>
+                  <th class="text-table2">Procedencia</th>
+                  <th class="text-table2">Personal responsable</th>
+
+                  <th class="text-table2">Fecha recolección</th>
+                  <th class="text-table">Hora de recolección</th>
+                  <th class="text-table">Comentarios</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  *ngFor="
+                    let orden of listaordene
+                      | paginate: { itemsPerPage: 5, currentPage: itemsPerPage }
+                  "
+                >
+                  <td>{{ orden.RegisterDate }}</td>
+                  <td>1</td>
+
+                  <td text-table2>{{ orden.SurNameAndName }}</td>
+                  <td>{{ orden.Age }}</td>
+                  <td>{{ orden.D_112 }}</td>
+                  <td>{{ orden.SampleID }}</td>
+
+                  <td text-table3>
+                    {{ orden.Groups.includes("H(hematologia)") ? "1" : "" }}
+                  </td>
+                  <td text-table3>
+                    {{
+                      orden.Groups.includes("IQS (Inmuno Química Serología)")
+                        ? "1"
+                        : ""
+                    }}
+                  </td>
+                  <td text-table3>
+                    {{ orden.Groups.includes("G (gasometría)") ? "1" : "" }}
+                  </td>
+                  <td text-table3>
+                    {{ orden.Groups.includes("C (Cuagulación)") ? "1" : "" }}
+                  </td>
+                  <td>{{ orden.Groups.includes("O (Orina)") ? "1" : "" }}</td>
+                  <td>{{ orden.Groups.includes("H (Heces)") ? "1" : "" }}</td>
+                  <td>
+                    {{
+                      orden.Groups.includes("BAC (Bacteriologia)") ? "1" : ""
+                    }}
+                  </td>
+                  <td>{{ getTotalMuestras(orden.Groups) }}</td>
+                  <td>{{ orden.RegisterHour }}</td>
+                  <td>{{ orden.D_119 }}</td>
+                  <td>{{ orden.Origin }}</td>
+                  <td>{{ orden.D_113 }}</td>
+                  <td>{{ orden.RegisterDate }}</td>
+                  <td>{{ sumarDiezMinutos(orden.RegisterHour) }}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls
+      (pageChange)="itemsPerPage = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+    ></pagination-controls>
+   
+  </div>
+
+ 
+</div>

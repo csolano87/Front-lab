@@ -1,0 +1,127 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off" class="form-inline">
+            <div class="form-group">
+              <div class="form-group col-md-4 espacio">
+                <label for="text " class="form-ItemName">Fecha desde</label>
+
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control datetimepicker-input"
+                    #FECHADESDE
+                    data-target="#reservationdate"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-4 espacio">
+                <label for="text " class="form-ItemName">Fecha hasta</label>
+
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control datetimepicker-input"
+                    #FECHAHASTA
+                    data-target="#reservationdate"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="esboton">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="registroProduccion(FECHADESDE.value, FECHAHASTA.value)"
+              >
+                CONSULTAR
+              </button>
+            </div>
+            <div class="esboton">
+              <button class="btn btn-info" (click)="exportDataToCSV()">
+                Exportar a CSV
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="cargando"
+    class="alert alert-info text-center mt-3 animated fadeIn faster"
+  >
+    <h4 class="alert-heading">Cargando</h4>
+    <p>
+      <i class="fa fa-refresh fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">Espere por favor</p>
+  </div>
+
+  <div class="row animated fadeIn fast" *ngIf="!cargando">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>CATEGORIA</th>
+
+                  <th>NOMBRE</th>
+                  <th>UNIDAD</th>
+                  <!--  <th>GENERACION</th> -->
+                  <th>REFERENCIA</th>
+                  <th>TOTAL</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let filtro of listafiltros | paginate: { itemsPerPage: 8, currentPage: page };">
+                  <td>{{ filtro.product.CATEGORIA }}</td>
+                  <td>{{ filtro.product.NOMBRE }}</td>
+                  <td>{{ filtro.product.UNIDAD }}</td>
+                  <!--  <td>{{filtro.product.GENERACION}}</td> -->
+                  <td>{{ filtro.product.REFERENCIA }}</td>
+                  <td>{{ filtro.Total }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls
+      (pageChange)="page = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+    ></pagination-controls>
+  </div>
+
+  <div class="modal fade show" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">+ Cargar pruebas</h4>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer justify-content-between"></div>
+    </div>
+  </div>
+</div>

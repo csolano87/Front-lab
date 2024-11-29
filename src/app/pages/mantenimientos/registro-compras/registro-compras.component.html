@@ -1,0 +1,557 @@
+<h1 class="title_index">Registros de procesos</h1>
+<form action="">
+  <div class="container">
+    <section>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="group_input">
+              <label for="">INSTITUCION</label>
+              <input
+                type="text"
+                class="input-especial"
+                name="institucion"
+                placeholder="Ingrese nombre de la institucion"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="">CODIGO DE PROCESO</label>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Ingrese codigos de procesos"
+                name="codigo"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="">LINK DE PROCESO</label>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Ingrese el link de proceso"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="">TIEMPO DE CONSUMO</label>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Ingrese tiempo de consumo"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="">DETER. EFECTIVAS</label>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Ingrese determinaciones "
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="">PRESUPUESTO</label>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Ingrese presupuesto "
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="">ENTREGA CARPETA</label>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Ingrese  carpeta "
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="text_areas">AREAS:</h5>
+
+          <div class="areas_row">
+            <div class="form-check">
+              <label for="">QUIMICA</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">COAGULACION</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">INMUNOLOGIA</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">ELECTROLITROS</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">UROANALISIS</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">HEMATOLOGIA</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">GASOMETRIA</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">INSUMOS</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">MICROBIOLOGIA </label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+            <div class="form-check">
+              <label for="">PRUEBAS RAPIDAS</label>
+
+              <input type="checkbox" class="check_item" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-body">
+          <div class="text-opcion">
+            <h5 class="text_areas2">TERCERA OPINION</h5>
+            <div class="radio_input">
+              <input type="radio" id="si" name="acuerdo" value="si" />
+              <label for="si">Sí</label>
+            </div>
+            <div class="radio_input">
+              <input type="radio" id="no" name="acuerdo" value="no" />
+              <label for="no">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="card">
+        <div class="card-body">
+          <div class="text-opcion">
+            <h5 class="text_areas2">ESCOJA LA OPCION DEL SISTEMAS</h5>
+            <div class="radio_input">
+              <input type="radio" id="si" name="acuerdo" value="Infinty" />
+              <label for="si">Infinty</label>
+            </div>
+            <div class="radio_input">
+              <input type="radio" id="no" name="acuerdo" value="Siglab" />
+              <label for="no">Siglab</label>
+            </div>
+
+            <div class="radio_input">
+              <input type="radio" id="no" name="acuerdo" value="Orión" />
+              <label for="no">Orión</label>
+            </div>
+            <div class="radio_input">
+              <input
+                type="radio"
+                id="no"
+                name="acuerdo"
+                value="Interfaz de equipo"
+              />
+              <label for="no">Interfaz de equipo</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-body">
+          <div class="areas">
+            <div class="col-md-6">
+              <h4 class="text_title">EQUIPOS</h4>
+              <ul class="lista">
+                <li class="lista_item">QUIMICA</li>
+                <li class="lista_item">INMUNOLOGIA</li>
+                <li class="lista_item">HEMATOLOGIA</li>
+                <li class="lista_item">COAGULACION</li>
+                <li class="lista_item">GASOMETRIA</li>
+                <li class="lista_item">ELECTROLITOS</li>
+                <li class="lista_item">UROANALISIS</li>
+                <li class="lista_item">MICROBIOLOGIA</li>
+
+                <li class="lista_item">POC</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h4 class="text_title">PRINCIPAL</h4>
+              <div class="area_item">
+                <!--                     <label for="exampleFormControlSelect1">QUIMICA</label>
+-->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS C111</option>
+                  <option>COBAS C311</option>
+                  <option>COBAS PURE 302</option>
+
+                  <option>COBAS 6000 C501 MODULE</option>
+                  <option>COBAS PRO<503> ISE</option>
+                </select>
+
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">COAGULACION</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS E411 RACK</option>
+                  <option>COBAS E411 DISK</option>
+                  <option>COBAS PURE <402></option>
+                  <option>COBAS 6000 E601 MODULE</option>
+                  <option>COBAS 8000- COBAS E602 MODULE</option>
+                  <option>COBAS 8000</option>
+                  <option></option>
+                  <option>MAGLUMI X3</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">INMUNOLOGIA</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>XNL 350</option>
+                  <option>XNL 450</option>
+                  <option>XP 300</option>
+                  <option>XN-1000</option>
+                  <option>XN-2000</option>
+                  <option>XN-3000</option>
+                  <option>XN-1500</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">ELECTROLITROS</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS T411</option>
+                  <option>ALC TOP</option>
+                  <option>ACL ELITE</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">UROANALISIS</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS B123 POC SYSTEM</option>
+
+                  <option>COBAS B221</option>
+                  <option>GEM PREMIER</option>
+                  <option>I STAT</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!-- <label for="exampleFormControlSelect1">GASOMETRIA</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>AVL 9180</option>
+                  <option>COBAS C311</option>
+                  <option>COBAS C501 MODULE ISE</option>
+                  <option>COBAS PRO <503>ISE</option>
+                  <option>ISTAT</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">MICROBIOLOGIA</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS 6500</option>
+                  <option>COBAS U701</option>
+                  <option>COBAS U601</option>
+                  <option>KU-2800</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--   <label for="exampleFormControlSelect1">POC</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS 4800</option>
+                  <option>COBAS Z480</option>
+                  <option>LIGHTCYCLER 480 II</option>
+                  <option>96</option>
+                  <option>LIGHTCYCLER 2.0 INSTRUMENT</option>
+                  <option>MAGNA PURE COMPACT</option>
+                  <option>COBAS LIAT SYSTEM</option>
+                  <option>MAGNAPURE 24</option>
+                  <option>MAGNA PURE 96 INSTRUMENT</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--     <label for="exampleFormControlSelect1">HEMATOLOGIA</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS B 101 INSTRUMENT</option>
+                  <option>COBAS H 232 KIT (NO SCANNER)</option>
+                  <option>COBAS H 232 KIT (SCANNER)</option>
+                  <option>COAGUCHEK XS PRO KIT INTERNATI</option>
+                  <option>COAGUCHEK XS KIT (HU/EL/ES/PT)</option>
+                  <option>ACCUNTREND PLUS KIT MG/DL</option>
+                  <option>ACCU-CHECK INFORM II METER KIT + R</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div></div>
+            </div>
+
+            <div class="col-md-6">
+              <h4 class="text_title">BACK-UP</h4>
+              <div class="area_item">
+                <!--                     <label for="exampleFormControlSelect1">QUIMICA</label>
+-->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS C111</option>
+                  <option>COBAS C311</option>
+                  <option>COBAS PURE 302</option>
+
+                  <option>COBAS 6000 C501 MODULE</option>
+                  <option>COBAS PRO<503> ISE</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">COAGULACION</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS E411 RACK</option>
+                  <option>COBAS E411 DISK</option>
+                  <option>COBAS PURE <402></option>
+                  <option>COBAS 6000 E601 MODULE</option>
+                  <option>COBAS 8000- COBAS E602 MODULE</option>
+                  <option>COBAS 8000 <801></option>
+                  <option>MAGLUMI X3</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">INMUNOLOGIA</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>XNL 350</option>
+                  <option>XNL 450</option>
+                  <option>XP 300</option>
+                  <option>XN-1000</option>
+                  <option>XN-2000</option>
+                  <option>XN-3000</option>
+                  <option>XN-1500</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">ELECTROLITROS</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS T411</option>
+                  <option>ALC TOP</option>
+                  <option>ACL ELITE</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">UROANALISIS</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS B123 POC SYSTEM</option>
+
+                  <option>COBAS B221</option>
+                  <option>GEM PREMIER</option>
+                  <option>I STAT</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!-- <label for="exampleFormControlSelect1">GASOMETRIA</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>AVL 9180</option>
+                  <option>COBAS C311</option>
+                  <option>COBAS C501 MODULE ISE</option>
+                  <option>COBAS PRO <503>ISE</option>
+                  <option>ISTAT</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--  <label for="exampleFormControlSelect1">MICROBIOLOGIA</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS 6500</option>
+                  <option>COBAS U701</option>
+                  <option>COBAS U601</option>
+                  <option>KU-2800</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <!--   <label for="exampleFormControlSelect1">POC</label> -->
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS 4800</option>
+                  <option>COBAS Z480</option>
+                  <option>LIGHTCYCLER 480 II</option>
+                  <option>96</option>
+                  <option>LIGHTCYCLER 2.0 INSTRUMENT</option>
+                  <option>MAGNA PURE COMPACT</option>
+                  <option>COBAS LIAT SYSTEM</option>
+                  <option>MAGNAPURE 24</option>
+                  <option>MAGNA PURE 96 INSTRUMENT</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div class="area_item">
+                <select class="form-select" id="exampleFormControlSelect1">
+                  <option>NO APLICA</option>
+                  <option>COBAS B 101 INSTRUMENT</option>
+                  <option>COBAS H 232 KIT (NO SCANNER)</option>
+                  <option>COBAS H 232 KIT (SCANNER)</option>
+                  <option>COAGUCHEK XS PRO KIT INTERNATI</option>
+                  <option>COAGUCHEK XS KIT (HU/EL/ES/PT)</option>
+                  <option>ACCUNTREND PLUS KIT MG/DL</option>
+                  <option>ACCU-CHECK INFORM II METER KIT + R</option>
+                </select>
+                <input type="number" class="input_select" />
+              </div>
+
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section>
+        <div class="card">
+          <div class="card-body">
+            <div class="text-opcion">
+              <h5 class="text_areas2">ELIGE LA LICENCIA EQUIPO HEMATOLOGICO</h5>
+              <div class="form-check2">
+                <input
+                  type="checkbox"
+                  class="check_item"
+                  id="si"
+                  name="acuerdo"
+                  value="Infinty"
+                />
+                <label class="" for="si"
+                  >Parametros reportables modo fluidos corporales</label
+                >
+              </div>
+              <div class="form-check2">
+                <input
+                  type="checkbox"
+                  class="check_item"
+                  id="no"
+                  name="acuerdo"
+                  value="Siglab"
+                />
+                <label class="" for="no"
+                  >Parametros reportables canal reticulocitos</label
+                >
+              </div>
+
+              <div class="form-check2">
+                <input
+                  type="checkbox"
+                  class="check_item"
+                  id="no"
+                  name="acuerdo"
+                  value="Orión"
+                />
+                <label class="" for="no"
+                  >Parametros investigacion canal reticulocitos</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-body">
+          <div class="obs">
+            <!--  <label for="">OBSERVACIONES</label> -->
+            <h5 class="text_areas">OBSERVACIONES:</h5>
+
+            <textarea name="" id="" class="text_area" rows="10"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="card">
+      <div class="botones">
+        <button class="btn" type="submit">Guardar</button>
+        <button class="btn">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</form>

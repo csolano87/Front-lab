@@ -1,0 +1,40 @@
+/* 
+*{
+    outline: 2px solid crimson;  
+}  */
+
+.qrcodeImage {
+    display: flex;
+   
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px auto;
+
+    width: 50%;
+   
+  }
+  
+  /* Add custom styles here */
+  .qr_title {
+    margin: 0 50px;
+    
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .btn-button{
+margin:5px auto;
+  
+  }
+
+  .code{
+    display: flex;
+    justify-content: center;
+ /*    justify-items: center; */
+   margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* . btn-md{
+
+  } */

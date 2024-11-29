@@ -1,0 +1,166 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            class="input-file"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <!--       <h6 class="title">Lista de Productos</h6> -->
+          <p *ngFor="let item of dataStore">{{ item | json }}</p>
+          <!--        (ngSubmit)="onSubmit()" -->
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <form [formGroup]="stockForm" (ngSubmit)="guardar()">
+              <div class="button">
+                <button type="submit" class="btn btn-primary btn-sm">
+                  Guardar
+                </button>
+
+                <button type="reset" class="btn btn-danger btn-sm">
+                  Cancelar
+                </button>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-3">
+                  <label for="">Guia</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="guia"
+                    [class.is-invalid]="guia"
+                    [readOnly]="true"
+                    placeholder="Ingrese guia.."
+                  />
+                  <small *ngIf="guia" class="text-danger"
+                    >Ingrese un caracter</small
+                  >
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="">Bodega</label>
+                  <select class="form-control" formControlName="bodegaId">
+                    <option value="">--selecione--</option>
+                    <option
+                      *ngFor="let bodega of listabodega"
+                      [value]="bodega.id"
+                    >
+                      {{ bodega.NOMBRE }}
+                    </option>
+                  </select>
+                  <small *ngIf="guia" class="text-danger"
+                    >Ingrese un caracter</small
+                  >
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="">Proveedor</label>
+                  <select class="form-control" formControlName="proveedor">
+                    <option value="">--selecione--</option>
+                    <option
+                      *ngFor="let bodega of listacorreo"
+                      [value]="bodega.empresa"
+                    >
+                      {{ bodega.empresa }}
+                    </option>
+                  </select>
+                  <small *ngIf="guia" class="text-danger"
+                    >Ingrese un caracter</small
+                  >
+                </div>
+              </div>
+              <!-- style="opacity: 0; position: absolute; top: -9999px;" -->
+
+              <div
+                *ngIf="cargando"
+                class="alert alert-info text-center mt-3 animated fadeIn faster"
+              >
+                <h4 class="alert-heading">Cargando</h4>
+                <p>
+                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                </p>
+                <p class="mb-0">Espere por favor</p>
+              </div>
+
+              <div *ngIf="!cargando" class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Referencia</th>
+                      <th>Descripcion</th>
+                      <th>Lote</th>
+                      <th>F.caducidad</th>
+                      <th>Cantidad</th>
+                      <th>Cant Recibida</th>
+                      <th>Fabricante</th>
+                      <th>Registro Sanitario</th>
+                    </tr>
+                  </thead>
+
+                  <tbody formArrayName="productos">
+                    <tr
+                      *ngFor="
+                        let producto of stockForm.controls['productos']?.value
+                          | paginate
+                            : { itemsPerPage: count, currentPage: page };
+                        let i = index
+                      "
+                      [formGroupName]="i"
+                    >
+                      <td>{{ page }}</td>
+                      <td>{{ producto.referencia }}</td>
+                      <td>{{ producto.descripcion }}</td>
+                      <td>{{ producto.lote }}</td>
+
+                      <td>{{ producto.caducidad }}</td>
+                      <td>{{ producto.cantidad }}</td>
+                      <td>{{ producto.cantidad_recibida }}</td>
+                      <td>{{ producto.fabricante }}</td>
+                      <td>{{ producto.sanitario }}</td>
+                      <td>
+                        <i
+                          class="bx bx-comment-detail bx-sm"
+                          (click)="comments(i)"
+                        >
+                        </i>
+                        <span
+                          *ngIf="producto.comentario.length > 0"
+                          class="badge badge-danger comment-badge"
+                        >
+                          1
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <pagination-controls
+                (pageChange)="page = $event"
+              ></pagination-controls>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<input
+  style="opacity: 0; position: absolute; top: -9999px"
+  type="text"
+  #barcodeInput
+  (input)="onBarcodeInput($event)"
+  autofocus
+/>

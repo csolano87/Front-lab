@@ -1,0 +1,41 @@
+<div class="container-fluid rounded shadow">
+          
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Crear Impresora</h3>
+      </div>
+
+      <form  autocomplete="off"
+      [formGroup]="impresoraForm"
+      (ngSubmit)="crearImpresora()"
+      id="impresoraForm">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="">NOMBRE</label>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="NOMBRE"
+                [class.is-invalid]="NOMBRE"
+                placeholder="Ingrese referencia.."
+              />
+              <small *ngIf="NOMBRE" class="text-danger"
+              >Ingrese un caracter</small
+            >
+            </div>
+           
+          </div>
+
+        
+        
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  
+</div>

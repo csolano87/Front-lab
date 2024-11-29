@@ -1,0 +1,18 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off" class="form-inline"></form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resto de tu código HTML -->
+
+  <input type="file" (change)="onFileSelected($event)" class="input-file" />
+  <button (click)="uploadFile()" class="btn btn-primary">Subir archivo</button>
+
+  <!-- Resto de tu código HTML -->
+</div>

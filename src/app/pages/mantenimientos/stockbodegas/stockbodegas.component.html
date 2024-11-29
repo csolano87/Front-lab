@@ -1,0 +1,126 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off">
+            <div class="row">
+            <div class="form-group col-md-4">
+              <label>Area de trabajo</label>
+
+              <select class="form-control" #bodegaId>
+                <option value="">--Seleccione--</option>
+                <option *ngFor="let item of listabodega" [value]="item.id">
+                  {{ item.NOMBRE }}
+                </option>
+              </select>
+            </div>
+
+            <div class="esboton">
+              <button
+              type="submit"
+              class="btn btn-primary rounded shadow btn-sm"
+              (click)="buscar(bodegaId.value)"
+            >
+              Consultar
+            </button>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="title">Stock de Bodegas</h6>
+
+          <div class="col-md-3 button"></div>
+
+          <div class="table-responsive">
+            <form>
+              <div
+                *ngIf="cargando"
+                class="alert alert-info text-center mt-3 animated fadeIn faster"
+              >
+                <h4 class="alert-heading">Cargando</h4>
+                <p>
+                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                </p>
+                <p class="mb-0">Espere por favor</p>
+              </div>
+
+              <div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Referencia</th>
+                      <th>Nombre</th>
+                      <th>Lote</th>
+                      <th>Bodega</th>
+                      <th>Entregado</th>
+                      <th>Descargo</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <ng-container
+                      *ngFor="
+                        let stock of listaSotck
+                          | paginate: { itemsPerPage: 10, currentPage: page };
+                        let i = index
+                      "
+                      data-widget="expandable-table"
+                      aria-expanded="true"
+                    >
+                      <tr>
+                        <td>{{ stock.product.REFERENCIA }}</td>
+                        <td>{{ stock.product.NOMBRE }}</td>
+                        <td>{{ stock.lote }}</td>
+                        <td>{{ stock.bodega.NOMBRE }}</td>
+                        <td>{{ stock.CANTIDAD }}</td>
+                        <td>
+                          <input
+                            type="number"
+                            #numero
+                            (keyup)="DescargoStock(stock, numero.value)"
+                          />
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <pagination-controls
+                  (pageChange)="page = $event"
+                  previousLabel="Anterior"
+                  nextLabel="Siguiente"
+                ></pagination-controls>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-info">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-"></div>
+      </div>
+    </div>
+  </div>
+</div>

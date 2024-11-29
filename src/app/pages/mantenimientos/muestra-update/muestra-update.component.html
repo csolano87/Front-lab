@@ -1,0 +1,110 @@
+<div class="container w-75 bg- mt-5 rounded shadow">
+  <div class="row align-items-stretch">
+    <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded">
+      <img
+        src="./assets/persona registro-01.png"
+        class="logoimg img-fluid"
+        width="400"
+        height="400"
+      />
+    </div>
+    <!--     <div class="col bg-white p-5 rounded-end"> -->
+    <!-- <div class="text-end">
+            <img src="./assets/LOGO BLUELAB-06.png" class="img-thumbnail" alt="">
+          </div> -->
+
+    <div class="col-md-6">
+      <div class="card card-info card2">
+        <div class="text">
+          <h2 class="card-title">Muestras Actualizar</h2>
+        </div>
+
+        <div class="card-body">
+          <form
+            autocomplete="off"
+            [formGroup]="forma"
+            (ngSubmit)="guardar()"
+            id="forma"
+          >
+            <!--      <label class="form-label titilo">Tipo de rechazo</label>
+
+                        <div *ngFor="let rechazos of rechazo">
+                          
+                            
+
+                                <input formControlName="comentario" [class.is-invalid]="comentario" type="radio" value="{{rechazos.descripcion}}"   
+                                                                
+                                 >
+                            <label class="margin">{{rechazos.descripcion}}</label>
+                            
+                        
+                        
+
+                    </div> -->
+            <div class="mb-4">
+              <label class="form-label">Ingrese comentario</label>
+
+              <input
+                autofocus
+                class="form-control"
+                type="text"
+                formControlName="comentarioUpdate"
+                placeholder="comentario"
+                [class.is-invalid]="comentarioUpdate"
+              />
+
+              <!--  <small *ngIf="numeroorden.invalid && numeroorden.touched"
+                        class="form-text text-danger">Ingrese 12 digitos</small> -->
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Ingrese muestra</label>
+
+              <input
+                autofocus
+                class="form-control"
+                type="text"
+                formControlName="numeroorden"
+                placeholder="Numero Orden"
+                [class.is-invalid]="numeroorden"
+              />
+
+              <!--  <small *ngIf="numeroorden.invalid && numeroorden.touched"
+                                class="form-text text-danger">Ingrese 12 digitos</small> -->
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+            <!-- 
+
+                        <div class="form-group buton">
+                            <label class="col-2 col-form-label">&nbsp;</label>
+                            <div class="input-group col-md-8">
+                                <button type="submit" class="btn btn-primary">
+                                    Guardar
+                                </button>
+                            </div>
+                        </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr />
+<!-- <pre>
+    Estado del formulario: {{ forma.valid }}
+    <br>
+    Status: {{ forma.status }}
+    </pre>
+
+<pre>
+
+    <pre>
+
+        {{ forma.value | json }}
+    
+        </pre>   -->

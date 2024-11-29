@@ -1,0 +1,368 @@
+<div class="container-fluid scroll">
+  <!--   <h1 class="title_index">Registros de procesos</h1> -->
+  <form
+    action=""
+    autocomplete="off"
+    [formGroup]="cotizacionForm"
+    novalidate
+    (ngSubmit)="guardar()"
+    id="cotizacionForm"
+  >
+    <div class="col-md-12">
+      <div class="card card-info">
+        <div class="card-header">
+          <h6 class="card-title">Datos del cliente</h6>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="">Razon social</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="RAZONSOCIAL"
+                  [class.is-invalid]="RAZONSOCIAL"
+                  placeholder="Ingrese nombre de la institucion"
+                  appUppercase
+                />
+                <small *ngIf="RAZONSOCIAL" class="text-danger"
+                  >Campo obligatorio
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="">RUC</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Ingrese codigos de procesos"
+                  formControlName="RUC"
+                  [class.is-invalid]="RUC"
+                />
+                <small *ngIf="RUC" class="text-danger"
+                  >Campo obligatorio
+                </small>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="">CORREO</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Ingrese codigos de procesos"
+                  formControlName="CORREO"
+                  [class.is-invalid]="CORREO"
+                />
+                <small *ngIf="CORREO" class="text-danger"
+                  >Campo obligatorio
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">MODALIDAD de la oferta</label>
+                <select
+                  name=""
+                  id=""
+                  formControlName="MODALIDAD"
+                  [class.is-invalid]="MODALIDAD"
+                  class="form-control"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let modalidad of listamodalidad"
+                    [value]="modalidad.id"
+                  >
+                    {{ modalidad.NOMBRE }}
+                  </option>
+                </select>
+                <!-- <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Ingrese codigos de procesos"
+                    formControlName="codigo"
+                    [class.is-invalid]=""
+                  /> -->
+                <small *ngIf="MODALIDAD" class="text-danger"
+                  >Campo obligatorio
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--     <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">AREAS:</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div
+              class="col-md-3"
+              formArrayName="areas"
+              *ngFor="let equi of areas.controls; let i = index"
+            >
+              <label>
+                <input
+                  class="check_item"
+                  [formControlName]="i"
+                  type="checkbox"
+                />
+                {{ equipo[i].ItemName }}</label
+              >
+            </div>
+          </div>
+
+          <small class="text-danger"> Debe escoger al menos una area. </small>
+        </div>
+      </div>
+ -->
+      <div class="card card-info">
+        <div class="card-header">
+          <h6 class="card-title">Equipos a ofertar:</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="" class="">Area:</label>
+                <select
+                  class="form-control"
+                  id="modelo-select"
+                  (change)="onSelectModelo($event)"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let modelo of listamodelo"
+                    [value]="modelo.id"
+                  >
+                    {{ modelo.NOMBRE }}
+                  </option>
+                </select>
+
+                <small *ngIf="" class="text-danger"
+                  >Debe de escoger una opción
+                </small>
+              </div>
+              <div class="form-group">
+                <label for="">Equipo:</label>
+
+                <select
+                  id="equipos-select"
+                  class="form-control"
+                  formControlName="EQUIPO_ID"
+                  [class.is-invalid]=""
+                  (change)="onSelectEquipo($event)"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option *ngFor="let equipo of equipos" [value]="equipo.id">
+                    {{ equipo.NOMBRE }}
+                  </option>
+                  <!-- <option value="F">Femenino</option>
+                        <option value="3">Otros</option> -->
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card-body scroll">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Area</th>
+                      <th>Equipos</th>
+                      <th>Cantidad</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="EQUIPO_ID">
+                    <tr></tr>
+                    <tr
+                      *ngFor="
+                        let eq of cotizacionForm.controls['EQUIPO_ID']?.value;
+                        let i = index
+                      "
+                      [formGroupName]="i"
+                    >
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ eq.nombreEquipo }}</td>
+                      <td>{{ eq.nombreAnalizador }}</td>
+                      <td>
+                        <input
+                          class="form-control"
+                          formControlName="CANTIDAD"
+                          type="number"
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--      <div class="card card-info">
+
+        <div class="card-header">
+          <h6 class="card-title">Equipos complementarios</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div
+            class="col-md-4"
+              formArrayName="acc"
+              *ngFor="let ac of acc.controls; let i = index"
+            >
+              <label class="check_ajuste">
+                <input
+                
+                  class="check_item"
+                  [formControlName]="i"
+                  type="checkbox"
+                />
+
+                 {{ listaAcccotizacion[i].NOMBRE }}
+              </label>
+            </div>
+          </div>
+          <small
+            class="text-danger"
+            *ngIf="
+              cotizacionForm.hasError('noPruebas') &&
+              (cotizacionForm.get('areas')?.dirty ||
+              cotizacionForm.get('areas')?.touched)
+            "
+          >
+            Debe escoger al menos una area.
+          </small>
+        </div>
+      </div>
+ -->
+      <div class="card">
+        <div class="card card-info">
+          <div class="card-header">
+            <h3 class="card-title">Informacion ESTADISTICA</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group col-md-4">
+            <label for="" class="form-ItemName"
+              >¿Tiene información estadística del cliente?</label
+            >
+          </div>
+          <div class="form-group col-md-4">
+            <input
+              type="radio"
+              value="1"
+              formControlName="ESTADISTICA"
+              [class.is-invalid]="ESTADISTICA"
+            />
+            <label class="labelcheck" for="">Si</label>
+          </div>
+
+          <div class="form-group col-md-4">
+            <input
+              type="radio"
+              value="0"
+              formControlName="ESTADISTICA"
+              [class.is-invalid]="ESTADISTICA"
+            />
+            <label class="labelcheck" for="">No</label>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="cotizacionForm.value.ESTADISTICA == '1'" class="card">
+        <div class="card card-info">
+          <div class="card-header">
+            <h3 class="card-title">FILE de archivo.</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group col-md-12">
+            <label for="" class="form-ItemName">
+              archivo que contenga información estadística de ventas/consumo del
+              cliente</label
+            >
+          </div>
+
+          <input
+            type="file"
+            multiple="multiple"
+            (change)="onFileSelected($event)"
+            class="input-file"
+          />
+
+          <!--  <button (click)="enviarArchivo()" class="btn btn-primary">
+            Subir archivo
+          </button> -->
+        </div>
+      </div>
+      <div class="card">
+        <div class="card card-info">
+          <div class="card-header">
+            <h3 class="card-title" for="">COMENTARIOS</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="form-group col-md-12">
+                  <label for="" class="form-ItemName"
+                    >Si tiene COMENTARIOS sobre la información proporcionada por
+                    el cliente para el requerimiento, por favor detalle.</label
+                  >
+                </div>
+
+                <textarea
+                  class="form-control textarea-mod"
+                  rows="5"
+                  formControlName="COMENTARIOS"
+                  placeholder="Enter ..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group-append">
+        <a type="submit" (click)="cambioEstado()" class="btn btn-primary">
+          {{ btnVal }}</a
+        >
+        &nbsp;
+        <button type="reset" onclick="onreset()" class="btn btn-danger">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<hr />
+<pre>
+        Estado del formulario: {{ cotizacionForm.valid }}
+        <br>
+        Status: {{ cotizacionForm.status }}
+        </pre>
+
+<pre>
+    
+        {{ cotizacionForm.value | json }}
+    
+        </pre
+>

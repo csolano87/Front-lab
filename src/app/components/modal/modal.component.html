@@ -1,0 +1,278 @@
+<!-- <div class="fondo-modal animated fadeIn fast"
+   [class.oculto]="modalImagenService.ocultarModal" >
+
+    <div class="modal fade show" 
+        id="exampleModal" 
+        tabindex="-1" 
+        role="dialog" 
+        aria-labelledby="exampleModalLabel1" 
+        style="display: block;">
+
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">Cargar pruebas</h4>
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="modal" 
+                        aria-label="Close"
+                        (click)="cerrarModal()" >
+                        <span aria-hidden="true"  >×</span>
+                </button>
+            </div>
+            <div class="modal- re">
+                
+  <div class="col-md-8">
+    <div class="row">
+       
+       
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Bio. Molecular</p>
+                </div>
+                <div class="card-body">
+                    <div class="" *ngFor="let m of molecular">
+
+                        <input type="checkbox" [(ngModel)]="m.isChecked" [value]="m.ItemID" >
+                        <label class="margin">
+                           {{m.ItemName}}
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Hematología</p>
+                </div>
+                <div class="card-body">
+                    <div class="" *ngFor="let h of hema">
+
+                        <input type="checkbox" [(ngModel)]="h.isChecked" [value]="h.ItemID" >
+                        <label class="margin">
+                            {{h.ItemName}}
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Coagulacíon</p>
+                </div>
+                <div class="card-body">
+                    <div class="" *ngFor="let co of coa">
+
+                        <input type="checkbox" [(ngModel)]="co.isChecked" [value]="co.ItemID" >
+                        <label class="margin">
+                            {{co.ItemName}}
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Serología</p>
+                </div>
+                <div class="card-body">
+                    <div class="" *ngFor="let s of sero">
+
+                        <input type="checkbox" [(ngModel)]="s.isChecked" [value]="s.ItemID" >
+                        <label class="margin">
+                            {{s.ItemName}}
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+
+
+    <div class="row">
+
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Uroanálisis</p>
+                </div>
+                <div class="card-body">
+                    <div class="" *ngFor="let u of uro">
+
+                        <input type="checkbox" [(ngModel)]="u.isChecked" [value]="u.ItemID" >
+                        <label class="margin">
+                            {{u.ItemName}}
+                        </label>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Gases</p>
+                </div>
+                <div class="card-body">
+                    <div class="" *ngFor="let g of gas">
+
+                        <input type="checkbox" [(ngModel)]="g.isChecked" [value]="g.ItemID" >
+                        <label class="margin">
+                            {{g.ItemName}}
+                        </label>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Perfiles Varios</p>
+                </div>
+                <div class="card-body">
+
+                    <div class="" *ngFor="let per of perfil">
+
+                        <input type="checkbox" [(ngModel)]="per.isChecked" [value]="per.ItemID" >
+                        <label class="margin">
+                            {{per.ItemName}}
+                        </label>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Química Clínica</p>
+                </div>
+
+                <div class="card-body">
+                    <div class="" *ngFor="let q of quimica;let i=index">
+                        <input type="checkbox" [value]="q.ItemID" [(ngModel)]="q.isChecked" >
+                        <label class="margin">
+                            {{q.ItemName}}
+                        </label>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header card-title">
+                    <p class="tittle">Coprología</p>
+                </div>
+                <div class="card-body">
+
+                    <div class="" *ngFor="let c of copro">
+
+                        <input type="checkbox" [(ngModel)]="c.isChecked" [value]="c.ItemID" >
+                        <label class="margin">
+                            {{c.ItemName}}
+                        </label>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div> 
+    </div> 
+
+<div class="col-md-4">
+            <div class="wrapper">
+
+                <div class="limit-width form-group col-md-12" #asBoxInput>
+                    <input class="input-src form-control" [ngClass]="{'loading':isLoading}" [spellcheck]="false"
+                        placeholder="pruebas" type="text" (ngModelChange)="search($event)" [(ngModel)]="src">
+
+
+
+                    <div class="results">
+                        <ul>
+                            <li class="li"  *ngFor="let item of data$ | async">
+
+
+                                {{item.ItemName}}
+
+
+
+
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+      
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" 
+                        class="btn btn-default" 
+                        data-dismiss="modal"
+                        (click)="cerrarModal()">
+                    Cancelar
+                </button>
+                <button type="button" 
+                        class="btn btn-primary"
+                        >Guardar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+ -->

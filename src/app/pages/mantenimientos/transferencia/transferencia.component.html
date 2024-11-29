@@ -1,0 +1,170 @@
+<div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    [formGroup]="importForm"
+    novalidate
+    (ngSubmit)="guardar()"
+    id="importForm"
+  >
+    <div class="col-md-12">
+      <div class="card card-info">
+        <div class="card-header">
+          <h6 class="card-title">Transferencia entre bodega</h6>
+        </div>
+        <div class="card-body">
+          <div class="button">
+            <a
+              type="submit"
+              class="btn btn-primary btn-sm"
+              (click)="cambioEstado()"
+            >
+              {{ btnVal }}
+            </a>
+            &nbsp;
+
+            <button
+              type="reset"
+              (click)="onreset()"
+              class="btn btn-danger btn-sm"
+            >
+              Cancelar
+            </button>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="">Bodega origen</label>
+              <select class="form-control" formControlName="BODEGA_ORIGEN_ID">
+                <option value="">--selecione--</option>
+                <option *ngFor="let bodega of listabodega" [value]="bodega.id">
+                  {{ bodega.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="" class="text-danger">Ingrese un caracter</small>
+            </div>
+
+
+            <div class="form-group col-md-3">
+              <label for="">Bodega Destino</label>
+              <select class="form-control" formControlName="BODEGA_DESTINO_ID">
+                <option value="">--selecione--</option>
+                <option *ngFor="let bodega of listabodega" [value]="bodega.id">
+                  {{ bodega.NOMBRE }}
+                </option>
+              </select>
+              <small *ngIf="" class="text-danger">Ingrese un caracter</small>
+            </div>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+
+                  <th>Unidad</th>
+                  <th>Cantidad ordenada</th>
+                  
+                </tr>
+              </thead>
+              <tbody formArrayName="PRODUCTOS">
+                <tr
+                  *ngFor="
+                    let d of importForm.controls['PRODUCTOS']?.value;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <td>
+                    {{ d.NOMBRE }}
+                    <div
+                      class="limit-width form-group col-md-12"
+                      #asBoxInput
+                    ></div>
+                  </td>
+               <td>{{ d.UNIDAD }}</td>
+                  <td>
+                    <input
+                      class="form-control"
+                      formControlName="CANTIDAD"
+                   
+                    
+                     
+                    >
+                  </td> 
+
+                
+                  <td>
+                    <i  (click)="borrarProducto(i)"
+                    class="bx bxs-trash bx-sm"></i>
+
+                    <i class='bx bxs-purchase-tag bx-sm'></i> 
+                  </td>
+                </tr>
+              </tbody>
+              <a
+                type="button"
+                class="agregar"
+                data-toggle="modal"
+                data-target="#modal-info"
+                (click)="agregarproductos()"
+                >Agregar producto</a
+              >
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<hr />
+<pre>{{ importForm.valid }}</pre>
+<pre>{{ importForm.value | json }}</pre>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Buscar Productos</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="container-fluid rounded shadow">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <input
+                  #inputRef
+                  class="input-src form-control"
+                  [ngClass]="{ loading: isLoading }"
+                  [spellcheck]="false"
+                  placeholder="reactivos"
+                  type="text"
+                  (ngModelChange)="searchReactivos($event)"
+                  [(ngModel)]="src"
+                />
+                <div class="card-body scroll2">
+                  <ul class="ullist">
+                    <li
+                      (click)="actualizarInputs(item, selectedProductIndex)"
+                      class="li"
+                      *ngFor="let item of data$ | async"
+                    >
+                      {{ item.NOMBRE  }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

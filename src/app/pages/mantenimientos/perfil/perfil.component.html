@@ -1,0 +1,74 @@
+<!-- <div class="register-page col-6"> -->
+<div class="container-fluid rounded shadow">
+  <div class="card card-outline card-primary">
+    <div class="card-body">
+      <h2 class="login-box-msg">Actualizar usuario</h2>
+
+      <form
+        autocomplete="off"
+        [formGroup]="perfilform"
+        (ngSubmit)="updateUsuario()"
+        id="updateUsuario"
+      >
+        <div class="form-group col-md-12">
+          <label class="form-label">Nombres</label>
+
+          <input
+            class="form-control"
+            type="text"
+            formControlName="doctor"
+            placeholder="Ingrese un nombre de usuario"
+            [class.is-invalid]="doctorNoValido"
+          />
+        </div>
+
+        <small *ngIf="doctorNoValido" class="text-danger"
+          >Ingrese los nombres
+        </small>
+
+        <div class="form-group col-md-12">
+          <label class="form-label">Usuario</label>
+          <input
+            class="form-control"
+            type="text"
+            formControlName="usuario"
+            placeholder="Ingrese un nombre de usuario"
+            [class.is-invalid]="usuarioNoValido"
+          />
+        </div>
+        <small *ngIf="usuarioNoValido" class="text-danger"
+          >Ingrese un usuario</small
+        >
+
+        <div class="form-group col-md-12">
+          <label class="form-label">Rol</label>
+
+          <select
+            [attr.disabled]="true"
+            class="form-control"
+            formControlName="rol"
+            [class.is-invalid]="rolNoValido"
+          >
+            <option value="">-Seleccione-</option>
+            <option *ngFor="let rol of listaroles" [value]="rol.rol">
+              {{ rol.rol }}
+            </option>
+          </select>
+        </div>
+
+        <small *ngIf="rolNoValido" class="text-danger"
+          >Debe de escoger un rol</small
+        >
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-save"></i> Actualizar
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded">
+      <!--   <img src="./assets/persona ressgistro2-01.png" class="img-fluid" width="500" height="500">  -->
+    </div>
+  </div>
+</div>

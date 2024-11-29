@@ -1,0 +1,15 @@
+.re {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.table-camposmedium{
+
+  width: 25%;
+}
+
+
+.table-camposlarge{
+
+  width: 40%;
+}

@@ -1,0 +1,126 @@
+<div class="container rounded shadow">
+  <div class="calendario col-md-8">
+    <full-calendar
+      [options]="calendarOptions"
+      [events]="calendarEvents"
+    ></full-calendar>
+  </div>
+
+  <div class="consulta col-md-4">
+    <div class="register-box">
+      <div class="card card-outline card-primary">
+        <div class="card-body scroll2">
+          <h2 class="login-box-msg">Registro de agenda</h2>
+          <form
+            action=""
+            autocomplete="off"
+            [formGroup]="AgendarForm"
+            (ngSubmit)="guardarOrden()"
+            id="AgendarForm"
+          >
+            <div class="form-group col-md-12">
+              <label for="" class="form-ItemName">N. Orden</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  (keyup.enter)="buscarAs400(AgendarForm.value.DLNUOR)"
+                  class="form-control"
+                  formControlName="DLNUOR"
+                  [class.is-invalid]="DLNUOR"
+                  placeholder="Ingrese orden"
+                />
+              </div>
+
+              <small *ngIf="" class="text-danger">Campo obligatorio</small>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label for="" class="form-ItemName">Nombres</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLAPEL"
+                  [class.is-invalid]="DLAPEL"
+                  [attr.disabled]="true"
+                  [disabled]="ordenEncontrada"
+                  placeholder="Ingrese los nombres"
+                />
+              </div>
+
+              <small *ngIf="" class="text-danger">Campo obligatorio</small>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label for="" class="form-ItemName">Fecha</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control appUppercase"
+                  formControlName="FECHA"
+                  [(ngModel)]="selectedDateString"
+                  [class.is-invalid]="FECHA"
+                  placeholder=""
+                />
+              </div>
+
+              <div
+                *ngIf="AgendarForm.get('FECHA').hasError('invalidDate')"
+                class="invalid-feedback"
+              >
+                Invalid date. Please select a different date.
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+            <div class="card-body scroll">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>N.-</th>
+
+                    <th>Exámenes</th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="DLCEXAS">
+                  <tr
+                    *ngFor="
+                      let d of AgendarForm.controls['DLCEXAS']?.value;
+                      let i = index
+                    "
+                    [formGroupName]="i"
+                  >
+                    <td>
+                      <div class="">
+                        {{ i + 1 }}
+                      </div>
+                    </td>
+
+                    <td>
+                      {{ d.ItemName }}
+                    </td>
+
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  <hr>
+    <pre> Estado del formulario: {{ AgendarForm.valid }}
+<br>
+Status: {{ AgendarForm.status }}
+
+
+</pre>
+    <pre>
+
+    {{ AgendarForm.value | json }}
+
+    </pre> -->

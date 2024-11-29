@@ -1,0 +1,92 @@
+table {
+  width: 100%;
+}
+
+.table tr {
+  cursor: pointer;
+}
+
+.disabled-icon {
+  opacity: 0.5;
+  /* Opacidad reducida para desactivar visualmente el ícono */
+  pointer-events: none;
+  /* Evitar eventos de clic en el ícono desactivado */
+}
+thead th {
+  font-size: 0.8rem;
+}
+
+.title {
+  text-align: center;
+  font-weight: 700;
+}
+tbody td {
+  font-size: 0.8rem;
+}
+
+.text-table {
+  width: 10%;
+}
+.text-table3 {
+  width: 50%;
+}
+.text-table4 {
+  margin: 0 auto;
+  width: 50%;
+}
+.text-table2 {
+  width: 10%;
+}
+th,
+td {
+  /*  padding:  5px 25px; */
+}
+
+tr:hover {
+  background-color: #34497280;
+}
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+
+.bg-pen {
+  background-color: #eee52b;
+  background-position: center;
+  padding: 5px 5px;
+}
+
+/*  .espacio{
+
+   margin: 5 auto;
+    margin-left: 5px;
+  } */
+
+.esboton {
+  margin: 0 auto;
+  margin-top: 20px;
+  /*   margin-left: 80px; */
+}
+
+.form-group {
+  padding: 0.1px 0;
+  /* You can adjust the margin value as needed */
+}
+
+.col-12 {
+  margin: 0 auto;
+  /* Center the content horizontally within the column */
+}
+
+.form-control {
+  margin: 0;
+}

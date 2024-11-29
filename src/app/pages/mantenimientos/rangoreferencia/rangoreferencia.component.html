@@ -1,0 +1,258 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="button">
+            <button
+              class="btn btn-primary btn-sm"
+              data-toggle="modal"
+              data-target="#modal-info"
+            >
+              <i class="bx bxs-plus-circle"></i>
+              Agregar rangos de Referencia
+            </button>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="">ID de la prueba:</label>
+              {{ listaseleecionadapruebas.CODIGO }}
+            </div>
+            <div class="form-group col-md-6">
+              <label for="">Nombre de la prueba:</label>
+              {{ listaseleecionadapruebas.NOMBRE }}
+            </div>
+            <div class="form-group col-md-3">
+              <label for="">Fecha:</label>
+              {{ listaseleecionadapruebas.createdAt | utcDate: "YYYY-MM-dd" }}
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsible">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tipo fisiologico</th>
+                <th>Tramo edades</th>
+
+                <th>Unidad</th>
+                <th>Rangos</th>
+                <th>comentario</th>
+                <th>Estado</th>
+
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of listarangos; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.tipofisiologico.DESCRIPCION }}</td>
+              <td>
+                {{ item.edadinicial }} {{ item.unidadedad.DESCRIPCION }} -
+                {{ item.edadfinal }} {{ item.unidadedad.DESCRIPCION }}
+              </td>
+              <td>{{ item.unidad.DESCRIPCION }}</td>
+              <td>{{ item.rangos }}</td>
+              <td></td>
+              <td><input type="checkbox" [(ngModel)]="item.ESTADO" /></td>
+              <td>
+                <span class="cursor">
+                  <a
+                    [ngClass]="{ 'disabled-icon': item.ESTADO != true }"
+                    [routerLink]="['/dashboard', 'rangos', item.id]"
+                  >
+                    <i
+                      class="bx bxs-edit bx-sm"
+                      data-toggle="modal"
+                      data-target="#modal-info"
+                    ></i> </a
+                ></span>
+                <span (click)="borrarRango(item)" class="cursor">
+                  <i class="bx bxs-trash bx-sm"></i
+                ></span>
+              </td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear rangos de referencia</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--       <div class=""> -->
+      <div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <form
+                autocomplete="off"
+                [formGroup]="rangosform"
+                (ngSubmit)="crearRango()"
+                id="panelform"
+              >
+                <div class="row">
+                  <!-- Primera columna (col-md-6) -->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="">Tipo fisiologico</label>
+                      <select
+                        class="form-control"
+                        formControlName="tipofisiologicoId"
+                        [class.is-invalid]="tipofisiologicoId"
+                      >
+                        <option value="">--Seleccione--</option>
+                        <option
+                          *ngFor="let item of listatipofisiologico"
+                          [value]="item.id"
+                        >
+                          {{ item.DESCRIPCION }}
+                        </option>
+                      </select>
+                      <small *ngIf="tipofisiologicoId" class="text-danger"
+                        >Seleccione una opcion</small
+                      >
+                    </div>
+
+                    <div class="form-group">
+                      <label for="">Rangos</label>
+                      <input
+                        type="text"
+                        appUppercase
+                        class="form-control"
+                        formControlName="rangos"
+                        [class.is-invalid]="rangos"
+                        placeholder="Ingrese nombre de la prueba ..."
+                      />
+                      <small *ngIf="rangos" class="text-danger"
+                        >Ingrese un valor
+                      </small>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="">Unidad de resultado</label>
+                      <select
+                        class="form-control"
+                        [class.is-invalid]="unidadId"
+                        formControlName="unidadId"
+                      >
+                        <option value="">--Seleccione--</option>
+                        <option
+                          *ngFor="let item of listaunidad"
+                          [value]="item.id"
+                        >
+                          {{ item.DESCRIPCION }}
+                        </option>
+                      </select>
+                      <small *ngIf="unidadId" class="text-danger"
+                        >Seleccione una opcion</small
+                      >
+                    </div>
+                    <strong>Tramo de edades</strong>
+                    <hr />
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="">Edad inicial</label>
+                        <input
+                          class="form-control"
+                          [class.is-invalid]="edadinicial"
+                          formControlName="edadinicial"
+                          type="number"
+                        />
+                        <small *ngIf="edadinicial" class="text-danger"
+                          >Ingrese un valor</small
+                        >
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label for="">Edad final</label>
+                        <input
+                          class="form-control"
+                          [class.is-invalid]="edadfinal"
+                          formControlName="edadfinal"
+                          type="number"
+                        />
+                        <small *ngIf="edadfinal" class="text-danger"
+                          >Ingrese un valor</small
+                        >
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        <label for="">Unidad edades</label>
+                        <select
+                          class="form-control"
+                          [class.is-invalid]="unidadedadId"
+                          formControlName="unidadedadId"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option
+                            *ngFor="let item of listaunidadedades"
+                            [value]="item.id"
+                          >
+                            {{ item.DESCRIPCION }}
+                          </option>
+                        </select>
+                        <small *ngIf="unidadedadId" class="text-danger"
+                          >Seleccione una opcion</small
+                        >
+                      </div>
+
+                      <!--  <div class="form-group col-md-8">
+                        <label for="">Unidad edad final</label>
+                        <select class="form-control">
+                          <option value="">--Seleccione--</option>
+                          <option
+                            *ngFor="let item of listaunidadedades"
+                            [value]="item.id"
+                          >
+                            {{ item.DESCRIPCION }}
+                          </option>
+                        </select>
+                      </div> -->
+                    </div>
+                  </div>
+
+                  <!-- Segunda columna (col-md-6) -->
+
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label for="">Interpretacion</label>
+                      <textarea
+                        class="form-control textarea-mod"
+                        rows="14"
+                        formControlName="comentario"
+                        placeholder="Enter ..."
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+                <!--    <pre>{{ rangosform.value | json }}</pre> -->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr />

@@ -1,0 +1,201 @@
+<div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    [formGroup]="importForm"
+    novalidate
+    (ngSubmit)="guardar()"
+    id="importForm"
+  >
+    <div class="col-md-12">
+      <div class="card card-info">
+        <div class="card-header">
+          <h6 class="card-title">Solicitud de reactivos</h6>
+          
+        </div>
+        <div class="card-body">
+          <div class="button">
+            <!-- <button class="btn btn-primary btn-sm" (click)="cambioEstado()">
+              {{ btnVal }}
+            </button> -->
+            <button class="btn btn-primary btn-sm" >
+              Guardar
+            </button>
+            &nbsp;
+
+            <button
+              type="reset"
+              (click)="onreset()"
+              class="btn btn-danger btn-sm"
+            >
+              Cancelar
+            </button>
+            &nbsp;
+            <a
+              type="button"
+              (click)="comprobarCantidad(pedidoSseleccionado)"
+              class="btn btn-secondary btn-sm"
+            >
+              comprobar disponiblidad
+            </a>
+            <!--   &nbsp;
+              <button
+                type="reset"
+                (click)="onreset()"
+                class="btn btn-default btn-sm"
+              >
+                Validar
+              </button> -->
+          </div>
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label class="form-ItemName">INSTITUCION</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="AREA"
+                [class.is-invalid]="AREA"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label class="form-ItemName">CODIGO</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="CODIGO"
+                [class.is-invalid]="CODIGO"
+              />
+              <!--      <select
+                  class="form-control"
+                  formControlName="AREA"
+                  [class.is-invalid]="AREA"
+                >
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let cliente of listacliente"
+                    [value]="cliente.id"
+                  >
+                    {{ cliente.NOMBRE }}
+                  </option>
+                
+                </select> -->
+            </div>
+
+            <!-- <div class="form-group col-md-4">
+                  <label class="form-ItemName">Bodega</label>
+    
+                  <select
+                    class="form-control"
+                    formControlName="MARCA"
+                    [class.is-invalid]="MARCA"
+                  >
+                    <option value="">--Seleccione--</option>
+                    <option *ngFor="let marca of listamarca" [value]="marca.id">
+                      {{ marca.NOMBRE }}
+                    </option>
+                  </select>
+                </div> -->
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Descripcion</th>
+                  <th>Unidad</th>
+                  <th>Cantidad ordenada</th>
+                  <th>Entregado</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="PRODUCTOS">
+                <tr
+                  *ngFor="
+                    let d of PRODUCTOS.controls;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <!--   <td>{{i +1}}</td> -->
+                  <td>
+                    <select
+                      class="form-control"
+                      formControlName="ID_PRODUCTO"
+                      (change)="actualizarInputs(i, $event)"
+                    >
+                      <option
+                        *ngFor="let producto of listaproductos"
+                        [value]="producto.id"
+                      >
+                        {{ producto.REFERENCIA }}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                 
+                     <input
+                        class="form-control"
+                        type="text"
+                        formControlName="NOMBRE"
+                        [attr.disabled]="true"
+                      /> 
+                  </td>
+                  <td>
+                    
+                     <input
+                        class="form-control"
+                        type="text"
+                        formControlName="UNIDAD"
+                        [disabled]="true"
+                      /> 
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      type="number"
+                      formControlName="CANTIDAD"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="ENTREGADO"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="LOTE"
+                    />
+                  </td>
+                  <td>
+                    <i
+                      class="bx bxs-trash bx-sm"
+                      (click)="borrarProducto(i)"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <td>
+              <a type="button" class="agregar" (click)="agregarproductos()"
+                >Agregar producto</a
+              >
+              <!--  <a
+                type="button"
+                
+                data-toggle="modal"
+                data-target="#modal-default"
+              >
+               Agregar producto
+                </a> -->
+            </td>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<hr />
+<pre>{{ importForm.value | json }}</pre>

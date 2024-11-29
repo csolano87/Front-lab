@@ -1,0 +1,11 @@
+.ti {
+  display: flexbox;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.title-header {
+}
+
+.img {
+}

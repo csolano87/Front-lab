@@ -1,0 +1,33 @@
+.button{
+    display: flex;
+    justify-content: end;
+    
+    }
+    
+    .custom-option {
+        white-space: nowrap; 
+        width: 10%;
+      }
+    
+      .li {
+        list-style: none;
+        left: 0;
+        margin: auto 0;
+      }
+      
+      .scroll2 {
+        margin-right: 80px;
+        width: 90%;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+      
+        left: 0;
+        
+        cursor: pointer;
+      }
+    
+      
+    .scroll2 li:hover {
+      background-color: #b3ecb7;
+    }

@@ -1,0 +1,150 @@
+<div class="container-fluid rounded shadow">
+    <div class="row py-4 animated fadeIn fast">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar pedido..."
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div
+      *ngIf="cargando"
+      class="alert alert-info text-center mt-3 animated fadeIn faster"
+    >
+      <h4 class="alert-heading">Cargando</h4>
+      <p>
+        <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+      </p>
+      <p class="mb-0">Espere por favor</p>
+    </div>
+  
+    <div class="row animated fadeIn fast" *ngIf="!cargando">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="title">LISTADO DE PEDIDOS GENERADOS</h6>
+  
+            <div class="col-md-3 button"></div>
+  
+            <div class="table-responsive">
+              <table
+                *ngIf="!cargando && listaPedidoStock.length > 0"
+                class="table"
+              >
+                <thead>
+                  <tr>
+                    <th class="text-table">FECHA</th>
+                    <th class="text-table">AREA</th>
+                    <!-- <th class="text-table">MARCA</th> -->
+                    <!--  <th class="text-table">
+                        PRODUCTOS
+                       
+                      </th> -->
+                    <th class="text-table">RESPONSABLE</th>
+                    <th class="text-table">Estado</th>
+                    <th class="text-table">Acciones</th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let pedido of listaPedidoStock
+                        | paginate: { itemsPerPage: 8, currentPage: page }
+                    "
+                  >
+                    <td>{{ pedido.FECHAPEDIDOSTOCK }}</td>
+                    <td>{{ pedido.AREA }}</td>
+                    <td>{{ pedido.user.doctor }}</td>
+                    <td>
+                      <span
+                        *ngIf="pedido.ESTADO == 1 "
+                        class="rounded shadow bg-pen"
+                        >Creado</span
+                      >
+  
+                      <span
+                        *ngIf="pedido.ESTADO == 2"
+                        class="rounded shadow bg-com"
+                        >Despachado</span
+                      >
+                      <span
+                      *ngIf="pedido.ESTADO == 0"
+                      class="rounded shadow "
+                      >Anulado</span
+                    >
+                    </td>
+  
+                    <td class="text-nowrap">
+                      <a
+                        [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
+                        [routerLink]="[
+                          '/dashboard',
+                          'solicitud-pedidos',
+                          pedido.id
+                        ]"
+                      >
+                        <i class="bx bx-edit-alt bx-sm"></i>
+                      </a> 
+  
+                      <span class="cursor">
+                        <a [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }">
+                          <i
+                            (click)="borrarPedido(pedido)"
+                            class="bx bxs-trash bx-sm"
+                          ></i>
+                        </a>
+                      </span>
+                      <span class="cursor">
+                        <a>
+                          <i
+                            (click)="ImprimirPDf(pedido)"
+                            class="bx bxs-file-pdf bx-sm"
+                          ></i>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pagination-controls
+        (pageChange)="page = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      ></pagination-controls>
+    </div>
+  
+    <div class="modal fade show" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">+ Cargar pruebas</h4>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+  
+        <div class="modal-footer justify-content-between">
+          <!--    <button type="button" class="btn btn-default" data-dismiss="modal"></button> 
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">Guardar</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,509 @@
+<div class="container-fluid">
+  <form
+    class="re"
+    autocomplete="off"
+    [formGroup]="OrdenAs400Form"
+    novalidate
+    (ngSubmit)="guardarOrden()"
+    id="OrdenAs400Form"
+  >
+    <div class="button">
+      <a type="submit" class="btn btn-primary btn-sm" (click)="cambioestado()">
+        {{ btnVal }}</a
+      >
+      &nbsp;
+
+      <button type="reset" (click)="reset()" class="btn btn-danger btn-sm">
+        Cancelar
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Datos del paciente</h6>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName"># Orden</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLNUOR"
+                  [class.is-invalid]="DLNUOR"
+                  (keyup.enter)="buscarHis(OrdenAs400Form.value.DLNUOR)"
+                  placeholder="Ingrese su orden"
+                />
+
+                <small *ngIf="" class="text-danger">Campo obligatorio </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Historia Clinica</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLHIST"
+                  [class.is-invalid]="DLHIST"
+                  placeholder="Ingrese su historia"
+                />
+
+                <small *ngIf="" class="text-danger">Campo obligatorio </small>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="" class="form-ItemName">Paciente</label>
+                <div class="input-group">
+                  <input
+                    appUppercase
+                    type="text"
+                    class="form-control appUppercase"
+                    formControlName="DLAPEL"
+                    [class.is-invalid]="DLAPEL"
+                    placeholder="Ingrese paciente"
+                  />
+                  <div class="input-group-append"></div>
+                </div>
+
+                <small *ngIf="" class="text-danger">Campo obligatorio</small>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Cédula</label>
+
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLCEDU"
+                  [class.is-invalid]="DLCEDU"
+                  placeholder="Ingrese su cédula"
+                />
+
+                <small *ngIf="" class="text-danger">Campo obligatorio </small>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Fecha nacimiento</label>
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="DLFECN"
+                    [class.is-invalid]="DLFECN"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="" class="form-ItemName">Sexo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="DLSEXO"
+                  [class.is-invalid]="DLSEXO"
+                />
+
+                <small *ngIf="" class="text-danger"
+                  >Debe de escoger una opción
+                </small>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="" class="form-ItemName">Dependencia</label>
+                <!--  <input
+                  appUppercase
+                  type="text"
+                  class="form-control"
+                  formControlName="EMAIL"
+                  [class.is-invalid]=""
+                  placeholder="example@gmail.com"
+                /> -->
+                <select
+                  class="form-control"
+                  formControlName="DLCDEP"
+                  [class.invalid]="DLCDEP"
+                >
+                  <option value="">--Seleccione--</option>
+
+                  <option
+                    *ngFor="let dependencia of listaSala"
+                    [value]="dependencia.ValueCode"
+                  >
+                    {{ dependencia.Description }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Activo</label>
+                <!-- <input
+                  type="text"
+                  class="form-control"
+                  formControlName="TELEFONO"
+                  [class.is-invalid]=""
+                  placeholder="Ingrese numero de télefono"
+                /> -->
+                <select
+                  class="form-control"
+                  formControlName="DLCACT"
+                  [class.invalid]="DLCACT"
+                >
+                  <option value="">--Seleccione--</option>
+
+                  <option
+                    *ngFor="let activo of listaOperador"
+                    [value]="activo.ValueCode"
+                  >
+                    {{ activo.Description }}
+                  </option>
+                </select>
+                <small *ngIf="" class="text-danger">campo obligatorio </small>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Otros</label>
+            
+                  <select
+                    class="form-control"
+                    formControlName="DLCOTR"
+                    [class.invalid]="DLCOTR"
+                  >
+                    <option value="">--Seleccione--</option>
+
+                    <option
+                      *ngFor="let otros of listaFlebotomista"
+                      [value]="otros.ValueCode"
+                    >
+                      {{ otros.Description }}
+                    </option>
+                  </select>
+                  <small *ngIf="DLCOTR" class="text-danger"
+                  >Debe de escoger una opción</small
+                >
+                  <!--  <input
+                      class="form-control"
+                      formControlName="DLTIDO"
+                      [class.is-invalid]="DLTIDO"                    value=""
+                    /> -->
+                
+              </div>
+
+              <!-- <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Ti</label>
+                <div class="col-">
+                  <select
+                    class="form-control"
+                    formControlName="DLTIDO"
+                    [class.invalid]="DLTIDO"
+                  >
+                    <option value="">--Seleccione--</option>
+
+                    <option
+                      *ngFor="let origin of listaCentrosalud"
+                      [value]="origin.ValueCode"
+                    >
+                      {{ origin.Description }}
+                    </option>
+                  </select>
+                   <input
+                      class="form-control"
+                      formControlName="DLTIDO"
+                      [class.is-invalid]="DLTIDO"                    value=""
+                    /> 
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Datos demograficos</h6>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Tipo Orden</label>
+                <div class="col-">
+                  <select
+                    class="form-control"
+                    formControlName="DLTIDO"
+                    [class.invalid]="DLTIDO"
+                  >
+                    <option value="">--Seleccione--</option>
+
+                    <option
+                      *ngFor="let origin of listaCentrosalud"
+                      [value]="origin.ValueCode"
+                    >
+                      {{ origin.Description }}
+                    </option>
+                  </select>
+                  <!--  <input
+                      class="form-control"
+                      formControlName="DLTIDO"
+                      [class.is-invalid]="DLTIDO"                    value=""
+                    /> -->
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Procedencia</label>
+                <div class="col-">
+                  <!--  <input
+                    class="form-control"
+                    formControlName="DLCPRO"
+                    [class.is-invalid]="DLCPRO"
+                    value=""
+                  /> -->
+                  <select
+                    class="form-control"
+                    formControlName="DLCPRO"
+                    [class.invalid]="DLCPRO"
+                  >
+                    <option value="">--Seleccione--</option>
+
+                    <option
+                      *ngFor="let origin of listaorigin"
+                      [value]="origin.ValueCode"
+                    >
+                      {{ origin.Description }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">Servicio</label>
+                <div class="col-">
+                  <select
+                    class="form-control"
+                    formControlName="DLCSER"
+                    [class.invalid]="DLCSER"
+                  >
+                    <option value="">--Seleccione--</option>
+
+                    <option
+                      *ngFor="let servicio of listaservice"
+                      [value]="servicio.ValueCode"
+                    >
+                      {{ servicio.Description }}
+                    </option>
+                  </select>
+                  <!-- <input
+                    class="form-control"
+                    formControlName="DLCSER"
+                    [class.is-invalid]="DLCSER"
+                    value=""
+                  /> -->
+                </div>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName">DOCTOR</label>
+                <div class="col-">
+                  <select
+                    class="form-control"
+                    formControlName="DLCMED"
+                    [class.invalid]="DLCMED"
+                  >
+                    <option value="">--Seleccione--</option>
+
+                    <option
+                      *ngFor="let doctor of listadoctor"
+                      [value]="doctor.ValueCode"
+                    >
+                      {{ doctor.Description }}
+                    </option>
+                  </select>
+                  <!--  <input
+                    class="form-control"
+                    formControlName="DLCMED"
+                    [class.is-invalid]="DLCMED"
+                    value=""
+                  /> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Pruebas</h6>
+          </div>
+
+          <div class="card-body scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+
+                  <th>PROCESAR</th>
+                  <th>NOMBRE_EXAMEN</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="DLCEXAS">
+                <tr
+                  *ngFor="
+                    let d of OrdenAs400Form.controls['DLCEXAS']?.value;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <td>
+                    <div class="">
+                      {{ i + 1 }}
+                    </div>
+                  </td>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="checkbox__input"
+                      formControlName="ESTADO"
+                    />
+                  </td>
+                  <td>{{ d.ItemName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content3">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- 
+          <div class="modal-">
+            <div class="container-fluid rounded shadow">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <form autocomplete="off" class="form-inline">
+                      <div class="form-group">
+                        <div class="form-group col-md-4 espacio">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Ingrese apellidos..."
+                            #NOMBRE
+                          />
+                        </div>
+    
+                        <div class="form-group col-md-4 espacio">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Ingrese  cédula.."
+                            #CEDULA
+                          />
+                        </div>
+                      </div>
+    
+                      <div class="esboton">
+                        <a
+                          class="btn btn-primary"
+                          (click)="buscar(NOMBRE.value, CEDULA.value)"
+                        >
+                          CONSULTAR</a
+                        >
+                      </div>
+                    </form>
+                  </div>
+                </div>
+    
+                <div class="row animated fadeIn fast">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="title">Busqueda Pacientes</h6>
+    
+                        <div class="col-md-3 button"></div>
+    
+                        <div class="row py-2">
+                          <div class="col-12"></div>
+                        </div>
+    
+                        <div *ngIf="cargando" class="row animated fadeIn fast">
+                          <div class="col-12">
+                            <div class="alert alert-info text-center">
+                              <h4 class="alert-heading">Cargando</h4>
+                              <i class="fa fa-refresh fa-spin fa-2x"></i>
+                              <p class="mb-0">Por favor espere</p>
+                            </div>
+                          </div>
+                        </div>
+    
+                        <div *ngIf="!cargando" class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th class="text-table">Cédula</th>
+                                <th class="text-table">Apellidos</th>
+                                <th class="text-table">Nombres</th>
+                                <th class="text-table">Edad</th>
+    
+                                <th class="text-table">Sexo</th>
+    
+                                <th class="text-table">FechaNacimiento</th>
+                              </tr>
+                            </thead>
+    
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let paciente of listaordene
+                                    | paginate
+                                      : { itemsPerPage: 5, currentPage: page }
+                                "
+                                (click)="seleccionarPaciente(paciente)"
+                              >
+                                <td>{{ paciente.PA_ID1 }}</td>
+                                <td>{{ paciente.PA_LASTNAME }}</td>
+                                <td>{{ paciente.PA_FIRSTNAME }}</td>
+                                <td>{{ paciente.PA_AGE }}</td>
+                                <td>{{ paciente.PA_SEX }}</td>
+                                <td>{{ paciente.PA_BIRTHDATE }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+    
+                        <pagination-controls
+                          (pageChange)="page = $event"
+                          previousLabel="Anterior"
+                          nextLabel="Siguiente"
+                        ></pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+   -->
+    </div>
+  </div>
+</div>
+<!-- <pre>
+      {{ OrdenAs400Form.value | json }}
+  </pre -->
+>

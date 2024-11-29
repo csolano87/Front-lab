@@ -1,0 +1,12 @@
+{
+    "editor.fontSize": 13,
+    "editor.tabSize": 5,
+    "editor.renderWhitespace": "all",
+    "editor.cursorStyle": "underline-thin",
+    "editor.wordWrap": "on",
+    "editor.accessibilitySupport": "on",
+    "editor.autoClosingBrackets": "always",
+    "workbench.colorCustomizations": {
+        
+    }
+}

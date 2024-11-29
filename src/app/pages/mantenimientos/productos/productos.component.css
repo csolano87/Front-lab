@@ -1,0 +1,80 @@
+.container {
+  width: 50%;
+  min-height: 550px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.actualizar {
+  margin: 0 auto;
+}
+.rg {
+  color: #ff8970;
+  background: #fff;
+  
+  text-align: center;
+}
+
+.text-table {
+  width: 20%;
+}
+.table tr {
+  cursor: pointer;
+}
+.bg-com {
+  background-color: #06d641;
+  background-position: center;
+  padding: 5px 5px;
+}
+.bxs-trash{
+  color: red;
+}
+table {
+  width: 100%;
+  text-align: center;
+}
+
+thead th {
+  font-size: 0.8rem;
+  text-align: left;
+}
+tbody td {
+  font-size: .8rem;
+  text-align: left;
+}
+
+th,
+td {
+  /* padding: 10px 8px;
+  text-align: left; */
+}
+
+
+.bg-pen {
+  background-color: #eee52b;
+  background-position: center;
+  padding: 5px 5px;
+}
+
+.espacio {
+  margin: 10 auto;
+  margin-left: 30px;
+}
+
+.esboton {
+  margin: 0 auto;
+  margin-left: 80px;
+}
+
+.title{
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+.input-file{
+  padding: 15px 20px;
+  margin: 0 auto;
+  
+}
+.btn{
+  margin-left: 40px;
+}

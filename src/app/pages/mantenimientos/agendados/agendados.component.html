@@ -1,0 +1,232 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off" class="form-inline">
+            <div class="form-group col-md-2">
+              <label for="text " class="form-ItemName">Cédula</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder=" numero de cédula ..."
+                #IDENTIFICADOR
+              />
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="text" class="form-ItemName">ORDEN</label>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder=" numero de HIST ..."
+                #SALA
+              />
+            </div>
+
+            <div class="form-group col-md-3 form-item">
+              <label for="" class="form-ItemName">Fecha cita </label>
+
+              <div class="input-group date" id="reservationdate">
+                <input
+                  type="date"
+                  class="form-control datetimepicker-input"
+                  #FECHA
+                  data-target="#reservationdate"
+                />
+              </div>
+            </div>
+
+            <div class="button">
+              <a
+                type="button"
+                class="btn btn-primary btn-sm cursor"
+                (click)="
+                  buscar(
+                    IDENTIFICADOR.value,
+
+                    SALA.value,
+                    FECHA.value
+                  )
+                "
+              >
+                Buscar
+              </a>
+
+              <a
+                type="button"
+                (click)="pdf()"
+                class="btn btn-danger btn-sm cursor"
+                >Pdf
+              </a>
+
+              <a
+                (click)="borrarFiltro(IDENTIFICADOR, SALA, FECHA)"
+                class="btn btn-primary btn-sm cursor"
+              >
+                limpiar filtros
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf=""
+    class="alert alert-info text-center mt-3 animated fadeIn faster"
+  >
+    <h4 class="alert-heading">Cargando</h4>
+    <p>
+      <i class="fa fa-refresh fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">Espere por favor</p>
+  </div>
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="title">Listado de ordenes registrados</h6>
+
+          <div class="col-md-3 button"></div>
+
+          <!--  <div *ngIf="ordenes.length === 0" class="row py-2">
+                        <div class="col-12">
+                            <div class="alert alert-info" role="alert">
+                                <h3 class="text-center"> No existe registros  </h3>
+                            </div>
+                        </div>
+                    </div> -->
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-table2">Fecha Cita</th>
+                  <th>Cédula</th>
+                  <th class="text-table4">Pacientes</th>
+
+                  <!--  <th>HORA ORDEN</th> -->
+                  <!--        <th class="text-table2"># HIS</th> -->
+                  <th class=""># ORDEN</th>
+                  <!--   <th class="text-table2"># INIFNITY</th> -->
+                  <!--   <th class="text-table2">F. nacim</th> -->
+                  <th class="text-table2">Origen</th>
+                  <th class="text-table2">Estado</th>
+                  <th class="text-table2">Acciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  *ngFor="
+                    let orden of dataExterna
+                      | paginate: { itemsPerPage: 8, currentPage: page }
+                  "
+                >
+                  <td>{{ orden.FECHA }}</td>
+                  <td>{{ orden.DLCEDU }}</td>
+                  <td>{{ orden.DLAPEL }}</td>
+
+                  <!--       <td>{{ orden.HORATOMA }}</td> -->
+                  <!--  <td>{{ orden.DLHIST }}</td> -->
+                  <td>{{ orden.DLNUOR }}</td>
+                  <!--  <td class="w30">{{ orden.NUMEROORDEN }}</td> -->
+                  <!--      <td>{{ orden.DLFECN }}</td> -->
+                  <td>{{ orden.DLCPRO }}</td>
+                  <td>
+                    <div [ngSwitch]="orden.ESTADO">
+                      <span *ngSwitchCase="1" class="rounded shadow bg-creada"
+                        >Creada</span
+                      >
+                      <span *ngSwitchCase="2" class="rounded shadow bg-procesando"
+                        >Procesando</span
+                      >
+                      <span *ngSwitchCase="3" class="rounded shadow bg-pendiente"
+                        >Pendiente</span
+                      >
+                      <span *ngSwitchDefault class="rounded shadow bg-desactivado"
+                        >Cancelada</span
+                      >
+                    </div>
+                  </td>
+                  <!-- <td>{{orden.FECHACITA|date:"yyyy-MM-dd"}}</td>   -->
+
+                  <td class="text-nowrap">
+                    <a
+                      [routerLink]="['/dashboard', 'manual', orden.id]"
+                      [ngClass]="{ 'disabled-icon': orden.ESTADO == '2' }"
+                      data-toggle="tooltip"
+                      data-original-title="Editar"
+                    >
+                      <i class="bx bxs-edit bx-sm"></i>
+                    </a>
+                    &nbsp;
+                    <!-- <a
+                      [ngClass]="{ 'disabled-icon': orden.ESTADO != '1' }"
+                      data-toggle="tooltip"
+                      data-original-title="Borrar"
+                      (click)="eliminarOrden(orden)"
+                      class="cursor"
+                    >
+                      <i class="bx bxs-printer bx-sm"></i>
+                    </a> -->
+                    <span
+                      [ngClass]="{ 'disabled-icon': orden.ESTADO != '2' }"
+                      class="rounded shadow cursor"
+                      (click)="pdf2(orden)"
+                    >
+                      <i class="bx bxs-file-pdf bx-sm text-danger"></i>
+                    </span>
+
+                    <span
+                      [ngClass]="{ 'disabled-icon': orden.ESTADO != '1' }"
+                      (click)="borrarOrden(orden)"
+                      class="cursor"
+                    >
+                      <i class="bx bx-trash bx-sm text-danger"></i>
+                    </span>
+                    <!-- <span>
+                      <i class="bx bx-barcode bx-sm"></i>
+                    </span> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls
+      (pageChange)="page = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+    ></pagination-controls>
+  </div>
+
+  <div class="modal fade show" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">+ Cargar pruebas</h4>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer justify-content-between">
+        <!--    <button type="button" class="btn btn-default" data-dismiss="modal"></button> 
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Guardar</button> -->
+      </div>
+    </div>
+  </div>
+</div>

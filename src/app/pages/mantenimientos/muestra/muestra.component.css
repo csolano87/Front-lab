@@ -1,0 +1,33 @@
+.bg-pen {
+  background-color: #067434;
+  background-position: center;
+  padding: 5px 5px;
+}
+
+.bg-pe {
+  background-color: #f10505;
+  background-position: center;
+  padding: 5px 5px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  cursor: pointer;
+}
+
+tr:hover {
+  background-color: #b3ecb7;
+}
+
+thead th {
+  font-size: 0.8rem;
+}
+tbody td {
+  font-size: 0.9rem;
+}

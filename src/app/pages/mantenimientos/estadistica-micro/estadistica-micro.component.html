@@ -1,0 +1,191 @@
+<div class="container-fluid rounded shadow">
+  <div class="row py-4 animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form autocomplete="off" class="form-inline">
+            <div class="form-group">
+              <!-- <input type="text" class="form-control" placeholder="Buscar numero de cedula ..." (keyup)="buscar(txtTermino.value.toUpperCase() )" #txtTermino /> -->
+
+              <!--    <input type="text" class="form-control" placeholder="Buscar estado..." #ESTADO /> -->
+
+              <div class="form-group col-md-4 espacio">
+                <label for="text" class="form-ItemName">Fecha desde</label>
+
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control datetimepicker-input"
+                    #FECHADESDE
+                    data-target="#reservationdate"
+                  />
+                </div>
+                <!--  <input type="text" class="form-control" placeholder="Buscar fecha registro..." #FECHAORDEN /> -->
+              </div>
+
+              <div class="form-group col-md-4 espacio">
+                <label for="text " class="form-ItemName">Fecha hasta</label>
+
+                <div class="input-group date" id="reservationdate">
+                  <input
+                    type="date"
+                    class="form-control datetimepicker-input"
+                    #FECHAHASTA
+                    data-target="#reservationdate"
+                  />
+                </div>
+                <!--  <input type="text" class="form-control" placeholder="Buscar fecha registro..." #FECHAORDEN /> -->
+              </div>
+            </div>
+
+            <div class="esboton">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="registroMicro(FECHADESDE.value, FECHAHASTA.value)"
+              >
+                CONSULTAR
+              </button>
+            </div>
+
+            <!--   <button class="btn btn-danger btn-sm mt-3" (click)="imprimirLista()">PDF</button>
+                        &nbsp; -->
+
+            <div class="esboton">
+              <button class="btn btn-info" (click)="exportTable()">
+                Exportar a CSV
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="cargando"
+    class="alert alert-info text-center mt-3 animated fadeIn faster"
+  >
+    <h4 class="alert-heading">Cargando</h4>
+    <p>
+      <!--   <i class="fa fa-refresh fa-spin fa-2x"></i> -->
+      <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">Espere por favor</p>
+  </div>
+
+  <div class="row animated fadeIn fast" *ngIf="!cargando">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="title">REGISTRO MICROBIOLOGIA</h6>
+
+          <div class="col-md-3 button"></div>
+
+          <!--  <div *ngIf="ordenes.length === 0" class="row py-2">
+                        <div class="col-12">
+                            <div class="alert alert-info" role="alert">
+                                <h3 class="text-center"> No existe registros  </h3>
+                            </div>
+                        </div>
+                    </div> -->
+
+          <div class="table-responsive">
+            <table #table class="table">
+              <thead>
+                <tr>
+                  <th class="">Fecha Ingreso</th>
+                  <th class="">orden No.</th>
+                  <th class="">Origen</th>
+                  <th class="text-table2">Servicio</th>
+                  <th class="text-table">Historia clínica</th>
+                  <th class="text-table">Paciente</th>
+                  <th class="text-table">Edad</th>
+                  <th class="">Sexo</th>
+                  <th class="text-table2">Tipo de muestra</th>
+                  <th class="text-table2">Microorganismo</th>
+                  <th class="text-table2">Tecnica</th>
+                  <th class="text-table2">Valor</th>
+                  <th class="text-table3">Antibiotico</th>
+                  <th class="">Sensible</th>
+                  <th class="">Resistente</th>
+                  <th class="">Comentario</th>
+                  <th class="">Usuario Validador</th>
+                  <th class="">Fecha Validacion</th>
+                  <th class="">Orden As400</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  *ngFor="
+                    let orden of listaordene
+                      | paginate: { itemsPerPage: 5, currentPage: itemsPerPage }
+                  "
+                >
+                  <td>{{ orden.Fechaingreso }}</td>
+                  <td>{{ orden.SampleID }}</td>
+                  <td>{{ orden.Origen }}</td>
+                  <td>{{ orden.Servicio }}</td>
+                  <td>{{ orden.Historia }}</td>
+                  <td>{{ orden.Paciente }}</td>
+                  <td>{{ orden.Age }}</td>
+
+                  <td>{{ orden.Sexo }}</td>
+
+                  <!--    <td></td> -->
+                  <td>{{ orden.Tipomuestra }}</td>
+
+                  <td>{{ orden.Microorganismo }}</td>
+                  <td>{{ orden.Tecnica }}</td>
+                  <td>
+                    <ng-container *ngFor="let valor of splitValor(orden.Valor)">
+                      <div>{{ valor }}</div>
+                    </ng-container>
+                  </td>
+                  <!-- <td>{{orden.Antibiotico}}</td> -->
+                  <td class="text-table3">
+                    <ng-container
+                      *ngFor="
+                        let antibiotico of splitAntibiotics(orden.Antibiotico)
+                      "
+                    >
+                      <div>{{ antibiotico }}</div>
+                    </ng-container>
+                  </td>
+                  <td>
+                    <ng-container
+                      *ngFor="let sensible of splitSensible(orden.Sensible)"
+                    >
+                      <div>
+                        {{ sensible.includes("Sensible") ? "SI" : "-" }}
+                      </div>
+                    </ng-container>
+                  </td>
+                  <td>
+                    <ng-container
+                      *ngFor="let sensible of splitSensible(orden.Sensible)"
+                    >
+                      <div>
+                        {{ sensible.includes("Resistente") ? "SI" : "-" }}
+                      </div>
+                    </ng-container>
+                  </td>
+                  <td>{{ orden.Comentario }}</td>
+                  <td>{{ orden.Validador }}</td>
+                  <td>{{ orden.Fechavalidacion }}</td>
+                  <td>{{ orden.Orden }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls
+      (pageChange)="itemsPerPage = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+    ></pagination-controls>
+  </div>
+</div>

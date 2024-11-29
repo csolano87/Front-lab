@@ -1,0 +1,57 @@
+
+  table {
+    width: 100%;
+  }
+  
+  .table tr {
+    cursor: pointer;
+  }
+  
+  thead th {
+    padding-left: 0px;
+    font-size: 0.8rem;
+  }
+  
+  tbody td {
+    font-size: 0.9rem;
+  }
+  
+  th,
+  td {
+    padding: 12px 20px;
+    padding-left: 0;
+  }
+  
+  .bxs-trash {
+    color: red;
+  }
+  
+  .select-box {
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    line-height: 22px;
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  .disabled-link {
+    pointer-events: none;
+    opacity: 0.6;
+    /* Add any other styles to visually indicate that the link is disabled */
+  }
+  .bg-pen {
+    background-color: #eee52b;
+    background-position: center;
+    padding: 5px 5px;
+  }
+
+  .title{
+   text-align: center;
+   font-weight: 700;
+  }
+  .disabled-icon {
+    opacity: 0.5;
+    /* Opacidad reducida para desactivar visualmente el ícono */
+    pointer-events: none;
+    /* Evitar eventos de clic en el ícono desactivado */
+  }
