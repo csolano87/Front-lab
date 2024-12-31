@@ -9,7 +9,11 @@ import {
 } from '../interfaces/pedidos-stocks.interface';
 import { StockPedidoDespacho } from '../models/stockForm.module';
 import { StockForm } from '../interfaces/stockMasivoExcel.interface';
-import { StockBodega, StockBodegas } from '../interfaces/cargarStockBodegas.interface';
+import {
+  StockBodega,
+  StockBodegas,
+} from '../interfaces/cargarStockBodegas.interface';
+import { StockL, StocksL } from '../interfaces/cargalistadoStock.interface';
 const baseUrl = environment.url;
 @Injectable({
   providedIn: 'root',
@@ -23,7 +27,7 @@ export class StockService {
   get headers() {
     return {
       // headers: { 'x-token': this.token },
-      headers: { 'x-token': this.token, responseType: 'blob'  },
+      headers: { 'x-token': this.token, responseType: 'blob' },
     };
   }
 
@@ -40,16 +44,18 @@ export class StockService {
       .pipe(map(({ pedidoStock }) => pedidoStock));
   }
 
-  getDeletePedidoStock(pedido:pedidoStock) {
-    return this.http
-      .delete(`${baseUrl}/api/pedidos-stock/${pedido.id}`, this.headers)
-     
+  getDeletePedidoStock(pedido: pedidoStock) {
+    return this.http.delete(
+      `${baseUrl}/api/pedidos-stock/${pedido.id}`,
+      this.headers,
+    );
   }
 
-  getPdfPedidoStock(pedido:pedidoStock) {
-    return this.http
-      .get(`${baseUrl}/api/pedidos-stock/reporte-pdf/${pedido.id}`,
-       {    responseType: 'blob'})
+  getPdfPedidoStock(pedido: pedidoStock) {
+    return this.http.get(
+      `${baseUrl}/api/pedidos-stock/reporte-pdf/${pedido.id}`,
+      { responseType: 'blob' },
+    );
   }
   getByfiltroStock(termino: string) {
     return this.http
@@ -67,23 +73,50 @@ export class StockService {
       this.headers,
     );
   }
-  
-  getCreateStock(formData:StockForm) {
 
-    return this.http.post(`${baseUrl}/api/stock`,formData,this.headers)
+  getCreateStock(formData: StockForm) {
+    return this.http.post(`${baseUrl}/api/stock`, formData, this.headers);
   }
 
-  getFiltroBodegas(bodegaId:string):Observable<StockBodega[]>{
-    return this.http.get<StockBodegas>(`${baseUrl}/api/pedidos-stock/bodega/bodega?bodegaId=${bodegaId}`,this.headers)
-    .pipe(map(({stock})=>stock))
+  getCargarinternaCreateStock(formData: StockForm) {
+    return this.http.post(
+      `${baseUrl}/api/stock/cargaInterna`,
+      formData,
+      this.headers,
+    );
   }
 
-  getdescargoStock(data){
-    return this.http.put(`${baseUrl}/api/pedidos-stock`,data,this.headers)
+  getDeleteStock(id:number) {
+    return this.http.delete(
+      `${baseUrl}/api/stock/${id}`,
+      
+      this.headers,
+    );
   }
-   getreportePdfStock() {
-    return this.http.get(`${baseUrl}/api/stock/reporte/pdf`,
-      {    responseType: 'blob'}
-    )
-   } 
+  getCargarinternaStock(): Observable<StockL[]> {
+    return this.http
+      .get<StocksL>(
+        `${baseUrl}/api/stock/cargaInterna`,
+
+        this.headers,
+      )
+      .pipe(map(({ stock }) => stock));
+  }
+  getFiltroBodegas(bodegaId: string): Observable<StockBodega[]> {
+    return this.http
+      .get<StockBodegas>(
+        `${baseUrl}/api/pedidos-stock/bodega/bodega?bodegaId=${bodegaId}`,
+        this.headers,
+      )
+      .pipe(map(({ stock }) => stock));
+  }
+
+  getdescargoStock(data) {
+    return this.http.put(`${baseUrl}/api/pedidos-stock`, data, this.headers);
+  }
+  getreportePdfStock() {
+    return this.http.get(`${baseUrl}/api/stock/reporte/pdf`, {
+      responseType: 'blob',
+    });
+  }
 }

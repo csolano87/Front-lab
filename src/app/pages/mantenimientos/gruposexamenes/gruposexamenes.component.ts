@@ -30,7 +30,7 @@ export class GruposexamenesComponent implements OnInit {
   listagrupoexam: Listaperfile[] = [];
   selectedProductIndex: number | null = null;
   pagesGrupo: number = 1;
-  pagesPruebas: number = 1;
+  pagesPruebas;
   listaperfilId: ListaperfilesID;
 
   listadoseleccionadoperfil: ListaperfilesID;

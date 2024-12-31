@@ -783,46 +783,57 @@ export class IngresordenesComponent implements OnInit {
     this.inputRef.nativeElement.value = '';
   }
   borrarPasatiempo(i: number) {
-   
     const isArray = this.ingresoForm.get('pruebas') as FormArray;
     console.log(this.listgrupoperfil);
-    const nombrePrueba = isArray.value.at(i).nomExam;
+    const nombrePrueba = isArray.value.at(i);
     console.log(nombrePrueba);
-    if (isArray.value.at(i).etq === 3) {
+    if (nombrePrueba.etq === 3) {
       console.log(this.listgrupoperfil);
-      const perfilseleccionado = this.listgrupoperfil.filter(
-             (it) => it.nombre === nombrePrueba,
+      const perfilseleccionado = this.listgrupoperfil.find(
+        (it) => it.nombre === nombrePrueba.nomExam,
       );
       console.log(perfilseleccionado);
+
       if (perfilseleccionado) {
+        console.log(isArray.value);
         perfilseleccionado.isChecked = false;
-        /*  for (const perfil of perfilseleccionado) {
-          console.log(isArray.value.at(i).codigo); */
+        for (let index = isArray.value.length - 1; index >= 0; index--) {
+          const prueba = isArray.at(index).value;
+          console.log(prueba);
 
-        console.log(perfilseleccionado);
+          const existsInPerfil = perfilseleccionado.itempruebas.some(
+            (item) => item.panelprueba.CODIGO === prueba.codigo,
+          );
 
-        const index = isArray.value.map((item) =>
+          if (existsInPerfil) {
+            isArray.removeAt(index);
+          }
+        }
+
+        /*  const index = isArray.value.map((item) =>
           perfilseleccionado.itempruebas.findIndex(
             (p) => p.panelprueba.CODIGO === item.codigo,
           ),
-        );
-
-        console.log(index);
-        index.reverse().forEach((i) => {
+        ); */
+        /* const validIndices = index.filter((i) => i !== -1)
+         .sort((a, b) => b - a) ;
+          console.log(validIndices);
+    
+        validIndices.forEach((i) => {
+          this.pruebas.removeAt(i);
+        }); */
+        /*  console.log(index);
+        index.reverse().forEach((i:number) => {
           if (i !== -1) {
             this.pruebas.removeAt(i);
           }
-        });
+        }); */
       }
-      // }
     }
-
-    const isPruebaseleccionada = isArray.value.at(i);
-    console.log(isPruebaseleccionada);
 
     for (let categoria of this.listaquimica) {
       for (let item of categoria.CODIGO) {
-        if (item.CODIGO === isPruebaseleccionada.codigo) {
+        if (item.CODIGO === nombrePrueba.codigo) {
           item.isChecked = false;
           break;
         }

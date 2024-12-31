@@ -13,35 +13,11 @@
           <h6 class="card-title">{{ tittle }} a bodega</h6>
         </div>
         <div class="card-body">
-          <div class="button">
-            <a
-              type="submit"
-              class="btn btn-primary btn-sm"
-              (click)="cambioEstado()"
-            >
-              {{ btnVal }}
-            </a>
-            &nbsp;
-
-            <button
-              type="reset"
-              (click)="onreset()"
-              class="btn btn-danger btn-sm"
-            >
-              Cancelar
-            </button>
-            &nbsp;
-            <a
-              type="button"
-              (click)="comprobarCantidad(pedidoseleccionado)"
-              class="btn btn-secondary btn-sm"
-            >
-              comprobar disponiblidad
-            </a>
-          </div>
           <div class="row">
-            <div class="form-group col-md-6">
-              <label class="form-ItemName">Departamento solicitante / Area de trabajo</label>
+            <div class="form-group col-md-4">
+              <label class="form-ItemName"
+                >Departamento solicitante / Area de trabajo</label
+              >
 
               <select
                 class="form-control"
@@ -55,15 +31,47 @@
               </select>
             </div>
 
+            <div class="col-md-8">
+              <div class="button">
+                <a
+                *ngIf="btnValC ==='1'"
+                  type="submit"
+                  class="btn btn-primary btn-sm"
+                  (click)="cambioEstado()"
+                >
+                  {{ btnVal }}
+                </a>
+                &nbsp;
+
+                <button
+                  type="reset"
+                  (click)="onreset()"
+                  class="btn btn-danger btn-sm"
+                >
+                  Cancelar
+                </button>
+                &nbsp;
+                <a
+                  *ngIf=" btnVal !== 'Guardar' "
+                  type="button"
+                  [class.disabled]="isChecking"
+                  (click)="comprobarCantidad(pedidoseleccionado)"
+                  class="btn btn-secondary btn-sm"
+                >
+                  {{ btnValC == "1" ? "Comprobar disponibilidad" : "Validar" }}
+                </a>
+              </div>
+            </div>
+
             <table class="table">
               <thead>
                 <tr>
                   <th>Producto</th>
 
-                  <th>Unidad</th>
+                  <th>Marca</th>
                   <th>Cantidad ordenada</th>
-                  <th>Entregado</th>
-                  <th>Lote</th>
+                  <th *ngIf="usuario.rol != 'OPERADOR'">Entregado</th>
+                  <th *ngIf="usuario.rol != 'OPERADOR'">Lote</th>
                 </tr>
               </thead>
               <tbody formArrayName="PRODUCTOS">
@@ -97,18 +105,16 @@
                     <input
                       class="form-control"
                       type="text"
+                      [readonly]="!importForm.enabled || importForm.disabled"
                       formControlName="CANTIDAD"
                     />
                   </td>
 
-                  <td>{{ d.ENTREGADO }}</td>
-                  <td>
+                  <td *ngIf="usuario.rol != 'OPERADOR'">{{ d.ENTREGADO }}</td>
+                  <td *ngIf="usuario.rol != 'OPERADOR'">
                     {{ d.LOTE }}
-                   
                   </td>
                   <td>
-                    
-
                     <i
                       class="bx bxs-trash bx-sm"
                       (click)="borrarProducto(i)"
@@ -116,27 +122,27 @@
                   </td>
                 </tr>
               </tbody>
-              <a
-                type="button"
-                class="agregar"
-                data-toggle="modal"
-                data-target="#modal-info"
-                (click)="agregarproductos()"
-                >Agregar producto</a
-              >
             </table>
+            <a
+              type="button"
+              class="agregar"
+              data-toggle="modal"
+              data-target="#modal-info"
+              (click)="agregarproductos()"
+              >Agregar producto</a
+            >
           </div>
         </div>
       </div>
     </div>
   </form>
 </div>
- 
-<!--  <hr />
- <p>AQUIIUUI</p>
+
+<!-- <hr />
+<p>AQUIIUUI</p>
 <pre>{{ importForm.valid }}</pre>
-<pre>{{ importForm.value | json }}</pre>  -->
- 
+<pre>{{ importForm.value | json }}</pre>
+ -->
 <div class="modal fade" id="modal-info">
   <div class="modal-dialog">
     <div class="modal-content">

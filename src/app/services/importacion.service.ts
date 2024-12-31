@@ -148,6 +148,13 @@ export class ImportacionService {
       .get(`${baseUrl}/api/pedidos-stock/${id}`, this.headers)
       .pipe(map((pedidoStock: { ok: boolean; pedidoStock: PedidoStock }) => pedidoStock.pedidoStock));
   }
+
+getvalidarcantidad(data : StockPedido){
+  return this.http
+      .put(`${baseUrl}/api/pedidos-stock/validar-cantidad/${data.id}`,data, this.headers)
+     
+}
+
   getDeleteImport(pedido: Pedido) {
     return this.http.delete(
       `${baseUrl}/api/pedido-importacion/${pedido.id}`,

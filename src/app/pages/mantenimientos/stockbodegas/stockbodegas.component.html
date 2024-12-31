@@ -5,27 +5,27 @@
         <div class="card-body">
           <form autocomplete="off">
             <div class="row">
-            <div class="form-group col-md-4">
-              <label>Area de trabajo</label>
+              <div class="form-group col-md-4">
+                <label>Area de trabajo</label>
 
-              <select class="form-control" #bodegaId>
-                <option value="">--Seleccione--</option>
-                <option *ngFor="let item of listabodega" [value]="item.id">
-                  {{ item.NOMBRE }}
-                </option>
-              </select>
-            </div>
+                <select class="form-control" #bodegaId>
+                  <option value="">--Seleccione--</option>
+                  <option *ngFor="let item of listabodega" [value]="item.id">
+                    {{ item.NOMBRE }}
+                  </option>
+                </select>
+              </div>
 
-            <div class="esboton">
-              <button
-              type="submit"
-              class="btn btn-primary rounded shadow btn-sm"
-              (click)="buscar(bodegaId.value)"
-            >
-              Consultar
-            </button>
+              <div class="esboton">
+                <button
+                  type="submit"
+                  class="btn btn-primary rounded shadow btn-sm"
+                  (click)="buscar(bodegaId.value)"
+                >
+                  Consultar
+                </button>
+              </div>
             </div>
-          </div>
           </form>
         </div>
       </div>
@@ -85,7 +85,7 @@
                           <input
                             type="number"
                             #numero
-                            (keyup)="DescargoStock(stock, numero.value)"
+                            (keyup.enter)="DescargoStock(stock, numero.value)"
                           />
                         </td>
                       </tr>

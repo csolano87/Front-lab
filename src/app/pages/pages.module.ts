@@ -106,12 +106,22 @@ import { TecnicaComponent } from './mantenimientos/tecnica/tecnica.component';
 import { MuestraspruebasComponent } from './mantenimientos/muestraspruebas/muestraspruebas.component';
 import { GroupByPipe } from '../pipes/group-by.pipe';
 import { FiltroexamPipe } from '../pipes/filtroexam.pipe';
+import { FiltroProductoPipe } from '../pipes/filtro-producto.pipe';
+import { FiltroStockPipe } from '../pipes/filtro-stock.pipe';
+import { MenuComponent } from './mantenimientos/menu/menu.component';
+import { ListadoStockComponent } from './mantenimientos/listado-stock/listado-stock.component';
+import { CargaInternaComponent } from './mantenimientos/carga-interna/carga-interna.component';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
   declarations: [
+
+    ListadoStockComponent,
+    CargaInternaComponent,
+    MenuComponent,
     FiltroexamPipe,
-    
+    FiltroStockPipe,
+    FiltroProductoPipe,
     GroupByPipe,
     TecnicaComponent,
     MuestraspruebasComponent,

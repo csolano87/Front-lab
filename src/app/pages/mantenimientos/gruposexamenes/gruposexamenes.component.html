@@ -86,11 +86,13 @@
                   </thead>
                   <!-- let d of grupoform.controls['pruebas']?.value -->
                   <tbody formArrayName="pruebas">
+                    <!--  | paginate
+                            : { itemsPerPage: 10, currentPage: pagesGrupo };
+                        let i = index -->
                     <tr
                       *ngFor="
                         let d of pruebas.controls
-                          | paginate
-                            : { itemsPerPage: 10, currentPage: pagesGrupo };
+                         
                         let i = index
                       "
                       [formGroupName]="i"
@@ -108,11 +110,11 @@
                     </tr>
                   </tbody>
                 </table>
-                 <pagination-controls
+                <!--  <pagination-controls
                 (pageChange)="pagesGrupo = $event"
                 previousLabel="Anterior"
                 nextLabel="Siguiente"
-              ></pagination-controls> 
+              ></pagination-controls>  -->
               </div>
             </div>
           </div>
@@ -160,7 +162,6 @@
         </div>
       </div>
 
-      <!--       <div class=""> -->
       <div>
         <div class="col-md-12">
           <div class="card">
@@ -195,13 +196,14 @@
                   </tr>
                 </tbody>
               </table>
+             
             </div>
-            <pagination-controls
-              (pageChange)="pagesPruebas = $event"
-              previousLabel="Anterior"
-              nextLabel="Siguiente"
-            ></pagination-controls>
           </div>
+          <pagination-controls
+          (pageChange)="pagesPruebas = $event"
+          previousLabel="Anterior"
+          nextLabel="Siguiente"
+        ></pagination-controls>
         </div>
       </div>
     </div>

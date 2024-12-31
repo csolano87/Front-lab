@@ -20,11 +20,12 @@ import * as XLSX from 'xlsx';
 })
 export class ProductosComponent implements OnInit {
   exceldata: any;
+  search: string = '';
   productoForm!: FormGroup;
   data = [];
   fileTemp;
   control: UntypedFormArray;
-    
+
   listaproductos: Producto[] = [];
   public desde: number = 0;
   public page!: number;
@@ -46,7 +47,7 @@ export class ProductosComponent implements OnInit {
     if (this.data.length == 0) this.addRow();
     else this.populateTableWithData(this.data); */
 
-   // this.activatedRoute.params.subscribe(({ id }) => this.crearImport(id));
+    // this.activatedRoute.params.subscribe(({ id }) => this.crearImport(id));
 
     this.getProductos();
   }
@@ -74,10 +75,10 @@ export class ProductosComponent implements OnInit {
       });
   }
   getProductos() {
-    this.cargando=true;
+    this.cargando = true;
     this.inportService.getProductos().subscribe((productos) => {
       this.listaproductos = productos;
-      this.cargando=false;
+      this.cargando = false;
       console.log(productos);
     });
   }
@@ -93,21 +94,27 @@ export class ProductosComponent implements OnInit {
       confirmButtonText: 'Si eliminar ',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.inportService.getDeleteProducto(producto).subscribe((resp: any) => {
-          const { msg } = resp;
-
-          Swal.fire({
-            title: "Producto eliminado!",
-            text: `${msg}`,
-            icon: "success"
+        this.inportService
+          .getDeleteProducto(producto)
+          .subscribe((resp: any) => {
+            const { msg } = resp;
+            this.getProductos();
+            Swal.fire({
+              title: 'Producto eliminado!',
+              text: `${msg}`,
+              icon: 'success',
+            });
           });
-        });
       }
     });
-  //  console.log(id);
+    //  console.log(id);
   }
 
-  editarProducto(producto : Producto){
-     console.log(producto)
+  editarProducto(producto: Producto) {
+    console.log(producto);
+  }
+
+  onSearchProducto(search: string) {
+    this.search = search;
   }
 }

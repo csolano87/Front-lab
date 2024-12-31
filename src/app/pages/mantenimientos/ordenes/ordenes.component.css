@@ -117,3 +117,8 @@
 .demographic-column p strong {
   color: #333; /* Resaltar títulos */
 }
+
+
+.button_buscar{
+margin: 25px auto;
+}

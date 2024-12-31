@@ -24,15 +24,7 @@
 
           <div class="table-responsive">
             <form [formGroup]="stockForm" (ngSubmit)="guardar()">
-              <div class="button">
-                <button type="submit" class="btn btn-primary btn-sm">
-                  Guardar
-                </button>
-
-                <button type="reset" class="btn btn-danger btn-sm">
-                  Cancelar
-                </button>
-              </div>
+            
               <div class="row">
                 <div class="form-group col-md-3">
                   <label for="">Guia</label>
@@ -51,7 +43,11 @@
 
                 <div class="form-group col-md-3">
                   <label for="">Bodega</label>
-                  <select class="form-control" formControlName="bodegaId">
+                  <select
+                    class="form-control"
+                    formControlName="bodegaId"
+                    [class.is-invalid]="bodegaId"
+                  >
                     <option value="">--selecione--</option>
                     <option
                       *ngFor="let bodega of listabodega"
@@ -60,14 +56,18 @@
                       {{ bodega.NOMBRE }}
                     </option>
                   </select>
-                  <small *ngIf="guia" class="text-danger"
-                    >Ingrese un caracter</small
+                  <small *ngIf="bodegaId" class="text-danger"
+                    >Seleccione una opción</small
                   >
                 </div>
 
                 <div class="form-group col-md-3">
                   <label for="">Proveedor</label>
-                  <select class="form-control" formControlName="proveedor">
+                  <select
+                    class="form-control"
+                    formControlName="proveedor"
+                    [class.is-invalid]="proveedor"
+                  >
                     <option value="">--selecione--</option>
                     <option
                       *ngFor="let bodega of listacorreo"
@@ -76,9 +76,18 @@
                       {{ bodega.empresa }}
                     </option>
                   </select>
-                  <small *ngIf="guia" class="text-danger"
-                    >Ingrese un caracter</small
+                  <small *ngIf="proveedor" class="text-danger"
+                    >Seleccione una opción</small
                   >
+                </div>
+                <div class=" col-md-3 ">
+                  <button type="submit" class="btn btn-primary btn-sm">
+                    Guardar
+                  </button>
+  &nbsp;
+                  <button (click)="borrarStock()" class="btn btn-danger btn-sm">
+                    Cancelar
+                  </button>
                 </div>
               </div>
               <!-- style="opacity: 0; position: absolute; top: -9999px;" -->

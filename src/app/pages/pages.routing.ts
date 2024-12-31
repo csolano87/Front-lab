@@ -89,6 +89,10 @@ import { UnidadedadComponent } from './mantenimientos/unidadedad/unidadedad.comp
 import { ValidacionresultadosComponent } from './mantenimientos/validacionresultados/validacionresultados.component';
 import { TecnicaComponent } from './mantenimientos/tecnica/tecnica.component';
 import { MuestraspruebasComponent } from './mantenimientos/muestraspruebas/muestraspruebas.component';
+import { MenuComponent } from './mantenimientos/menu/menu.component';
+
+import { CargaInternaComponent } from './mantenimientos/carga-interna/carga-interna.component';
+import { ListadoStockComponent } from './mantenimientos/listado-stock/listado-stock.component';
 
 const routes: Routes = [
   {
@@ -206,7 +210,27 @@ const routes: Routes = [
       },
 
 
+      {
+        path: 'cargaInterna',
+        component: CargaInternaComponent,
+        data: { titulo: 'cargaInterna' },
+      },
+      {
+        path: 'cargaInterna/:id',
+        component: CargaInternaComponent,
+        data: { titulo: 'cargaInterna' },
+      },
 
+      {
+        path: 'listadoStock',
+        component: ListadoStockComponent,
+        data: { titulo: 'listadoStock' },
+      },
+      {
+        path: 'menu',
+        component: MenuComponent,
+        data: { titulo: 'menu' },
+      },
 
       {
         path: 'unidadedad',

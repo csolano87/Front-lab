@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -35,6 +35,7 @@ type AOA = any[][];
 })
 export class StockComponent implements OnInit {
   barcodeValue: string;
+  @ViewChild('fileInput') fileInput!: ElementRef;
   dataStore = [];
   cantidad: number = 0;
   cargando = false;
@@ -62,11 +63,16 @@ export class StockComponent implements OnInit {
       this.stockForm?.get('guia')!.touched
     );
   }
-
+  get proveedor() {
+    return (
+      this.stockForm?.get('proveedor')!.invalid &&
+      this.stockForm?.get('proveedor')!.touched
+    );
+  }
   get bodegaId() {
     return (
       this.stockForm?.get('bodegaId')!.invalid &&
-      this.stockForm?.get('bodegaId  ')!.touched
+      this.stockForm?.get('bodegaId')!.touched
     );
   }
 
@@ -256,6 +262,7 @@ export class StockComponent implements OnInit {
         this.router.navigateByUrl('/dashboard/stocks');
       },
       (err) => {
+        console.log(err.error.msg);
         Swal.fire({
           icon: 'error',
           title: 'Error ',
@@ -276,8 +283,12 @@ export class StockComponent implements OnInit {
     // this.productos.disable();
   }
 
-  borrarStock(i: number) {
-    this.productos.removeAt(i);
+  borrarStock():void {
+     this.stockForm.reset()
+    this.productos.clear(); 
+    
+   // window.location.reload();
+    /* console.log(this.productos.controls); */
   }
   async comments(index: number) {
     const currentComment =

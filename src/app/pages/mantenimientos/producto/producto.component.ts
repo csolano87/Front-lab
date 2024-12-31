@@ -20,7 +20,7 @@ export class ProductoComponent implements OnInit {
   productoseleccionado: cargaProductos;
   productoForm!: UntypedFormGroup;
   btnVal = 'Guardar';
-  tittle='Crear';
+  tittle = 'Crear';
 
   get REFERENCIA() {
     return (
@@ -29,14 +29,12 @@ export class ProductoComponent implements OnInit {
     );
   }
 
-
   get NOMBRE() {
     return (
       this.productoForm?.get('NOMBRE')!.invalid &&
       this.productoForm?.get('NOMBRE')!.touched
     );
   }
-
 
   get CATEGORIA() {
     return (
@@ -45,14 +43,12 @@ export class ProductoComponent implements OnInit {
     );
   }
 
-
   get UNIDAD() {
     return (
       this.productoForm?.get('UNIDAD')!.invalid &&
       this.productoForm?.get('UNIDAD')!.touched
     );
   }
-
 
   get GENERACION() {
     return (
@@ -61,18 +57,12 @@ export class ProductoComponent implements OnInit {
     );
   }
 
-
   get VALOR() {
     return (
       this.productoForm?.get('VALOR')!.invalid &&
       this.productoForm?.get('VALOR')!.touched
     );
   }
-
-
-
-
-
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -101,10 +91,10 @@ export class ProductoComponent implements OnInit {
       this.productoForm.reset();
       this.productoForm.enable();
       this.btnVal = 'Guardar';
-      this.tittle='Crear';
+      this.tittle = 'Crear';
       return;
     }
-    this.tittle='Actualizar';
+    this.tittle = 'Actualizar';
     this.btnVal = 'Editar';
     this.productoForm.disable();
     this.inportService.obtenerProductoById(id).subscribe((productos) => {
@@ -152,36 +142,36 @@ export class ProductoComponent implements OnInit {
         const { msg } = resp;
 
         Swal.fire('Actualizado', `${msg}`, 'success');
-        
+
         this.productoForm.disable();
         this.btnVal = 'Editar';
-        this.tittle='Actualizar';
+        this.tittle = 'Actualizar';
+        this.router.navigateByUrl('/dashboard/productos');
       });
-      
-    }else{
+    } else {
       Swal.fire({
         allowOutsideClick: false,
         icon: 'info',
         text: 'Espere por favor ...',
       });
       Swal.showLoading(null);
-      this.inportService.PostProducto(this.productoForm.value).subscribe((resp: any) => {
-        const { msg } = resp;
-          
-        Swal.fire( `${msg}`, 'success');
-        
-        this.productoForm.reset();
-      },
-      (err) => {
-        console.log('error', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al autenticar',
-          text: err.error.msg,
-        });
-      },
-    
-    );
+      this.inportService.PostProducto(this.productoForm.value).subscribe(
+        (resp: any) => {
+          const { msg } = resp;
+
+          Swal.fire(`${msg}`, 'success');
+          this.router.navigateByUrl('/dashboard/productos');
+          this.productoForm.reset();
+        },
+        (err) => {
+          console.log('error', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al autenticar',
+            text: err.error.msg,
+          });
+        },
+      );
     }
   }
 
@@ -191,6 +181,6 @@ export class ProductoComponent implements OnInit {
     }
     this.productoForm.enable();
     this.btnVal = 'Guardar';
-    this.tittle='Actualizar'
+    this.tittle = 'Actualizar';
   }
 }

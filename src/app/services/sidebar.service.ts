@@ -1,21 +1,32 @@
 import { Injectable } from '@angular/core';
 import { UsuarioService } from './usuario.service';
 import { Usuario } from '../models/usuario.module';
-
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
+import { Menu, Menus } from '../interfaces/carga-menu.interface';
+import { map, Observable } from 'rxjs';
+const baseUrl = environment.url;
 @Injectable({
   providedIn: 'root',
 })
 export class SidebarService {
   private usuario: Usuario;
-  constructor(private usuarioService: UsuarioService) {
+  constructor(
+    private usuarioService: UsuarioService,
+    private http: HttpClient,
+  ) {
     this.usuario = usuarioService.usuario;
   }
-
+  getMenu(): Observable<Menu[]> {
+    return this.http
+      .get<Menus>(`${baseUrl}/api/menu`)
+      .pipe(map(({ menu }) => menu));
+  }
   menu: any[] = [
     {
       icono: 'right fas fa-angle-left',
       titulo: ' Usuarios',
-    
+
       submenu: [
         { titulo: 'Crear Usuario', url: 'usuario', roles: ['ADMIN'] },
 
@@ -27,7 +38,6 @@ export class SidebarService {
       ],
     },
     {
-    
       titulo: 'Gestión de ordenes',
       icono: 'right fas fa-angle-left',
       submenu: [
@@ -108,7 +118,19 @@ export class SidebarService {
         },
       ],
     },
-    /*     {
+    {
+      titulo: 'CONSULTA DE RESULTADOS',
+      icono: 'right fas fa-angle-left',
+      submenu: [
+        {
+          titulo: 'Consulta Web',
+          url: 'consulta-web',
+          roles: ['ADMIN', 'MICRO', 'DOCTOR', 'MEDICO'],
+        },
+      ],
+    },
+    ,
+    /*   {
       titulo: 'MUESTRAS',
       icono: 'right fas fa-angle-left',
       submenu: [
@@ -127,14 +149,13 @@ export class SidebarService {
           url: 'muestras-rechazo',
           roles: ['ADMIN', ''],
         },
-        {l
+        {
           titulo: 'Muestras actualizar',
           url: 'muestras-actualización',
           roles: ['ADMIN', ''],
         },
       ],
-    },
-    {
+    } */ /*  {
       titulo: 'COMPRAS',
       icono: 'right fas fa-angle-left',
       submenu: [
@@ -149,7 +170,7 @@ export class SidebarService {
           roles: ['ADMIN', 'COMPRAS'],
         },
       ],
-    }, */
+    },  */
 
     /*   {
       titulo: 'COMERCIAL',
@@ -205,7 +226,7 @@ export class SidebarService {
         },
       ],
     },*/
-    /*  {
+    {
       titulo: 'Gestión productos',
       icono: 'right fas fa-angle-left',
       submenu: [
@@ -220,7 +241,7 @@ export class SidebarService {
           roles: ['ADMIN', 'IMPORT', 'INVENTARIO'],
         },
       ],
-    }, */
+    },
 
     /* {
       titulo: 'MANTENIMIENTOS',
@@ -490,13 +511,24 @@ export class SidebarService {
         },
       ],
     }, */
-    /*     {
+    {
       titulo: ' Gestión Inventario',
       icono: 'right fas fa-angle-left',
       submenu: [
         {
           titulo: 'Carga stock',
           url: 'stock',
+          roles: ['ADMIN', 'INVENTARIO'],
+        },
+
+        {
+          titulo: 'Carga Interna',
+          url: 'cargaInterna/Nuevo',
+          roles: ['ADMIN', 'INVENTARIO'],
+        },
+        {
+          titulo: 'Listado de stock ',
+          url: 'listadoStock',
           roles: ['ADMIN', 'INVENTARIO'],
         },
         //  {
@@ -513,7 +545,7 @@ export class SidebarService {
           titulo: 'Solicitud bodega',
           url: 'solicitud-pedidos/Nuevo',
 
-          roles: ['ADMIN', 'INVENTARIO'],
+          roles: ['ADMIN', 'OPERADOR', 'INVENTARIO'],
         },
 
         {
@@ -529,35 +561,35 @@ export class SidebarService {
         {
           titulo: 'Stock bodega',
           url: 'stockbodega',
-          roles: ['ADMIN', 'INVENTARIO'],
+          roles: ['ADMIN', 'OPERADOR', 'INVENTARIO'],
         },
-        //  {
-        //   titulo: 'descargobodega',
-        //   url: 'descargobodega',
-        //   roles: ['ADMIN', 'INVENTARIO','DESCARGO'],
-        // }, 
+        /*  {
+          titulo: 'descargobodega',
+          url: 'descargobodega',
+          roles: ['ADMIN', 'INVENTARIO', 'DESCARGO'],
+        }, */
 
-        //   {
-        //   titulo: 'Validacion',
-        //   url: 'validacion',
-        //   roles: ['ADMIN'],
-        // }, 
-        //  {
-        //   titulo: 'TRANSFERENCIA',
-        //   url: 'transferencia',
-        //    roles: ['ADMIN'],
-        // },
+        /*  {
+          titulo: 'Validacion',
+          url: 'validacion',
+          roles: ['ADMIN'],
+        },
+        {
+          titulo: 'TRANSFERENCIA',
+          url: 'transferencia',
+          roles: ['ADMIN'],
+        }, */
         {
           titulo: 'Crear proveedor',
           url: 'correos',
-          roles: ['ADMIN', , 'INVENTARIO'],
+          roles: ['ADMIN', 'INVENTARIO'],
         },
         {
           titulo: 'Bodega',
           url: 'bodega/Nuevo',
           roles: ['ADMIN', 'INVENTARIO'],
         },
-         {
+        /*   {
           titulo: 'Resultados',
           url: 'resultados',
           roles: ['ADMIN'],
@@ -567,9 +599,9 @@ export class SidebarService {
           titulo: 'Reportes resultados',
           url: 'ReportesResultados',
           roles: ['ADMIN'],
-        },  
+        }, */
       ],
-    }, */
+    },
   ];
 
   getMenuWithPermissions(): any[] {

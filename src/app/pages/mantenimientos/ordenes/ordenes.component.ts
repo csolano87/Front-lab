@@ -32,7 +32,7 @@ export class OrdenesComponent implements OnInit {
   public ordenesTemp: Orden[] = [];
   public desde: number = 0;
   public page!: number;
-  listaOrdenId:OrdenID;
+  listaOrdenId: OrdenID;
   public listaordenesingresdas: Ordene[] = [];
 
   public cargando: boolean = true;
@@ -188,9 +188,8 @@ export class OrdenesComponent implements OnInit {
     this.manteniminetoService
       .getIngresoOrdenId(orden.id.toString())
       .subscribe((ordenId) => {
-console.log(ordenId.prueba)
-        this.listaOrdenId=ordenId;
-
+        console.log(ordenId.prueba);
+        this.listaOrdenId = ordenId;
       });
   }
   deleteOrden(orden: Ordene) {

@@ -62,10 +62,15 @@
                 >
                   <tr>
                     <td>{{ pedido.FECHAPEDIDOSTOCK }}</td>
-                    <!--    <td>{{pedido.itemstock.}}</td> -->
+                       
                     <td>{{ pedido.usuario.doctor }}</td>
                     <td>
-                      <span
+                      <div [ngSwitch]="pedido.ESTADO">
+                        <div *ngSwitchCase="1">Activo</div>
+                        <div *ngSwitchCase="2">Despachado</div>
+                        <div *ngSwitchDefault>Anulado</div>
+                      </div>
+                    <!--   <span
                         *ngIf="pedido.ESTADO == 1"
                         class="rounded shadow bg-pen"
                         >Creado</span
@@ -78,7 +83,7 @@
                       >
                       <span *ngIf="pedido.ESTADO == 0" class="rounded shadow"
                         >Anulado</span
-                      >
+                      > -->
                     </td>
 
                     <td class="text-nowrap">
@@ -123,22 +128,24 @@
                   </tr>
                   <ng-container *ngIf="showDetails[i]">
                     <tr>
-                      <th colspan="1"></th>
+                    
                       <!--    <th >Referencia</th> -->
 
                       <th>Bodega destino</th>
                       <th>Referencia</th>
                       <th>Producto</th>
                       <th>Cantidad</th>
+                     
                     </tr>
                     <ng-container *ngFor="let item of pedido.itemstock">
                       <tr>
-                        <td colspan="1"></td>
+                        
                         <!--   <td>{{ item.ID_PRODUCTO }}</td> -->
                         <td>{{ item.bodega.NOMBRE }}</td>
-                        <td>{{ item |json }}</td>
+                        <td>{{ item.product.REFERENCIA }}</td>
                         <td>{{ item.product.NOMBRE }}</td>
                         <td>{{ item.CANTIDAD }}</td>
+                       
                       </tr>
                     </ng-container>
                   </ng-container>

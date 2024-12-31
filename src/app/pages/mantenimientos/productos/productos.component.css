@@ -1,4 +1,4 @@
-.container {
+/* .container {
   width: 50%;
   min-height: 550px;
   margin-top: 10px;
@@ -42,11 +42,11 @@ tbody td {
   text-align: left;
 }
 
-th,
-td {
-  /* padding: 10px 8px;
-  text-align: left; */
-}
+//th,
+//td {
+  // padding: 10px 8px;
+ // text-align: left; 
+} //
 
 
 .bg-pen {
@@ -77,4 +77,129 @@ td {
 }
 .btn{
   margin-left: 40px;
+}
+ */
+
+
+
+ /* Estilo para el campo de búsqueda */
+input[type="text"] {
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde de color gris claro */
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  box-sizing: border-box; /* Incluye el padding dentro del ancho total */
+  font-size: 16px; /* Tamaño de la fuente */
+  transition: all 0.3s ease; /* Transición suave para el foco */
+}
+
+input[type="text"]:focus {
+  border-color: #007bff; /* Color de borde al hacer foco */
+  outline: none; /* Eliminar el borde azul por defecto en algunos navegadores */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul para foco */
+}
+
+input[type="text"]::placeholder {
+  color: #aaa; /* Color del texto del placeholder */
+}
+
+
+/* Estilo para la tabla */
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Eliminar los bordes duplicados */
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  padding: 12px; /* Espaciado interno */
+  text-align: left; /* Alinear el texto a la izquierda */
+  border-bottom: 1px solid #ddd; /* Línea de separación suave entre filas */
+}
+
+.table th {
+  background-color: #f4f4f4; /* Fondo gris suave para los encabezados */
+  font-weight: bold;
+  color: #333; /* Color de texto más oscuro */
+}
+
+.table tr:hover {
+  background-color: #f1f1f1; /* Resaltado suave de la fila al pasar el mouse */
+}
+
+.table td {
+  font-size: 14px; /* Tamaño de fuente más pequeño */
+  color: #555; /* Color de texto */
+}
+
+.table td span {
+  display: inline-block; /* Permite que los iconos se alineen correctamente */
+  padding: 5px 10px;
+}
+
+.table .btn {
+  background-color: #28a745; /* Color verde para el botón de acción */
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.table .btn-danger {
+  background-color: #dc3545; /* Color rojo para el botón de eliminar */
+}
+
+.table .btn:hover {
+  opacity: 0.8; /* Efecto de opacidad al pasar el cursor */
+}
+
+
+
+/* Estilo para el modal */
+.modal-content {
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+}
+
+.modal-header {
+  background-color: #007bff; /* Color de fondo azul */
+  color: white; /* Texto blanco */
+  border-radius: 8px 8px 0 0; /* Bordes redondeados solo en la parte superior */
+}
+
+.modal-title {
+  font-size: 18px;
+}
+
+.modal-body {
+  font-size: 16px;
+  color: #555;
+}
+
+.modal-footer {
+  border-top: 1px solid #ddd;
+}
+
+.modal-footer .btn {
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.modal-footer .btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.modal-footer .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.modal-footer .btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #5a6268;
 }

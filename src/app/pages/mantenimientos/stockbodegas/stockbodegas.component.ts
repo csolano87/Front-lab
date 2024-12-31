@@ -10,6 +10,7 @@ import {
 } from 'ngx-scanner-qrcode';
 import { Subject } from 'rxjs';
 import { FormArray } from '@angular/forms';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-stockbodegas',
 
@@ -104,23 +105,52 @@ export class StockbodegasComponent implements OnInit {
     }); */
   }
   buscar(bodegaId: string) {
-
     console.log(bodegaId);
     this.stockService.getFiltroBodegas(bodegaId).subscribe((stock) => {
       console.log(stock);
-      this.listaSotck = stock;
+      this.listaSotck = stock.filter(item=>item.CANTIDAD == '1');
     });
   }
 
   DescargoStock(i: any, numero: string) {
+    console.log(i)
+    Swal.fire({
+      title: 'Descargar producto?',
+      html: `Esta seguro que desea realizar la descargar el producto <strong>${i.product.NOMBRE}</strong>  con  lote # 
+      <strong>${i.lote}</strong>  `,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si descargar ',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const data = {
+          ...i,
+          descargo: numero,
+        };
+        this.stockService.getdescargoStock(data).subscribe((resp: any) => {
+          const { msg } = resp;
+        this.buscar(i.bodegaId);
+          Swal.fire({
+            title: 'Producto descargado!',
+            text: `${msg}`,
+            icon: 'success',
+          });
+        
+        });
+      
+      }
+    });
+    /* 
     console.log(i);
     const data = {
       ...i,
       descargo: numero,
-    };
-    console.log(data);
-    this.stockService.getdescargoStock(data).subscribe((msg)=>{
-      console.log(msg)
-    })
+    }; */
+    /*    console.log(data);
+    this.stockService.getdescargoStock(data).subscribe((msg) => {
+      console.log(msg);
+    }); */
   }
 }

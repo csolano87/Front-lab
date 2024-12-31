@@ -26,6 +26,7 @@ export interface stocksPedido {
     product:     Product; */
     ID_PRODUCTO: number;
     CANTIDAD:    number;
+    ENTREGADO:    number;
     product:     Product;
     bodega:      Bodega;
   }

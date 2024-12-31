@@ -3,71 +3,39 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <form autocomplete="off" class="form-inline">
-            <div class="form-group col-md-3">
-              <label for="text " class="form-ItemName">Identificador</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Buscar numero de cédula ..."
-                #IDENTIFICADOR
-              />
-            </div>
-
-            <div class="form-group col-md-3">
-              <label for="text " class="form-ItemName"
-                >Apellidos del paciente</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Buscar por apellidos ..."
-                #APELLIDO
-              />
-            </div>
-
-            <!--     <div class="form-group">
-                <label for="text " class="form-ItemName">estado</label>
-                <div class="col-12">
-                  <select class="form-control" #estado>
-                    <option value="">--Seleccione--</option>
-                    <option value="1">Creada</option>
-                    <option value="2">Procesada</option>
-                    <option value="3">Pendiente</option>
-                  </select>
-                </div>
-              </div>
-
+          <form autocomplete="off">
+            <div class="row">
               <div class="form-group col-md-2">
-                <label for="text " class="form-ItemName"># ORDEN</label>
+                <label for="text " class="form-ItemName">Identificador</label>
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Buscar his..."
-                  #HIS
+                  placeholder="Buscar numero de cédula ..."
+                  #IDENTIFICADOR
                 />
-              </div> -->
+              </div>
 
-            <!--   <button
-              type="submit"
-              class="btn btn-primary btn-md rounded shadow"
-              (click)="
-                buscar(
-                  IDENTIFICADOR.value,
-                  estado.value,
-                  HIS.value,
-                  SALA.value,
-                  PRIORIDAD.value,
-                  APELLIDO.value
-                )
-              "
-            >
-              CONSULTAR
-            </button> -->
+              <div class="form-group col-md-4">
+                <label for="text " class="form-ItemName"
+                  >Apellidos del paciente</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar por apellidos ..."
+                  #APELLIDO
+                />
+              </div>
 
-            <button type="submit" class="btn btn-primary btn-md rounded shadow">
-              CONSULTAR
-            </button>
+              <div class="col-4 button_buscar">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-md rounded shadow"
+                >
+                  Buscar
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -293,16 +261,16 @@
 
                   <table class="table">
                     <thead>
-                    <tr>
-                      <th >Examen</th>
-                      <th >Estado</th>
-                      <th >Recepción muestra</th>
-                      <th>Usuario Reporta</th>
-                      <th>Fecha Reporta</th>
-                      <th>Usuario Valida</th>
-                      <th>Fecha Valida</th>
-                    </tr>
-                  </thead>
+                      <tr>
+                        <th>Examen</th>
+                        <th>Estado</th>
+                        <th>Recepción muestra</th>
+                        <th>Usuario Reporta</th>
+                        <th>Fecha Reporta</th>
+                        <th>Usuario Valida</th>
+                        <th>Fecha Valida</th>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr *ngFor="let prueba of listaOrdenId?.prueba">
                         <ng-container *ngIf="prueba.panelprueba.ORDEN != '2'">

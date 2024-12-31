@@ -618,7 +618,7 @@ export class ComprasComponent implements OnInit {
       });
     } else {
       this.registroServices
-        .getRegistro(this.RegistroForm.value.trim())
+        .getRegistro(this.RegistroForm.value)
         .subscribe((res: any) => {
           const { msg } = res;
           Swal.fire({

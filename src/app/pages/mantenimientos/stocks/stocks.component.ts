@@ -12,6 +12,7 @@ import { StockService } from 'src/app/services/stock.service';
 })
 export class StocksComponent implements OnInit {
   listaSotck: Stock[] = [];
+  search:string='';
   public listaStockTemp: Stock[] = [];
   itemsPerPage: number = 1; // Número de elementos por página
   currentPage: number = 1; // Página actual
@@ -94,5 +95,9 @@ export class StocksComponent implements OnInit {
       link.click();
       window.URL.revokeObjectURL(url);
     });
+  }
+
+  onSearchStock(search:string){
+this.search=search
   }
 }

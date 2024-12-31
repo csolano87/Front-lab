@@ -1,57 +1,435 @@
-<section class="content">
-  <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
-     <!--  <div class="col-lg-3 col-6">
-       
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>{{ totalIngresada }}</h3>
+<div class="">
+  <div class="">
+    <!-- Content Header (Page header) -->
 
-            <p>Procesos</p>
-          </div>
-          <div class="icon">
-            <i class="bx bx-receipt"></i>
-          </div>
-         
-        </div>
-      </div> -->
-      <!-- ./col -->
+    <!-- /.content-header -->
 
-      <div class="col-12 col-sm-6 col-md-3" *ngFor="let equipo of conteoPorEstadoArray">
-        <div class="info-box">
-          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-
-          <div class="info-box-content" >
-            <span class="info-box-text">{{equipo.nombre}}</span>
-            <span class="info-box-number">{{equipo.total}}
-            
-          
-            </span>
-          </div>
-         
-        </div>
-        
-      </div>
-   
-    
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
       
 
-      <div>
-        <canvas id="myChart" width="600"></canvas>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Monthly Recap Report</h5>
+
+                <div class="card-tools">
+                  <button
+                    type="button"
+                    class="btn btn-tool"
+                    data-card-widget="collapse"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-tool dropdown-toggle"
+                      data-toggle="dropdown"
+                    >
+                      <i class="fas fa-wrench"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                      <a href="#" class="dropdown-item">Action</a>
+                      <a href="#" class="dropdown-item">Another action</a>
+                      <a href="#" class="dropdown-item">Something else here</a>
+                      <a class="dropdown-divider"></a>
+                      <a href="#" class="dropdown-item">Separated link</a>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-tool"
+                    data-card-widget="remove"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-5">
+                    <!--  <p class="text-center">
+                      <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                    </p> -->
+
+                    <!-- Sales Chart Canvas -->
+                    <ngx-charts-advanced-pie-chart
+                      [view]="viewPastel"
+                      [scheme]="colorScheme"
+                      [results]="conteoPorEstadoArray"
+                      [gradient]="gradient"
+                      (select)="onSelect($event)"
+                      (activate)="onActivate($event)"
+                      (deactivate)="onDeactivate($event)"
+                    >
+                    </ngx-charts-advanced-pie-chart>
+
+                    <!-- /.chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-7">
+                    <p class="text-center">
+                      <strong>Total de pruebas</strong>
+                    </p>
+                    <ngx-charts-bar-vertical
+                      [view]="viewBar"
+                      [scheme]="colorScheme"
+                      [results]="graficaBarras"
+                      [gradient]="gradient"
+                      [xAxis]="showXAxis"
+                      [yAxis]="showYAxis"
+                      [legend]="showLegend"
+                      [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel"
+                      [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="yAxisLabel"
+                      (select)="onSelect($event)"
+                    >
+                    </ngx-charts-bar-vertical>
+
+                    <!-- /.progress-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- ./card-body -->
+              <!--   <div class="card-footer">
+                <div class="row">
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-success"
+                        ><i class="fas fa-caret-up"></i> 17%</span
+                      >
+                      <h5 class="description-header">$35,210.43</h5>
+                      <span class="description-text">TOTAL REVENUE</span>
+                    </div>
+                   
+                  </div>
+                
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-warning"
+                        ><i class="fas fa-caret-left"></i> 0%</span
+                      >
+                      <h5 class="description-header">$10,390.90</h5>
+                      <span class="description-text">TOTAL COST</span>
+                    </div>
+                   
+                  </div>
+             
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-success"
+                        ><i class="fas fa-caret-up"></i> 20%</span
+                      >
+                      <h5 class="description-header">$24,813.53</h5>
+                      <span class="description-text">TOTAL PROFIT</span>
+                    </div>
+                  
+                  </div>
+                
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block">
+                      <span class="description-percentage text-danger"
+                        ><i class="fas fa-caret-down"></i> 18%</span
+                      >
+                      <h5 class="description-header">1200</h5>
+                      <span class="description-text">GOAL COMPLETIONS</span>
+                    </div>
+                  
+                  </div>
+                </div>
+             
+              </div> -->
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <div class="col-md-8">
+            <!-- MAP & BOX PANE -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">US-Visitors Report</h3>
+
+                <div class="card-tools">
+                  <button
+                    type="button"
+                    class="btn btn-tool"
+                    data-card-widget="collapse"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-tool"
+                    data-card-widget="remove"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="d-md-flex">
+                  <div class="p-1 flex-fill" style="overflow: hidden">
+                    <ngx-charts-line-chart
+                      [view]="viewLinear"
+                      [scheme]="colorScheme"
+                      [legend]="legend"
+                      [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel"
+                      [xAxis]="xAxis"
+                      [yAxis]="yAxis"
+                      [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="yAxisLabel"
+                      [timeline]="timeline"
+                      [results]="multi"
+                      (select)="onSelect($event)"
+                      (activate)="onActivate($event)"
+                      (deactivate)="onDeactivate($event)"
+                    >
+                    </ngx-charts-line-chart>
+                  </div>
+                </div>
+                <!-- /.d-md-flex -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <div class="row">
+            
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Latest Orders</h3>
+
+                <div class="card-tools">
+                  <button
+                    type="button"
+                    class="btn btn-tool"
+                    data-card-widget="collapse"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-tool"
+                    data-card-widget="remove"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Item</th>
+                        <th>Status</th>
+                        <th>Popularity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a href="pages/examples/invoice.html">OR9842</a>
+                        </td>
+                        <td>Call of Duty IV</td>
+                        <td>
+                          <span class="badge badge-success">Shipped</span>
+                        </td>
+                        <td>
+                          <div
+                            class="sparkbar"
+                            data-color="#00a65a"
+                            data-height="20"
+                          >
+                            90,80,90,-70,61,-83,63
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="pages/examples/invoice.html">OR1848</a>
+                        </td>
+                        <td>Samsung Smart TV</td>
+                        <td>
+                          <span class="badge badge-warning">Pending</span>
+                        </td>
+                        <td>
+                          <div
+                            class="sparkbar"
+                            data-color="#f39c12"
+                            data-height="20"
+                          >
+                            90,80,-90,70,61,-83,68
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="pages/examples/invoice.html">OR7429</a>
+                        </td>
+                        <td>iPhone 6 Plus</td>
+                        <td>
+                          <span class="badge badge-danger">Delivered</span>
+                        </td>
+                        <td>
+                          <div
+                            class="sparkbar"
+                            data-color="#f56954"
+                            data-height="20"
+                          >
+                            90,-80,90,70,-61,83,63
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="pages/examples/invoice.html">OR7429</a>
+                        </td>
+                        <td>Samsung Smart TV</td>
+                        <td>
+                          <span class="badge badge-info">Processing</span>
+                        </td>
+                        <td>
+                          <div
+                            class="sparkbar"
+                            data-color="#00c0ef"
+                            data-height="20"
+                          >
+                            90,80,-90,70,-61,83,63
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="pages/examples/invoice.html">OR1848</a>
+                        </td>
+                        <td>Samsung Smart TV</td>
+                        <td>
+                          <span class="badge badge-warning">Pending</span>
+                        </td>
+                        <td>
+                          <div
+                            class="sparkbar"
+                            data-color="#f39c12"
+                            data-height="20"
+                          >
+                            90,80,-90,70,61,-83,68
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="pages/examples/invoice.html">OR7429</a>
+                        </td>
+                        <td>iPhone 6 Plus</td>
+                        <td>
+                          <span class="badge badge-danger">Delivered</span>
+                        </td>
+                        <td>
+                          <div
+                            class="sparkbar"
+                            data-color="#f56954"
+                            data-height="20"
+                          >
+                            90,-80,90,70,-61,83,63
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href="pages/examples/invoice.html">OR9842</a>
+                        </td>
+                        <td>Call of Duty IV</td>
+                        <td>
+                          <span class="badge badge-success">Shipped</span>
+                        </td>
+                        <td>
+                          <div
+                            class="sparkbar"
+                            data-color="#00a65a"
+                            data-height="20"
+                          >
+                            90,80,90,-70,61,-83,63
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-sm btn-info float-left"
+                  >Place New Order</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-sm btn-secondary float-right"
+                  >View All Orders</a
+                >
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+
+          <div class="col-md-4">
+            <!-- Info Boxes Style 2 -->
+            <div class="info-box mb-3 bg-warning" *ngFor="let data of listaday">
+              <span class="info-box-icon"><i class="fas fa-tag"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">{{ data.category }}</span>
+                <span class="info-box-number">{{ data.total }}</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+
+            <!-- /.info-box -->
+
+            <!-- /.info-box -->
+
+            <!-- /.info-box -->
+
+           
+
+            <!-- PRODUCT LIST -->
+          
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
       </div>
-
-
-     
-
-
-
-    </div>
-    <!-- /.row -->
-    <!-- Main row -->
-
-    <!-- /.row (main row) -->
+      <!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
   </div>
-
-  <!-- /.container-fluid -->
-</section>
+</div>

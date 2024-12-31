@@ -131,7 +131,8 @@ export class LlenarCombosService {
     return this.http
       .get<Productos>(`${baseUrl}/api/productos/${q}`, this.headers)
       .pipe(
-        map(({ productos }) => productos),
+      //  map(({ productos }) => productos),
+      map(({ productos }) => productos.filter(producto => producto.ESTADO === 1)),
         finalize(() => (this.isLoading = false)),
       );
   }

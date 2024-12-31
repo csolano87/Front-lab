@@ -6,9 +6,9 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Buscar producto por referencia..."
-            (keyup)="buscarProductos(txtTermino.value.toUpperCase())"
-            #txtTermino
+            placeholder="Buscar producto por nombre..."
+            #txtSearch
+            (keyup)="onSearchStock(txtSearch.value)"
           />
         </div>
       </div>
@@ -19,68 +19,75 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <h6 class="title">Lista Stock Ingresado</h6>
-          <a class="btn btn-secondary btn-md" (click)="descargarPDf()">PDF</a>
-          <div class="col-md-3 button">
-       
-          </div>
+          <div class="mb-3">
+            <!--     <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar productos..."
+              #txtSearch
+              (keyup)="onSearchStock(txtSearch.value)"
+            /> -->
+            <!--  <h6 class="title">Lista Stock Ingresado</h6> -->
+            <a class="btn btn-secondary btn-md" (click)="descargarPDf()">PDF</a>
+            <div class="col-md-3 button"></div>
 
-          <div class="table-responsive">
-            <form>
-              <div
-                *ngIf="cargando"
-                class="alert alert-info text-center mt-3 animated fadeIn faster"
-              >
-                <h4 class="alert-heading">Cargando</h4>
-                <p>
-                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
-                </p>
-                <p class="mb-0">Espere por favor</p>
-              </div>
+            <div class="table-responsive">
+              <form>
+                <div
+                  *ngIf="cargando"
+                  class="alert alert-info text-center mt-3 animated fadeIn faster"
+                >
+                  <h4 class="alert-heading">Cargando</h4>
+                  <p>
+                    <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                  </p>
+                  <p class="mb-0">Espere por favor</p>
+                </div>
 
-              <div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Referencia</th>
-                      <th>Nombre</th>
-                      <th>Total</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <ng-container
-                      *ngFor="
-                        let stock of listaSotck
-                          | paginate: { itemsPerPage: 10, currentPage: page };
-                        let i = index
-                      "
-                      data-widget="expandable-table"
-                      aria-expanded="true"
-                    >
+                <div>
+                  <table class="table">
+                    <thead>
                       <tr>
-                        <td>{{ stock.referencia }}</td>
-                        <td>{{ stock.nombre }}</td>
-                        <td>{{ stock.total_referencia }}</td>
-                        <td>
-                          <span *ngFor="let item of stock.detalles">
-                            <i
-                              [ngClass]="getAlertClass(item.caducidad)"
-                              class="fa fa-eye"
-                            ></i>
-                          </span>
-                          <span (click)="toggleDetails(i)">
-                            <i
-                              class="bx"
-                              [ngClass]="{
-                                'bxs-down-arrow  ': showDetails[i],
-                                'bxs-right-arrow ': !showDetails[i]
-                              }"
-                            ></i>
-                          </span>
+                        <th>Referencia</th>
+                        <th>Nombre</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
 
-                          <!--         <a [ngClass]="{
+                    <tbody>
+                      <ng-container
+                        *ngFor="
+                          let stock of listaSotck
+                            | filtroStock: search
+                            | paginate: { itemsPerPage: 10, currentPage: page };
+                          let i = index
+                        "
+                        data-widget="expandable-table"
+                        aria-expanded="true"
+                      >
+                        <tr>
+                          <td>{{ stock.referencia }}</td>
+                          <td>{{ stock.nombre }}</td>
+                          <td>{{ stock.total_referencia }}</td>
+                          <td>
+                            <span *ngFor="let item of stock.detalles">
+                              <i
+                                [ngClass]="getAlertClass(item.caducidad)"
+                                class="fa fa-eye"
+                              ></i>
+                            </span>
+                            <span (click)="toggleDetails(i)">
+                              <i
+                                class="bx"
+                                [ngClass]="{
+                                  'bxs-down-arrow  ': showDetails[i],
+                                  'bxs-right-arrow ': !showDetails[i]
+                                }"
+                              ></i>
+                            </span>
+
+                            <!--         <a [ngClass]="{
                           'disabled-icon':  stock.total_referencia == 0
                         }"  class="nav-link" data-toggle="dropdown" href="#">
 
@@ -123,32 +130,32 @@
                         
                           </a>
                         </div> -->
-                        </td>
-                      </tr>
-                      <ng-container *ngIf="showDetails[i]">
-                        <tr>
-                          <th colspan="1"></th>
-                          <!--    <th >Referencia</th> -->
-
-                          <th>Lote</th>
-                          <th>Cantidad</th>
-                          <th>Fecha</th>
+                          </td>
                         </tr>
-                        <ng-container *ngFor="let item of stock.detalles">
+                        <ng-container *ngIf="showDetails[i]">
                           <tr>
-                            <td colspan="1"></td>
-                            <td>{{ item.lote }}</td>
-                            <td>{{ item.TOTAL }}</td>
-                            <td>
-                              {{ item.caducidad | utcDate: "yyyy-MM-dd" }}
-                            </td>
+                            <th colspan="1"></th>
+                            <!--    <th >Referencia</th> -->
+
+                            <th>Lote</th>
+                            <th>Cantidad</th>
+                            <th>Fecha</th>
                           </tr>
+                          <ng-container *ngFor="let item of stock.detalles">
+                            <tr>
+                              <td colspan="1"></td>
+                              <td>{{ item.lote }}</td>
+                              <td>{{ item.TOTAL }}</td>
+                              <td>
+                                {{ item.caducidad | utcDate: "yyyy-MM-dd" }}
+                              </td>
+                            </tr>
+                          </ng-container>
                         </ng-container>
                       </ng-container>
-                    </ng-container>
-                    <!--  <td>{{ stock.lote }}</td>
+                      <!--  <td>{{ stock.lote }}</td>
                       <td>{{ stock.cantidad }}</td> -->
-                    <!--  <td
+                      <!--  <td
                         [ngClass]="{
                           'alerta-rojo':
                             obtenerFechaCaducidadFormateada(stock.caducidad) ===
@@ -159,11 +166,11 @@
                       >
                         {{ stock.caducidad | utcDate: "yyyy-MM-dd" }}
                       </td> -->
-                    <!--  <td  >{{stock.caducidad | utcDate:'yyyy-MM-dd'}}</td> -->
-                    <!-- <td>
+                      <!--  <td  >{{stock.caducidad | utcDate:'yyyy-MM-dd'}}</td> -->
+                      <!-- <td>
                         <span>Activo </span>
                       </td> -->
-                    <!--    <td>
+                      <!--    <td>
                           <span   class="cursor">
   
                            <a [ngClass]="{ 'disabled-icon': producto.ESTADO == 2 }"
@@ -184,49 +191,50 @@
                           ></span>
                         </td> -->
 
-                    <!--  <tr class="expandable-body">
+                      <!--  <tr class="expandable-body">
                       <td colspan="5">
                         <p>
                           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                         </p>
                       </td>
                     </tr> -->
-                  </tbody>
-                </table>
-                <pagination-controls
-                  (pageChange)="page = $event"
-                  previousLabel="Anterior"
-                  nextLabel="Siguiente"
-                ></pagination-controls>
-              </div>
-              <!-- <pagination-controls
+                    </tbody>
+                  </table>
+                  <pagination-controls
+                    (pageChange)="page = $event"
+                    previousLabel="Anterior"
+                    nextLabel="Siguiente"
+                  ></pagination-controls>
+                </div>
+                <!-- <pagination-controls
                   (pageChange)="page = $event"
                   previousLabel="Anterior"
                   nextLabel="Siguiente"
                 ></pagination-controls> -->
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal fade" id="modal-info">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"></h4>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <div class="modal fade" id="modal-info">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-"></div>
       </div>
-      <div class="modal-"></div>
     </div>
   </div>
 </div>
