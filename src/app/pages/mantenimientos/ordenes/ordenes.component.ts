@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { Orden } from 'src/app/models/orden.module';
@@ -16,6 +16,7 @@ import { OrdenID } from 'src/app/interfaces/carga-IngresordenId.interface';
   selector: 'app-ordenes',
   templateUrl: './ordenes.component.html',
   styleUrls: ['./ordenes.component.css'],
+
 })
 export class OrdenesComponent implements OnInit {
   constructor(

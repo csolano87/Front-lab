@@ -104,54 +104,6 @@ input[type="text"]::placeholder {
 }
 
 
-/* Estilo para la tabla */
-.table {
-  width: 100%;
-  border-collapse: collapse; /* Eliminar los bordes duplicados */
-  margin-top: 20px;
-}
-
-.table th, .table td {
-  padding: 12px; /* Espaciado interno */
-  text-align: left; /* Alinear el texto a la izquierda */
-  border-bottom: 1px solid #ddd; /* Línea de separación suave entre filas */
-}
-
-.table th {
-  background-color: #f4f4f4; /* Fondo gris suave para los encabezados */
-  font-weight: bold;
-  color: #333; /* Color de texto más oscuro */
-}
-
-.table tr:hover {
-  background-color: #f1f1f1; /* Resaltado suave de la fila al pasar el mouse */
-}
-
-.table td {
-  font-size: 14px; /* Tamaño de fuente más pequeño */
-  color: #555; /* Color de texto */
-}
-
-.table td span {
-  display: inline-block; /* Permite que los iconos se alineen correctamente */
-  padding: 5px 10px;
-}
-
-.table .btn {
-  background-color: #28a745; /* Color verde para el botón de acción */
-  color: white;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 14px;
-}
-
-.table .btn-danger {
-  background-color: #dc3545; /* Color rojo para el botón de eliminar */
-}
-
-.table .btn:hover {
-  opacity: 0.8; /* Efecto de opacidad al pasar el cursor */
-}
 
 
 

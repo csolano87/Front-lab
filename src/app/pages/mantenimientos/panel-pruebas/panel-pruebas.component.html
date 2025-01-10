@@ -3,14 +3,8 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <input
-            type="text"
-            class="form-control"
-            #txtSearch
-            (keyup)="onSearchExam(txtSearch.value)"
-            placeholder="Buscar examen"
-            placeholder="Buscar por nombre"
-          />
+          <input type="text" class="form-control" #txtSearch (keyup)="onSearchExam(txtSearch.value)"
+            placeholder="Buscar examen" placeholder="Buscar por nombre" />
         </div>
       </div>
     </div>
@@ -21,11 +15,7 @@
       <div class="card">
         <div class="card-body">
           <div class="button">
-            <button
-              class="btn btn-primary btn-sm"
-              data-toggle="modal"
-              data-target="#modal-info"
-            >
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-info">
               <i class="bx bxs-plus-circle"></i>
               Agregar
             </button>
@@ -33,10 +23,7 @@
           <div class="col-md-3 button"></div>
 
           <div class="table-responsive">
-            <div
-              *ngIf="cargando"
-              class="alert alert-info text-center mt-3 animated fadeIn faster"
-            >
+            <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
               <h4 class="alert-heading">Cargando</h4>
               <p>
                 <i class="fas fa-sync-alt fa-spin fa-2x"></i>
@@ -48,26 +35,23 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Codigo</th>
-                    <th>Nombre</th>
+                    <th style="width: 8%;">Codigo</th>
+                    <th style="width: 15%;">Nombre</th>
 
-                    <th>Categoria</th>
-                    <th>Tiempo de resultado</th>
-                    <th>Valor</th>
-                    <th>Favorito</th>
-                    <th>Estado</th>
-                    <th>Actions</th>
+                    <th style="width: 10%;">Categoria</th>
+                    <th style="width: 10%;">Tiempo de resultado</th>
+                    <th  style="width: 10%;">Valor</th>
+                    <th style="width: 10%;">Favorito</th>
+                    <th style="width: 12%;">Estado</th>
+                    <th style="width: 20%;" >Actions</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr
-                    *ngFor="
+                  <tr *ngFor="
                       let pruebas of listapruebas|filtroexam:search
                         | paginate: { itemsPerPage: 10, currentPage: page }
-                    "
-                    class="table-row-not-expanded"
-                  >
+                    " class="table-row-not-expanded">
                     <!-- <td class="cell" (click)="equipo.isExpanded = !equipo.isExpanded"> -->
                     <td>{{ pruebas.CODIGO }}</td>
                     <td>{{ pruebas.NOMBRE }}</td>
@@ -77,11 +61,7 @@
 
                     <td>{{ pruebas.VALOR }}</td>
                     <td>
-                      <input
-                        type="checkbox"
-                        [(ngModel)]="pruebas.favorite"
-                        (change)="favorite(pruebas)"
-                      />
+                      <input type="checkbox" [(ngModel)]="pruebas.favorite" (change)="favorite(pruebas)" />
                     </td>
                     <td>
                       <div [ngSwitch]="pruebas.ESTADO">
@@ -90,29 +70,20 @@
                       </div>
                     </td>
 
-                    <td>
-                      <span class="cursor">
-                        <a
-                          [ngClass]="{ 'disabled-icon': pruebas.ESTADO != 1 }"
-                          [routerLink]="[
-                            '/dashboard',
-                            'panelPruebas',
-                            pruebas.id
-                          ]"
-                        >
-                          <i
-                            class="bx bxs-edit"
-                            data-toggle="modal"
-                            data-target="#modal-info"
-                          ></i> </a
-                      ></span>
-                      <span (click)="borrarequipo(pruebas)" class="cursor">
-                        <i class="bx bxs-trash"></i
-                      ></span>
+                    <td class="actions">
+                      <span class="span_edit">
 
-                      <a [routerLink]="['/dashboard', 'rangos', pruebas.id]">
-                        <i class="bx bx-bar-chart-square"></i>
-                      </a>
+                        <i [ngClass]="{ 'disabled-icon': pruebas.ESTADO != 1 }" [routerLink]="[
+                          '/dashboard',
+                          'panelPruebas',
+                          pruebas.id
+                        ]" class="bx bxs-edit" data-toggle="modal" data-target="#modal-info">Editar</i></span>
+                      <span (click)="borrarequipo(pruebas)" class="span_delete">
+                        <i class="bx bxs-trash">Eliminar</i></span>
+
+                      <span class="span_rangos" >
+                        <i [routerLink]="['/dashboard', 'rangos', pruebas.id]" class="bx bx-bar-chart-square">Rangos</i>
+                      </span>
 
                       <!--   <a  (click)="favorite(pruebas)">
                         <i class='bx bxs-star'></i>
@@ -143,11 +114,8 @@
                 </tbody>
               </table>
             </div>
-            <pagination-controls
-              (pageChange)="page = $event"
-              previousLabel="Anterior"
-              nextLabel="Siguiente"
-            ></pagination-controls>
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+              nextLabel="Siguiente"></pagination-controls>
           </div>
         </div>
       </div>
@@ -160,13 +128,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Crear Prueba</h4>
-        <button
-          type="button"
-          class="close"
-          (click)="borrarPruebas()"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" (click)="borrarPruebas()" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -175,174 +137,91 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
-              <form
-                autocomplete="off"
-                [formGroup]="panelform"
-                (ngSubmit)="crearPanel()"
-                id="panelform"
-              >
+              <form autocomplete="off" [formGroup]="panelform" (ngSubmit)="crearPanel()" id="panelform">
                 <div class="card-body">
                   <div class="row">
                     <div class="form-group col-md-2">
                       <label for="">Codigo</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="CODIGO"
-                        [class.is-invalid]="CODIGO"
-                        placeholder="1001"
-                      />
-                      <small *ngIf="CODIGO" class="text-danger"
-                        >Ingrese un codigo</small
-                      >
+                      <input type="text" class="form-control" formControlName="CODIGO" [class.is-invalid]="CODIGO"
+                        placeholder="1001" />
+                      <small *ngIf="CODIGO" class="text-danger">Ingrese un codigo</small>
                     </div>
 
                     <div class="form-group col-md-2">
                       <label for="">Abrev</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="ABREV"
-                        [class.is-invalid]="ABREV"
-                        placeholder="GLU"
-                      />
-                      <small *ngIf="ABREV" class="text-danger"
-                        >Ingrese un nombre</small
-                      >
+                      <input type="text" class="form-control" formControlName="ABREV" [class.is-invalid]="ABREV"
+                        placeholder="GLU" />
+                      <small *ngIf="ABREV" class="text-danger">Ingrese un nombre</small>
                     </div>
 
                     <div class="form-group col-md-5">
                       <label for="">Nombre</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="NOMBRE"
-                        [class.is-invalid]="NOMBRE"
-                        placeholder="Glucosa..."
-                      />
-                      <small *ngIf="NOMBRE" class="text-danger"
-                        >Ingrese un nombre</small
-                      >
+                      <input type="text" class="form-control" formControlName="NOMBRE" [class.is-invalid]="NOMBRE"
+                        placeholder="Glucosa..." />
+                      <small *ngIf="NOMBRE" class="text-danger">Ingrese un nombre</small>
                     </div>
 
                     <div class="form-group col-md-3">
                       <label for="">Seccion</label>
 
-                      <select
-                        formControlName="modeloId"
-                        [class.is-invalid]="modeloId"
-                        class="form-control"
-                      >
+                      <select formControlName="modeloId" [class.is-invalid]="modeloId" class="form-control">
                         <option [value]="">--Seleccione--</option>
-                        <option
-                          *ngFor="let categoria of listacategoria"
-                          [value]="categoria.id"
-                        >
+                        <option *ngFor="let categoria of listacategoria" [value]="categoria.id">
                           {{ categoria.NOMBRE }}
                         </option>
                       </select>
-                      <small *ngIf="modeloId" class="text-danger"
-                        >Seleccione una categoria</small
-                      >
+                      <small *ngIf="modeloId" class="text-danger">Seleccione una categoria</small>
                     </div>
                     <div class="form-group col-md-3">
                       <label for="">Tipo muestra</label>
 
-                      <select
-                        formControlName="muestraId"
-                        [class.is-invalid]="muestraId"
-                        class="form-control"
-                      >
+                      <select formControlName="muestraId" [class.is-invalid]="muestraId" class="form-control">
                         <option [value]="">--Seleccione--</option>
-                        <option
-                          *ngFor="let muestra of listatipomuestra"
-                          [value]="muestra.id"
-                        >
+                        <option *ngFor="let muestra of listatipomuestra" [value]="muestra.id">
                           {{ muestra.nombre }}
                         </option>
                       </select>
-                      <small *ngIf="muestraId" class="text-danger"
-                        >Seleccione una categoria</small
-                      >
+                      <small *ngIf="muestraId" class="text-danger">Seleccione una categoria</small>
                     </div>
 
                     <div class="form-group col-md-3">
                       <label for="">Tecncia</label>
 
-                      <select
-                        formControlName="tecnicaId"
-                        [class.is-invalid]="tecnicaId"
-                        class="form-control"
-                      >
+                      <select formControlName="tecnicaId" [class.is-invalid]="tecnicaId" class="form-control">
                         <option value="">--Seleccione--</option>
-                        <option
-                          *ngFor="let tecnica of listatecnica"
-                          [value]="tecnica.id"
-                        >
+                        <option *ngFor="let tecnica of listatecnica" [value]="tecnica.id">
                           {{ tecnica.nombre }}
                         </option>
                       </select>
-                      <small *ngIf="tecnicaId" class="text-danger"
-                        >Seleccione una categoria</small
-                      >
+                      <small *ngIf="tecnicaId" class="text-danger">Seleccione una categoria</small>
                     </div>
 
                     <div class="form-group col-md-2">
                       <label for="">Tiempo duracion</label>
-                      <input
-                        type="number"
-                        formControlName="TIEMPO"
-                        class="form-control"
-                        [class.is-invalid]="TIEMPO"
-                        id=""
-                        placeholder="2"
-                      />
-                      <small *ngIf="TIEMPO" class="text-danger"
-                        >Ingrese un tiempo de duracion</small
-                      >
+                      <input type="number" formControlName="TIEMPO" class="form-control" [class.is-invalid]="TIEMPO"
+                        id="" placeholder="2" />
+                      <small *ngIf="TIEMPO" class="text-danger">Ingrese un tiempo de duracion</small>
                     </div>
 
                     <div class="form-group col-md-2">
                       <label for="">Valor</label>
-                      <input
-                        formControlName="VALOR"
-                        type="text"
-                        class="form-control"
-                        [class.is-invalid]="VALOR"
-                        id=""
-                        placeholder="2.5"
-                      />
-                      <small *ngIf="VALOR" class="text-danger"
-                        >Ingrese un valor</small
-                      >
+                      <input formControlName="VALOR" type="text" class="form-control" [class.is-invalid]="VALOR" id=""
+                        placeholder="2.5" />
+                      <small *ngIf="VALOR" class="text-danger">Ingrese un valor</small>
                     </div>
 
                     <div class="form-group col-md-2">
                       <label for="">Ordenamiento</label>
-                      <input
-                        formControlName="ORDEN"
-                        type="text"
-                        class="form-control"
-                        [class.is-invalid]="ORDEN"
-                        placeholder="1"
-                      />
-                      <small *ngIf="ORDEN" class="text-danger"
-                        >Ingrese un valor</small
-                      >
+                      <input formControlName="ORDEN" type="text" class="form-control" [class.is-invalid]="ORDEN"
+                        placeholder="1" />
+                      <small *ngIf="ORDEN" class="text-danger">Ingrese un valor</small>
                     </div>
 
                     <div class="form-group col-md-2">
                       <label for="">Codigo externo</label>
-                      <input
-                        formControlName="CODEXTERNO"
-                        type="text"
-                        class="form-control"
-                        [class.is-invalid]=""
-                        placeholder="0001"
-                      />
-                      <small *ngIf="" class="text-danger"
-                        >Ingrese un valor</small
-                      >
+                      <input formControlName="CODEXTERNO" type="text" class="form-control" [class.is-invalid]=""
+                        placeholder="0001" />
+                      <small *ngIf="" class="text-danger">Ingrese un valor</small>
                     </div>
                   </div>
                 </div>
@@ -350,7 +229,7 @@
                 <div class="card-footer">
                   <a (click)="cambioEstado()" class="btn btn-primary">{{
                     btnVal
-                  }}</a>
+                    }}</a>
                 </div>
               </form>
             </div>
@@ -358,7 +237,7 @@
           <!--  <hr />
           <pre>{{ panelform.valid }}</pre>
           <pre>{{ panelform.value | json }}</pre> -->
-        
+
         </div>
       </div>
     </div>

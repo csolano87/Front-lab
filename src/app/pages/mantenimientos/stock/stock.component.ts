@@ -283,11 +283,11 @@ export class StockComponent implements OnInit {
     // this.productos.disable();
   }
 
-  borrarStock():void {
-     this.stockForm.reset()
-    this.productos.clear(); 
-    
-   // window.location.reload();
+  borrarStock(): void {
+    this.stockForm.reset()
+    this.productos.clear();
+
+    // window.location.reload();
     /* console.log(this.productos.controls); */
   }
   async comments(index: number) {

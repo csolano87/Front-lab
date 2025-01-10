@@ -1,0 +1,55 @@
+.grid-container {
+  display: grid; /* Activar CSS Grid */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ajuste dinámico */
+  grid-auto-rows: auto;
+ 
+  gap: 15px; /* Espaciado entre las cards */
+  align-items: start; /* Asegura que las cards se alineen hacia arriba */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0; /* Asegura que no haya margen que cause espacio extra */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Animación de hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.card-header h6.card-title {
+  font-weight: bold; /* Mantén el título en negrita */
+  font-size: 16px; /* Ajusta el tamaño si es necesario */
+  margin-bottom: 10px;
+}
+.card-header {
+  margin-bottom: 10px;
+}
+
+.card-items {
+  display: flex;
+  flex-direction: column; /* Alinear los elementos en columna */
+  gap: 8px;
+}
+
+.card-items input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.card-items label {
+  font-weight: normal; /* Asegúrate de que los labels no estén en negrita */
+  font-size: 14px; /* Ajusta el tamaño para que luzca bien */
+  line-height: 1.5; /* Mejora el espaciado entre líneas */
+  margin-left: 5px; /* Añade un pequeño espacio desde el checkbox */
+}
+/* .grid-container {
+  border: 1px solid red;
+}
+.card {
+  border: 1px solid blue;
+} */

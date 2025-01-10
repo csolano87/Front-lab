@@ -10,7 +10,13 @@ export interface Menus {
      padreid:   number | null;
      orden:     number;
      estado:    boolean;
-     createdAt: string;
-     updatedAt: string;
+ /*     createdAt: string;
+     updatedAt: string; */
  }
+
+export  interface MenuGrouped {
+    id:number;
+    nombre: string;
+    items: Menu[];
+  }
  

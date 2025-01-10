@@ -1,15 +1,27 @@
-.btn-xs {
-  margin-top: 50px;
-  margin-left: 200px;
-}
-.esboton {
-  margin: 0 auto;
-  margin-top: 40px;
 
-  margin-right: 10px;
+
+/*  *{
+  outline: 1px solid crimson;
+ } */
+
+/*  .container-fluid {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
 }
 
-.esboton2{
-  margin: 20 auto;
- 
+.card-header {
+  font-weight: bold;
 }
+
+.btn {
+  border-radius: 5px;
+}
+
+.table thead {
+  background-color: #f1f1f1;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f9f9f9;
+} */

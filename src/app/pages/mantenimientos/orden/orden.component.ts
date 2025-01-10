@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   FormGroup,
   UntypedFormArray,
@@ -33,6 +33,7 @@ declare var $: any;
   selector: 'app-orden',
   templateUrl: './orden.component.html',
   styleUrls: ['./orden.component.css'],
+  
 })
 export class OrdenComponent implements OnInit {
   anio: number;

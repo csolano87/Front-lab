@@ -810,24 +810,7 @@ export class IngresordenesComponent implements OnInit {
           }
         }
 
-        /*  const index = isArray.value.map((item) =>
-          perfilseleccionado.itempruebas.findIndex(
-            (p) => p.panelprueba.CODIGO === item.codigo,
-          ),
-        ); */
-        /* const validIndices = index.filter((i) => i !== -1)
-         .sort((a, b) => b - a) ;
-          console.log(validIndices);
-    
-        validIndices.forEach((i) => {
-          this.pruebas.removeAt(i);
-        }); */
-        /*  console.log(index);
-        index.reverse().forEach((i:number) => {
-          if (i !== -1) {
-            this.pruebas.removeAt(i);
-          }
-        }); */
+
       }
     }
 

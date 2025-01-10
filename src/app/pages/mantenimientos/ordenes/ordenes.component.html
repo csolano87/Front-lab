@@ -86,8 +86,8 @@
                   "
                   class="table-row"
                 >
-                  <td class="">
-                    {{ orden.numeroorden }}
+                  <td class="table_text">
+                    {{ orden.numeroorden }} <br>
                     <i
                       [ngClass]="{
                         'bx bxs-bell-plus animated-icon bx-xs':
@@ -103,14 +103,14 @@
                     ></i>
                   </td>
                   <td>
-                    <i class="bx bxs-calendar"> {{ orden.fechaorden }}</i>
+                    &nbsp;   <i class="bx bxs-calendar"> {{ orden.fechaorden }}</i>
                     <br />
 
                     <i class="bx bxs-time"> {{ orden.horaorden }}</i>
                   </td>
 
                   <td class="">
-                    {{ orden.paciente.numero }} <br />
+                    {{ orden.paciente.numero }} <br /> 
                     {{ orden.paciente.nombres }} {{ orden.paciente.apellidos }}
                   </td>
                   <td>

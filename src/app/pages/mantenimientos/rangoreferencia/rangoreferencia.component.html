@@ -33,20 +33,20 @@
           <table class="table">
             <thead>
               <tr>
-                <th>#</th>
+               <!--  <th>#</th> -->
                 <th>Tipo fisiologico</th>
                 <th>Tramo edades</th>
 
                 <th>Unidad</th>
                 <th>Rangos</th>
-                <th>comentario</th>
+             <!--    <th>comentario</th> -->
                 <th>Estado</th>
 
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody *ngFor="let item of listarangos; let i = index">
-              <td>{{ i + 1 }}</td>
+             <!--  <td>{{ i + 1 }}</td> -->
               <td>{{ item.tipofisiologico.DESCRIPCION }}</td>
               <td>
                 {{ item.edadinicial }} {{ item.unidadedad.DESCRIPCION }} -
@@ -54,22 +54,22 @@
               </td>
               <td>{{ item.unidad.DESCRIPCION }}</td>
               <td>{{ item.rangos }}</td>
-              <td></td>
+           <!--    <td></td> -->
               <td><input type="checkbox" [(ngModel)]="item.ESTADO" /></td>
-              <td>
-                <span class="cursor">
-                  <a
-                    [ngClass]="{ 'disabled-icon': item.ESTADO != true }"
-                    [routerLink]="['/dashboard', 'rangos', item.id]"
+              <td class="actions">
+              
+                  <span class="span_edit"
+                    
                   >
-                    <i
-                      class="bx bxs-edit bx-sm"
+                    <i [ngClass]="{ 'disabled-icon': item.ESTADO != true }"
+                    [routerLink]="['/dashboard', 'rangos', item.id]"
+                      class="bx bxs-edit"
                       data-toggle="modal"
                       data-target="#modal-info"
-                    ></i> </a
-                ></span>
-                <span (click)="borrarRango(item)" class="cursor">
-                  <i class="bx bxs-trash bx-sm"></i
+                    >Editar</i> </span
+                >
+                <span (click)="borrarRango(item)" class="span_delete">
+                  <i class="bx bxs-trash ">Eliminar</i
                 ></span>
               </td>
             </tbody>

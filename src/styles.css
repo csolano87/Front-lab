@@ -1,5 +1,9 @@
+
+
 table {
   width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
 }
 
 .table tr {
@@ -8,6 +12,7 @@ table {
 
 thead th {
   padding-left: 0px;
+  text-align: center;
   /*   font-size: 1rem; */
 }
 tr:nth-child(even) {
@@ -15,6 +20,10 @@ tr:nth-child(even) {
 }
 tbody td {
   font-size: 0.9rem;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px; 
+  white-space: nowrap;
 }
 
 th,
@@ -212,3 +221,87 @@ tr:nth-child(even){
 /* *{
   outline: crimson solid;
 } */
+
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+ 
+
+}
+
+.span_edit,
+.span_delete ,
+.span_password,
+.span_permisos,
+.span_rangos{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  margin: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.span_edit {
+  color: #007bff;
+  background-color: #e8f4fc;
+}
+
+.span_edit:hover {
+  background-color: #cce5ff;
+  color: #0056b3;
+}
+
+.span_delete {
+  color: #dc3545;
+  background-color: #f8d7da;
+}
+
+.span_delete:hover {
+  background-color: #f5c6cb;
+  color: #a71d2a;
+}
+.span_password {
+  color: #cfc694;
+  background-color: #ad9d06;
+}
+
+.span_password:hover {
+  background-color: #8d7d21;
+  color: rgb(141, 140, 84);
+}
+.span_permisos {
+  color: #181616;
+  background-color: #8a8484;
+}
+
+.span_permisos:hover {
+  background-color: #131111;
+  color: #8f8686;
+}
+
+
+.span_rangos {
+  color: #4328dd;
+  background-color: #9887a0;
+}
+
+.span_rangos:hover {
+  background-color: #2a09be;
+  color: #e4e0ee;
+}
+i {
+  margin: 0 5px;
+  
+}
+
+.disabled-icon {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}

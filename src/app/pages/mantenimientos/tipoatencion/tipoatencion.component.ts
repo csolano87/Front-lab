@@ -96,7 +96,7 @@ export class TipoatencionComponent implements OnInit {
     console.log(atencion.id);
 
     Swal.fire({
-      title: 'Eliminar Grupo?',
+      title: 'Eliminar tipo atencion?',
       text: `Esta seguro que desea eliminar la atencion  ${atencion.nombre}`,
       icon: 'warning',
       showCancelButton: true,
@@ -111,7 +111,7 @@ export class TipoatencionComponent implements OnInit {
             const { msg } = resp;
             this.getAtencion();
             Swal.fire({
-              title: 'Grupo eliminada!',
+              title: 'Tipo atencion  eliminado!',
               text: `${msg}`,
               icon: 'success',
             });

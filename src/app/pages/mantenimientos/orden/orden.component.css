@@ -1,7 +1,21 @@
-/*  *{
-  outline: 2px solid crimson;  
+
+table {
+  width: 100%;
+  cursor: pointer;
 }
-  */
+
+tr:hover {
+  background-color: #b3ecb7;
+}
+
+thead th {
+  font-size: 0.8rem;
+}
+
+tbody td {
+  font-size: 0.9rem;
+}
+
 
 .li {
   list-style: none;
@@ -231,35 +245,6 @@ left: -10px;
 }
 .colorcopro {
   background-color: #c6cff6;
-}
-/*  @media (max-width: 1366px) and (max-height: 768px) {
-  .tt2, .tt {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 130px);
-    gap: 5px;
-  }
-
-  .pto, .ot, .cop, .dddd, .se, .qc {
-    grid-column: auto;
-    grid-row: auto;
-  }
-} */
-
-table {
-  width: 100%;
-  cursor: pointer;
-}
-
-tr:hover {
-  background-color: #b3ecb7;
-}
-
-thead th {
-  font-size: 0.8rem;
-}
-
-tbody td {
-  font-size: 0.9rem;
 }
 
 .text-table {

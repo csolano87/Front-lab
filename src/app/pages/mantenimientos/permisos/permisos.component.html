@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-info">
+        <div class="card-header">
+          <h3 class="card-title">Administración de permisos del sistema</h3>
+          <div class="button">
+            <a (click)="guardarMenu()" class="btn btn-primary btn-sm">Guardar</a>
+          </div>
+        </div>
+
+        <div class="container-fluid">
+          <div class="card-body grid-container">
+            <div class="card" *ngFor="let menu of groupedMenus">
+              <div class="card-header">
+                <h6 class="card-title">{{ menu.nombre }}</h6>
+              </div>
+              <div class="card-items">
+                <div *ngFor="let item of menu.items">
+                  <input
+                    type="checkbox"
+                    name="checkbox"
+                    (change)="onChangeMenu($event, item)"
+                    [checked]="isChecked(item.id)"
+                  />
+                  <label>{{ item.nombre }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

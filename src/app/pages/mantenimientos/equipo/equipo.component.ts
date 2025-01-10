@@ -191,14 +191,14 @@ export class EquipoComponent implements OnInit {
         SERIE,
         ESTADOPROVEEDOR: estadoproveedorId ? estadoproveedorId : '',
         ESTADOCLIENTE: estadoclienteId ? estadoclienteId : '',
-      /*   ESTADO_ID: historicoestado[0].estadoId
-          ? historicoestado[0].estadoId
-          : '',
-        UBICACION_ID: historicoubicacion[0].ubicacionId
-          ? historicoubicacion[0].ubicacionId
-          : '', */
+        /*   ESTADO_ID: historicoestado[0].estadoId
+            ? historicoestado[0].estadoId
+            : '',
+          UBICACION_ID: historicoubicacion[0].ubicacionId
+            ? historicoubicacion[0].ubicacionId
+            : '', */
 
-          ESTADO_ID: historicoestado && historicoestado[0] && historicoestado[0].estadoId
+        ESTADO_ID: historicoestado && historicoestado[0] && historicoestado[0].estadoId
           ? historicoestado[0].estadoId
           : '',
         UBICACION_ID: historicoubicacion && historicoubicacion[0] && historicoubicacion[0].ubicacionId
@@ -208,18 +208,18 @@ export class EquipoComponent implements OnInit {
         ACC:
           acc && acc.length > 0
             ? acc.map((ac) =>
-                //: acc.map((ac) =>
-                this.ACC.push(
-                  this.fb.group({
-                    DESCRIPCION: ac.DESCRIPCION,
-                    equipocomplementariosId:
-                      ac.equipocomplementariosId.toString(),
-                    MARCA: ac.MARCA,
-                    SERIEACC: ac.SERIEACC,
-                    fechacom: `${ac.fechacom}`.slice(0, 10),
-                  }),
-                ),
-              )
+              //: acc.map((ac) =>
+              this.ACC.push(
+                this.fb.group({
+                  DESCRIPCION: ac.DESCRIPCION,
+                  equipocomplementariosId:
+                    ac.equipocomplementariosId.toString(),
+                  MARCA: ac.MARCA,
+                  SERIEACC: ac.SERIEACC,
+                  fechacom: `${ac.fechacom}`.slice(0, 10),
+                }),
+              ),
+            )
             : [],
       });
 
@@ -328,8 +328,8 @@ export class EquipoComponent implements OnInit {
     console.log(selectedCategoria);
     this.listaeq = selectedCategoria
       ? selectedCategoria.instrumento.sort((a, b) =>
-          a.NOMBRE.localeCompare(b.NOMBRE),
-        )
+        a.NOMBRE.localeCompare(b.NOMBRE),
+      )
       : [];
 
     console.log(this.listaeq);

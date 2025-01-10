@@ -93,6 +93,7 @@ import { MenuComponent } from './mantenimientos/menu/menu.component';
 
 import { CargaInternaComponent } from './mantenimientos/carga-interna/carga-interna.component';
 import { ListadoStockComponent } from './mantenimientos/listado-stock/listado-stock.component';
+import { PermisosComponent } from './mantenimientos/permisos/permisos.component';
 
 const routes: Routes = [
   {
@@ -250,15 +251,26 @@ const routes: Routes = [
         data: { titulo: 'ordenes' },
       },
 
-     /*  {
-        path: 'ordenes/:id',
-        component: OrdenesComponent,
-        data: { titulo: 'ordenes' },
-      }, */
+      /*  {
+         path: 'ordenes/:id',
+         component: OrdenesComponent,
+         data: { titulo: 'ordenes' },
+       }, */
       {
         path: 'perfil/:id',
         component: PerfilComponent,
         data: { titulo: 'perfil' },
+      },
+
+      {
+        path: 'permisos/:id',
+        component: PermisosComponent,
+        data: { titulo: 'permisos' },
+      },
+      {
+        path: 'menu/:id',
+        component: MenuComponent,
+        data: { titulo: 'menu' },
       },
       {
         path: 'productos',
@@ -714,4 +726,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }

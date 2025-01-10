@@ -20,7 +20,7 @@
       </div>
       <div class="info">
        
-        <a routerLink="#" class="d-block"> {{ usuario.codigo_doctor }}</a>
+        <a routerLink="#" class="d-block"> {{ usuario.doctor }}</a>
       </div>
     </div>
     
@@ -31,27 +31,27 @@
         role="menu"
         data-accordion="false"
       >
-        <li class="nav-item" *ngFor="let item of menuItems">
+        <li class="nav-item" *ngFor="let menu of groupedMenus">
           
           <a href="#" class="nav-link">
-            <i [class]="item.icono"></i>
+            <i class="right fas fa-angle-left"></i>
             <p>
-              {{ item.titulo }}
+              {{ menu.nombre }}
             </p>
-          </a>
+          </a> 
           <ul class="nav nav-treeview">
-            <li class="nav-item" *ngFor="let subMenuItem of item.submenu">
+            <li class="nav-item" *ngFor="let subMenuItem of menu.items">
               <a
                 class="nav-link"
-                [routerLink]="subMenuItem.url"
+                [routerLink]="subMenuItem.ruta"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
               >
                 <i class="far fa-circle nav-icon"></i>
-                <p>{{ subMenuItem.titulo }}</p>
+                <p>{{ subMenuItem.nombre }}</p>
               </a>
             </li>
-          </ul>
+          </ul> 
         </li>
       </ul>
 

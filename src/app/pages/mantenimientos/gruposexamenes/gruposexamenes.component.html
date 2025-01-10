@@ -1,161 +1,109 @@
-<div class="container-fluid rounded shadow">
-  <form [formGroup]="grupoform" (ngSubmit)="crearGrupo()" id="grupoform">
-    <div class="esboton2">
-      <a type="submit" class="btn btn-primary btn-sm" (click)="cambioestado()">
-        {{ btnVal }}
-      </a>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="form-group col-md-2">
-          <label for="">Codigo</label>
+<div class="container-fluid rounded shadow mt-4 p-4 bg-light">
 
-          <input
-            class="form-control"
-            type="text"
-            formControlName="codigo"
-            [class.invalid]="codigo"
-            placeholder="Ingrese un codigo"
-          />
-        </div>
+  <form [formGroup]="grupoform" autocomplete="off" (ngSubmit)="crearGrupo()" id="grupoform">
 
-        <div class="form-group col-md-3">
-          <label for="">Nombre</label>
-
-          <input
-            class="form-control"
-            type="text"
-            formControlName="nombre"
-            [class.invalid]="nombre"
-            placeholder="Ingrese un nombre de grupo"
-          />
-        </div>
-        <small *ngIf="nombre" class="text-danger">campo obligatorio </small>
-        <div class="form-group col-md-2">
-          <label for="">Tipo de grupo</label>
-
-          <select
-            formControlName="tipogrupoId"
-            class="form-control"
-            name="
-            "
-            id=""
-          >
-            <option *ngFor="let grupo of listatipogrupo" [value]="grupo.id">
-              {{ grupo.nombre }}
-            </option>
-          </select>
-        </div>
-
-        <div class="esboton">
-          <a
-            class="btn btn-primary btn-sm"
-            data-toggle="modal"
-            data-target="#modal-pruebas"
-          >
-            <i class="bx bxs-plus-circle"></i>
-            Agregar
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="row animated fadeIn fast">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <div class="table-responsive">
-              <div
-                *ngIf="cargando"
-                class="alert alert-info text-center mt-3 animated fadeIn faster"
-              >
-                <h4 class="alert-heading">Cargando</h4>
-                <p>
-                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
-                </p>
-                <p class="mb-0">Espere por favor</p>
-              </div>
-
-              <div *ngIf="!cargando" class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Codigo</th>
-                      <th>Nombre</th>
-                    </tr>
-                  </thead>
-                  <!-- let d of grupoform.controls['pruebas']?.value -->
-                  <tbody formArrayName="pruebas">
-                    <!--  | paginate
-                            : { itemsPerPage: 10, currentPage: pagesGrupo };
-                        let i = index -->
-                    <tr
-                      *ngFor="
-                        let d of pruebas.controls
-                         
-                        let i = index
-                      "
-                      [formGroupName]="i"
-                    >
-                      <!--    <td><i class="bx bx-test-tube bx-sm"></i></td> -->
-                      <td>{{ d.value.codigo }}</td>
-                      <td>{{ d.value.nombre }}</td>
-                      <td>
-                        <i
-                          (click)="borrarPrueba(i)"
-                          class="bx bxs-trash"
-                          aria-hidden="true "
-                        ></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!--  <pagination-controls
-                (pageChange)="pagesGrupo = $event"
-                previousLabel="Anterior"
-                nextLabel="Siguiente"
-              ></pagination-controls>  -->
-              </div>
+    <!--  -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-info">
+          <div class="card-header">
+            <h6 class="card-title">Gestion de perfiles</h6>
+            <div class="button">
+              <button type="button" class="btn btn-primary btn-sm" (click)="cambioestado()">
+                {{ btnVal }}
+              </button>
             </div>
           </div>
+          <div class="card-body">
+            <div class="row ">
+              <div class="form-group col-md-4">
+                <label for="codigo">Código</label>
+                <input id="codigo" class="form-control" type="text" formControlName="codigo" [class.is-invalid]="codigo"
+                  placeholder="Ingrese un código" />
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" class="form-control" type="text" formControlName="nombre" [class.is-invalid]="nombre"
+                  placeholder="Ingrese un nombre de grupo" />
+                <small *ngIf="nombre" class="text-danger">Campo obligatorio</small>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="tipogrupo">Tipo de Grupo</label>
+                <select id="tipogrupo" formControlName="tipogrupoId" class="form-control">
+                  <option *ngFor="let grupo of listatipogrupo" [value]="grupo.id">
+                    {{ grupo.nombre }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+         
+      
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card-header">
+            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-pruebas">
+              <i class="bx bxs-plus-circle"></i> Agregar Pruebas
+            </button>
+           <!--  <h6 class="card-title">Pruebas Asignadas</h6> -->
+          </div>
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="pruebas">
+              <tr *ngFor="let d of pruebas.controls; let i = index" [formGroupName]="i">
+                <td>{{ d.value.codigo }}</td>
+                <td>{{ d.value.nombre }}</td>
+                <td>
+                  <span class="span_delete" >
+                    <i (click)="borrarPrueba(i)" class="bx bxs-trash">Eliminar</i> 
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
         </div>
       </div>
+
     </div>
+  </div>
+</div>
   </form>
 </div>
-
 <!-- <hr />
 <pre>{{ grupoform.valid }}</pre>
 <pre>{{ grupoform.value | json }}</pre> -->
 
-<div class="modal fade" id="modal-pruebas">
+<div class="modal fade" id="modal-pruebas" tabindex="-1">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Examenes</h4>
-        <button
-          type="button"
-          class="close"
-          (click)="borrarPruebas()"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+
+      <div class="modal-header bg-primary text-white">
+        <h4 class="modal-title">Seleccionar Pruebas</h4>
+        <button type="button" class="close" (click)="borrarPruebas()" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
             <form (ngSubmit)="onSubmit()" #form="ngForm">
               <div class="form-group col-md-12">
                 <label for="">Buscar examenes</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  #txtSearch
-                  (keyup)="onSearchExam(txtSearch.value)"
-                  placeholder="Buscar examen"
-                />
+                <input type="text" class="form-control" #txtSearch (keyup)="onSearchExam(txtSearch.value)"
+                  placeholder="Buscar examen" />
               </div>
             </form>
           </div>
@@ -166,44 +114,43 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
-              <table class="table">
+
+
+
+
+
+              <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th></th>
+
                     <th>Codigo</th>
                     <th>Nombre</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    *ngFor="
+                  <tr *ngFor="
                       let pru of listapruebas
                         | filtroexam: search
                         | paginate
                           : { itemsPerPage: 10, currentPage: pagesPruebas }
-                    "
-                    class="table-row-not-expanded"
-                  >
-                    <td><i class="bx bx-test-tube bx-sm"></i></td>
+                    " class="table-row-not-expanded">
+                    <!--    <td><i class="bx bx-test-tube bx-sm"></i></td> -->
                     <td>{{ pru.CODIGO }}</td>
                     <td>{{ pru.NOMBRE }}</td>
                     <td>
-                      <i
-                        (click)="pruebaseleccionado(pru)"
-                        class="bx bx-check-square bx-sm"
-                      ></i>
+                      <button class="btn btn-success btn-sm" (click)="pruebaseleccionado(pru)">
+                        <i class="bx bx-check"></i> Seleccionar
+                      </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
-             
+
             </div>
           </div>
-          <pagination-controls
-          (pageChange)="pagesPruebas = $event"
-          previousLabel="Anterior"
-          nextLabel="Siguiente"
-        ></pagination-controls>
+          <pagination-controls (pageChange)="pagesPruebas = $event" previousLabel="Anterior"
+            nextLabel="Siguiente"></pagination-controls>
         </div>
       </div>
     </div>

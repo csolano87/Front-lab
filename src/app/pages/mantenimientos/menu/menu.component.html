@@ -1,39 +1,212 @@
-
 <div class="container-fluid">
-     <div class="col-md-12">
-       <div class="card">
-         <div class="card-body">
-           <div class="wrapper">
-             <div class="tabs">
-               <div class="tab">
-              
-                 <label for="tab-1" class="tab-label">Lab General</label>
-                
-                     <div class="card">
-                       <div class="card-header card-title colorquimi">
-                         <p class="tittle"></p>
-                       </div>
 
-                       <div class="card-body">
-                         <div class="caso" >
-                           <input
-                             type="checkbox"
-                             name="checkbox"
-                             
-                           />
-                          
-                           <label class="margin">
-                           
-                           </label>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-              
-             </div>
-           </div>
-         </div>
+  <div class="row">
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body d-flex align-items-center justify-content-between">
+          
+        
+          <div class="col-8 ms-auto">
+            <input type="text" class="form-control" placeholder="Buscar menú...">
+          </div>
+        
+          <div class="crear_button">
+            <a data-toggle="modal"  data-target="#modal-menu" routerLink="/dashboard/menu/Nuevo">Crear nueva ruta</a>
+          </div>
+
      
-   </div>
+          <div class="table-responsive">
+            <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
+              <h4 class="alert-heading">Cargando</h4>
+              <p>
+                <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+              </p>
+              <p class="mb-0">Espere por favor</p>
+            </div>
+
+
+            <div *ngIf="!cargando" class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Nombre</th>
+                    <th style="width: 20%;">Ruta</th>
+                    <th>Orden</th>
+
+                    <th>Estado</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="
+                      let menu of listamenu
+                      
+                        | paginate: { itemsPerPage: 10, currentPage: page }
+                    ">
+                    <td>{{ menu.nombre }}</td>
+                    <td>{{ menu.ruta }}</td>
+
+                    <td>{{ menu.orden }}</td>
+
+
+                    <td>
+                      <div [ngSwitch]="menu.estado">
+                        <div *ngSwitchCase="true">Activo</div>
+                        <div *ngSwitchDefault>Inactivo</div>
+                      </div>
+                      <!--  <span
+                        *ngIf="menu.ESTADO == 1"
+                        class="rounded shadow bg-pen"
+                      >
+                        Activo
+                      </span> -->
+                    </td>
+                    <td class="actions">
+                      <span class="span_edit">
+                        <!--  <a  data-toggle="modal" data-target="#modal-menu" [ngClass]="{
+                            'disabled-icon': menu.estado !=true
+                          }" [routerLink]="[
+                            '/dashboard',
+                            'menu',
+                            menu.id
+                          ]"> -->
+                        <i data-toggle="modal" data-target="#modal-menu" [ngClass]="{
+                            'disabled-icon': menu.estado !=true
+                          }" [routerLink]="[
+                            '/dashboard',
+                            'menu',
+                            menu.id
+                          ]" class="bx bxs-edit ">Editar</i>
+                        <!--   </a> -->
+                      </span>
+                      <span [ngClass]="{
+                          'disabled-icon': menu.estado !=true
+                        }" (click)="borrarMenu(menu)" class="span_delete">
+                        <i class="bx bxs-trash">Eliminar</i>
+
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+              nextLabel="Siguiente"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+<div class="modal fade" id="modal-menu">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear Rutas de Menu</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+
+
+                <form autocomplete="off" [formGroup]="menuForm" (ngSubmit)="guardarMenu()" autocomplete="false"
+                  id="pacienteForm">
+                  <div class="row">
+
+
+                    <div class="form-group col-md-6">
+                      <label for="" class="form-ItemName">Nombre </label>
+                      <input type="text" class="form-control" formControlName="nombre" [class.is-invalid]=""
+                        placeholder="Ingrese  nombre " />
+                      <small *ngIf="nombre" class="text-danger">Campo obligatorio
+                      </small>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label for="" class="form-ItemName">Ruta </label>
+                      <input type="text" class="form-control" formControlName="ruta" [class.is-invalid]=""
+                        placeholder="Ingrese  ruta " />
+                      <small *ngIf="" class="text-danger">Campo obligatorio
+                      </small>
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                      <label for="" class="form-ItemName">Ruta padre</label>
+
+                      <select class="form-control" formControlName="padreid" [class.is-invalid]="">
+                        <option value="">--Seleccione--</option>
+                        <option *ngFor="let item of groupedMenus" [value]="item.id">{{item.nombre}}</option>
+
+                      </select>
+
+                      <small *ngIf="" class="text-danger">Debe de escoger una opción
+                      </small>
+                    </div>
+
+
+
+
+
+                    <div class="form-group col-md-4">
+                      <label for="" class="form-ItemName">Orden</label>
+
+                      <input type="text" class="form-control " formControlName="orden" [class.is-invalid]="orden"
+                        placeholder="Ingrese el # orden" />
+                      <div class="input-gro-append"></div>
+
+                      <small *ngIf="orden" class="text-danger">Campo obligatorio</small>
+                    </div>
+
+
+
+
+
+
+
+                  </div>
+
+
+
+
+                  <div class="card-footer">
+                    <a type="submit"   class="btn btn-primary btn-sm" (click)="cambioestado()" class="btn btn-primary">
+                      <i class="bx bx-save"></i>
+                     {{btnVal}}
+                    </a>
+                    
+                  </div>
+                </form>
+
+              <!--   <pre>
+                  {{    menuForm.value |json}}
+                    </pre>
+                  </div> -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 

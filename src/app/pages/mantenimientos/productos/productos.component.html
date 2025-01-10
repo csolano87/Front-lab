@@ -1,146 +1,9 @@
-<!-- <div class="container-fluid rounded shadow">
-  <div class="row py-4 animated fadeIn fast">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <input
-            type="file"
-            (change)="onFileSelected($event)"
-            class="input-file"
-          />
-
-          <button (click)="enviarArchivo()" class="btn btn-primary">
-            Subir archivo
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row animated fadeIn fast">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <h6 class="title">Lista de Productos</h6>
-
-          <div class="col-md-3 button"></div>
-
-          <div class="table-responsive">
-            <form [formGroup]="productoForm">
-              <div
-                *ngIf="cargando"
-                class="alert alert-info text-center mt-3 animated fadeIn faster"
-              >
-                <h4 class="alert-heading">Cargando</h4>
-                <p>
-                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
-                </p>
-                <p class="mb-0">Espere por favor</p>
-              </div>
-
-              <div *ngIf="!cargando" class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Referencia</th>
-                      <th>Descripcion</th>
-                      <th>Categoria</th>
-                      <th>Unidad</th>
-                      <th>Generacion</th>
-                      <th>Estado</th>
-
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr
-                      *ngFor="
-                        let producto of listaproductos
-                          | paginate: { itemsPerPage: 10, currentPage: page }
-                      "
-                    >
-                      <td>{{ producto.REFERENCIA }}</td>
-                      <td>{{ producto.NOMBRE }}</td>
-                      <td>{{ producto.CATEGORIA }}</td>
-                      <td>{{ producto.UNIDAD }}</td>
-                      <td>{{ producto.GENERACION }}</td>
-                      <td>
-                        <span
-                          *ngIf="producto.ESTADO == 1"
-                          class="rounded shadow bg-pen"
-                          >Activo
-                        </span>
-                      </td>
-                      <td>
-                        <span class="cursor">
-                          <a
-                            [ngClass]="{
-                              'disabled-icon': producto.ESTADO == 2
-                            }"
-                            [routerLink]="[
-                              '/dashboard',
-                              'producto',
-                              producto.id
-                            ]"
-                          >
-                            <i
-                              class="bx bxs-edit bx-sm"
-                              data-toggle="modal"
-                              data-target="#modal-info"
-                            ></i> </a
-                        ></span>
-                        <span (click)="borrarProducto(producto)" class="cursor">
-                          <i class="bx bxs-trash bx-sm"></i
-                        ></span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <pagination-controls
-                (pageChange)="page = $event"
-                previousLabel="Anterior"
-                nextLabel="Siguiente"
-              ></pagination-controls>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="modal-info">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"></h4>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-"></div>
-    </div>
-  </div>
-</div>
- -->
-
 <div class="container-fluid rounded shadow">
   <div class="row py-4 animated fadeIn fast">
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <input
-            type="file"
-            (change)="onFileSelected($event)"
-            class="input-file"
-          />
+          <input type="file" (change)="onFileSelected($event)" class="input-file" />
           &nbsp;
           <button (click)="enviarArchivo()" class="btn btn-primary btn-sm">
             Subir archivo
@@ -158,23 +21,15 @@
 
           <!-- Campo de búsqueda de productos -->
           <div class="mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Buscar productos..."
-              #txtSearch
-              (keyup)="onSearchProducto(txtSearch.value)"
-            />
+            <input type="text" class="form-control" placeholder="Buscar productos..." #txtSearch
+              (keyup)="onSearchProducto(txtSearch.value)" />
           </div>
 
           <div class="col-md-3 button"></div>
 
           <div class="table-responsive">
             <form [formGroup]="productoForm">
-              <div
-                *ngIf="cargando"
-                class="alert alert-info text-center mt-3 animated fadeIn faster"
-              >
+              <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
                 <h4 class="alert-heading">Cargando</h4>
                 <p>
                   <i class="fas fa-sync-alt fa-spin fa-2x"></i>
@@ -186,24 +41,22 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Referencia</th>
-                      <th>Descripcion</th>
-                      <th>Categoria</th>
-                      <th>Unidad</th>
-                      <th>Generacion</th>
-                      <th>Estado</th>
-                      <th>Actions</th>
+                      <th style="width: 8%;">Referencia</th>
+                      <th style="width: 40%;">Descripcion</th>
+                      <th  style="width: 8%;">Categoria</th>
+                      <th  style="width: 8%;">Unidad</th>
+                      <th  style="width: 8%;">Generacion</th>
+                      <th  style="width: 8%;">Estado</th>
+                      <th style="width: 18%;">Actions</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    <tr
-                      *ngFor="
+                    <tr *ngFor="
                         let producto of listaproductos
                           | filtroProducto: search
                           | paginate: { itemsPerPage: 10, currentPage: page }
-                      "
-                    >
+                      ">
                       <td>{{ producto.REFERENCIA }}</td>
                       <td>{{ producto.NOMBRE }}</td>
 
@@ -223,29 +76,22 @@
                           Activo
                         </span> -->
                       </td>
-                      <td>
-                        <span class="cursor">
-                          <a
-                            [ngClass]="{
+                      <td class="actions">
+                        <span class="span_edit">
+                         
+                            <i [ngClass]="{
                               'disabled-icon': producto.ESTADO == 0
-                            }"
-                            [routerLink]="[
+                            }" [routerLink]="[
                               '/dashboard',
                               'producto',
                               producto.id
-                            ]"
-                          >
-                            <i class="bx bxs-edit bx-sm"></i>
-                          </a>
+                            ]" class="bx bxs-edit ">Editar</i>
+                          
                         </span>
-                        <span
-                          [ngClass]="{
+                        <span [ngClass]="{
                             'disabled-icon': producto.ESTADO == 0
-                          }"
-                          (click)="borrarProducto(producto)"
-                          class="cursor"
-                        >
-                          <i class="bx bxs-trash bx-sm"></i>
+                          }" (click)="borrarProducto(producto)" class="span_delete">
+                          <i class="bx bxs-trash">Eliminar</i>
                         </span>
                       </td>
                     </tr>
@@ -253,11 +99,8 @@
                 </table>
               </div>
 
-              <pagination-controls
-                (pageChange)="page = $event"
-                previousLabel="Anterior"
-                nextLabel="Siguiente"
-              ></pagination-controls>
+              <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                nextLabel="Siguiente"></pagination-controls>
             </form>
           </div>
         </div>
@@ -271,12 +114,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title"></h4>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

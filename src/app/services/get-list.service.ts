@@ -10,7 +10,7 @@ const baseUrl = environment.url;
 })
 export class GetListService {
   userToken!: string;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   get token(): string {
     return localStorage.getItem('token') || '';

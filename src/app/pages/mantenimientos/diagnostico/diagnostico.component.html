@@ -24,7 +24,7 @@
                 data-target="#modal-info"
               >
                 <i class="bx bx-plus-circle"></i>
-                Agregar
+                Crear diagnostico
               </button>
             </div>
   
@@ -46,7 +46,7 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>nombre</th>
+                      <th>Nombre</th>
   
                       <th>Estado</th>
   
@@ -69,13 +69,13 @@
                         </div>
                       </td>
   
-                      <td>
-                        <span class="cursor">
-                          <i class="bx bxs-edit bx-sm"></i
+                      <td class="actions">
+                        <span class="span_edit">
+                          <i class="bx bxs-edit ">Editar</i
                         ></span>
   
-                        <span (click)="borrarAtencion(atencion)" class="cursor">
-                          <i class="bx bxs-trash bx-sm"></i
+                        <span  class="span_delete">
+                          <i (click)="borrarAtencion(atencion)" class="bx bxs-trash ">Eliminar</i
                         ></span>
                       </td>
                     </tr>
@@ -95,10 +95,10 @@
   </div>
   
   <div class="modal fade" id="modal-info">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Crear Servicio de Equipo</h4>
+          <h4 class="modal-title">Crear diagnostico</h4>
           <button
             type="button"
             class="close"
@@ -120,8 +120,8 @@
                 >
                   <div class="card-body">
                     <div class="row">
-                      <div class="form-group col-md-6">
-                        <label for="">nombre</label>
+                      <div class="form-group col-md-12">
+                        <label for="">Nombre</label>
                         <input
                           appUppercase
                           type="text"
