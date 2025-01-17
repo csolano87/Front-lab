@@ -168,8 +168,8 @@ export class CategoriaComponent implements OnInit {
     console.log(categoria);
 
     Swal.fire({
-      title: 'Eliminar categoria?',
-      text: `Esta seguro que desea eliminar la categoria  ${categoria.NOMBRE}`,
+      title: 'Eliminar seccion?',
+      text: `Esta seguro que desea eliminar la seccion  ${categoria.NOMBRE}`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -183,7 +183,7 @@ export class CategoriaComponent implements OnInit {
             const { msg } = resp;
             this.getCategoria();
             Swal.fire({
-              title: 'Categoria eliminada!',
+              title: 'Seccion eliminada!',
               text: `${msg}`,
               icon: 'success',
             });

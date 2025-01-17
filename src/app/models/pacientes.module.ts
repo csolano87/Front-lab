@@ -13,8 +13,8 @@ export class Pacientes {
     public convencional?: number,
     public celular?: number,
     public provincia?: number,
-    public canton?: string,
-    public parroquia?: string,
+    public canton?: number,
+    public parroquia?: number,
     public barrio?: string,
     public numeracion?: string,
   ) {}

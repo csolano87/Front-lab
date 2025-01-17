@@ -120,6 +120,7 @@ import { Tecnica, Tecnicas } from '../interfaces/cargar-tecnica.interface';
 
 import { Muestra, Muestras } from '../interfaces/carga-muestras.interface';
 import { ListaperfilesID, PerfilId } from '../interfaces/cargar-listaperfilesId.interface';
+import { Data } from '../models/cargaGnerica.module';
 //import { Pruebas } from '../interfaces/cargaReportPruebas.interfaces';
 
 const baseUrl = environment.url;
@@ -323,13 +324,13 @@ export class MantenimientosService {
   getCrearMuestras(formData: FormData) {
     return this.http.post(`${baseUrl}/api/muestras`, formData, this.headers);
   }
-  getUpdateMuestras(data: EstadoclienteID) {
+ /*  getUpdateMuestras(data: EstadoclienteID) {
     return this.http.put(
       `${baseUrl}/api/muestras/${data.id}`,
       data,
       this.headers,
     );
-  }
+  } */
   getByIDMuestras(id: string) {
     return this.http
       .get<EstadoByIdcliente>(`${baseUrl}/api/muestras/${id}`, this.headers)
@@ -337,6 +338,12 @@ export class MantenimientosService {
   }
   getDeleteMuestras(id: number) {
     return this.http.delete(`${baseUrl}/api/muestras/${id}`, this.headers);
+  }
+
+  UpdateMuestras(data:Data) {
+    return this.http
+      .put(`${baseUrl}/api/muestras/${data.id}`, data,this.headers)
+      
   }
 
   getBodega(): Observable<Bodega[]> {

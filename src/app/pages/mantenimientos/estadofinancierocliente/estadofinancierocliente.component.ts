@@ -81,10 +81,10 @@ export class EstadofinancieroclienteComponent {
             )
           : console.log(estadoclienteId);
 
-        const { NOMBRE } = estadoclienteId;
+        const { nombre } = estadoclienteId;
 
         this.estadoclienteForm.patchValue({
-          NOMBRE,
+          NOMBRE:nombre,
         });
         this.listaseleccionadoestadocliente = estadoclienteId;
       });

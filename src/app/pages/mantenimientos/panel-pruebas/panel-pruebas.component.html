@@ -17,7 +17,7 @@
           <div class="button">
             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-info">
               <i class="bx bxs-plus-circle"></i>
-              Agregar
+              Crear nueva prueba
             </button>
           </div>
           <div class="col-md-3 button"></div>
@@ -36,11 +36,11 @@
                 <thead>
                   <tr>
                     <th style="width: 8%;">Codigo</th>
-                    <th style="width: 15%;">Nombre</th>
+                    <th style="width: 20%;">Nombre</th>
 
                     <th style="width: 10%;">Categoria</th>
-                    <th style="width: 10%;">Tiempo de resultado</th>
-                    <th  style="width: 10%;">Valor</th>
+                 <!--    <th style="width: 10%;">Tiempo de resultado</th>
+                    <th  style="width: 10%;">Valor</th> -->
                     <th style="width: 10%;">Favorito</th>
                     <th style="width: 12%;">Estado</th>
                     <th style="width: 20%;" >Actions</th>
@@ -57,9 +57,9 @@
                     <td>{{ pruebas.NOMBRE }}</td>
                     <td>{{ pruebas.modelo.NOMBRE }}</td>
 
-                    <td>{{ pruebas.TIEMPO }} horas</td>
+                <!--     <td>{{ pruebas.TIEMPO }} horas</td>
 
-                    <td>{{ pruebas.VALOR }}</td>
+                    <td>{{ pruebas.VALOR }}</td> -->
                     <td>
                       <input type="checkbox" [(ngModel)]="pruebas.favorite" (change)="favorite(pruebas)" />
                     </td>
@@ -89,12 +89,7 @@
                         <i class='bx bxs-star'></i>
                       </a> -->
                     </td>
-                    <td>
-                      <!--  <i
-                        class="expandable-table-caret fas fa-caret-right fa-fw"
-                        (click)="toggleExpand(equipo)"
-                      ></i> -->
-                    </td>
+                   
                   </tr>
                   <!--  <tr >
                     <td colspan="9">

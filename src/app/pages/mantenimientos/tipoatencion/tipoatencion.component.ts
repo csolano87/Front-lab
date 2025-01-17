@@ -9,6 +9,7 @@ import { Marca } from 'src/app/models/marca.module';
 import { LlenarCombosService } from 'src/app/services/llenar-combos.service';
 import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import Swal from 'sweetalert2';
+import { Modelo } from 'src/app/interfaces/cargaModelo.interface';
 declare var $: any;
 @Component({
   selector: 'app-tipoatencion',
@@ -20,6 +21,7 @@ export class TipoatencionComponent implements OnInit {
   cargando = false;
   public page!: number;
   listaatencion: Tipoatencion[] = [];
+   listacategoria: Modelo[] = [];
   atencionForm!: FormGroup;
   constructor(
     private llenarcomboServices: LlenarCombosService,
@@ -37,6 +39,7 @@ export class TipoatencionComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAtencion();
+    this.getCategoria();
   }
 
   crearFormulario() {
@@ -90,6 +93,15 @@ export class TipoatencionComponent implements OnInit {
       console.log(tipoatencion);
 
       this.listaatencion = tipoatencion;
+    });
+  }
+
+
+  getCategoria() {
+    this.llenarcomboServices.getModelo().subscribe((modelo) => {
+      console.log(modelo);
+
+      this.listacategoria = modelo.sort((a,b)=>a.NOMBRE.localeCompare( b.NOMBRE));
     });
   }
   borrarAtencion(atencion: Tipoatencion) {

@@ -5,7 +5,7 @@ export interface EstadoByIdcliente {
 
 export interface EstadoclienteID {
     id:        number;
-    NOMBRE:    string;
+    nombre:    string;
     ESTADO:    number;
     createdAt: Date;
     updatedAt: Date;

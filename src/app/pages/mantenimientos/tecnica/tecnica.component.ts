@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Tecnica } from 'src/app/interfaces/cargar-tecnica.interface';
 //import { TipoTecnica } from 'src/app/interfaces/cargarTipoTecnica.interface';
 import { Tipogrupo } from 'src/app/interfaces/cargarTipogrupo.interface';
 import { Tiposervicio } from 'src/app/interfaces/cargarTiposervicio.interface';
+import { Data } from 'src/app/models/cargaGnerica.module';
 
 import { Marca } from 'src/app/models/marca.module';
 import { LlenarCombosService } from 'src/app/services/llenar-combos.service';
@@ -22,9 +23,12 @@ export class TecnicaComponent implements OnInit {
   public page!: number;
   listaTecnica: Tecnica[] = [];
   TecnicaForm!: FormGroup;
+  listadoselecioandotecnica: Data;
+  btnVal: string = 'guardar';
   constructor(
     private llenarcomboServices: LlenarCombosService,
     private manteniemintoService: MantenimientosService,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
   ) {
@@ -37,6 +41,8 @@ export class TecnicaComponent implements OnInit {
     );
   }
   ngOnInit(): void {
+
+    this.activatedRoute.params.subscribe(({ id }) => this.Creartecnicas(id));
     this.getTecnica();
   }
 
@@ -45,46 +51,95 @@ export class TecnicaComponent implements OnInit {
       nombre: ['', [Validators.required]],
     });
   }
+  Creartecnicas(id: string) {
+    if (id === 'Nuevo') {
+      this.TecnicaForm.reset();
+      this.TecnicaForm.enable();
+      this.btnVal = 'Guardar';
+      return;
+    }
+    console.log(id)
+    this.btnVal = 'Editar';
+    this.TecnicaForm.disable();
+    this.manteniemintoService.getByIDTecnica(id).
+      subscribe((estadoclienteId) => {
+        console.log(estadoclienteId);
+        !estadoclienteId
+          ?
+          this.router.navigateByUrl('/dashboard/tecnica/Nuevo')
+          :
+          console.log(estadoclienteId);
+        const { nombre } = estadoclienteId;
 
+        this.TecnicaForm.setValue({
+          nombre,
+        });
+
+        this.listadoselecioandotecnica = estadoclienteId;
+      })
+
+
+  }
   crearTecnica() {
     if (this.TecnicaForm.invalid) {
       this.TecnicaForm.markAllAsTouched();
       return;
     }
-    console.log(this.TecnicaForm.value);
+    if (this.listadoselecioandotecnica) {
+      const data = {
+        id: this.listadoselecioandotecnica.id,
+        ...this.TecnicaForm.value
+      }
+this.manteniemintoService.getUpdateTecnica(data)
+.subscribe((resp:any)=>{
+  const {msg}=resp;
+    Swal.fire('Actualizado', `${msg}`, 'success');
+            $('#modal-info').modal('hide');
+            this.getTecnica();
+            this.TecnicaForm.disable();
+            this.TecnicaForm.reset();
+            this.btnVal = 'Editar';
+            this.listadoselecioandotecnica = undefined;
+            this.router.navigateByUrl('/dashboard/tecnica/Nuevo');
+})
 
-    Swal.fire({
-      allowOutsideClick: false,
 
-      icon: 'info',
-      text: 'Espere por favor ...',
-    });
-    Swal.showLoading(null);
-    this.manteniemintoService.getCrearTecnica(this.TecnicaForm.value).subscribe(
-      (resp: any) => {
-        this.getTecnica();
-        const { msg } = resp;
-        Swal.fire({
-          icon: 'success',
+    } else {
+      console.log(this.TecnicaForm.value);
 
-          titleText: `${msg}`,
-          timer: 1500,
-        });
-        $('#modal-info').modal('hide');
-        this.TecnicaForm.reset({
-          nombre: '',
-        });
-        //this.router.navigateByUrl('/dashboard/usuarios');
-      },
-      (err) => {
-        console.log('error', err.error.msg);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al autenticar',
-          text: err.error.msg,
-        });
-      },
-    );
+      Swal.fire({
+        allowOutsideClick: false,
+
+        icon: 'info',
+        text: 'Espere por favor ...',
+      });
+      Swal.showLoading(null);
+      this.manteniemintoService.getCrearTecnica(this.TecnicaForm.value).subscribe(
+        (resp: any) => {
+          this.getTecnica();
+          const { msg } = resp;
+          Swal.fire({
+            icon: 'success',
+
+            titleText: `${msg}`,
+            timer: 1500,
+          });
+          $('#modal-info').modal('hide');
+          this.TecnicaForm.reset({
+            nombre: '',
+          });
+          //this.router.navigateByUrl('/dashboard/usuarios');
+        },
+        (err) => {
+          console.log('error', err.error.msg);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al autenticar',
+            text: err.error.msg,
+          });
+        },
+      );
+    }
   }
   getTecnica() {
     this.manteniemintoService.getTecnica().subscribe((tipoTecnica) => {
@@ -123,5 +178,16 @@ export class TecnicaComponent implements OnInit {
 
   editarServicio(servicio: any) {
     console.log(servicio);
+  }
+
+
+
+  cambioestado() {
+    if (this.btnVal != 'Editar') {
+      this.crearTecnica();
+    }
+    this.TecnicaForm.enable();
+    this.btnVal = 'Guardar';
+
   }
 }

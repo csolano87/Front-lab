@@ -1,0 +1,169 @@
+
+/*  *{
+     outline: 1px solid crimson;
+}  
+  */
+
+.table {
+     width: 100%;
+     border-collapse: separate;
+     border-spacing: 0 10px; /* Espaciado entre filas */
+   }
+   
+   .table th {
+     background-color: #f4f6f9; /* Fondo sutil para encabezados */
+     font-weight: bold;
+     padding: 10px;
+     color: #444;
+   }
+   
+   .table td {
+     padding: 5px 10px;
+     vertical-align: middle;
+   }
+   
+   .table td input[type="text"] {
+     padding: 8px;
+     border: 1px solid #ddd;
+     border-radius: 4px;
+     width: 100%;
+   }
+   
+   .badge {
+     background-color: #007bff;
+     color: #fff;
+     padding: 5px 10px;
+     border-radius: 5px;
+   }
+   
+   .btn {
+     padding: 8px 15px;
+     font-weight: bold;
+     border-radius: 4px;
+   }
+   
+   .btn-primary {
+     background-color: #28a745; /* Verde para el botón de guardar */
+     border-color: #28a745;
+   }
+   
+   .btn-primary:hover {
+     background-color: #218838; /* Color al pasar el cursor */
+   }
+   
+   .btn-secondary {
+     background-color: #6c757d; /* Gris para botón secundario */
+     border-color: #6c757d;
+   }
+   
+   .alarm-icon {
+     color: #ffc107; /* Amarillo para fuera de rango */
+   }
+   
+   .alarm-icon.success {
+     color: #28a745; /* Verde para dentro del rango */
+   }
+   
+   .tooltip {
+     position: relative;
+     display: inline-block;
+   }
+   
+   .tooltip .tooltiptext {
+     visibility: hidden;
+     width: 120px;
+     background-color: #333;
+     color: #fff;
+     text-align: center;
+     border-radius: 5px;
+     padding: 5px 0;
+     position: absolute;
+     z-index: 1;
+     bottom: 100%; /* Colocación encima del ícono */
+     left: 50%;
+     margin-left: -60px;
+   }
+   
+   .tooltip:hover .tooltiptext {
+     visibility: visible;
+   }
+   
+   .disabled-icon {
+     opacity: 0.5;
+   
+     pointer-events: none;
+   }
+   .demographic-card {
+     background-color: #f8f9fa; /* Fondo claro */
+     border: 1px solid #ddd; /* Borde suave */
+     border-radius: 8px;
+     padding: 15px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+     margin-bottom: 20px;
+   }
+   
+   .demographic-title {
+     font-size: 1.2em;
+     font-weight: bold;
+     color: #333;
+     border-bottom: 1px solid #ddd;
+     padding-bottom: 10px;
+     margin-bottom: 10px;
+   }
+   
+   .demographic-content {
+     display: flex;
+     justify-content: space-between;
+   }
+   
+   .demographic-column {
+     width: 48%; /* Ancho de cada columna */
+   }
+   
+   .demographic-column p {
+     font-size: 0.95em;
+     color: #555;
+     line-height: 1.6;
+     margin: 5px 0;
+   }
+   
+   .demographic-column p strong {
+     color: #333; /* Resaltar títulos */
+   }
+   .contente-wrapper {
+    display: flex;
+    justify-content: space-between; /* Espacia los elementos entre izquierda y derecha */
+    align-items: center; /* Alinea verticalmente */
+    white-space: nowrap; /* Evita que el texto o los elementos se rompan en varias líneas */
+    overflow: hidden; /* Asegura que el contenido no desborde */
+  }
+  
+  .left-content,
+  .right-content {
+ 
+    display: flex;
+    align-items: center;
+  }
+  
+  .left-content {
+    gap: 5px; /* Espaciado entre categoría y estado */
+  }
+  
+  .right-content {
+    gap: 10px; /* Espaciado entre el badge y los íconos */
+  }
+  
+  .badge {
+    padding: 0 5px; /* Reduce el tamaño del badge si es necesario */
+  }
+  
+  .nombre_categoria {
+    padding: 5px; /* Ajusta el relleno general */
+    font-size: 14px; /* Ajusta el tamaño de la fuen
+    pte si es necesario */
+  }
+
+ p {
+  margin: 0 auto;
+  margin-left: 4px;
+ }

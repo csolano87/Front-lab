@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 import { Pacientes } from '../models/pacientes.module';
 import { Medicos } from '../models/medico.module';
-import { OrdenID } from '../interfaces/carga-IngresordenId.interface';
+import { IngresoordenesID, OrdenID } from '../interfaces/carga-IngresordenId.interface';
+import { map, Observable } from 'rxjs';
+import { Ingresoordenes, Ordene } from '../interfaces/cargaIngresoordenes.interface';
 const baseUrl = environment.url;
 @Injectable({
   providedIn: 'root',
 })
 export class IngresoService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   get token(): string {
     return localStorage.getItem('token') || '';
   }
@@ -41,4 +43,21 @@ export class IngresoService {
       this.headers,
     );
   }
+
+
+  getFiltrosResultadosIngresoOrden(orden: string, identificacion: string, modeloId:string):Observable<Ordene[]> {
+    return this.http.get<Ingresoordenes>(`${baseUrl}/api/ingresorden/filtros/ordenes?orden=${orden}&identificacion=${identificacion}&modeloId=${modeloId}`,
+
+      this.headers,
+    )
+      .pipe(map(({ ordenes }) => ordenes))
+  }
+
+ /*  getFiltrosResultadosIngresoOrden(id):Observable<Ordene[]> {
+    return this.http.get<Ingresoordenes>(`${baseUrl}/api/ingresorden/filtros/ordenes/${id}`,
+
+      this.headers,
+    )
+      .pipe(map(({ ordenes }) => ordenes))
+  } */
 }

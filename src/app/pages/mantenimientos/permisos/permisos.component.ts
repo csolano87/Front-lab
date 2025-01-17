@@ -139,9 +139,9 @@ export class PermisosComponent implements OnInit {
     }
     console.log(this.addmenuForm.value)
     this.menuService.getPermiso(this.addmenuForm.value).subscribe((resp: any) => {
-     const {msg}=resp;
-     this.getMenu();
-     Swal.fire({icon:'success', html:`<strong>${msg}</strong>`})
+      const { msg } = resp;
+      this.getMenu();
+      Swal.fire({ icon: 'success', html: `<strong>${msg}</strong>` })
     })
 
   }
@@ -183,17 +183,17 @@ export class PermisosComponent implements OnInit {
     console.log(id);
 
     this.usuarioService.GetUsuarioById(id).subscribe((user) => {
-      console.log(user)
+/*       console.log(user) */
       this.usuarioSeleccionado = user;
-      console.log(user)
+      /* console.log(user) */
       const userMenus = user.role.menu.map(item => item.id);
 
-      console.log(userMenus)
-      console.log(this.groupedMenus)
+     /*  console.log(userMenus) */
+   /*    console.log(this.groupedMenus) */
       for (const group of this.groupedMenus) {
         for (const item of group.items) {
           const isChecked = userMenus.includes(item.id);
-          console.log(isChecked)
+         /*  console.log(isChecked) */
           if (isChecked) {
             this.addmenuForm.get('id').setValue(this.usuarioSeleccionado.id)
             this.menu.push(

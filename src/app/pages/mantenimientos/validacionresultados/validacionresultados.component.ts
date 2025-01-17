@@ -319,11 +319,7 @@ export class ValidacionresultadosComponent implements OnInit {
     return ''; */
   }
 
-  /*   validarBotonResultado() {
-    return this.listaordenesid.prueba.some(
-      (item) => item.resultado === null || item.resultado === '',
-    );
-  } */
+ 
   validarOrden(listaordenesid: OrdenID) {
     console.log(listaordenesid.id);
 

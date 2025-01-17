@@ -10,10 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from '../auth/auth.module';
 import { OrdenComponent } from './mantenimientos/orden/orden.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OrdenesComponent } from './mantenimientos/ordenes/ordenes.component';
+import { OrdenesComponent } from 
+'./mantenimientos/ordenes/ordenes.component';
 import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
 import { PerfilComponent } from './mantenimientos/perfil/perfil.component';
 import { MuestrasComponent } from './mantenimientos/muestras/muestras.component';
+
 
 import { ProductoComponent } from './mantenimientos/producto/producto.component';
 import { ProductosComponent } from './mantenimientos/productos/productos.component';

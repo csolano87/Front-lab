@@ -17,12 +17,9 @@
               </div>
               <div class="card-items">
                 <div *ngFor="let item of menu.items">
-                  <input
-                    type="checkbox"
-                    name="checkbox"
-                    (change)="onChangeMenu($event, item)"
-                    [checked]="isChecked(item.id)"
-                  />
+                  <input type="checkbox" name="checkbox"
+                   (change)="onChangeMenu($event, item)"
+                    [checked]="isChecked(item.id)" />
                   <label>{{ item.nombre }}</label>
                 </div>
               </div>

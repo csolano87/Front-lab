@@ -146,12 +146,13 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>Pruebas</th>
+                        <th style="width: 30%;">Pruebas</th>
 
-                        <th>Muestras</th>
-                        <th>Recibida</th>
-                        <th>Pendiente</th>
-                        <th>Rechazado</th>
+                        <th style="width: 20%;">Muestras</th>
+                        <th style="width: 10%;">Recibida</th>
+                        <th style="width: 10%;">Pendiente</th>
+                        <th style="width: 10%;">Rechazado</th>
+                        <th style="width: 10%;"></th>
                       </tr>
                     </thead>
                     <!--  <tbody formArrayName="pruebas">
@@ -211,10 +212,14 @@
                     <tbody formArrayName="pruebas">
                       <ng-container *ngFor="let d of pruebas.controls; let i = index">
                         <tr *ngIf="d.value.etq === 3 || !d.value.etq" [formGroupName]="i">
-                          <td>
-                            {{ d.value.nomExam }}
-                            <i class="bx bx-message-square-dots"></i>
-                            <i class="bx bxs-time" title="{{ d.value.tiempo }} horas"></i>
+                          <td class="examen">
+                            <div>
+                              {{ d.value.nomExam }}
+                            </div>
+                            <div>
+                              <i class="bx bx-message-square-dots"></i>
+                              <i class="bx bxs-time" title="{{ d.value.tiempo }} horas"></i>
+                            </div>
                           </td>
                           <td>{{ d.value.muestra }}</td>
 
@@ -230,7 +235,7 @@
                             <input type="radio" value="3" formControlName="estado" />
                           </td>
 
-                          <td>
+                          <td class="actions">
                             <span class="span_delete">
                               <i (click)="borrarPasatiempo(i)" class="bx bxs-trash" aria-hidden="true ">Eliminar</i>
                             </span>
@@ -609,47 +614,73 @@
 </div>
 
 <div class="modal fade" id="modal-default">
-  <div class="modal-dialog">
+  <div class="modal-dialog ">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">+ Cargar pruebas</h4>
+      <div class="card-info">
+        <div class="card-header">
+        <h4 class="card-title">+ Cargar pruebas</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        </div>
+       
       </div>
 
       <div class="modal-">
-        <div class="container-fluid">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="wrapper">
-                  <div class="tabs">
-                    <div class="tab">
-                      <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch" />
-                      <label for="tab-1" class="tab-label">Lab General</label>
-                      <div class="tab-content">
-                        <div class="tt">
-                          <div class="card" *ngFor="let q of listaquimica">
-                            <div class="card-info colorquimi">
-                              <h6 class="card-header">{{ q.CATEGORIA }}</h6>
-                            </div>
+    <div class="container-fluid">
+      <div class="row py-4 animated fadeIn fast">
+        <div class="col-9">
+          <div class="container-fluid">
 
-                            <div class="card-items">
-                              <div class="caso" *ngFor="let d of q.CODIGO">
-                                <input type="checkbox" name="checkbox" [(ngModel)]="d.isChecked"
-                                  (change)="onchangePruebas($event, d)" [checked] />
+            <div class="card-body grid-container">
+  
+  
+              <div class="card" *ngFor="let q of listaquimica">
+                <div class="card-header">
+                  <h6 class="card-title">{{ q.CATEGORIA }}</h6>
+                </div>
+  
+                <div class="card-items">
+                  <div *ngFor="let d of q.CODIGO">
+                    <input type="checkbox" name="checkbox" (change)="onchangePruebas($event, d)"
+                      [checked]="isChecked(d.CODIGO)" />
+                    <label>
+                      {{ d.NOMBRE }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
 
-                                <label class="margin">
-                                  {{ d.NOMBRE }}
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tab">
+       <div class="container-fluid">
+        <div class="card-body  grid-container">
+        <div class="card">
+          <div class="card-header">
+            <h6 class="card-title">Pruebas de Perfiles</h6>
+          </div>
+          <div class="card-items">
+            <div  *ngFor="let perfil of listgrupoperfil">
+              
+              <input type="checkbox" name="checkbox" [(ngModel)]="perfil.isChecked"
+                (change)="onchangePerfil($event, perfil)" [checked] />
+              <label>
+                {{ perfil.nombre }}
+              </label>
+            </div>
+          </div>
+        </div>
+        </div>
+       </div>
+
+
+      </div>
+      </div>
+    </div>
+      </div>
+      <!--     <div class="tab">
                       <input type="radio" name="css-tabs" id="tab-2" class="tab-switch" />
                       <label for="tab-2" class="tab-label">MICROBIOLOGIA</label>
                       <div class="tab-content">
@@ -662,9 +693,9 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
 
-                    <div class="tab">
+      <!--    <div class="tab">
                       <input type="radio" name="css-tabs" id="tab-3" class="tab-switch" />
                       <label for="tab-3" class="tab-label">PERFILES</label>
 
@@ -687,17 +718,13 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                    </div> -->
     </div>
   </div>
 </div>
+
+
+
 <div class="modal fade" id="modal-paciente">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">

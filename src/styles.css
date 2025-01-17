@@ -305,3 +305,53 @@ i {
   opacity: 0.6;
   pointer-events: none;
 }
+
+
+
+.generado {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px ;
+  margin: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #007bff;
+  background-color: #e8f4fc;
+}
+
+.reportado {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px ;
+  margin: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #007bff;
+  background-color: #e8f4fc;
+}
+
+.validado {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px ;
+  margin: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  color: rgb(57, 196, 49);
+  background-color: #e8f4fc;
+}
+
+.eliminada {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px ;
+  margin: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  color: rgb(219, 81, 12);
+  background-color: #e8f4fc;
+}

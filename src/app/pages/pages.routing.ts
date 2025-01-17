@@ -194,7 +194,7 @@ const routes: Routes = [
       },
       {
         path: 'tecnica/:id',
-        component: MuestraspruebasComponent,
+        component: TecnicaComponent,
         data: { titulo: 'tecnica' },
       },
 

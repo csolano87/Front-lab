@@ -63,6 +63,25 @@ export class IngresordenesComponent implements OnInit {
   etiqueta: string = '';
   parroquia: any[] = [];
   /* datos orden */
+
+  currentSlide = 0;
+
+  prevSlide() {
+    const totalSlides = 3; // Número de diapositivas
+    this.currentSlide = (this.currentSlide - 1 + totalSlides) % totalSlides;
+    this.updateSliderPosition();
+  }
+
+  nextSlide() {
+    const totalSlides = 3; // Número de diapositivas
+    this.currentSlide = (this.currentSlide + 1) % totalSlides;
+    this.updateSliderPosition();
+  }
+
+  updateSliderPosition() {
+    const slider = document.querySelector('.slides') as HTMLElement;
+    slider.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+  }
   get pacienteId() {
     return (
       this.ingresoForm?.get('pacienteId')!.invalid &&
@@ -301,81 +320,8 @@ export class IngresordenesComponent implements OnInit {
       this.ingresoForm.patchValue({ CODIMPRESORA: valorAlmacenado });
     }
   }
-  cargaIngresoOrden(id: string) {
-    console.log(id);
-    if (id === 'Nuevo') {
-      this.ingresoForm.reset();
-      this.pruebas.clear();
-      this.clearFilters();
-      this.ingresoForm.enable();
-      this.btnVal = 'Guardar';
+ 
 
-      return;
-    }
-
-    this.btnVal = 'Editar';
-    this.ingresoForm.disable();
-    if (this.ingresoForm.invalid) {
-      return Object.values(this.ingresoForm.controls).forEach((control) => {
-        control.markAsTouched();
-      });
-    }
-    this.manteniminetoService.getIngresoOrdenId(id).subscribe((ordenId) => {
-      !ordenId
-        ? this.router.navigateByUrl('/dashboard/ordenes')
-        : console.log(ordenId);
-
-      const {
-        id,
-        paciente,
-        pacienteId,
-        medico,
-        numeroorden,
-        embarazada,
-        fum,
-        observaciones,
-        fechaorden,
-        horaorden,
-        estado,
-        medicoId,
-        diagnostico,
-        diagnosticoId,
-        tiposervicioId,
-        tipoatencionId,
-        prueba,
-      } = ordenId;
-      this.pacientes = ordenId.paciente;
-      this.ingresoSeleccionado = ordenId;
-      this.ingresoForm.setValue({
-        numero: paciente.numero,
-        doctor: medico.nombres,
-        diagnostico: diagnostico.nombre,
-        pacienteId,
-        embarazada,
-        fum: `${fum}`.slice(0, 10),
-        observaciones,
-        medicoId,
-        diagnosticoId,
-        tiposervicioId,
-        tipoatencionId,
-        pruebas: prueba.map((item) =>
-          this.pruebas.push(
-            this.fb.group({
-              //  this.etiqueta:item.panelprueba.ABREV,
-              codigoId: item.panelprueba.id,
-              codigo: item.panelprueba.CODIGO,
-              nomExam: item.panelprueba.NOMBRE,
-              tiempo: item.panelprueba.TIEMPO,
-              muestra: item.panelprueba.muestra.nombre,
-              etq: item.panelprueba.ORDEN == '2' ? item.panelprueba.ORDEN : '',
-
-              estado: item.estado.toString(),
-            }),
-          ),
-        ),
-      });
-    });
-  }
   getprovincia() {
     this.manteniminetoService.getProvincia().subscribe((provincia) => {
       this.listprovincia = provincia;
@@ -957,4 +903,92 @@ export class IngresordenesComponent implements OnInit {
         });
       });
   }
+
+  cargaIngresoOrden(id: string) {
+    console.log(this.pruebas)
+        console.log(id);
+        if (id === 'Nuevo') {
+          this.ingresoForm.reset();
+          this.pruebas.clear();
+          this.clearFilters();
+          this.ingresoForm.enable();
+          this.btnVal = 'Guardar';
+        
+          return;
+        }
+    
+        this.btnVal = 'Editar';
+        this.ingresoForm.disable();
+        if (this.ingresoForm.invalid) {
+          return Object.values(this.ingresoForm.controls).forEach((control) => {
+            control.markAsTouched();
+          });
+        }
+        this.manteniminetoService.getIngresoOrdenId(id).subscribe((ordenId) => {
+          !ordenId
+            ? this.router.navigateByUrl('/dashboard/ordenes')
+            : console.log(ordenId);
+    
+          const {
+            id,
+            paciente,
+            pacienteId,
+            medico,
+            numeroorden,
+            embarazada,
+            fum,
+            observaciones,
+            fechaorden,
+            horaorden,
+            estado,
+            medicoId,
+            diagnostico,
+            diagnosticoId,
+            tiposervicioId,
+            tipoatencionId,
+            prueba,
+          } = ordenId;
+          this.pacientes = ordenId.paciente;
+          this.ingresoSeleccionado = ordenId;
+          this.ingresoForm.setValue({
+            numero: paciente.numero,
+            doctor: medico.nombres,
+            diagnostico: diagnostico.nombre,
+            pacienteId,
+            embarazada,
+            fum: `${fum}`.slice(0, 10),
+            observaciones,
+            medicoId,
+            diagnosticoId,
+            tiposervicioId,
+            tipoatencionId,
+            pruebas: prueba.map((item) =>
+              this.pruebas.push(
+                this.fb.group({
+                  //  this.etiqueta:item.panelprueba.ABREV,
+                  codigoId: item.panelprueba.id,
+                  codigo: item.panelprueba.CODIGO,
+                  nomExam: item.panelprueba.NOMBRE,
+                  tiempo: item.panelprueba.TIEMPO,
+                  muestra: item.panelprueba.muestra.nombre,
+                  etq: item.panelprueba.ORDEN == '2' ? item.panelprueba.ORDEN : '',
+    
+                  estado: item.estado.toString(),
+                }),
+              ),
+            ),
+          });
+       console.log(this.ingresoForm.get('pruebas')as FormArray) 
+        });
+      }
+      isChecked(codigo:number):boolean{
+        const menuArray = this.pruebas;
+        console.log(menuArray.value);
+        console.log(codigo);
+    
+        console.log(menuArray.value.some(item=> item.codigo === codigo ))
+        return menuArray.value.some(item=> item.codigo === codigo )
+    
+        
+      }
 }

@@ -26,7 +26,7 @@
               data-target="#modal-info"
             >
               <i class="bx bx-plus-circle"></i>
-              Agregar
+              Crear nueva seccion
             </button>
           </div>
 
@@ -68,33 +68,31 @@
                     <td>{{ categoria.marca.NOMBRE }}</td>
 
                     <td>
-                      <input type="checkbox" [(ngModel)]="categoria.ESTADO" />
-                      <!--  <div [ngSwitch]="categoria.ESTADO">
+                      <!-- <input type="checkbox" [(ngModel)]="categoria.ESTADO" /> -->
+                     <div [ngSwitch]="categoria.ESTADO">
                         <div *ngSwitchCase="1">Activo</div>
                         <div *ngSwitchDefault>Inactivo</div>
-                      </div> -->
+                      </div> 
                     </td>
 
-                    <td>
-                      <span class="cursor">
-                        <a
-                          [ngClass]="{ 'disabled-icon': categoria.ESTADO != 1 }"
+                    <td class="actions">
+                      <span class="span_edit">
+                       
+                          <i [ngClass]="{ 'disabled-icon': categoria.ESTADO != 1 }"
                           [routerLink]="[
                             '/dashboard',
                             'categoria',
                             categoria.id
                           ]"
-                        >
-                          <i
-                            class="bx bxs-edit bx-sm"
+                            class="bx bxs-edit "
                             data-toggle="modal"
                             data-target="#modal-info"
-                          ></i>
-                        </a>
+                          >Edit</i>
+                        
                       </span>
 
-                      <span (click)="borrarCategoria(categoria)" class="cursor">
-                        <i class="bx bxs-trash bx-sm"></i
+                      <span (click)="borrarCategoria(categoria)" class="span_delete">
+                        <i class="bx bxs-trash ">Eliminar</i
                       ></span>
                     </td>
                   </tr>
@@ -114,18 +112,17 @@
 </div>
 
 <div class="modal fade" id="modal-info">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Crear Categoria de Equipo</h4>
-        <button
-          type="button"
+        <h4 class="modal-title">Crear Seccion</h4>
+        <a type="button" routerLink="/dashboard/categoria/Nuevo" 
           class="close"
           data-dismiss="modal"
           aria-label="Close"
         >
           <span (click)="reset()" aria-hidden="true">&times;</span>
-        </button>
+      </a>
       </div>
       <div class="modal-">
         <div class="col-md-12">
@@ -139,7 +136,7 @@
               >
                 <div class="card-body">
                   <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                       <label for="">Marca</label>
                       <select
                         class="form-control"
@@ -158,7 +155,7 @@
                         >Escoger marca</small
                       >
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                       <label for="">NOMBRE</label>
                       <input
                         appUppercase

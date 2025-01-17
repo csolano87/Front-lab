@@ -34,7 +34,7 @@ declare var $: any;
   templateUrl: './pedidos.component.html',
   styleUrl: './pedidos.component.css',
 })
-export class PedidosComponent {
+export class PedidosComponent implements OnInit{
   @ViewChild('inputRef') inputRef: ElementRef;
   selectedProductIndex: number | null = null;
   pedidosForm!: FormGroup;

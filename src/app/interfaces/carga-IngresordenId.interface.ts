@@ -6,13 +6,13 @@ export interface IngresoordenesID {
 export interface OrdenID {
     id?:             number;
     pacienteId?:     number;
-    numeroorden?:    number;
+    numeroorden?:    string;
     embarazada?:     null;
     fum?:            null;
     observaciones?:  string;
     fechaorden?:     Date;
     horaorden?:      string;
-    estado?:         boolean;
+    estado?:         number;
     createdAt?:      Date;
     updatedAt?:      Date;
     medicoId?:       number;
@@ -56,15 +56,15 @@ export interface Paciente {
     convencional?: number;
     celular?:      number;
     provincia?:    number | null;
-    canton?:       string;
-    parroquia?:    string;
+    canton?:       number;
+    parroquia?:    number;
     barrio?:       string;
     numeracion?:   string;
     USUARIO_ID?:   null;
     CREATEDBY?:    null;
     UPDATEDBY?:    null;
     DELETEDBY?:    null;
-    estado?:       boolean;
+    estado?:       number;
     createdAt?:    Date;
     updatedAt?:    Date;
     tipo?:         string;
@@ -90,7 +90,7 @@ export interface Medico {
     CREATEDBY?:    null;
     UPDATEDBY?:    null;
     DELETEDBY?:    null;
-    estado?:       boolean;
+    estado?:       number;
     createdAt?:    Date;
     updatedAt?:    Date;
     tipo?:         string;
