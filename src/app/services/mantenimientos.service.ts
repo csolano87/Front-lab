@@ -381,6 +381,8 @@ export class MantenimientosService {
     return this.http.post(`${baseUrl}/api/bodega`, formData, this.headers);
   }
 
+
+
   getRangosreferencia(): Observable<Rango[]> {
     return this.http
       .get<Rangoreferencia>(`${baseUrl}/api/rangos`, this.headers)
@@ -394,6 +396,18 @@ export class MantenimientosService {
   getCargarangosreferencia(formData: FormData) {
     return this.http.post(`${baseUrl}/api/rangos/`, formData, this.headers);
   }
+  getUpdateRangos(id:number,data: FormData) {
+    console.log(id)
+    return this.http.put(`${baseUrl}/api/rangos/${id}`, data, this.headers);
+  }
+
+  getDeleteRangos(id: number) {
+    return this.http
+      .delete(`${baseUrl}/api/rangos/${id}`, this.headers)
+    
+  }
+
+
   getUpdateBodega(data: EstadoclienteID) {
     return this.http.put(
       `${baseUrl}/api/bodega/${data.id}`,
@@ -599,6 +613,22 @@ export class MantenimientosService {
     );
   }
 
+
+  getUpdateServicio(data: EstadoclienteID) {
+    return this.http.put(
+      `${baseUrl}/api/tiposervicio/${data.id}`,
+      data,
+      this.headers,
+    );
+  }
+  getByIdServicio(id:string) {
+    return this.http.get<EstadoByIdcliente>(
+      `${baseUrl}/api/tiposervicio/${id}`,
+      
+      this.headers,
+    ) .pipe(map(({ estadoclienteId }) => estadoclienteId));
+  }
+
   getServicio(): Observable<Tiposervicio[]> {
     return this.http
       .get<Tiposervicios>(`${baseUrl}/api/tiposervicio`, this.headers)
@@ -620,6 +650,28 @@ export class MantenimientosService {
     );
   }
 
+
+  getUpdateAtencion(data: EstadoclienteID) {
+    return this.http.put(
+      `${baseUrl}/api/tipoatencion/${data.id}`,
+      data,
+      this.headers,
+    );
+  }
+  getByIdatencion(id:string) {
+    return this.http.get<EstadoByIdcliente>(
+      `${baseUrl}/api/tipoatencion/${id}`,
+      
+      this.headers,
+    ) .pipe(map(({ estadoclienteId }) => estadoclienteId));
+  }
+
+
+
+
+
+
+
   /*  getTipofisiologico(): Observable<Tipoatencion[]> {
     return this.http
       .get<Tipoatenciones>(`${baseUrl}/api/tipoatencion`, this.headers)
@@ -639,6 +691,9 @@ export class MantenimientosService {
       .get<Tipoatenciones>(`${baseUrl}/api/tipoatencion`, this.headers)
       .pipe(map(({ tipoatencion }) => tipoatencion));
   }
+
+
+
 
   deleteAtencion(atencion: Tipoatencion) {
     return this.http.delete(
@@ -677,12 +732,28 @@ export class MantenimientosService {
   postDiagnostico(formData: FormData) {
     return this.http.post(`${baseUrl}/api/diagnostico`, formData, this.headers);
   }
-
+  UpdateDiagnostico( data: EstadoclienteID) {
+    return this.http.put(`${baseUrl}/api/diagnostico/${data.id}`, data, this.headers);
+  }
   getDiagnostico(): Observable<Diagnostico[]> {
     return this.http
       .get<Diagnosticos>(`${baseUrl}/api/diagnostico`, this.headers)
       .pipe(map(({ diagnostico }) => diagnostico));
   }
+  deleteDiagnosticos(id: number) {
+    return this.http.delete(
+      `${baseUrl}/api/diagnostico/${id}`,
+      this.headers,
+    );
+  }
+
+  getByIDDiagnostico(id: string) {
+    return this.http.get<EstadoByIdcliente>(
+      `${baseUrl}/api/diagnostico/${id}`,
+      this.headers,
+    ).pipe(map(({ estadoclienteId }) => estadoclienteId));
+  }
+
 
   deleteDiagnostico(tubo: Envase) {
     return this.http.delete(

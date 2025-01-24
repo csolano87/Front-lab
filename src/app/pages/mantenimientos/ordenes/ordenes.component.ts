@@ -19,12 +19,7 @@ import { OrdenID } from 'src/app/interfaces/carga-IngresordenId.interface';
 
 })
 export class OrdenesComponent implements OnInit {
-  constructor(
-    private ordenServicie: OrdenesService,
-    public agendamientoService: AgendamientoService,
-    private manteniminetoService: MantenimientosService,
-    private router: Router,
-  ) {}
+  
   public totalAceptas: number = 0;
   ordenBorrarActivo = 1;
   public totalIngresada: number = 0;
@@ -35,9 +30,16 @@ export class OrdenesComponent implements OnInit {
   public page!: number;
   listaOrdenId: OrdenID;
   public listaordenesingresdas: Ordene[] = [];
-
+ public  search: number =0;
   public cargando: boolean = true;
+  constructor(
+    private ordenServicie: OrdenesService,
+    public agendamientoService: AgendamientoService,
+    private manteniminetoService: MantenimientosService,
+    private router: Router,
+  ) { }
   ngOnInit(): void {
+
     this.cargarOrdenes();
     this.escucharSocket();
     this.getOrdenes();
@@ -228,5 +230,12 @@ export class OrdenesComponent implements OnInit {
         );
       }
     });
+  }
+
+  onSearchOrden(search: any) {
+    console.log(search)
+   this.search = search;
+
+   console.log(this.search)
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OrdenID, Prueba } from 'src/app/interfaces/carga-IngresordenId.interface';
+import { OrdenID, Panelprueba, Prueba } from 'src/app/interfaces/carga-IngresordenId.interface';
 import { Resultado } from 'src/app/interfaces/cargarResultadoAs400.interface';
 import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import Swal from 'sweetalert2';
@@ -18,6 +18,7 @@ import { Ordene } from 'src/app/interfaces/cargaIngresoordenes.interface';
 })
 export class ResultadosComponent implements OnInit {
   resultadoForm!: FormGroup;
+  isResultadoValido: boolean = false;
   page;
   listaordenesid: OrdenID = {};
   selectedFile: File | null = null;
@@ -31,6 +32,13 @@ export class ResultadosComponent implements OnInit {
   showDetails: boolean[] = [];
   showPruebasHeader: boolean = false;
   listamarca: Marca[] = [];
+  filtradaOrden: number | null;
+
+  filtroOrden: string = '';
+  filtroIdentificacion: string = '';
+  filtroModeloId: string = '';
+  filtroFechaIn: string = '';
+  filtroFechaOut: string = '';
   public listaordenesingresdas: Ordene[] = [];
   get pruebas() {
     return this.validarfrom.get('pruebas') as FormArray;
@@ -88,59 +96,46 @@ export class ResultadosComponent implements OnInit {
   }
 
 
-  buscarOrden(orden: string, identificacion: string, modeloId: string) {
-    console.log(orden, identificacion, modeloId)
-    /* 
-          modeloId == '--Seleccione--'   ? modeloId=null:
-        console.log(modeloId) */
+  buscarOrden(orden: string, identificacion: string, modeloId: string, fechaIn: string, fechaOut: string) {
+    console.log(orden, identificacion, modeloId, fechaIn, fechaOut)
+    this.filtroOrden = orden;
+    this.filtroIdentificacion = identificacion;
+    this.filtroModeloId = modeloId;
+    this.filtroFechaIn = fechaIn;
+    this.filtroFechaOut = fechaOut;
 
     this.ingresoService.getFiltrosResultadosIngresoOrden(orden,
-      identificacion, modeloId)
+      identificacion, modeloId, fechaIn, fechaOut)
       .subscribe((ordenes) => {
 
-        this.listaordenesingresdas = ordenes;
-        /*  console.log(ordenId);
-         this.listaordenesid = ordenId;
-         const agrupada = this.listaordenesid.prueba.reduce((acc, prueba) => {
-           const modeloNombre = prueba.panelprueba.modelo.NOMBRE;
-           console.log(modeloNombre);
- 
-           if (!acc[modeloNombre]) {
-             acc[modeloNombre] = {
-               total: 0,
-               pruebas: [],
-             };
-           }
- 
-           acc[modeloNombre].pruebas.push(prueba);
- 
-           acc[modeloNombre].total += 1;
- 
-           return acc;
-         }, {});
-         console.log(agrupada);
-         this.agrupadas = Object.keys(agrupada).map((item) => {
-           return {
-             categoria: item,
-             item: agrupada[item],
-           };
-         }); */
+        this.listaordenesingresdas = ordenes.filter(item => item.estado != 0);
+        console.log(this.listaordenesingresdas);
+        this.ordenRefrescar(this.listaordenesingresdas);
       })
 
   }
 
   getOrdenId(ordenId: OrdenID) {
     console.log(ordenId);
+
+    this.pruebas.clear();
+    console.log(this.pruebas.value);
+    this.filtradaOrden = ordenId.id;
     this.listaordenesid = ordenId;
+    this.isResultadoValido = this.listaordenesid.prueba.some(
+      (item) => item.resultado === null || item.resultado === '',
+    );
     const agrupada = this.listaordenesid.prueba.reduce((acc, prueba) => {
       const modeloNombre = prueba.panelprueba.modelo.NOMBRE;
       const estadoNombre = prueba.estado;
-      console.log(estadoNombre)
-      console.log(modeloNombre);
+      const id = ordenId.id;
+      /*    console.log(estadoNombre)
+         console.log(id); */
 
       if (!acc[modeloNombre]) {
         acc[modeloNombre] = {
           total: 0,
+          id: id,
           estado: estadoNombre,
           pruebas: [],
         };
@@ -152,7 +147,7 @@ export class ResultadosComponent implements OnInit {
 
       return acc;
     }, {});
-    console.log(agrupada);
+    /*   console.log(agrupada); */
     this.agrupadas = Object.keys(agrupada).map((item) => {
       return {
         categoria: item,
@@ -160,13 +155,13 @@ export class ResultadosComponent implements OnInit {
       };
 
     });
-    console.log(this.agrupadas)
+    /*  console.log(this.agrupadas) */
     const { id, prueba } = this.listaordenesid;
     this.validarfrom.patchValue({
       id,
 
       pruebas: prueba.map((item) => {
-        console.log(item);
+        /*   console.log(item); */
         if (item.panelprueba.rango) {
           const rangoId = this.Validarrangos(item);
           console.log(rangoId);
@@ -229,11 +224,11 @@ export class ResultadosComponent implements OnInit {
   }
 
   Validarrangos(item) {
-    const date1 = new Date(); // Fecha actual
-    date1.setDate(date1.getDate() - 1); // Restar un día a la fecha actual
-    const date2 = new Date(this.listaordenesid.paciente.fechanac); // Fecha de nacimiento
+    const date1 = new Date();
+    date1.setDate(date1.getDate() - 1);
+    const date2 = new Date(this.listaordenesid.paciente.fechanac);
 
-    // Calculamos años, meses y días
+
     const years = date1.getFullYear() - date2.getFullYear();
     let months = date1.getMonth() - date2.getMonth();
     let days = date1.getDate() - date2.getDate();
@@ -255,7 +250,7 @@ export class ResultadosComponent implements OnInit {
     let matchedRango = null;
 
     if (item.panelprueba.rango) {
-      console.log(item.panelprueba.rango);
+
       matchedRango = item.panelprueba.rango.find((rango) => {
         if (
           years === 0 &&
@@ -274,23 +269,23 @@ export class ResultadosComponent implements OnInit {
         if (years > 0 && rango.unidadedad.DESCRIPCION === 'AÑOS') {
           return true;
         }
-        return false; // Retornar falso si ninguna condición coincide
+        return false;
       });
     }
-    console.log(matchedRango);
-    return matchedRango || null; // Retorna el rango coincidente o null si no se encuentra ninguno
+
+    return matchedRango || null;
   }
   resultados(event: KeyboardEvent, modelo: any) {
     const arrPruebas = this.validarfrom.get('pruebas') as FormArray;
     const input = event.target as HTMLInputElement;
     const valor = input.value;
 
-    console.log(modelo.panelprueba.id);
-    const valorResultado = parseFloat(valor);
+    /*  console.log(modelo.panelprueba.id); */
+    const valorResultado = valor;
+/*  (valorResultado) ? null : */
+    const resultadoFinal = valorResultado;
 
-    const resultadoFinal = isNaN(valorResultado) ? null : valorResultado;
-
-    console.log(arrPruebas.value);
+    /*     console.log(arrPruebas.value); */
 
     const encontrado = arrPruebas.value.find(
       (control) => control.ordenId === modelo.panelprueba.id,
@@ -309,12 +304,12 @@ export class ResultadosComponent implements OnInit {
   }
 
   validarResultadoConRango(prueba: any) {
-    console.log(prueba);
-    const date1 = new Date(); // Fecha actual
-    date1.setDate(date1.getDate() - 1); // Restar un día a la fecha actual
-    const date2 = new Date(this.listaordenesid.paciente.fechanac); // Fecha de nacimiento
+
+    const date1 = new Date();
+    date1.setDate(date1.getDate() - 1);
+    const date2 = new Date(this.listaordenesid.paciente.fechanac);
     const resultado = prueba.resultado;
-    // Calculamos años, meses y días
+
     const years = date1.getFullYear() - date2.getFullYear();
     let months = date1.getMonth() - date2.getMonth();
     let days = date1.getDate() - date2.getDate();
@@ -335,8 +330,8 @@ export class ResultadosComponent implements OnInit {
 
     console.log(prueba.panelprueba.rango);
 
-    /* if (prueba.panelprueba.rango) {
-      const [rangoMin, rangoMax] = prueba.panelprueba.rango
+    if (prueba.panelprueba.rango) {
+      const [rangoMin, rangoMax] = prueba.panelprueba.rango.rangos
         .split('-')
         .map(Number);
 
@@ -348,7 +343,7 @@ export class ResultadosComponent implements OnInit {
       } else {
         return 'normal';
       }
-    } */
+    }
     return '';
     /*  const rango = this.Validarrangos(prueba);
     console.log(rango);
@@ -366,10 +361,107 @@ export class ResultadosComponent implements OnInit {
     }
     return ''; */
   }
-  guardarResultados( data: any) {
+  guardarResultados(prueba: any) {
+    /*     console.log(prueba); */
+    /*   const id = [...new Set(prueba.map(item => item.ordenId))]; */
+    console.log(prueba)
+    const [id] = prueba
+      .map(item => item.ordenId)
+      .filter((valor, indice, self) => self.indexOf(valor) === indice);
+    console.log(id)
+    /*    console.log(this.pruebas.value) */
+    const data = this.pruebas.value.filter(
+      (item) => prueba.some(da => da.panelpruebaId === item.ordenId)
+
+    )
     console.log(data)
+    this.ingresoService
+      .getValidacionOrden(id, data)
+      .subscribe((resp: any) => {
+        /*  console.log(resp); */
+        const { msg } = resp;
+        /*  this.listaordenesingresdas=null; */
+        this.buscarOrden(this.filtroOrden,
+          this.filtroIdentificacion,
+          this.filtroModeloId,
+          this.filtroFechaIn,
+          this.filtroFechaOut);
+
+
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `${msg}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        /*    this.orden(this.validarfrom.value.id); */
+      });
+
+
+
   }
-  borrarResultados() {
+
+  ordenRefrescar(lista: any) {
+
+    const itemSeleccioando = lista.find(item => item.id === this.filtradaOrden)
+    console.log(itemSeleccioando)
+    this.getOrdenId(itemSeleccioando)
+
+  }
+  ValidarParcial(modelo: any) {
+    console.log(modelo.item.pruebas)
+    const itemId = modelo.item.pruebas.map(item => item.panelpruebaId)
+    const data = {
+      id: modelo.item.id,
+      estado: 3,
+      panelpruebaId: itemId
+    }
+    console.log(data);
+
+    this.ingresoService.getValidarIngresoOrden(data).subscribe((resp: any) => {
+      const { msg } = resp;
+    /*   this.getOrdenId(this.listaordenesid) */
+      console.log(msg);
+
+
+      this.buscarOrden(this.filtroOrden,
+        this.filtroIdentificacion,
+        this.filtroModeloId,
+        this.filtroFechaIn,
+        this.filtroFechaOut);
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: `${msg}`,
+        showConfirmButton: false,
+        timer: 1500,
+      }); 
+    });
+
+  }
+
+  borrarFiltros(txtorden:any, txtidentificacion:any, txtmodeloId:any, txtfechaIn:any, txtfechaOut:any) {
+    console.log(txtorden, txtidentificacion, txtmodeloId, txtfechaIn, txtfechaOut)
+    txtorden.value = '',
+
+      txtidentificacion.value= '',
+      txtmodeloId.value = '',
+      txtfechaIn.value = '',
+      txtfechaOut.value= '',
+    console.log(txtorden, txtidentificacion, txtmodeloId, txtfechaIn, txtfechaOut)
+  }
+
+  validarPruebasValor(pruebas: any) {
+    console.log(pruebas);
+    return pruebas.some(item =>
+      item.resultado != null && item.estado != 3)
+      ? true
+      : null
+
+
 
   }
 }

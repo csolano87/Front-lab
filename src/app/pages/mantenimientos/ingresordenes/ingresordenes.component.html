@@ -133,7 +133,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="card-header">
-                  <button type="button" class="btn btn-default btn-sm btnd" data-toggle="modal"
+                  <button  *ngIf="btnVal !='Editar'"  type="button" class="btn btn-default btn-sm btnd" data-toggle="modal"
                     data-target="#modal-default">
                     <i class="bx bxs-plus-circle bx-xs"></i>
                   </button>
@@ -236,7 +236,7 @@
                           </td>
 
                           <td class="actions">
-                            <span class="span_delete">
+                            <span *ngIf="btnVal !=='Editar'" class="span_delete">
                               <i (click)="borrarPasatiempo(i)" class="bx bxs-trash" aria-hidden="true ">Eliminar</i>
                             </span>
                           </td>
@@ -742,23 +742,23 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th>Identificacion</th>
-                      <th>Nombres</th>
+                      <th  style="width: 5%;"></th>
+                      <th  style="width: 10%;">Identificacion</th>
+                      <th  style="width: 25%;">Nombres</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let paciente of listapacientes">
-                      <td><i class="bx bx-user bx-sm"></i></td>
+                      <td><i (click)="pacienteseleccionado(paciente)" class="bx bx-user bx-sm"></i></td>
                       <td>{{ paciente.numero }}</td>
 
                       <td>
                         {{ paciente.apellidos }}
                         {{ paciente.nombres }}
                       </td>
-                      <td>
+                    <!--   <td>
                         <i (click)="pacienteseleccionado(paciente)" class="bx bx-check-square bx-sm"></i>
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>

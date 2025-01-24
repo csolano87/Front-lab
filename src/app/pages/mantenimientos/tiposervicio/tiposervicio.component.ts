@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Tiposervicio } from 'src/app/interfaces/cargarTiposervicio.interface';
+import { Data } from 'src/app/models/cargaGnerica.module';
 
 import { Marca } from 'src/app/models/marca.module';
 import { LlenarCombosService } from 'src/app/services/llenar-combos.service';
@@ -10,20 +11,23 @@ import Swal from 'sweetalert2';
 declare var $: any;
 @Component({
   selector: 'app-tiposervicio',
-  
+
   templateUrl: './tiposervicio.component.html',
   styleUrl: './tiposervicio.component.css'
 })
 export class TiposervicioComponent implements OnInit {
   cargando = false;
   public page!: number;
-  listaServicio:Tiposervicio[]=[];
+  listaServicio: Tiposervicio[] = [];
   servicioForm!: FormGroup;
+  listadoselecioandoservicio: Data;
+  btnVal = 'Guardar';
   constructor(
     private llenarcomboServices: LlenarCombosService,
     private manteniemintoService: MantenimientosService,
     private router: Router,
     private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) {
     this.crearFormulario();
   }
@@ -34,6 +38,8 @@ export class TiposervicioComponent implements OnInit {
     );
   }
   ngOnInit(): void {
+
+    this.activatedRoute.params.subscribe(({ id }) => this.editarServicio(id))
     this.getServicio();
   }
 
@@ -48,42 +54,56 @@ export class TiposervicioComponent implements OnInit {
       this.servicioForm.markAllAsTouched();
       return;
     }
-    console.log(this.servicioForm.value);
-
-    Swal.fire({
-      allowOutsideClick: false,
-
-      icon: 'info',
-      text: 'Espere por favor ...',
-    });
-    Swal.showLoading(null);
-    this.manteniemintoService
-      .postServicio(this.servicioForm.value)
-      .subscribe(
-        (resp: any) => {
-          this.getServicio();
+    if (this.listadoselecioandoservicio) {
+      const data = {
+        id: this.listadoselecioandoservicio.id,
+        ...this.servicioForm.value
+      }
+      console.log(data)
+      this.manteniemintoService.getUpdateServicio(data)
+        .subscribe((resp: any) => {
           const { msg } = resp;
-          Swal.fire({
-            icon: 'success',
-
-            titleText: `${msg}`,
-            timer: 1500,
-          });
+          Swal.fire('Actualizado', `${msg}`, 'success');
           $('#modal-info').modal('hide');
-          this.servicioForm.reset({
-            nombre: '',
-          });
-          //this.router.navigateByUrl('/dashboard/usuarios');
-        },
-        (err) => {
-          console.log('error', err.error.msg);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al autenticar',
-            text: err.error.msg,
-          });
-        },
-      );
+          this.getServicio();
+          this.servicioForm.disable();
+          this.servicioForm.reset();
+          this.btnVal = 'Editar';
+          this.listadoselecioandoservicio = undefined;
+          this.router.navigateByUrl('/dashboard/servicio/Nuevo');
+        })
+    } else {
+
+
+
+      this.manteniemintoService
+        .postServicio(this.servicioForm.value)
+        .subscribe(
+          (resp: any) => {
+            this.getServicio();
+            const { msg } = resp;
+            Swal.fire({
+              icon: 'success',
+
+              titleText: `${msg}`,
+              timer: 1500,
+            });
+            $('#modal-info').modal('hide');
+            this.servicioForm.reset({
+              nombre: '',
+            });
+            //this.router.navigateByUrl('/dashboard/usuarios');
+          },
+          (err) => {
+            console.log('error', err.error.msg);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al autenticar',
+              text: err.error.msg,
+            });
+          },
+        );
+    }
   }
   getServicio() {
     this.manteniemintoService.getServicio().subscribe((tiposervicio) => {
@@ -120,7 +140,42 @@ export class TiposervicioComponent implements OnInit {
     });
   }
 
-  editarServicio(servicio: any) {
-    console.log(servicio);
+  editarServicio(id: string) {
+    if (id === 'Nuevo') {
+      this.servicioForm.reset();
+      this.servicioForm.enable();
+      this.btnVal = 'Guardar';
+      return;
+    }
+    console.log(id)
+    this.btnVal = 'Editar';
+    this.servicioForm.disable();
+    this.manteniemintoService.getByIdServicio(id).
+      subscribe((estadoclienteId) => {
+        console.log(estadoclienteId);
+        !estadoclienteId
+          ?
+          this.router.navigateByUrl('/dashboard/servicio/Nuevo')
+          :
+          console.log(estadoclienteId);
+        const { nombre } = estadoclienteId;
+
+        this.servicioForm.setValue({
+          nombre,
+        });
+
+        this.listadoselecioandoservicio = estadoclienteId;
+      })
+
+  }
+
+  cambioestado() {
+    if (this.btnVal != 'Editar') {
+      this.crearServicio();
+    }
+    this.servicioForm.enable();
+    this.btnVal = 'Guardar';
+
+
   }
 }

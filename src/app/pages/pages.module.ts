@@ -114,6 +114,8 @@ import { MenuComponent } from './mantenimientos/menu/menu.component';
 import { ListadoStockComponent } from './mantenimientos/listado-stock/listado-stock.component';
 import { CargaInternaComponent } from './mantenimientos/carga-interna/carga-interna.component';
 import { PermisosComponent } from './mantenimientos/permisos/permisos.component';
+import { FiltrordenesPipe } from '../pipes/filtrordenes.pipe';
+
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
@@ -124,6 +126,7 @@ const config: SocketIoConfig = { url: environment.url, options: {} };
     PermisosComponent,
     MenuComponent,
     FiltroexamPipe,
+    FiltrordenesPipe,
     FiltroStockPipe,
     FiltroProductoPipe,
     GroupByPipe,

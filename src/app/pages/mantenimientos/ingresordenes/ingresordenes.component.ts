@@ -814,7 +814,7 @@ export class IngresordenesComponent implements OnInit {
   onchangePruebas(e: any, item: Listaprueba) {
     const isChecked = e.target.checked;
     let isCheckedValue = item;
-    console.log(item);
+    console.log(item.CODIGO);
     const pruebasArray = this.ingresoForm.get('pruebas') as FormArray;
 
     const isPrueba = pruebasArray.value.find(
@@ -905,7 +905,7 @@ export class IngresordenesComponent implements OnInit {
   }
 
   cargaIngresoOrden(id: string) {
-    console.log(this.pruebas)
+    console.log(this.pruebas.controls)
         console.log(id);
         if (id === 'Nuevo') {
           this.ingresoForm.reset();
@@ -978,8 +978,12 @@ export class IngresordenesComponent implements OnInit {
               ),
             ),
           });
-       console.log(this.ingresoForm.get('pruebas')as FormArray) 
+
+        /*   this.pruebas.controls.forEach((control)=>control.get('estado').disable())
+          this.pruebas.controls.forEach((control)=>console.log(control)) */
+          console.log(this.pruebas.controls)
         });
+      
       }
       isChecked(codigo:number):boolean{
         const menuArray = this.pruebas;
@@ -989,6 +993,7 @@ export class IngresordenesComponent implements OnInit {
         console.log(menuArray.value.some(item=> item.codigo === codigo ))
         return menuArray.value.some(item=> item.codigo === codigo )
     
-        
+       
       }
+     
 }

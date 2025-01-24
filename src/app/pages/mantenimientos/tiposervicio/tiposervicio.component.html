@@ -60,7 +60,10 @@
 
                     <td class="actions">
                       <span class="span_edit">
-                        <i class="bx bxs-edit ">Editar</i></span>
+                        <i class="bx bxs-edit " 
+                        
+                        
+                        [routerLink]="['/dashboard','servicio',servicio.id]" data-toggle="modal" data-target="#modal-info">Editar</i></span>
 
                       <span class="span_delete">
                         <i (click)="borrarServicio(servicio)" class="bx bxs-trash ">Eliminar</i></span>
@@ -79,11 +82,11 @@
 </div>
 
 <div class="modal fade" id="modal-info">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Crear Servicio</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button"  routerLink="/dashboard/servicio/Nuevo"   class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
 
         </button>
@@ -105,8 +108,8 @@
                 </div>
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">
-                    <i class='bx bx-save'></i>Guardar</button>
+                  <a (click)="cambioestado()" class="btn btn-primary">
+                    <i class='bx bx-save'></i>{{btnVal}}</a>
                 </div>
               </form>
             </div>

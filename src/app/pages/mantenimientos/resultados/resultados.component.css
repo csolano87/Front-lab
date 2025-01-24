@@ -1,8 +1,8 @@
 
 /*  *{
      outline: 1px solid crimson;
-}  
-  */
+}   */
+ 
 
 .table {
      width: 100%;
@@ -137,7 +137,13 @@
     white-space: nowrap; /* Evita que el texto o los elementos se rompan en varias líneas */
     overflow: hidden; /* Asegura que el contenido no desborde */
   }
-  
+  .left-content2
+  {
+ 
+    display: flex;
+    align-items: center;
+margin-top: -20px;
+  }
   .left-content,
   .right-content {
  

@@ -355,3 +355,108 @@ i {
   color: rgb(219, 81, 12);
   background-color: #e8f4fc;
 }
+
+
+/* Estilo general para el modal */
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+/* Encabezado del modal */
+.modal-header {
+  background: #007bff;
+  color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Botón de cierre */
+.modal-header .close {
+  color: #fff;
+  font-size: 1.5rem;
+  opacity: 1;
+}
+
+.modal-header .close:hover {
+  opacity: 0.8;
+}
+
+/* Contenedor de formulario */
+.card {
+  border: none;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Etiquetas del formulario */
+label {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Estilo de los inputs y selects */
+.form-control {
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Mensajes de error */
+.text-danger {
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+/* Botón de enviar */
+.btn-primary {
+  background: #007bff;
+  border-color: #007bff;
+  border-radius: 5px;
+/*   padding: 10px  */;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background: #0056b3;
+  border-color: #004085;
+}
+
+/* Espaciado entre los campos del formulario */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Estilo para los placeholders */
+::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Estilo para los selects */
+select.form-control {
+  cursor: pointer;
+}
+
+/* Ordenamiento responsive */
+@media (max-width: 768px) {
+  .modal-dialog {
+    max-width: 90%;
+  }
+}

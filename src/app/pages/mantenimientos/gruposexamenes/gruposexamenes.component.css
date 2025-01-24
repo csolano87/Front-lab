@@ -25,3 +25,8 @@
 .table-hover tbody tr:hover {
   background-color: #f9f9f9;
 } */
+.disabled-icon {
+  opacity: 0.5;
+
+  pointer-events: none;
+}

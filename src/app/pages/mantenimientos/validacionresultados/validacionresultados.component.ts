@@ -68,11 +68,13 @@ export class ValidacionresultadosComponent implements OnInit {
       //   this.isResultadoValido = ordenId.prueba((orden) => orden.resultado && orden.resultado.trim() !== '');
       const agrupada = this.listaordenesid.prueba.reduce((acc, prueba) => {
         const modeloNombre = prueba.panelprueba.modelo.NOMBRE;
+        const estadoNombre = prueba.estado;
         console.log(modeloNombre);
 
         if (!acc[modeloNombre]) {
           acc[modeloNombre] = {
             total: 0,
+            estado: estadoNombre,
             pruebas: [],
           };
         }
@@ -218,7 +220,7 @@ export class ValidacionresultadosComponent implements OnInit {
     console.log(this.validarfrom.value);
 
     this.ingresoService
-      .getValidacionOrden(this.validarfrom.value)
+      .getValidacionOrden(this.validarfrom.value.id,this.validarfrom.value)
       .subscribe((resp: any) => {
         console.log(resp);
         const { msg } = resp;
@@ -231,7 +233,7 @@ export class ValidacionresultadosComponent implements OnInit {
         });
 
         this.orden(this.validarfrom.value.id);
-      });
+      }); 
   }
   resultados(event: KeyboardEvent, modelo: any) {
     const arrPruebas = this.validarfrom.get('pruebas') as FormArray;
@@ -338,5 +340,12 @@ export class ValidacionresultadosComponent implements OnInit {
         timer: 1500,
       });
     });
+  }
+
+  guardarResultados(data: any) {
+    console.log(data)
+  }
+  ValidarParcial() {
+
   }
 }

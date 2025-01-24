@@ -1,7 +1,7 @@
 export class Pacientes {
   constructor(
     public tipo?: string,
-    public numero?: string,
+    public numero?: number,
     public nombres?: string,
     public apellidos?: string,
     public sexo?: string,

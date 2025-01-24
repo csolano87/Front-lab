@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 // { Listaprueba } from 'src/app/interfaces/cargaListapruebas.interface';
 import { Listapruebas } from 'src/app/models/cargaIdPruebas.module';
@@ -13,6 +13,7 @@ import { Unidad } from 'src/app/interfaces/cargaUnidad.interface';
 import { Rango } from 'src/app/interfaces/cargar-Rangosreferencia.interface';
 import { RangosID } from 'src/app/interfaces/cargaReferenciaIdRangos.interface';
 import Swal from 'sweetalert2';
+import { OrdenID } from 'src/app/interfaces/carga-IngresordenId.interface';
 declare var $: any;
 @Component({
   selector: 'app-rangoreferencia',
@@ -23,11 +24,15 @@ declare var $: any;
 export class RangoreferenciaComponent implements OnInit {
   rangosform!: FormGroup;
   listaseleecionadapruebas: Listapruebas;
+  itemSeleccionadoUdpate: RangosID[] = [];
   listatipofisiologico: Tipofisiologico[] = [];
   listaunidad: Unidad[] = [];
   listaunidadedades: Unidadedad[] = [];
   listarangos: RangosID[] = [];
-
+  cargando: boolean = false;
+  btnVal = 'Guardar';
+  rangoSeleccionadoId: number | null = null;
+  pruebaSeleccionadoId: string | null = null;
   get tipofisiologicoId() {
     return (
       this.rangosform?.get('tipofisiologicoId')!.invalid &&
@@ -71,6 +76,7 @@ export class RangoreferenciaComponent implements OnInit {
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private mantenimientoService: MantenimientosService,
+    private router: Router,
   ) {
     this.crearFormulario();
   }
@@ -104,12 +110,6 @@ export class RangoreferenciaComponent implements OnInit {
     });
   }
 
-  /*   getRangoReferencia() {
-    this.mantenimientoService.getRangosreferencia().subscribe((rangos) => {
-      console.log(rangos);
-      this.listarangos = rangos;
-    });
-  } */
   crearFormulario() {
     this.rangosform = this.fb.group({
       //  panelpruebasId:['', [Validators.required]],
@@ -126,7 +126,7 @@ export class RangoreferenciaComponent implements OnInit {
     if (id === 'Nuevo') {
       return;
     }
-
+    this.pruebaSeleccionadoId = id;
     this.mantenimientoService
       .getIdPanelPruebas(id)
       .subscribe((listapruebas) => {
@@ -138,9 +138,16 @@ export class RangoreferenciaComponent implements OnInit {
       .getRangosIDreferencia(id)
       .subscribe((rangosId) => {
         console.log(rangosId);
+
+        !rangosId ? this.router.navigateByUrl('/dashboard/rangos')
+          : console.log(rangosId)
+
+        /*  const {rango}=rangosId  */
+
+
         this.listarangos = rangosId;
 
-       
+
       });
   }
   crearRango() {
@@ -150,14 +157,21 @@ export class RangoreferenciaComponent implements OnInit {
         control.markAsTouched();
       });
     }
-    const data = {
-      ...this.rangosform.value,
-      panelpruebasId: this.listaseleecionadapruebas.id,
-    };
 
-    this.mantenimientoService.getCargarangosreferencia(data).subscribe(
-      (resp: any) => {
+console.log(this.rangoSeleccionadoId)
+  
+    if (this.rangoSeleccionadoId !=null) {
+      console.log(this.rangoSeleccionadoId)
+      /*  const dataupdate = {
+         id: this.rangoSeleccionadoId,
+         ...this.rangosform
+       } */
+
+      this.mantenimientoService.getUpdateRangos(this.rangoSeleccionadoId, this.rangosform.value).subscribe((resp: any) => {
         const { msg } = resp;
+        this.crearRangos(this.pruebaSeleccionadoId);
+        this.rangoSeleccionadoId = null;
+        this.rangosform.reset()
         Swal.fire({
           icon: 'success',
 
@@ -165,19 +179,107 @@ export class RangoreferenciaComponent implements OnInit {
           // showConfirmButton: false,
         });
         $('#modal-info').modal('hide');
+      })
+    } else {
+      const data = {
+        ...this.rangosform.value,
+        panelpruebasId: this.listaseleecionadapruebas.id,
+      };
+      this.mantenimientoService.getCargarangosreferencia(data).subscribe(
+        (resp: any) => {
+          const { msg } = resp;
+          this.rangoSeleccionadoId = null;
+          this.rangosform.reset()
+          this.crearRangos(this.pruebaSeleccionadoId);
 
-        // this.router.navigateByUrl('/dashboard/rangos');
-      },
-      (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error ',
-          text: err.error.msg,
-        });
-      },
-    );
+          Swal.fire({
+            icon: 'success',
+
+            title: `${msg}`,
+            // showConfirmButton: false,
+          });
+          $('#modal-info').modal('hide');
+
+          // this.router.navigateByUrl('/dashboard/rangos');
+        },
+        (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error ',
+            text: err.error.msg,
+          });
+        },
+      );
+    }
+
+
   }
-  cambioEstado() {}
 
-  borrarRango(rango: any) {}
+  cargarRangoSeleccionado(item: RangosID) {
+    this.rangosform.disable()
+    console.log(item);
+    this.rangoSeleccionadoId = item.id;
+    this.btnVal = 'Editar';
+
+    const { rangos,
+
+      edadinicial,
+
+      edadfinal,
+
+      comentario,
+      tipofisiologicoId,
+      unidadId,
+      unidadedadId } = item;
+    this.rangosform.setValue({
+      rangos,
+      edadinicial,
+
+      edadfinal,
+
+      comentario,
+      tipofisiologicoId,
+      unidadId,
+      unidadedadId
+    })
+
+
+  }
+  cambioestado() {
+    if (this.btnVal != 'Editar') {
+      this.crearRango();
+    }
+    this.rangosform.enable();
+    this.btnVal = 'Guardar';
+  }
+  resetFormulario() {
+    this.rangosform.reset();
+    this.rangosform.enable()
+  }
+  borrarRango(item: RangosID) {
+    const id = item.id;
+
+    console.log(id);
+    Swal.fire({
+      title: 'Desactivar el rango ?',
+      html: `Esta seguro de desactivar <strong> ${item.rangos}</strong>`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Si desactivar ?',
+    }).then((result) => {
+      if (result.value) {
+        this.mantenimientoService.getDeleteRangos(id).subscribe((resp: any) => {
+          const { msg } = resp;
+
+          Swal.fire(
+            'Rango Desactivado',
+            `${msg} `,
+            'success',
+          );
+        });
+      }
+    });
+
+  }
 }

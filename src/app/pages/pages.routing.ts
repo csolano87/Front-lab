@@ -560,7 +560,11 @@ const routes: Routes = [
         component: DiagnosticoComponent,
         data: { titulo: 'diagnostico' },
       },
-
+      {
+        path: 'diagnostico/:id',
+        component: DiagnosticoComponent,
+        data: { titulo: 'diagnostico' },
+      },
       {
         path: 'grupoexamen',
         component: GruposexamenesComponent,

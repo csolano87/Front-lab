@@ -48,7 +48,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card-header">
-            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-pruebas">
+            <button   class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-pruebas">
               <i class="bx bxs-plus-circle"></i> Agregar Pruebas
             </button>
            <!--  <h6 class="card-title">Pruebas Asignadas</h6> -->
@@ -65,8 +65,8 @@
               <tr *ngFor="let d of pruebas.controls; let i = index" [formGroupName]="i">
                 <td>{{ d.value.codigo }}</td>
                 <td>{{ d.value.nombre }}</td>
-                <td>
-                  <span class="span_delete" >
+                <td  [ngClass]="{'disabled-icon': btnVal !='Editar'}">
+                  <span   class="span_delete" >
                     <i (click)="borrarPrueba(i)" class="bx bxs-trash">Eliminar</i> 
                   </span>
                 </td>

@@ -47,7 +47,7 @@ export interface Diagnostico {
 
 export interface Paciente {
     id?:           number;
-    numero?:       string;
+    numero?:       number;
     apellidos?:    string;
     nombres?:      string;
     email?:        string;
@@ -73,7 +73,7 @@ export interface Paciente {
 }
 export interface Medico {
     id?:           number;
-    numero?:       string;
+    numero?:       number;
     apellidos?:    string;
     nombres?:      string;
     email?:        string;
@@ -109,6 +109,13 @@ export interface Prueba {
     ordenId?:       number;
     panelpruebaId?: number;
     panelprueba?:   Panelprueba;
+    fechaordenreportada?: Date;
+    horaordenreportada?:  Date;
+    fechaordenvalidada?:  Date;
+    horaordenvalidada?:   Date;
+    creador?:             Reportador | null;
+    reportador?:          Reportador | null;
+    validador?:          Reportador | null;
 }
 
 export interface Panelprueba {
@@ -163,4 +170,18 @@ export interface Rango {
     unidadedadId?:      number;
     unidadedad?:        Diagnostico;
     unidad?:            Diagnostico;
+}
+export interface Reportador {
+    id?:            number;
+    doctor?:        string;
+    codigo_doctor?: null;
+    usuario?:       string;
+    password?:      string;
+    rol?:           string;
+    USUARIO_ID?:    null;
+    CREATEDBY?:     null;
+    UPDATEDBY?:     null;
+    DELETEDBY?:     null;
+    estado?:        boolean;
+    roleId?:        number;
 }

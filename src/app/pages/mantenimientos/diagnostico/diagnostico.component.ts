@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Tipoatencion } from 'src/app/interfaces/cargarTipoatencion.interface';
 import { Tipogrupo } from 'src/app/interfaces/cargarTipogrupo.interface';
 import { Tiposervicio } from 'src/app/interfaces/cargarTiposervicio.interface';
+import { Data } from 'src/app/models/cargaGnerica.module';
 
 import { Marca } from 'src/app/models/marca.module';
 import { LlenarCombosService } from 'src/app/services/llenar-combos.service';
@@ -21,11 +22,14 @@ export class DiagnosticoComponent {
   public page!: number;
   listaatencion: Tipoatencion[] = [];
   diagnosticoForm!: FormGroup;
+  listadoselecioandodiagnostico: Data;
+  btnVal = 'Guardar';
   constructor(
     private llenarcomboServices: LlenarCombosService,
     private manteniemintoService: MantenimientosService,
     private router: Router,
     private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) {
     this.crearFormulario();
   }
@@ -36,6 +40,8 @@ export class DiagnosticoComponent {
     );
   }
   ngOnInit(): void {
+
+    this.activatedRoute.params.subscribe(({ id }) => this.editarDiagnostico(id))
     this.getDiagnostico();
   }
 
@@ -50,42 +56,54 @@ export class DiagnosticoComponent {
       this.diagnosticoForm.markAllAsTouched();
       return;
     }
-    console.log(this.diagnosticoForm.value);
 
-    Swal.fire({
-      allowOutsideClick: false,
-
-      icon: 'info',
-      text: 'Espere por favor ...',
-    });
-    Swal.showLoading(null);
-    this.manteniemintoService
-      .postDiagnostico(this.diagnosticoForm.value)
-      .subscribe(
-        (resp: any) => {
-          this.getDiagnostico();
+    if (this.listadoselecioandodiagnostico) {
+      const data = {
+        id: this.listadoselecioandodiagnostico.id,
+        ...this.diagnosticoForm.value
+      }
+      console.log(data)
+      this.manteniemintoService.UpdateDiagnostico(data)
+        .subscribe((resp: any) => {
           const { msg } = resp;
-          Swal.fire({
-            icon: 'success',
-
-            titleText: `${msg}`,
-            timer: 1500,
-          });
+          Swal.fire('Actualizado', `${msg}`, 'success');
           $('#modal-info').modal('hide');
-          this.diagnosticoForm.reset({
-            nombre: '',
-          });
-          //this.router.navigateByUrl('/dashboard/usuarios');
-        },
-        (err) => {
-          console.log('error', err.error.msg);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al autenticar',
-            text: err.error.msg,
-          });
-        },
-      );
+          this.getDiagnostico();
+          this.diagnosticoForm.disable();
+          this.diagnosticoForm.reset();
+          this.btnVal = 'Editar';
+          this.listadoselecioandodiagnostico = undefined;
+          this.router.navigateByUrl('/dashboard/diagnostico/Nuevo');
+        })
+    } else {
+      this.manteniemintoService
+        .postDiagnostico(this.diagnosticoForm.value)
+        .subscribe(
+          (resp: any) => {
+            this.getDiagnostico();
+            const { msg } = resp;
+            Swal.fire({
+              icon: 'success',
+
+              titleText: `${msg}`,
+              timer: 1500,
+            });
+            $('#modal-info').modal('hide');
+            this.diagnosticoForm.reset({
+              nombre: '',
+            });
+            //this.router.navigateByUrl('/dashboard/usuarios');
+          },
+          (err) => {
+            console.log('error', err.error.msg);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al autenticar',
+              text: err.error.msg,
+            });
+          },
+        );
+    }
   }
   getDiagnostico() {
     this.manteniemintoService.getDiagnostico().subscribe((diagnostico) => {
@@ -94,12 +112,12 @@ export class DiagnosticoComponent {
       this.listaatencion = diagnostico;
     });
   }
-  borrarAtencion(atencion: Tipoatencion) {
-    console.log(atencion.id);
+  borrarAtencion(servicio: Tipoatencion) {
+    console.log(servicio.id);
 
     Swal.fire({
-      title: 'Eliminar Grupo?',
-      text: `Esta seguro que desea eliminar la atencion  ${atencion.nombre}`,
+      title: 'Eliminar servicio?',
+      text: `Esta seguro que desea eliminar el servicio  ${servicio.nombre}`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -108,12 +126,12 @@ export class DiagnosticoComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.manteniemintoService
-          .deleteAtencion(atencion)
+          .deleteDiagnosticos(servicio.id)
           .subscribe((resp: any) => {
             const { msg } = resp;
             this.getDiagnostico();
             Swal.fire({
-              title: 'Grupo eliminada!',
+              title: 'Servicio eliminada!',
               text: `${msg}`,
               icon: 'success',
             });
@@ -122,7 +140,42 @@ export class DiagnosticoComponent {
     });
   }
 
-  editarServicio(servicio: any) {
-    console.log(servicio);
+  editarDiagnostico(id: string) {
+    if (id === 'Nuevo') {
+      this.diagnosticoForm.reset();
+      this.diagnosticoForm.enable();
+      this.btnVal = 'Guardar';
+      return;
+    }
+    console.log(id)
+    this.btnVal = 'Editar';
+    this.diagnosticoForm.disable();
+    this.manteniemintoService.getByIDDiagnostico(id).
+      subscribe((estadoclienteId) => {
+        console.log(estadoclienteId);
+        !estadoclienteId
+          ?
+          this.router.navigateByUrl('/dashboard/diagnostico/Nuevo')
+          :
+          console.log(estadoclienteId);
+        const { nombre } = estadoclienteId;
+
+        this.diagnosticoForm.setValue({
+          nombre,
+        });
+
+        this.listadoselecioandodiagnostico = estadoclienteId;
+      })
+  }
+
+
+  cambioestado() {
+    if (this.btnVal != 'Editar') {
+      this.crearAtencion();
+    }
+    this.diagnosticoForm.enable();
+    this.btnVal = 'Guardar';
+
+
   }
 }

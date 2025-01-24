@@ -41,7 +41,7 @@ export interface Diagnostico {
 
 export interface Medico {
     id:            number;
-    numero:        string;
+    numero:        number;
     apellidos:     string;
     nombres:       string;
     email:         string;

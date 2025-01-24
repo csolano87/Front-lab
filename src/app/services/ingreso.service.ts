@@ -29,9 +29,9 @@ export class IngresoService {
   getPostMedico(formData: Medicos) {
     return this.http.post(`${baseUrl}/api/medico`, formData, this.headers);
   }
-  getValidacionOrden(data: OrdenID) {
+  getValidacionOrden(id:number,data: OrdenID) {
     return this.http.put(
-      `${baseUrl}/api/validacion/${data.id}`,
+      `${baseUrl}/api/validacion/${id}`,
       data,
       this.headers,
     );
@@ -45,8 +45,8 @@ export class IngresoService {
   }
 
 
-  getFiltrosResultadosIngresoOrden(orden: string, identificacion: string, modeloId:string):Observable<Ordene[]> {
-    return this.http.get<Ingresoordenes>(`${baseUrl}/api/ingresorden/filtros/ordenes?orden=${orden}&identificacion=${identificacion}&modeloId=${modeloId}`,
+  getFiltrosResultadosIngresoOrden(orden: string, identificacion: string, modeloId:string,fechaIn:string,fechaOut:string):Observable<Ordene[]> {
+    return this.http.get<Ingresoordenes>(`${baseUrl}/api/ingresorden/filtros/ordenes?orden=${orden}&identificacion=${identificacion}&modeloId=${modeloId}&fechaIn=${fechaIn}&fechaOut=${fechaOut}`,
 
       this.headers,
     )

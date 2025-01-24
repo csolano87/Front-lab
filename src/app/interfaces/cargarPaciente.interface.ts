@@ -6,7 +6,7 @@ export interface Pacientes {
 export interface Paciente {
     id:           number;
     tipo:         string;
-    numero:       string;
+    numero:       number;
     apellidos:    string;
     nombres:      string;
     fechanac:     Date;

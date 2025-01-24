@@ -7,7 +7,9 @@
             <div class="row">
               <div class="form-group col-md-2">
                 <label for="text " class="form-ItemName">Identificador</label>
-                <input type="text" class="form-control" placeholder="Buscar numero de cédula ..." #IDENTIFICADOR />
+                <input  type="text" class="form-control"
+
+                (keyup)="onSearchOrden(txtsearch.value)"  placeholder="Buscar numero de cédula ..." #txtsearch />
               </div>
 
               <div class="form-group col-md-4">
@@ -61,6 +63,7 @@
               <tbody>
                 <tr *ngFor="
                     let orden of listaordenesingresdas
+                    | filtrordenes: search
                       | paginate: { itemsPerPage: 10, currentPage: page }
                   " class="table-row">
                   <td class="table_text">
@@ -87,8 +90,8 @@
                   </td>
 
 
-                  <td  data-toggle="modal" data-target="#modal-default" (click)="OrdenId(orden)">
-                    <div  [ngClass]="{
+                  <td data-toggle="modal" data-target="#modal-default" (click)="OrdenId(orden)">
+                    <div [ngClass]="{
                       'generado': orden.estado === 1,
                       'reportado': orden.estado === 2,
                       'validado': orden.estado ==3 ,
@@ -102,9 +105,9 @@
                       <div *ngSwitchDefault>Eliminada</div>
                     </div>
                   </td>
-                  <td class="actions" [ngClass]="{ 'disabled-icon': orden.estado !==1    }">
+                  <td class="actions">
                     <!-- [ngClass]="{ 'disabled-icon': orden.estado !==1    }" -->
-                    <span class="span_edit">
+                    <span [ngClass]="{ 'disabled-icon': orden.estado !=1    }" class="span_edit">
 
                       <i [routerLink]="[
                             '/dashboard',
@@ -119,10 +122,10 @@
                         <i class="bx bxs-file-pdf bx-sm text-danger"></i>
                       </span> -->
 
-                    <span class="span_delete">
+                    <span [ngClass]="{ 'disabled-icon': orden.estado !=1   }" class="span_delete">
                       <i (click)="deleteOrden(orden)" class="bx bxs-trash ">Eliminar</i>
                     </span>
-                    <span class="span_rangos">
+                    <span [ngClass]="{ 'disabled-icon': orden.estado == 0 || orden.estado == 3  }" class="span_rangos">
                       <i [routerLink]="['/dashboard', 'validacion', orden.id]" class="bx bx-bar-chart">Validacion</i>
                     </span>
 
@@ -233,11 +236,12 @@
                           <td>
                             {{ prueba.panelprueba.NOMBRE }}
                           </td>
+
                           <td>
                             <div [ngSwitch]="prueba.estado">
                               <div *ngSwitchCase="1">Generado</div>
-                              <div *ngSwitchCase="2">Pendiente</div>
-                              <!--   <div *ngSwitchCase="3">rechazo</div> -->
+                              <div *ngSwitchCase="2">Reportado</div>
+                              <div *ngSwitchCase="3">Validado</div>
 
                               <div *ngSwitchDefault>Rechazo</div>
                             </div>
@@ -245,10 +249,12 @@
                           <td>
                             {{ prueba.fechaorden }} <br />{{ prueba.horaorden }}
                           </td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td>{{prueba?.reportador?.doctor}}</td>
+                          <td>{{prueba?.fechaordenreportada}} <br> {{prueba?.horaordenreportada}}</td>
+
+
+                          <td>{{prueba?.validador?.doctor}}</td>
+                          <td>{{prueba?.fechaordenvalidada}} <br> {{prueba?.horaordenvalidada}}</td>
                         </ng-container>
                       </tr>
                     </tbody>
