@@ -115,6 +115,7 @@ import { ListadoStockComponent } from './mantenimientos/listado-stock/listado-st
 import { CargaInternaComponent } from './mantenimientos/carga-interna/carga-interna.component';
 import { PermisosComponent } from './mantenimientos/permisos/permisos.component';
 import { FiltrordenesPipe } from '../pipes/filtrordenes.pipe';
+import { FiltroBodegaPipe } from '../pipes/filtro-bodega.pipe';
 
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
@@ -126,6 +127,7 @@ const config: SocketIoConfig = { url: environment.url, options: {} };
     PermisosComponent,
     MenuComponent,
     FiltroexamPipe,
+    FiltroBodegaPipe,
     FiltrordenesPipe,
     FiltroStockPipe,
     FiltroProductoPipe,

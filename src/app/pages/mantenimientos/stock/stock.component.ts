@@ -12,7 +12,7 @@ import {
   ScannerQRCodeSelectedFiles,
 } from 'ngx-scanner-qrcode';
 import { BarcodeScannerLivestreamComponent } from 'ngx-barcode-scanner';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { error } from 'console';
 import {
   NgxScannerQrcodeComponent,
@@ -27,7 +27,10 @@ import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import { Bodega } from 'src/app/interfaces/cargaBodega.interface';
 import { LlenarCombosService } from 'src/app/services/llenar-combos.service';
 import { Correo } from 'src/app/interfaces/cargaCorreo.interface';
+import { StockId } from 'src/app/models/cargaStockId.module';
 type AOA = any[][];
+
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
@@ -42,7 +45,8 @@ export class StockComponent implements OnInit {
   page: number = 1;
   count: number = 10;
   jsonData: any[];
-
+  btnVal = 'Guardar';
+  IDSeleccionado: string;
   private barcodeSubject = new Subject<string>();
   stockForm!: FormGroup;
   listabodega: Bodega[] = [];
@@ -50,7 +54,7 @@ export class StockComponent implements OnInit {
   inputsBloqueados: boolean = false;
   subscription?: Subscription;
   listacorreo: Correo[] = [];
-
+  listaStockSeleccionado: StockId;
   public isScanning = false;
   @ViewChild('barcodeInput') barcodeInput;
 
@@ -83,6 +87,7 @@ export class StockComponent implements OnInit {
     private manteniemintoService: MantenimientosService,
     private llenarcomboService: LlenarCombosService,
     private qrcode: NgxScannerQrcodeService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.crearFormulario();
   }
@@ -91,6 +96,49 @@ export class StockComponent implements OnInit {
     // this.focusOnBarcodeInput();
     this.getBodega();
     this.getProveedor();
+    this.activatedRoute.params.subscribe(({ id }) => this.crearStock(id))
+  }
+
+
+  crearStock(id: string) {
+    this.IDSeleccionado = id;
+    console.log(id);
+    console.log(this.IDSeleccionado)
+    if (id === 'Nuevo') {
+
+      this.stockForm.enable()
+      this.btnVal = 'Guardar';
+      return;
+    }
+    this.btnVal = 'Editar';
+    this.stockForm.disable();
+    this.stockService.getByIdBusqueda(id).subscribe((stockId) => {
+      !stockId ? this.router.navigateByUrl("/dashboard/stock")
+        : console.log(stockId)
+      const { guia, stockItem } = stockId
+      this.listaStockSeleccionado = stockId;
+      this.stockForm.patchValue({
+
+        guia,
+
+        productos: stockItem.map((item) =>
+          this.productos.push(
+            this.fb.group({
+
+              referencia: item.referencia,
+              descripcion: item.product.NOMBRE,
+              caducidad: item.caducidad.slice(0, 10),
+              lote: item.lote,
+              cantidad: item.cantidad,
+              cantidad_recibida: item.cantidad_recibida,
+              fabricante: item.fabricante,
+              sanitario: item.sanitario,
+              comentario: item.comentario,
+            })
+          ))
+      })
+    })
+
   }
 
   getProveedor() {
@@ -182,10 +230,12 @@ export class StockComponent implements OnInit {
   crearFormulario() {
     this.stockForm = this.fb.group({
       guia: ['', [Validators.required]],
-      bodegaId: ['', [Validators.required]],
-      proveedor: ['', [Validators.required]],
+      bodegaId: [''],
+      proveedor: [''],
       productos: this.fb.array([]),
-    });
+    })
+      ;
+    this.changeValidators();
   }
   crearProductos(): FormGroup {
     return this.fb.group({
@@ -200,6 +250,9 @@ export class StockComponent implements OnInit {
       comentario: [''],
     });
   }
+
+
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -244,32 +297,50 @@ export class StockComponent implements OnInit {
     reader.readAsArrayBuffer(file);
   }
   guardar() {
-    console.log(this.stockForm.value);
     if (this.stockForm.invalid) {
       return Object.values(this.stockForm.controls).forEach((control) => {
         control.markAsTouched();
       });
     }
-    this.stockService.getCreateStock(this.stockForm.value).subscribe(
-      (resp: any) => {
-        const { msg } = resp;
-        Swal.fire({
-          icon: 'success',
+    console.log(this.stockForm.value);
+console.log(this.listaStockSeleccionado)
+    if (this.listaStockSeleccionado) {
+const data={
+  id:this.listaStockSeleccionado.id,
+  ...this.stockForm.value
+}
+      /* UPDATE */
 
-          title: `${msg}`,
-          showConfirmButton: false,
-        });
-        this.router.navigateByUrl('/dashboard/stocks');
-      },
-      (err) => {
-        console.log(err.error.msg);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error ',
-          text: err.error.msg,
-        });
-      },
-    );
+this.stockService.getUpdateStock(data).subscribe((resp:any)=>{
+  const {msg}=resp;
+
+console.log(msg)})
+
+
+    } else {
+      this.stockService.getCreateStock(this.stockForm.value).subscribe(
+        (resp: any) => {
+          const { msg } = resp;
+          Swal.fire({
+            icon: 'success',
+
+            title: `${msg}`,
+            showConfirmButton: false,
+          });
+          this.router.navigateByUrl('/dashboard/stocks');
+        },
+        (err) => {
+          console.log(err.error.msg);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error ',
+            text: err.error.msg,
+          });
+        },
+      );
+
+
+    }
   }
   convertirAFecha(fechaExcel: number) {
     const d1 = new Date((fechaExcel - 25567 - 2) * 86400 * 1000);
@@ -286,6 +357,7 @@ export class StockComponent implements OnInit {
   borrarStock(): void {
     this.stockForm.reset()
     this.productos.clear();
+    this.router.navigateByUrl("/dashboard/stock/Nuevo")
 
     // window.location.reload();
     /* console.log(this.productos.controls); */
@@ -315,4 +387,35 @@ export class StockComponent implements OnInit {
       this.productos.at(index).get('bodegaId')?.value || '';
 
   } */
+
+  cambioEstado() {
+    if (this.btnVal != 'Editar') {
+      this.guardar();
+      this.stockForm.enable();
+    }
+    this.btnVal = 'Guardar'
+    this.stockForm.enable();
+  }
+  changeValidators() {
+console.log(this.listaStockSeleccionado)
+    if (this.listaStockSeleccionado) {
+      this.stockForm.controls['bodegaId'].setValidators([Validators.required]);
+      this.stockForm.controls['proveedor'].setValidators([Validators.required]);
+      this.stockForm.controls['bodegaId'].updateValueAndValidity();
+      this.stockForm.controls['proveedor'].updateValueAndValidity();
+    }
+  }
+
+   generarCSV() {
+      const url = 'assets/productos.csv'; // Ruta del archivo en 'src/assets'
+      
+      fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+          saveAs(blob, 'productos.csv'); // Nombre del archivo al descargar
+        })
+        .catch(error => console.error('Error al descargar el archivo:', error));
+    
+    }
+  
 }

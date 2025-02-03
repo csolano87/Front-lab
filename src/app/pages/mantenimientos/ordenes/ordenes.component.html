@@ -14,14 +14,15 @@
 
               <div class="form-group col-md-4">
                 <label for="text " class="form-ItemName">Apellidos del paciente</label>
-                <input type="text" class="form-control" placeholder="Buscar por apellidos ..." #APELLIDO />
+                <input type="text" class="form-control"
+                (keyup)="onSearchNombre(txtsearchNombre.value)"  placeholder="Buscar por apellidos ..." #txtsearchNombre />
               </div>
-
+<!-- 
               <div class="col-4 button_buscar">
                 <button type="submit" class="btn btn-primary btn-md rounded shadow">
                   Buscar
                 </button>
-              </div>
+              </div> -->
             </div>
           </form>
         </div>
@@ -55,15 +56,15 @@
                   <th class="title_paciente">Paciente</th>
 
 
-                  <th>Estado</th>
-                  <th>Acciones</th>
+                  <th style="width: 10%;">Estado</th>
+                  <th style="width: 30%;">Acciones</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr *ngFor="
                     let orden of listaordenesingresdas
-                    | filtrordenes: search
+                    | filtrordenes: search:searchNombre
                       | paginate: { itemsPerPage: 10, currentPage: page }
                   " class="table-row">
                   <td class="table_text">
@@ -74,8 +75,8 @@
                       }">
                     </i>
 
-                    <i *ngIf="orden.observaciones.length > 0" class="bx bxs-first-aid"
-                      title="{{ orden.observaciones }}"></i>
+                    <i *ngIf="orden.observaciones" class="bx bxs-first-aid"
+                      title="{{ orden?.observaciones }}"></i>
                   </td>
                   <td>
                     &nbsp; <i class="bx bxs-calendar"> {{ orden.fechaorden }}</i>
@@ -128,7 +129,9 @@
                     <span [ngClass]="{ 'disabled-icon': orden.estado == 0 || orden.estado == 3  }" class="span_rangos">
                       <i [routerLink]="['/dashboard', 'validacion', orden.id]" class="bx bx-bar-chart">Validacion</i>
                     </span>
-
+                    <span [ngClass]="{ 'disabled-icon': orden.estado == 0 || orden.estado == 1  }" class="span_rangos">
+                      <i  class="bx bx-bar-chart">Pdf</i>
+                    </span>
                   </td>
                   <!--   <td>
                     <span
@@ -240,10 +243,12 @@
                           <td>
                             <div [ngSwitch]="prueba.estado">
                               <div *ngSwitchCase="1">Generado</div>
-                              <div *ngSwitchCase="2">Reportado</div>
-                              <div *ngSwitchCase="3">Validado</div>
+                              <div *ngSwitchCase="2">Pendiente</div>
+                              <div *ngSwitchCase="3">Rechazado</div>
+                              <div *ngSwitchCase="4">Reportado</div>
+                          
 
-                              <div *ngSwitchDefault>Rechazo</div>
+                              <div *ngSwitchDefault>Validado</div>
                             </div>
                           </td>
                           <td>

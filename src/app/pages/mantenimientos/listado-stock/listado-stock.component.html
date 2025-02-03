@@ -67,29 +67,27 @@
                         </div>
                       </td>
 
-                      <td>
-                        <span class="cursor">
-                          <a
-                            [ngClass]="{
+                      <td class="actions">
+                        <span class="span_edit">
+                         
+                            <i    [ngClass]="{
                               'disabled-icon': ''
                             }"
                             [routerLink]="[
                               '/dashboard',
-                              'cargaInterna',
+                              'stock',
                               stock.id
-                            ]"
-                          >
-                            <i class="bx bxs-edit bx-sm"></i>
-                          </a>
+                            ]" class="bx bxs-edit ">Editar</i>
+                         
                         </span>
                         <span
                           [ngClass]="{
                             'disabled-icon': stock.ESTADO !== 1
                           }"
                           (click)="onDeleteStock(stock)"
-                          class="cursor"
+                          class="span_delete"
                         >
-                          <i class="bx bxs-trash bx-sm"></i>
+                          <i class="bx bxs-trash">Eliminar</i>
                         </span>
                       </td>
                     </tr>

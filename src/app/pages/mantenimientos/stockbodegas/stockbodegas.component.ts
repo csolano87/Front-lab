@@ -22,7 +22,7 @@ export class StockbodegasComponent implements OnInit {
   listabodega: Bodega[] = [];
   page;
   dataStore = [];
-
+search:string='';
   cargando: boolean = false;
   public isScanning = false;
   private barcodeSubject = new Subject<string>();
@@ -108,7 +108,7 @@ export class StockbodegasComponent implements OnInit {
     console.log(bodegaId);
     this.stockService.getFiltroBodegas(bodegaId).subscribe((stock) => {
       console.log(stock);
-      this.listaSotck = stock.filter(item=>item.CANTIDAD == '1');
+      this.listaSotck = stock.sort((a,b )=>Number(b.CANTIDAD)-Number(a.CANTIDAD));
     });
   }
 
@@ -152,5 +152,10 @@ export class StockbodegasComponent implements OnInit {
     this.stockService.getdescargoStock(data).subscribe((msg) => {
       console.log(msg);
     }); */
+  }
+
+  onSearchProducto(search:string){
+    console.log(search)
+ this.search=search;
   }
 }

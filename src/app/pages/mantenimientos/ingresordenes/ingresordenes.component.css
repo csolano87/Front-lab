@@ -1,21 +1,21 @@
-
-/* *{
+/* * {
   outline: 1px solid blue;
 } */
-.examen{
+
+.examen {
   display: flex;
   flex-direction: row;
- 
+
   justify-content: space-between;
 }
 
 .grid-container {
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   grid-auto-rows: auto;
- 
-  gap: 15px; 
-  align-items: start; 
+
+  gap: 15px;
+  align-items: start;
 }
 
 .card {
@@ -26,25 +26,31 @@
   border-radius: 10px;
   background-color: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin: 0; 
+  margin: 0;
 }
 
 .card:hover {
-  transform: translateY(-5px); /* Animación de hover */
+  transform: translateY(-5px);
+  /* Animación de hover */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .card-header h6.card-title {
-  font-weight: bold; /* Mantén el título en negrita */
-  font-size: 16px; /* Ajusta el tamaño si es necesario */
+  font-weight: bold;
+  /* Mantén el título en negrita */
+  font-size: 16px;
+  /* Ajusta el tamaño si es necesario */
   margin-bottom: 10px;
 }
+
 .card-header {
   margin-bottom: 10px;
 }
 
 .card-items {
   display: flex;
-  flex-direction: column; /* Alinear los elementos en columna */
+  flex-direction: column;
+  /* Alinear los elementos en columna */
   gap: 8px;
 }
 
@@ -53,10 +59,14 @@
 }
 
 .card-items label {
-  font-weight: normal; /* Asegúrate de que los labels no estén en negrita */
-  font-size: 14px; /* Ajusta el tamaño para que luzca bien */
-  line-height: 1.5; /* Mejora el espaciado entre líneas */
-  margin-left: 5px; /* Añade un pequeño espacio desde el checkbox */
+  font-weight: normal;
+  /* Asegúrate de que los labels no estén en negrita */
+  font-size: 14px;
+  /* Ajusta el tamaño para que luzca bien */
+  line-height: 1.5;
+  /* Mejora el espaciado entre líneas */
+  margin-left: 5px;
+  /* Añade un pequeño espacio desde el checkbox */
 }
 
 
@@ -70,219 +80,223 @@
 
 
 
-.icon_table{
+.icon_table {
   width: 5%;
- }
- 
- .icon_table1{
-   width: 10%;
-  }
-  .icon_table2{
-   width: 15%;
-  }
- .check-margin {
-   margin-top: 48px;
-   margin-left: 50px;
- }
- 
- .sm {
-  /*  margin: -5px 10px; */
-  
+}
+
+.icon_table1 {
+  width: 10%;
+}
+
+.icon_table2 {
+  width: 15%;
+}
+
+.check-margin {
+  margin-top: 48px;
+  margin-left: 50px;
+}
+
+
+
+.datapciente {
+  padding:10px  12px;
+  margin:0px auto;
+font-size: 1.2rem;
+}
+
+.sm i {
+  font-size: 0.4rem;
+  margin-top: 10px;
+}
+
+.li {
+  list-style: none;
+}
+
+.under {
+  list-style: none;
+}
+
+.row-content {
+  margin: auto 10px;
+}
+
+.custom-control-label {
+  font-size: 12px;
+}
+
+.col-sm-6 {
+  width: 100%;
+  margin: auto 0;
+}
+
+.contenido {
+  margin: auto 0;
+}
+
+.scroll {
+  margin: 4px, 2px;
+  padding: 4px;
+
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+}
+
+.scroll2 {
+  margin-right: 80px;
+  width: 90%;
+  height: 90vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  left: 0;
+
+  cursor: pointer;
+}
+
+.scroll2 li:hover {
+  background-color: #b3ecb7;
+}
+
+.button {
+  text-align: end;
+}
+
+.prueba {
   margin: 0 auto;
- }
- 
- .datapciente {
- /*   left: 0; */
-   margin: 5px auto;
-   padding: 20px;
- }
- .sm i {
-   font-size: 0.4rem;
-   margin-top: 10px;
- }
- 
- .li {
-   list-style: none;
- }
- 
- .under {
-   list-style: none;
- }
- 
- .row-content {
-   margin: auto 10px;
- }
- 
- .custom-control-label {
-   font-size: 12px;
- }
- 
- .col-sm-6 {
-   width: 100%;
-   margin: auto 0;
- }
- 
- .contenido {
-   margin: auto 0;
- }
- 
- .scroll {
-   margin: 4px, 2px;
-   padding: 4px;
- 
-   height: auto;
-   overflow-x: hidden;
-   overflow-y: auto;
-   text-align: justify;
- }
- 
- .scroll2 {
-   margin-right: 80px;
-   width: 90%;
-   height: 90vh;
-   overflow-x: hidden;
-   overflow-y: auto;
- 
-   left: 0;
- 
-   cursor: pointer;
- }
- 
- .scroll2 li:hover {
-   background-color: #b3ecb7;
- }
- 
- .button {
-   text-align: end;
- }
- 
- .prueba {
-   margin: 0 auto;
-   margin-left: 50px;
- }
- 
- .fo {
-   margin: -38px;
- 
-   border-radius: 5px;
- }
- 
- .ullist {
-   margin: 0 auto;
-   padding: 0.15rem;
-   margin-left: 0;
- }
- 
- .li {
-   cursor: pointer;
-   font-size: 11px;
- }
- 
- .tittle {
-   font-weight: bold;
-   margin: auto;
-   text-align: center;
-   font-size: 0.6em;
- }
- 
- label {
-   font-weight: 100;
- }
- 
- .caso {
-   display: flex;
-   padding: 1px;
- }
- 
- .marginInput {
-   margin: 0 0 30px;
- }
- 
- .wr {
-   margin: 0 20px;
- }
- 
- .re {
-   display: flex;
-   flex-wrap: wrap;
- }
- 
- 
- 
- .results {
-   height: 40%;
- }
- 
- .btnd {
- 
- 
-   margin: -5px 10px;
- }
- 
- .margin {
-   display: inline-block;
- 
-   margin: 2px 5px;
- 
-   font-size: 0.8em;
- }
- 
- .tt {
-   display: grid;
- 
-   grid-template-columns: repeat(4, 200px);
-  
-   grid-template-rows: auto;
-   gap: 10px;
-  
- }
- 
- .colorsero {
-   background-color: green;
- }
- 
- .colorhormo {
-   background-color: purple;
- }
- 
- .colorhema {
-   background-color: red;
- }
- .coloruro {
-   background-color: #ff6600;
- }
- .colorquimi {
-   background-color: #b1f0d3;
- }
- 
- .colora {
-   background-color: greenyellow;
- }
- 
- .colorprueba {
-   background-color: #c0f9f8;
- }
- 
- .colorotros {
-   background-color: skyblue;
- }
- .colormarca {
-   background-color: #208f5b;
- }
- .colorcopro {
-   background-color: red;
- }
- 
- .colorvirales {
-   background-color: violet;
- }
- 
- 
- .esboton {
-   margin: 0 auto;
-   margin-left: 80px;
- }
- /* 
+  margin-left: 50px;
+}
+
+.fo {
+  margin: -38px;
+
+  border-radius: 5px;
+}
+
+.ullist {
+  margin: 0 auto;
+  padding: 0.15rem;
+  margin-left: 0;
+}
+
+.li {
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.tittle {
+  font-weight: bold;
+  margin: auto;
+  text-align: center;
+  font-size: 0.6em;
+}
+
+label {
+  font-weight: 100;
+}
+
+.caso {
+  display: flex;
+  padding: 1px;
+}
+
+.marginInput {
+  margin: 0 0 30px;
+}
+
+.wr {
+  margin: 0 20px;
+}
+
+.re {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+
+.results {
+  height: 40%;
+}
+
+.btnd {
+
+
+  margin: -5px 10px;
+}
+
+.margin {
+  display: inline-block;
+
+  margin: 2px 5px;
+
+  font-size: 0.8em;
+}
+
+.tt {
+  display: grid;
+
+  grid-template-columns: repeat(4, 200px);
+
+  grid-template-rows: auto;
+  gap: 10px;
+
+}
+
+.colorsero {
+  background-color: green;
+}
+
+.colorhormo {
+  background-color: purple;
+}
+
+.colorhema {
+  background-color: red;
+}
+
+.coloruro {
+  background-color: #ff6600;
+}
+
+.colorquimi {
+  background-color: #b1f0d3;
+}
+
+.colora {
+  background-color: greenyellow;
+}
+
+.colorprueba {
+  background-color: #c0f9f8;
+}
+
+.colorotros {
+  background-color: skyblue;
+}
+
+.colormarca {
+  background-color: #208f5b;
+}
+
+.colorcopro {
+  background-color: red;
+}
+
+.colorvirales {
+  background-color: violet;
+}
+
+
+.esboton {
+  margin: 0 auto;
+  margin-left: 80px;
+}
+
+/* 
  .wrapper {
    width: auto;
    margin: 0 auto;
@@ -365,4 +379,3 @@
    transition: all 0.35s;
  }
   */
- 

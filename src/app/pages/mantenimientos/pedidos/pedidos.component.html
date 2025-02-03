@@ -51,14 +51,16 @@
                   Cancelar
                 </button>
                 &nbsp;
+                <!--  -->
+                <!--    *ngIf=" btnVal !== 'Guardar'  " -->
                 <a
-                  *ngIf=" btnVal !== 'Guardar' "
+                  *ngIf="   usuario.rol != 'OPERADOR'  "
                   type="button"
                   [class.disabled]="isChecking"
                   (click)="comprobarCantidad(pedidoseleccionado)"
                   class="btn btn-secondary btn-sm"
                 >
-                  {{ btnValC == "1" ? "Comprobar disponibilidad" : "Validar" }}
+                  {{ btnValC == "1" ? "Despachar" : "Validar" }}
                 </a>
               </div>
             </div>
@@ -66,7 +68,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>Producto</th>
+                  <th style="width: 30%;">Producto</th>
 
                   <th>Marca</th>
                   <th>Cantidad ordenada</th>
@@ -75,44 +77,33 @@
                 </tr>
               </thead>
               <tbody formArrayName="PRODUCTOS">
+                <!-- *ngFor="let d of importForm.get('PRODUCTOS')?.controls; let i = index" [formGroupName]="i"> -->
                 <tr
                   *ngFor="
-                    let d of importForm.controls['PRODUCTOS']?.value;
+                    let d of getProductos().controls;
                     let i = index
                   "
                   [formGroupName]="i"
                 >
                   <td>
-                    {{ d.NOMBRE }}
+                    {{ d.get('NOMBRE')?.value  }}
                     <div class="limit-width form-group col-md-12" #asBoxInput>
-                      <!-- <select
-                      class="custom-select custom-width"
-
-                      formControlName="ID_PRODUCTO"
-                      (change)="actualizarInputs(i, $event)"
-                    >
-                      <option  class="custom-option"
-                        *ngFor="let producto of listaproductos"
-                        [value]="producto.id"
-                      >
-                        {{[ producto.REFERENCIA]+' '+ producto.NOMBRE+' '+ producto.UNIDAD }}
-                      </option> 
-                    </select> -->
+                    
                     </div>
                   </td>
-                  <td>{{ d.UNIDAD }}</td>
+                  <td>{{ d.get('UNIDAD')?.value  }}</td>
                   <td>
                     <input
                       class="form-control"
-                      type="text"
+                      type="number"
                       [readonly]="!importForm.enabled || importForm.disabled"
                       formControlName="CANTIDAD"
                     />
                   </td>
 
-                  <td *ngIf="usuario.rol != 'OPERADOR'">{{ d.ENTREGADO }}</td>
+                  <td *ngIf="usuario.rol != 'OPERADOR'">{{ d.get('ENTREGADO')?.value  }}</td>
                   <td *ngIf="usuario.rol != 'OPERADOR'">
-                    {{ d.LOTE }}
+                    {{ d.get('LOTE')?.value  }}
                   </td>
                   <td>
                     <i

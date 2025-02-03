@@ -37,8 +37,11 @@
         <div class="card-body">
           <h6 class="title">Stock de Bodegas</h6>
 
-          <div class="col-md-3 button"></div>
-
+        
+          <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Buscar productos..." #txtSearch
+              (keyup)="onSearchProducto(txtSearch.value)" />
+          </div>
           <div class="table-responsive">
             <form>
               <div
@@ -68,7 +71,7 @@
                   <tbody>
                     <ng-container
                       *ngFor="
-                        let stock of listaSotck
+                        let stock of listaSotck|filtroBodega:search
                           | paginate: { itemsPerPage: 10, currentPage: page };
                         let i = index
                       "

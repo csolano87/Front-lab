@@ -21,7 +21,7 @@ import Swal from 'sweetalert2';
 })
 export class PermisosComponent implements OnInit {
 
-  groupedMenus: any[] = [];
+  groupedMenus: any[] ;
   menuForm!: FormGroup;
   addmenuForm!: FormGroup;
   usuario: Usuario;
@@ -56,14 +56,37 @@ export class PermisosComponent implements OnInit {
 
   }
   ngOnInit(): void {
-
+    this.getMenu();
     this.activateRoute.params.subscribe(({ id }) => {
-      this.getMenu();
+     this.getMenu();
       this.CrearUsuario(id)
     }
     )
-    this.getMenu();
+   // this.getMenu();
     console.log(this.groupedMenus)
+  }
+
+  getMenu() {
+
+
+    this.menuService.getMenu().subscribe((menu) => {
+      console.log(menu)
+      const parentMenus = menu.filter(item => item.padreid === null && item.estado !== false);
+      //console.log(parentMenus)
+      this.groupedMenus = parentMenus.map(parent => {
+        const children = menu.filter(menu => menu.padreid === parent.id && menu.estado !== false);
+        return {
+          nombre: parent.nombre,
+          id: parent.id,
+          items: [parent, ...children],
+        };
+      });
+
+      console.log(this.groupedMenus)
+    })
+
+
+
   }
 
 
@@ -104,28 +127,7 @@ export class PermisosComponent implements OnInit {
     })
 
   }
-  getMenu() {
-
-
-    this.menuService.getMenu().subscribe((menu) => {
-      console.log(menu)
-      const parentMenus = menu.filter(item => item.padreid === null && item.estado !== false);
-      //console.log(parentMenus)
-      this.groupedMenus = parentMenus.map(parent => {
-        const children = menu.filter(menu => menu.padreid === parent.id && menu.estado !== false);
-        return {
-          nombre: parent.nombre,
-          id: parent.id,
-          items: [parent, ...children],
-        };
-      });
-
-      console.log(this.groupedMenus)
-    })
-
-
-
-  }
+  
 
   onreset() {
 
@@ -189,7 +191,7 @@ export class PermisosComponent implements OnInit {
       const userMenus = user.role.menu.map(item => item.id);
 
      /*  console.log(userMenus) */
-   /*    console.log(this.groupedMenus) */
+      console.log(this.groupedMenus)
       for (const group of this.groupedMenus) {
         for (const item of group.items) {
           const isChecked = userMenus.includes(item.id);

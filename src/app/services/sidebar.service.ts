@@ -579,8 +579,8 @@ export class SidebarService {
            roles: [1],
          },
           {
-           titulo: 'CARGA STOCK MANUAL',
-           url: 'stock-manual',
+           titulo: 'CARGA STOCK MANUAL' no agregue , 
+                     url: 'stock-manual',
            roles: [1],
          },
          {
@@ -622,7 +622,7 @@ export class SidebarService {
            roles: [1],
          },
          {
-           titulo: 'TRANSFERENCIA',
+           titulo: 'TRANSFERENCIA', no agregada
            url: 'transferencia',
            roles: [1],
          }, 

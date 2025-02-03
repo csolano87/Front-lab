@@ -30,7 +30,8 @@ export class OrdenesComponent implements OnInit {
   public page!: number;
   listaOrdenId: OrdenID;
   public listaordenesingresdas: Ordene[] = [];
- public  search: number =0;
+ public  search: number=null ;
+ searchNombre:string='';
   public cargando: boolean = true;
   constructor(
     private ordenServicie: OrdenesService,
@@ -231,10 +232,17 @@ export class OrdenesComponent implements OnInit {
       }
     });
   }
+/* searchNombre */
 
+onSearchNombre(searchNombre: any) {
+  console.log(searchNombre)
+ this.searchNombre = searchNombre;
+
+ console.log(this.search)
+}
   onSearchOrden(search: any) {
     console.log(search)
-   this.search = search;
+   this.search =search;
 
    console.log(this.search)
   }

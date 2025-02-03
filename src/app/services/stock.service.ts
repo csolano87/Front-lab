@@ -14,6 +14,8 @@ import {
   StockBodegas,
 } from '../interfaces/cargarStockBodegas.interface';
 import { StockL, StocksL } from '../interfaces/cargalistadoStock.interface';
+import { StockById } from '../interfaces/carga-stockId.interfaces';
+import { StockId } from '../models/cargaStockId.module';
 const baseUrl = environment.url;
 @Injectable({
   providedIn: 'root',
@@ -77,7 +79,10 @@ export class StockService {
   getCreateStock(formData: StockForm) {
     return this.http.post(`${baseUrl}/api/stock`, formData, this.headers);
   }
+  getUpdateStock(data: StockId) {
+    return this.http.post(`${baseUrl}/api/stock/${data.id}`, data, this.headers);
 
+  }
   getCargarinternaCreateStock(formData: StockForm) {
     return this.http.post(
       `${baseUrl}/api/stock/cargaInterna`,
@@ -118,5 +123,14 @@ export class StockService {
     return this.http.get(`${baseUrl}/api/stock/reporte/pdf`, {
       responseType: 'blob',
     });
+  }
+
+
+  getByIdBusqueda(id: string) {
+    return this.http
+      .get<StockById>(`${baseUrl}/api/stock/busqueda/${id}`, this.headers)
+      .pipe(
+        map(({StockId}) => StockId),
+      );
   }
 }

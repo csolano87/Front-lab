@@ -43,13 +43,13 @@
               <div class="form-group col-md-8">
                 <label for="">Datos del paciente </label>
                 <div class="input-group datapciente" *ngIf="pacientes">
-                  <i class="bx bx-user bx-sm sm">
+                  <i class="bx bx-user">
                     {{ pacientes?.nombres }} {{ pacientes?.apellidos }}</i>
-                  <i class="fa fa-birthday-cake bx-sm sm">
+                  <i class="fa fa-birthday-cake ">
                     {{ pacientes?.fechanac | utcDate: "yyyy-MM-dd" }}
                   </i>
-                  <br />
-                  <i class="bx bx-male-sign bx-sm sm"> {{ pacientes?.sexo }}</i>
+               
+                  <i class="bx bx-male-sign "> {{ pacientes?.sexo }}</i>
                 </div>
               </div>
 
@@ -125,7 +125,7 @@
                 <label class="">Observaciones</label>
                 <div class="input-group">
                   <input type="text" class="form-control" formControlName="observaciones" [class.is-invalid]=""
-                    placeholder="Buscar medico" />
+                    placeholder="" />
                 </div>
               </div>
             </div>
@@ -252,8 +252,8 @@
         </div>
       </div>
     </div>
-    <hr />
-    <!--    <pre>
+<!--     <hr />
+       <pre>
       {{ ingresoForm.value | json }}
     </pre> -->
   </form>
@@ -664,8 +664,8 @@
           <div class="card-items">
             <div  *ngFor="let perfil of listgrupoperfil">
               
-              <input type="checkbox" name="checkbox" [(ngModel)]="perfil.isChecked"
-                (change)="onchangePerfil($event, perfil)" [checked] />
+              <input type="checkbox" name="checkbox" 
+                (change)="onchangePerfil($event, perfil)"  [checked]="isChecked2(perfil)" />
               <label>
                 {{ perfil.nombre }}
               </label>

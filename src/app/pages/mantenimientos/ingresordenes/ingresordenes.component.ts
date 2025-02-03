@@ -37,6 +37,7 @@ import { Provincia } from 'src/app/interfaces/cargarProvincias.interface';
 import { IngresoService } from 'src/app/services/ingreso.service';
 import { OrdenID } from 'src/app/interfaces/carga-IngresordenId.interface';
 import { isatty } from 'tty';
+import { AnyARecord } from 'dns';
 declare var $: any;
 @Component({
   selector: 'app-ingresordenes',
@@ -320,7 +321,7 @@ export class IngresordenesComponent implements OnInit {
       this.ingresoForm.patchValue({ CODIMPRESORA: valorAlmacenado });
     }
   }
- 
+
 
   getprovincia() {
     this.manteniminetoService.getProvincia().subscribe((provincia) => {
@@ -412,7 +413,7 @@ export class IngresordenesComponent implements OnInit {
       fum: [''],
       diagnostico: [''],
       diagnosticoId: [''],
-      observaciones: ['', [Validators.required]],
+      observaciones: [''],
 
       pruebas: this.fb.array([]),
     });
@@ -777,9 +778,9 @@ export class IngresordenesComponent implements OnInit {
       this.listgrupoperfil = listaperfiles;
     });
   }
-  onchangePerfil(event: any, item: Listaperfile) {
+  onchangePerfil(event: Event, item: Listaperfile) {
     console.log(item);
-    const isChecked = event.target.checked;
+    const isChecked = event.target as HTMLInputElement;
     let isCheckedValue = item;
     const pruebasArray = this.ingresoForm.get('pruebas') as FormArray;
     console.log(pruebasArray.value);
@@ -787,7 +788,7 @@ export class IngresordenesComponent implements OnInit {
       (itemarray) => itemarray.ItemID === item,
     );
     console.log(isPrueba);
-    if (isPrueba == undefined || isPrueba == 'undefined') {
+    if (isChecked.checked) {
       this.nomPerfil = item.nombre;
       console.log(this.nomPerfil.length);
       item.itempruebas.map((cod) => {
@@ -811,8 +812,10 @@ export class IngresordenesComponent implements OnInit {
       this.pruebas.removeAt(index);
     }
   }
-  onchangePruebas(e: any, item: Listaprueba) {
-    const isChecked = e.target.checked;
+  onchangePruebas(e: Event, item: Listaprueba) {
+    const isChecked = e.target as HTMLInputElement;
+    console.log(isChecked.checked)
+
     let isCheckedValue = item;
     console.log(item.CODIGO);
     const pruebasArray = this.ingresoForm.get('pruebas') as FormArray;
@@ -821,8 +824,7 @@ export class IngresordenesComponent implements OnInit {
       (items) => items.ItemID === item.CODIGO,
     );
     console.log(isPrueba);
-
-    if (isChecked == true) {
+    if (isChecked.checked == true) {
       this.pruebas.push(
         this.fb.group({
           codigoId: [item.id, Validators.required],
@@ -836,12 +838,15 @@ export class IngresordenesComponent implements OnInit {
         }),
       );
     } else {
-      const index = pruebasArray.value.findIndex(
-        (x) => x.ItemID === item.CODIGO,
-      );
 
+
+      const index = pruebasArray.value.findIndex(
+        (x) => x.codigo === item.CODIGO,
+      );
+      console.log(index)
       this.pruebas.removeAt(index);
     }
+
   }
   guardarPaciente() {
     this.ingresoService
@@ -905,95 +910,106 @@ export class IngresordenesComponent implements OnInit {
   }
 
   cargaIngresoOrden(id: string) {
-    console.log(this.pruebas.controls)
-        console.log(id);
-        if (id === 'Nuevo') {
-          this.ingresoForm.reset();
-          this.pruebas.clear();
-          this.clearFilters();
-          this.ingresoForm.enable();
-          this.btnVal = 'Guardar';
-        
-          return;
-        }
-    
-        this.btnVal = 'Editar';
-        this.ingresoForm.disable();
-        if (this.ingresoForm.invalid) {
-          return Object.values(this.ingresoForm.controls).forEach((control) => {
-            control.markAsTouched();
-          });
-        }
-        this.manteniminetoService.getIngresoOrdenId(id).subscribe((ordenId) => {
-          !ordenId
-            ? this.router.navigateByUrl('/dashboard/ordenes')
-            : console.log(ordenId);
-    
-          const {
-            id,
-            paciente,
-            pacienteId,
-            medico,
-            numeroorden,
-            embarazada,
-            fum,
-            observaciones,
-            fechaorden,
-            horaorden,
-            estado,
-            medicoId,
-            diagnostico,
-            diagnosticoId,
-            tiposervicioId,
-            tipoatencionId,
-            prueba,
-          } = ordenId;
-          this.pacientes = ordenId.paciente;
-          this.ingresoSeleccionado = ordenId;
-          this.ingresoForm.setValue({
-            numero: paciente.numero,
-            doctor: medico.nombres,
-            diagnostico: diagnostico.nombre,
-            pacienteId,
-            embarazada,
-            fum: `${fum}`.slice(0, 10),
-            observaciones,
-            medicoId,
-            diagnosticoId,
-            tiposervicioId,
-            tipoatencionId,
-            pruebas: prueba.map((item) =>
-              this.pruebas.push(
-                this.fb.group({
-                  //  this.etiqueta:item.panelprueba.ABREV,
-                  codigoId: item.panelprueba.id,
-                  codigo: item.panelprueba.CODIGO,
-                  nomExam: item.panelprueba.NOMBRE,
-                  tiempo: item.panelprueba.TIEMPO,
-                  muestra: item.panelprueba.muestra.nombre,
-                  etq: item.panelprueba.ORDEN == '2' ? item.panelprueba.ORDEN : '',
-    
-                  estado: item.estado.toString(),
-                }),
-              ),
-            ),
-          });
+    console.log(this.pruebas.controls.forEach(item => item));
+    console.log(id);
+    if (id === 'Nuevo') {
+      this.ingresoForm.reset();
+      this.pruebas.clear();
+      this.clearFilters();
+      this.ingresoForm.enable();
+      this.btnVal = 'Guardar';
 
-        /*   this.pruebas.controls.forEach((control)=>control.get('estado').disable())
-          this.pruebas.controls.forEach((control)=>console.log(control)) */
-          console.log(this.pruebas.controls)
-        });
-      
-      }
-      isChecked(codigo:number):boolean{
-        const menuArray = this.pruebas;
-        console.log(menuArray.value);
-        console.log(codigo);
-    
-        console.log(menuArray.value.some(item=> item.codigo === codigo ))
-        return menuArray.value.some(item=> item.codigo === codigo )
-    
-       
-      }
-     
+      return;
+    }
+
+    this.btnVal = 'Editar';
+    this.ingresoForm.disable();
+    if (this.ingresoForm.invalid) {
+      return Object.values(this.ingresoForm.controls).forEach((control) => {
+        control.markAsTouched();
+      });
+    }
+    this.manteniminetoService.getIngresoOrdenId(id).subscribe((ordenId) => {
+      !ordenId
+        ? this.router.navigateByUrl('/dashboard/ordenes')
+        : console.log(ordenId);
+
+      const {
+        id,
+        paciente,
+        pacienteId,
+        medico,
+        numeroorden,
+        embarazada,
+        fum,
+        observaciones,
+        fechaorden,
+        horaorden,
+        estado,
+        medicoId,
+        diagnostico,
+        diagnosticoId,
+        tiposervicioId,
+        tipoatencionId,
+        prueba,
+      } = ordenId;
+      this.pacientes = ordenId.paciente;
+      this.ingresoSeleccionado = ordenId;
+      this.ingresoForm.setValue({
+        numero: paciente.numero,
+        doctor: medico.nombres,
+        diagnostico: diagnostico.nombre,
+        pacienteId,
+        embarazada,
+        fum: `${fum}`.slice(0, 10),
+        observaciones,
+        medicoId,
+        diagnosticoId,
+        tiposervicioId,
+        tipoatencionId,
+        pruebas: prueba.map((item) =>
+          this.pruebas.push(
+            this.fb.group({
+              //  this.etiqueta:item.panelprueba.ABREV,
+              codigoId: item.panelprueba.id,
+              codigo: item.panelprueba.CODIGO,
+              nomExam: item.panelprueba.NOMBRE,
+              tiempo: item.panelprueba.TIEMPO,
+              muestra: item.panelprueba.muestra.nombre,
+              etq: item.panelprueba.ORDEN == '2' || item.panelprueba.ORDEN == '3' ? item.panelprueba.ORDEN : '',
+
+              estado: item.estado.toString(),
+            }),
+          ),
+        ),
+      });
+
+      this.pruebas.controls.forEach((control) => control.get('estado').disable())
+      this.pruebas.controls.forEach((control) => console.log(control))
+      console.log(this.pruebas.controls.forEach((control) => control))
+    });
+
+  }
+  isChecked(codigo: number): boolean {
+    const menuArray = this.pruebas;
+
+    console.log(menuArray.value)
+    return menuArray.value.some(item => item.codigo === codigo)
+
+
+  }
+
+
+
+
+  isChecked2(perfil: any): boolean {
+    const menuArray = this.pruebas;
+    const perfiles = perfil.itempruebas.filter(item => item.panelprueba.ORDEN == 3);
+
+
+    return menuArray.value.some(ite =>
+      perfiles.some(item => item.panelprueba.CODIGO === ite.codigo))
+
+  }
+
 }

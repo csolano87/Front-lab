@@ -84,7 +84,7 @@ export class PedidosComponent implements OnInit{
       this.listabodega = bodega;
     });
   }
-  get PRODUCTOS() {
+  get PRODUCTOS():FormArray {
     return this.importForm.get('PRODUCTOS') as FormArray;
     // return ( this.importForm.get('PRODUCTOS') as FormArray).controls;
   }
@@ -167,7 +167,7 @@ export class PedidosComponent implements OnInit{
   }
   borrarProducto(i: number) {
     this.PRODUCTOS.removeAt(i);
-    this.router.navigateByUrl('/dashboard/solicitud-pedidos');
+   /*  this.router.navigateByUrl('/dashboard/solicitud-pedidos'); */
   }
   crearStock(id: string) {
     console.log(`ID`, id);
@@ -365,5 +365,8 @@ export class PedidosComponent implements OnInit{
 
     this.data$ = this.llenarcomboService.pruebasreactivos({ q: value });
     console.log(this.data$);
+  }
+  getProductos(): FormArray {
+    return this.importForm.get('PRODUCTOS') as FormArray;
   }
 }

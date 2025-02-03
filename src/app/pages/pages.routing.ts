@@ -608,6 +608,12 @@ const routes: Routes = [
         component: StockComponent,
         data: { titulo: 'stock' },
       },
+
+      {
+        path: 'stock/:id',
+        component: StockComponent,
+        data: { titulo: 'stock' },
+      },
       {
         path: 'stocks',
         component: StocksComponent,
