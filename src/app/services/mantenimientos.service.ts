@@ -121,6 +121,7 @@ import { Tecnica, Tecnicas } from '../interfaces/cargar-tecnica.interface';
 import { Muestra, Muestras } from '../interfaces/carga-muestras.interface';
 import { ListaperfilesID, PerfilId } from '../interfaces/cargar-listaperfilesId.interface';
 import { Data } from '../models/cargaGnerica.module';
+import { UnidadById, UnidadId } from '../interfaces/cargar-unidadById.interface';
 //import { Pruebas } from '../interfaces/cargaReportPruebas.interfaces';
 
 const baseUrl = environment.url;
@@ -128,7 +129,7 @@ const baseUrl = environment.url;
   providedIn: 'root',
 })
 export class MantenimientosService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -324,13 +325,13 @@ export class MantenimientosService {
   getCrearMuestras(formData: FormData) {
     return this.http.post(`${baseUrl}/api/muestras`, formData, this.headers);
   }
- /*  getUpdateMuestras(data: EstadoclienteID) {
-    return this.http.put(
-      `${baseUrl}/api/muestras/${data.id}`,
-      data,
-      this.headers,
-    );
-  } */
+  /*  getUpdateMuestras(data: EstadoclienteID) {
+     return this.http.put(
+       `${baseUrl}/api/muestras/${data.id}`,
+       data,
+       this.headers,
+     );
+   } */
   getByIDMuestras(id: string) {
     return this.http
       .get<EstadoByIdcliente>(`${baseUrl}/api/muestras/${id}`, this.headers)
@@ -340,10 +341,10 @@ export class MantenimientosService {
     return this.http.delete(`${baseUrl}/api/muestras/${id}`, this.headers);
   }
 
-  UpdateMuestras(data:Data) {
+  UpdateMuestras(data: Data) {
     return this.http
-      .put(`${baseUrl}/api/muestras/${data.id}`, data,this.headers)
-      
+      .put(`${baseUrl}/api/muestras/${data.id}`, data, this.headers)
+
   }
 
   getBodega(): Observable<Bodega[]> {
@@ -372,9 +373,18 @@ export class MantenimientosService {
       .get<Unidades>(`${baseUrl}/api/unidad`, this.headers)
       .pipe(map(({ unidad }) => unidad));
   }
-
+  geByIDtUnidad(id:string) {
+    return this.http
+      .get<UnidadById>(`${baseUrl}/api/unidad/${id}`, this.headers)
+      .pipe(map(({ unidadId }) => unidadId));
+  }
   getpostUnidad(formData: FormData) {
     return this.http.post(`${baseUrl}/api/unidad`, formData, this.headers);
+  }
+
+
+  UpdateUnidad(data: UnidadId) {
+    return this.http.put(`${baseUrl}/api/unidad/${data.id}`, data, this.headers);
   }
 
   getCrearBodega(formData: Marca) {
@@ -396,7 +406,7 @@ export class MantenimientosService {
   getCargarangosreferencia(formData: FormData) {
     return this.http.post(`${baseUrl}/api/rangos/`, formData, this.headers);
   }
-  getUpdateRangos(id:number,data: FormData) {
+  getUpdateRangos(id: number, data: FormData) {
     console.log(id)
     return this.http.put(`${baseUrl}/api/rangos/${id}`, data, this.headers);
   }
@@ -404,7 +414,7 @@ export class MantenimientosService {
   getDeleteRangos(id: number) {
     return this.http
       .delete(`${baseUrl}/api/rangos/${id}`, this.headers)
-    
+
   }
 
 
@@ -621,12 +631,12 @@ export class MantenimientosService {
       this.headers,
     );
   }
-  getByIdServicio(id:string) {
+  getByIdServicio(id: string) {
     return this.http.get<EstadoByIdcliente>(
       `${baseUrl}/api/tiposervicio/${id}`,
-      
+
       this.headers,
-    ) .pipe(map(({ estadoclienteId }) => estadoclienteId));
+    ).pipe(map(({ estadoclienteId }) => estadoclienteId));
   }
 
   getServicio(): Observable<Tiposervicio[]> {
@@ -658,12 +668,12 @@ export class MantenimientosService {
       this.headers,
     );
   }
-  getByIdatencion(id:string) {
+  getByIdatencion(id: string) {
     return this.http.get<EstadoByIdcliente>(
       `${baseUrl}/api/tipoatencion/${id}`,
-      
+
       this.headers,
-    ) .pipe(map(({ estadoclienteId }) => estadoclienteId));
+    ).pipe(map(({ estadoclienteId }) => estadoclienteId));
   }
 
 
@@ -695,7 +705,7 @@ export class MantenimientosService {
 
 
 
-  deleteAtencion(atencion: Tipoatencion) {
+  deleteAtencion(atencion: any) {
     return this.http.delete(
       `${baseUrl}/api/tipoatencion/${atencion.id}`,
       this.headers,
@@ -717,7 +727,7 @@ export class MantenimientosService {
       .get<GrupoExam>(`${baseUrl}/api/perfiles`, this.headers)
       .pipe(map(({ listaperfiles }) => listaperfiles));
   }
-  getGrupoPerfilesId(id:string) {
+  getGrupoPerfilesId(id: string) {
     return this.http
       .get<PerfilId>(`${baseUrl}/api/perfiles/${id}`, this.headers)
       .pipe(map(({ listaperfilesId }) => listaperfilesId));
@@ -732,7 +742,7 @@ export class MantenimientosService {
   postDiagnostico(formData: FormData) {
     return this.http.post(`${baseUrl}/api/diagnostico`, formData, this.headers);
   }
-  UpdateDiagnostico( data: EstadoclienteID) {
+  UpdateDiagnostico(data: EstadoclienteID) {
     return this.http.put(`${baseUrl}/api/diagnostico/${data.id}`, data, this.headers);
   }
   getDiagnostico(): Observable<Diagnostico[]> {
@@ -930,15 +940,19 @@ export class MantenimientosService {
       .pipe(map(({ ordenes }) => ordenes));
   }
 
-  getDeleteIngresoOrden(id:number) {
+  getDeleteIngresoOrden(id: number) {
     return this.http
       .delete<Ingresoordenes>(`${baseUrl}/api/ingresorden/${id}`, this.headers)
-     
+
   }
 
   getIngresoOrdenId(id: string) {
     return this.http
       .get<IngresoordenesID>(`${baseUrl}/api/ingresorden/${id}`, this.headers)
       .pipe(map(({ ordenId }) => ordenId));
+  }
+
+  generarPdf(id: number) {
+    return this.http.get(`${baseUrl}/api/pdf/generarpdf/${id}`, { responseType: 'blob' })
   }
 }

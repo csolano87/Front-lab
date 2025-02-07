@@ -130,7 +130,7 @@
                       <i [routerLink]="['/dashboard', 'validacion', orden.id]" class="bx bx-bar-chart">Validacion</i>
                     </span>
                     <span [ngClass]="{ 'disabled-icon': orden.estado == 0 || orden.estado == 1  }" class="span_rangos">
-                      <i  class="bx bx-bar-chart">Pdf</i>
+                      <i   (click)="descargarPdf(orden.id)" class="bx bx-bar-chart">Pdf</i>
                     </span>
                   </td>
                   <!--   <td>

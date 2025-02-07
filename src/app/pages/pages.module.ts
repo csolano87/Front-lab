@@ -116,6 +116,8 @@ import { CargaInternaComponent } from './mantenimientos/carga-interna/carga-inte
 import { PermisosComponent } from './mantenimientos/permisos/permisos.component';
 import { FiltrordenesPipe } from '../pipes/filtrordenes.pipe';
 import { FiltroBodegaPipe } from '../pipes/filtro-bodega.pipe';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
@@ -248,6 +250,9 @@ const config: SocketIoConfig = { url: environment.url, options: {} };
     FullCalendarModule,
     UtcDatePipe,
     NgxChartsModule,
+     BrowserAnimationsModule,
+     ToastrModule.forRoot(),
+    
     SocketIoModule.forRoot(config),
   ],
 })

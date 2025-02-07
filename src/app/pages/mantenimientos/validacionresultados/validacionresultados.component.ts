@@ -20,6 +20,11 @@ export class ValidacionresultadosComponent implements OnInit {
   validarfrom!: FormGroup;
   agrupadas: any[] = [];
   isResultadoValido: boolean = false;
+  filtroOrden: string = '';
+  filtroIdentificacion: string = '';
+  filtroModeloId: string = '';
+  filtroFechaIn: string = '';
+  filtroFechaOut: string = '';
 
   get pruebas() {
     return this.validarfrom.get('pruebas') as FormArray;
@@ -165,7 +170,13 @@ export class ValidacionresultadosComponent implements OnInit {
     const date1 = new Date(); // Fecha actual
     date1.setDate(date1.getDate() - 1); // Restar un día a la fecha actual
     const date2 = new Date(this.listaordenesid.paciente.fechanac); // Fecha de nacimiento
-
+    const sexo = this.listaordenesid.paciente.sexo;
+    const sexoMap: Record<string, string> = {
+      "M": "MASCULINO",
+      "F": "FEMENINO"
+    }
+    const sexoTransformado = sexoMap[sexo] || sexo;
+    console.log(sexoTransformado)
     // Calculamos años, meses y días
     const years = date1.getFullYear() - date2.getFullYear();
     let months = date1.getMonth() - date2.getMonth();
@@ -184,31 +195,44 @@ export class ValidacionresultadosComponent implements OnInit {
     if (months < 0) {
       months += 12;
     }
-
+    console.log(`Tiene ${years} anos ,con  ${months} meses y ${days} dias`)
     let matchedRango = null;
-
     if (item.panelprueba.rango) {
       console.log(item.panelprueba.rango);
-      matchedRango = item.panelprueba.rango.find((rango) => {
-        if (
-          years === 0 &&
-          months === 0 &&
-          rango.unidadedad.DESCRIPCION === 'DIAS'
-        ) {
-          return true;
+    
+      for (let rango of item.panelprueba.rango) {
+        console.log(`Verificando rango:`, rango);
+    
+        // Si encontramos un tipo fisiológico específico que coincide con sexoTransformado, lo tomamos y terminamos
+        if (rango.tipofisiologico.DESCRIPCION !== 'GENERICO' && rango.tipofisiologico.DESCRIPCION === sexoTransformado) {
+          if (validarEdad(rango)) {
+            matchedRango = rango;
+            break; // ¡Nos detenemos aquí porque encontramos el específico!
+          }
         }
-        if (
-          years === 0 &&
-          months > 0 &&
-          rango.unidadedad.DESCRIPCION === 'MESES'
-        ) {
-          return true;
+    
+        // Si no hemos encontrado un específico, consideramos GENERAL como opción secundaria
+        if (!matchedRango && rango.tipofisiologico.DESCRIPCION === 'GENERICO' && validarEdad(rango)) {
+          matchedRango = rango;
         }
-        if (years > 0 && rango.unidadedad.DESCRIPCION === 'AÑOS') {
-          return true;
-        }
-        return false; // Retornar falso si ninguna condición coincide
-      });
+      }
+    }
+    
+    /**
+     * Función para validar la edad según la unidad del rango.
+     */
+    function validarEdad(rango) {
+      if (years === 0 && months === 0 && rango.unidadedad.DESCRIPCION === 'DIAS') {
+        return years >= rango.edadinicial && years <= rango.edadfinal;
+      }
+      if (years === 0 && months > 0 && rango.unidadedad.DESCRIPCION === 'MESES') {
+        return years >= rango.edadinicial && years <= rango.edadfinal;
+      }
+      if (years > 0 && rango.unidadedad.DESCRIPCION === 'AÑOS') {
+        return years >= rango.edadinicial && years <= rango.edadfinal;
+      }
+      return false;
+    
     }
     console.log(matchedRango);
     return matchedRango || null; // Retorna el rango coincidente o null si no se encuentra ninguno
@@ -220,7 +244,7 @@ export class ValidacionresultadosComponent implements OnInit {
     console.log(this.validarfrom.value);
 
     this.ingresoService
-      .getValidacionOrden(this.validarfrom.value.id,this.validarfrom.value)
+      .getValidacionOrden(this.validarfrom.value.id, this.validarfrom.value)
       .subscribe((resp: any) => {
         console.log(resp);
         const { msg } = resp;
@@ -233,7 +257,7 @@ export class ValidacionresultadosComponent implements OnInit {
         });
 
         this.orden(this.validarfrom.value.id);
-      }); 
+      });
   }
   resultados(event: KeyboardEvent, modelo: any) {
     const arrPruebas = this.validarfrom.get('pruebas') as FormArray;
@@ -321,7 +345,7 @@ export class ValidacionresultadosComponent implements OnInit {
     return ''; */
   }
 
- 
+
   validarOrden(listaordenesid: OrdenID) {
     console.log(listaordenesid.id);
 
@@ -345,7 +369,45 @@ export class ValidacionresultadosComponent implements OnInit {
   guardarResultados(data: any) {
     console.log(data)
   }
-  ValidarParcial() {
+  ValidarParcial(modelo: any) {
+    console.log(modelo.item.pruebas)
+    const itemId = modelo.item.pruebas.map(item => item.panelpruebaId)
+    const data = {
+      id: modelo.item.id,
+      estado: 3,
+      panelpruebaId: itemId
+    }
+    console.log(data);
+
+    this.ingresoService.getValidarIngresoOrden(data).subscribe((resp: any) => {
+      const { msg } = resp;
+      /*   this.getOrdenId(this.listaordenesid) */
+      console.log(msg);
+
+
+      /*  this.buscarOrden(this.filtroOrden,
+         this.filtroIdentificacion,
+         this.filtroModeloId,
+         this.filtroFechaIn,
+         this.filtroFechaOut); */
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: `${msg}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+
+  }
+  validarPruebasValor(pruebas: any) {
+    console.log(pruebas);
+    return pruebas.some(item =>
+      item.resultado != null && item.estado != 3)
+      ? true
+      : null
+
+
 
   }
 }

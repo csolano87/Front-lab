@@ -6,6 +6,8 @@ export interface RangoIDreferencia {
 export interface RangosID {
     id:                number;
     rangos:            string;
+    rangoMin:            string;
+    rangoMax:            string;
     edadinicial:       number;
     edadfinal:         number;
     comentario:        string;

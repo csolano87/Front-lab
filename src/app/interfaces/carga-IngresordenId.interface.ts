@@ -170,6 +170,7 @@ export interface Rango {
     unidadedadId?:      number;
     unidadedad?:        Diagnostico;
     unidad?:            Diagnostico;
+    tipofisiologico?:   Diagnostico;
 }
 export interface Reportador {
     id?:            number;

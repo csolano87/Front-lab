@@ -72,7 +72,7 @@ export class PermisosComponent implements OnInit {
     this.menuService.getMenu().subscribe((menu) => {
       console.log(menu)
       const parentMenus = menu.filter(item => item.padreid === null && item.estado !== false);
-      //console.log(parentMenus)
+      console.log(parentMenus)
       this.groupedMenus = parentMenus.map(parent => {
         const children = menu.filter(menu => menu.padreid === parent.id && menu.estado !== false);
         return {
@@ -93,6 +93,7 @@ export class PermisosComponent implements OnInit {
   isChecked(menuId: number): boolean {
     console.log(menuId)
     const menuArray = this.addmenuForm.get('menu') as FormArray;
+    console.log(menuArray.value)
     return menuArray.value.some(menuItem => menuItem.menuId === menuId);
   }
   crearFormulario() {

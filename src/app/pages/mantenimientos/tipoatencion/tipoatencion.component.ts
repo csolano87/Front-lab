@@ -11,10 +11,10 @@ import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import Swal from 'sweetalert2';
 import { Modelo } from 'src/app/interfaces/cargaModelo.interface';
 import { Data } from 'src/app/models/cargaGnerica.module';
+import { Unidad } from 'src/app/interfaces/cargaUnidad.interface';
 declare var $: any;
 @Component({
   selector: 'app-tipoatencion',
-
   templateUrl: './tipoatencion.component.html',
   styleUrl: './tipoatencion.component.css',
 })
@@ -22,10 +22,10 @@ export class TipoatencionComponent implements OnInit {
   cargando = false;
   public page!: number;
   listaatencion: Tipoatencion[] = [];
-   listacategoria: Modelo[] = [];
+  listacategoria: Modelo[] = [];
   atencionForm!: FormGroup;
   btnVal: string = 'guardar';
-  listadoselecioandoatencion:Data;
+  listadoselecioandoatencion: Data;
   constructor(
     private llenarcomboServices: LlenarCombosService,
     private manteniemintoService: MantenimientosService,
@@ -42,7 +42,7 @@ export class TipoatencionComponent implements OnInit {
     );
   }
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(({id})=>this.editarAtencion(id))
+    this.activatedRoute.params.subscribe(({ id }) => this.editarAtencion(id))
     this.getAtencion();
     this.getCategoria();
   }
@@ -65,55 +65,55 @@ export class TipoatencionComponent implements OnInit {
 
     console.log(this.atencionForm.value);
 
-if (this.listadoselecioandoatencion) {
-   const data = {
-          id: this.listadoselecioandoatencion.id,
-          ...this.atencionForm.value
-        }
-        console.log(data)
-  this.manteniemintoService.getUpdateAtencion(data)
-  .subscribe((resp:any)=>{
-    const {msg}=resp;
-      Swal.fire('Actualizado', `${msg}`, 'success');
-              $('#modal-info').modal('hide');
-              this.getAtencion();
-              this.atencionForm.disable();
-              this.atencionForm.reset();
-              this.btnVal = 'Editar';
-              this.listadoselecioandoatencion = undefined;
-              this.router.navigateByUrl('/dashboard/atencion/Nuevo');
-  })
-} else {
-  this.manteniemintoService.postAtencion(this.atencionForm.value).subscribe(
-    (resp: any) => {
-      this.getAtencion();
-      const { msg } = resp;
-      Swal.fire({
-        icon: 'success',
+    if (this.listadoselecioandoatencion) {
+      const data = {
+        id: this.listadoselecioandoatencion.id,
+        ...this.atencionForm.value
+      }
+      console.log(data)
+      this.manteniemintoService.getUpdateAtencion(data)
+        .subscribe((resp: any) => {
+          const { msg } = resp;
+          Swal.fire('Actualizado', `${msg}`, 'success');
+          $('#modal-info').modal('hide');
+          this.getAtencion();
+          this.atencionForm.disable();
+          this.atencionForm.reset();
+          this.btnVal = 'Editar';
+          this.listadoselecioandoatencion = undefined;
+          this.router.navigateByUrl('/dashboard/atencion/Nuevo');
+        })
+    } else {
+      this.manteniemintoService.postAtencion(this.atencionForm.value).subscribe(
+        (resp: any) => {
+          this.getAtencion();
+          const { msg } = resp;
+          Swal.fire({
+            icon: 'success',
 
-        titleText: `${msg}`,
-        timer: 1500,
-      });
-      $('#modal-info').modal('hide');
-      this.atencionForm.reset({
-        nombre: '',
-      });
-      //this.router.navigateByUrl('/dashboard/usuarios');
-    },
-    (err) => {
-      console.log('error', err.error.msg);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al autenticar',
-        text: err.error.msg,
-      });
-    },
-  );
-}
+            titleText: `${msg}`,
+            timer: 1500,
+          });
+          $('#modal-info').modal('hide');
+          this.atencionForm.reset({
+            nombre: '',
+          });
+          //this.router.navigateByUrl('/dashboard/usuarios');
+        },
+        (err) => {
+          console.log('error', err.error.msg);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al autenticar',
+            text: err.error.msg,
+          });
+        },
+      );
+    }
 
-   
-   
-   
+
+
+
   }
   getAtencion() {
     this.manteniemintoService.getAtencion().subscribe((tipoatencion) => {
@@ -128,7 +128,7 @@ if (this.listadoselecioandoatencion) {
     this.llenarcomboServices.getModelo().subscribe((modelo) => {
       console.log(modelo);
 
-      this.listacategoria = modelo.sort((a,b)=>a.NOMBRE.localeCompare( b.NOMBRE));
+      this.listacategoria = modelo.sort((a, b) => a.NOMBRE.localeCompare(b.NOMBRE));
     });
   }
   borrarAtencion(atencion: Tipoatencion) {
@@ -160,7 +160,7 @@ if (this.listadoselecioandoatencion) {
   }
 
   editarAtencion(id: string) {
-    if(id === 'Nuevo') {
+    if (id === 'Nuevo') {
       this.atencionForm.reset();
       this.atencionForm.enable();
       this.btnVal = 'Guardar';

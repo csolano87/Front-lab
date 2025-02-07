@@ -54,6 +54,7 @@
     "ngx-pagination": "^6.0.3",
     "ngx-scanner-qrcode": "^1.6.9",
     "ngx-socket-io": "^4.6.1",
+    "ngx-toastr": "^19.0.0",
     "normalize.css": "^8.0.1",
     "papaparse": "^5.4.1",
     "pdfmake": "^0.2.10",

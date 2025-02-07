@@ -30,7 +30,7 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { GroupByPipe } from './pipes/group-by.pipe';
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -58,6 +58,7 @@ import { GroupByPipe } from './pipes/group-by.pipe';
     RouterModule,
 
     QRCodeModule,
+   
     // SocketIoModule.forRoot(config)
   ],
 exports:[],

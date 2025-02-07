@@ -19,7 +19,7 @@ import { OrdenID } from 'src/app/interfaces/carga-IngresordenId.interface';
 
 })
 export class OrdenesComponent implements OnInit {
-  
+
   public totalAceptas: number = 0;
   ordenBorrarActivo = 1;
   public totalIngresada: number = 0;
@@ -30,8 +30,8 @@ export class OrdenesComponent implements OnInit {
   public page!: number;
   listaOrdenId: OrdenID;
   public listaordenesingresdas: Ordene[] = [];
- public  search: number=null ;
- searchNombre:string='';
+  public search: number = null;
+  searchNombre: string = '';
   public cargando: boolean = true;
   constructor(
     private ordenServicie: OrdenesService,
@@ -232,18 +232,33 @@ export class OrdenesComponent implements OnInit {
       }
     });
   }
-/* searchNombre */
+  /* searchNombre */
 
-onSearchNombre(searchNombre: any) {
-  console.log(searchNombre)
- this.searchNombre = searchNombre;
+  onSearchNombre(searchNombre: any) {
+    console.log(searchNombre)
+    this.searchNombre = searchNombre;
 
- console.log(this.search)
-}
+    console.log(this.search)
+  }
   onSearchOrden(search: any) {
     console.log(search)
-   this.search =search;
+    this.search = search;
 
-   console.log(this.search)
+    console.log(this.search)
+  }
+
+
+  descargarPdf(id: number) {
+    console.log(id);
+    this.manteniminetoService.generarPdf(id).subscribe((blob: Blob) => {
+      console.log(blob)
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'reporte.pdf';
+      link.click();
+      window.URL.revokeObjectURL(url);
+    })
+
   }
 }

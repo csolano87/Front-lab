@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { Listaperfile } from 'src/app/interfaces/cargarGrupoExam.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListaperfilesID } from 'src/app/interfaces/cargar-listaperfilesId.interface';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-gruposexamenes',
 
@@ -20,6 +21,7 @@ export class GruposexamenesComponent implements OnInit {
     private manteniemintoService: MantenimientosService,
     private activateroute: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService
   ) {
     this.crearFormulario();
   }
@@ -178,6 +180,14 @@ export class GruposexamenesComponent implements OnInit {
           nombre: [prueba.NOMBRE, Validators.required],
         }),
       );
+      console.log(`Prueba agregada con éxito, ${prueba.NOMBRE}`, {
+        timeOut: 3000, positionClass: 'toast-top-center'
+      })
+     
+      console.log(this.toastr.success('Prueba agregada con éxito'))
+    }else{
+      this.toastr.success('Prueba ya a sido agegada');
+      console.log(`Prueba ya a sido agegada, ${prueba.NOMBRE}`)
     }
   }
 

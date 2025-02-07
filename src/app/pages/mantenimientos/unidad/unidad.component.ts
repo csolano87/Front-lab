@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Tipoatencion } from 'src/app/interfaces/cargarTipoatencion.interface';
 import { Tipogrupo } from 'src/app/interfaces/cargarTipogrupo.interface';
 import { Tiposervicio } from 'src/app/interfaces/cargarTiposervicio.interface';
 import { Tipofisiologico } from 'src/app/interfaces/cargatipofisiologico.interface';
-import { Unidad } from 'src/app/interfaces/cargaUnidad.interface';
+import { Unidad } from 'src/app/models/cargaUnidad.module';
+
 
 import { Marca } from 'src/app/models/marca.module';
 import { LlenarCombosService } from 'src/app/services/llenar-combos.service';
@@ -14,7 +15,7 @@ import Swal from 'sweetalert2';
 declare var $: any;
 @Component({
   selector: 'app-unidad',
- 
+
   templateUrl: './unidad.component.html',
   styleUrl: './unidad.component.css'
 })
@@ -23,11 +24,14 @@ export class UnidadComponent implements OnInit {
   public page!: number;
   listaunidad: Unidad[] = [];
   unidadForm!: FormGroup;
+  btnVal: string = 'Guardar';
+    listadoselecioandounidad:Unidad ;
   constructor(
     private llenarcomboServices: LlenarCombosService,
     private manteniemintoService: MantenimientosService,
     private router: Router,
     private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) {
     this.crearFormulario();
   }
@@ -39,6 +43,7 @@ export class UnidadComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getUnidad();
+    this.activatedRoute.params.subscribe(({ id }) => this.crearUnidad(id))
   }
 
   crearFormulario() {
@@ -47,45 +52,63 @@ export class UnidadComponent implements OnInit {
     });
   }
 
-  crearAtencion() {
+  Unidad() {
     if (this.unidadForm.invalid) {
       this.unidadForm.markAllAsTouched();
       return;
     }
-    console.log(this.unidadForm.value);
+if (this.listadoselecioandounidad) {
+  const data = {
+    id: this.listadoselecioandounidad.id,
+    ...this.unidadForm.value
+  }
+  console.log(data)
+this.manteniemintoService.UpdateUnidad(data)
+.subscribe((resp:any)=>{
+  const {msg}=resp;
+  Swal.fire('Actualizado', `${msg}`, 'success');
+            $('#modal-info').modal('hide');
+            this.getUnidad();
+            this.unidadForm.disable();
+            this.unidadForm.reset();
+            this.btnVal = 'Editar';
+            this.listadoselecioandounidad = undefined;
+            this.router.navigateByUrl('/dashboard/unidad/Nuevo');
+})
 
+
+} else {
+  
+this.manteniemintoService.getpostUnidad(this.unidadForm.value).subscribe(
+  (resp: any) => {
+    this.getUnidad();
+    const { msg } = resp;
     Swal.fire({
-      allowOutsideClick: false,
+      icon: 'success',
 
-      icon: 'info',
-      text: 'Espere por favor ...',
+      titleText: `${msg}`,
+      timer: 1500,
     });
-    Swal.showLoading(null);
-    this.manteniemintoService.getpostUnidad(this.unidadForm.value).subscribe(
-      (resp: any) => {
-        this.getUnidad();
-        const { msg } = resp;
-        Swal.fire({
-          icon: 'success',
+    $('#modal-info').modal('hide');
+    this.unidadForm.reset({
+      DESCRIPCION: '',
+    });
+    //this.router.navigateByUrl('/dashboard/usuarios');
+  },
+  (err) => {
+    console.log('error', err.error.msg);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al autenticar',
+      text: err.error.msg,
+    });
+  },
+);
+}
 
-          titleText: `${msg}`,
-          timer: 1500,
-        });
-        $('#modal-info').modal('hide');
-        this.unidadForm.reset({
-          DESCRIPCION: '',
-        });
-        //this.router.navigateByUrl('/dashboard/usuarios');
-      },
-      (err) => {
-        console.log('error', err.error.msg);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al autenticar',
-          text: err.error.msg,
-        });
-      },
-    );
+
+
+
   }
   getUnidad() {
     this.manteniemintoService.getUnidad().subscribe((unidad) => {
@@ -94,12 +117,12 @@ export class UnidadComponent implements OnInit {
       this.listaunidad = unidad;
     });
   }
-  /* borrarAtencion(atencion: Tipofisiologico) {
-    console.log(atencion.id);
+  borrarUnidad(unidad: Unidad) {
+    console.log(unidad);
 
     Swal.fire({
-      title: 'Eliminar Grupo?',
-      text: `Esta seguro que desea eliminar la atencion  ${atencion.DESCRIPCION}`,
+      title: 'Eliminar Unidad?',
+      text: `Esta seguro que desea eliminar la unidad  ${unidad.DESCRIPCION}`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -108,21 +131,49 @@ export class UnidadComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.manteniemintoService
-          .deleteAtencion(atencion)
+          .deleteAtencion(unidad)
           .subscribe((resp: any) => {
             const { msg } = resp;
             this.getUnidad();
             Swal.fire({
-              title: 'Grupo eliminada!',
+              title: 'Unidad eliminada!',
               text: `${msg}`,
               icon: 'success',
             });
           });
       }
     });
-  } */
+  }
 
-  editarServicio(servicio: any) {
-    console.log(servicio);
+  crearUnidad(id: string) {
+    console.log(id);
+    if (id == 'Nuevo') {
+      this.unidadForm.reset();
+      this.unidadForm.enable();
+      this.btnVal = 'Guardar'
+      return;
+    }
+    this.btnVal = 'Editar';
+    this.unidadForm.disable();
+    this.manteniemintoService.geByIDtUnidad(id).subscribe((unidadId) => {
+      !unidadId ?
+        this.router.navigateByUrl("/dashboard/unidad/Nuevo")
+        : console.log(unidadId)
+
+      const { DESCRIPCION } = unidadId
+      this.unidadForm.setValue({
+        DESCRIPCION
+      });
+this.listadoselecioandounidad=unidadId;
+    })
+
+  }
+
+  cambioEstado() {
+    if (this.btnVal != 'Editar') {
+      this.Unidad();
+    }
+    this.unidadForm.enable();
+    this.btnVal = 'Guardar'
   }
 }

@@ -48,9 +48,9 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card-header">
-            <button   class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-pruebas">
+            <a  [ngClass]="{'disabled-icon': btnVal =='Editar'}"  class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-pruebas">
               <i class="bx bxs-plus-circle"></i> Agregar Pruebas
-            </button>
+            </a>
            <!--  <h6 class="card-title">Pruebas Asignadas</h6> -->
           </div>
           <table class="table table-hover">
@@ -65,7 +65,7 @@
               <tr *ngFor="let d of pruebas.controls; let i = index" [formGroupName]="i">
                 <td>{{ d.value.codigo }}</td>
                 <td>{{ d.value.nombre }}</td>
-                <td  [ngClass]="{'disabled-icon': btnVal !='Editar'}">
+                <td  [ngClass]="{'disabled-icon': btnVal =='Editar'}">
                   <span   class="span_delete" >
                     <i (click)="borrarPrueba(i)" class="bx bxs-trash">Eliminar</i> 
                   </span>
@@ -124,9 +124,9 @@
                 <thead>
                   <tr>
 
-                    <th>Codigo</th>
-                    <th>Nombre</th>
-                    <th></th>
+                    <th style="width: 15%;">Codigo</th>
+                    <th style="width: 45%;">Nombre</th>
+                    <th style="width: 20%;"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -138,7 +138,7 @@
                     " class="table-row-not-expanded">
                     <!--    <td><i class="bx bx-test-tube bx-sm"></i></td> -->
                     <td>{{ pru.CODIGO }}</td>
-                    <td>{{ pru.NOMBRE }}</td>
+                    <td>{{ pru.NOMBRE |slice:0:35}}</td>
                     <td>
                       <button class="btn btn-success btn-sm" (click)="pruebaseleccionado(pru)">
                         <i class="bx bx-check"></i> Seleccionar

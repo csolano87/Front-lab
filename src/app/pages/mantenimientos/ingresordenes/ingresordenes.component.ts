@@ -783,15 +783,16 @@ export class IngresordenesComponent implements OnInit {
     const isChecked = event.target as HTMLInputElement;
     let isCheckedValue = item;
     const pruebasArray = this.ingresoForm.get('pruebas') as FormArray;
-    console.log(pruebasArray.value);
+
     const isPrueba = pruebasArray.value.find(
       (itemarray) => itemarray.ItemID === item,
     );
     console.log(isPrueba);
-    if (isChecked.checked) {
+    if (isChecked.checked == true) {
       this.nomPerfil = item.nombre;
-      console.log(this.nomPerfil.length);
+      console.log(this.nomPerfil);
       item.itempruebas.map((cod) => {
+        console.log(cod);
         this.pruebas.push(
           this.fb.group({
             //  nombre: [item.nombre],
@@ -806,10 +807,37 @@ export class IngresordenesComponent implements OnInit {
           }),
         );
       });
-    } else {
-      const index = pruebasArray.value.findIndex((x) => console.log(x));
 
-      this.pruebas.removeAt(index);
+      console.log(this.pruebas.value)
+    } else {
+
+      const isArray = this.pruebas;
+
+
+      console.log(item);
+      const perfilseleccionado = this.listgrupoperfil.find((x) => x.nombre === item.nombre);
+      console.log(perfilseleccionado)
+
+
+      if (perfilseleccionado) {
+        
+        perfilseleccionado.isChecked = false;
+        for (let index = isArray.value.length - 1; index >= 0; index--) {
+          const prueba = isArray.at(index).value;
+          console.log(prueba);
+
+          const existsInPerfil = perfilseleccionado.itempruebas.some(
+            (item) => item.panelprueba.CODIGO === prueba.codigo,
+          );
+
+          if (existsInPerfil) {
+            isArray.removeAt(index);
+          }
+        }
+
+
+      }
+      //this.pruebas.removeAt(index);
     }
   }
   onchangePruebas(e: Event, item: Listaprueba) {
@@ -883,7 +911,7 @@ export class IngresordenesComponent implements OnInit {
       .getPostMedico(this.medicoForm.value)
       .subscribe((resp: any) => {
         const { msg } = resp;
-        $('#modal-info').modal('hide');
+        $('#modal-doctor').modal('hide');
         Swal.fire({
           icon: 'success',
           text: `${msg}`,
@@ -1010,6 +1038,10 @@ export class IngresordenesComponent implements OnInit {
     return menuArray.value.some(ite =>
       perfiles.some(item => item.panelprueba.CODIGO === ite.codigo))
 
+  }
+
+  buscarIdentificacion(){
+    console.log(this.ingresoForm.value)
   }
 
 }

@@ -32,7 +32,9 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMenuSiber();
-    $('[data-widget="treeview"]').Treeview('init');
+
+    console.log($('[data-widget="treeview"]').Treeview('init'))
+ /*   $('[data-widget="treeview"]').Treeview('init'); */
   }
 
   logout() {

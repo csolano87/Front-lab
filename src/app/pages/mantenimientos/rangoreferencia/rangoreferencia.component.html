@@ -82,7 +82,7 @@
                 {{ item.edadfinal }} {{ item.unidadedad.DESCRIPCION }}
               </td>
               <td>{{ item.unidad.DESCRIPCION }}</td>
-              <td>{{ item.rangos }}</td>
+              <td>{{ item.rangoMin }} - {{ item.rangoMax }}</td>
               <!--    <td></td> -->
               <td><input type="checkbox" [(ngModel)]="item.ESTADO" /></td>
               <td class="actions">
@@ -91,7 +91,8 @@
                   <!--  [routerLink]="['/dashboard', 'rangos', item.id]" -->
                   <i (click)="cargarRangoSeleccionado(item)" [ngClass]="{ 'disabled-icon': item.ESTADO != true }"
                     class="bx bxs-edit" data-toggle="modal" data-target="#modal-info">Editar</i> </span>
-                <span  [ngClass]="{ 'disabled-icon': item.ESTADO != true }" (click)="borrarRango(item)" class="span_delete">
+                <span [ngClass]="{ 'disabled-icon': item.ESTADO != true }" (click)="borrarRango(item)"
+                  class="span_delete">
                   <i class="bx bxs-trash ">Eliminar</i></span>
               </td>
             </tbody>
@@ -133,12 +134,26 @@
                       <small *ngIf="tipofisiologicoId" class="text-danger">Seleccione una opcion</small>
                     </div>
 
-                    <div class="form-group">
-                      <label for="">Rangos</label>
-                      <input type="text" appUppercase class="form-control" formControlName="rangos"
-                        [class.is-invalid]="rangos" placeholder="Ingrese nombre de la prueba ..." />
-                      <small *ngIf="rangos" class="text-danger">Ingrese un valor
-                      </small>
+                    <strong>Rangos</strong>
+                    <hr />
+                    <div class="row">
+
+                      <div class="form-group col-md-6">
+                        <label for="">Rango Min</label>
+                        <input type="text"  class="form-control" formControlName="rangoMin"
+                          [class.is-invalid]="rangoMin" placeholder="" />
+                        <small *ngIf="rangoMin" class="text-danger">Ingrese un valor
+                        </small>
+                      </div>
+
+
+                      <div class="form-group col-md-6">
+                        <label for="">Rango Max</label>
+                        <input type="text"  class="form-control" formControlName="rangoMax"
+                          [class.is-invalid]="rangoMax" placeholder="" />
+                        <small *ngIf="rangoMax" class="text-danger">Ingrese un valor
+                        </small>
+                      </div>
                     </div>
 
                     <div class="form-group">
@@ -210,7 +225,7 @@
                 <div class="card-footer">
                   <a (click)="cambioestado()" class="btn btn-primary">{{btnVal}}</a>
                 </div>
-               <!--      <pre>{{ rangosform.value | json }}</pre>  -->
+                <!--      <pre>{{ rangosform.value | json }}</pre>  -->
               </form>
             </div>
           </div>

@@ -22,7 +22,7 @@
               <div class="form-group col-md-4">
                 <label for="" class="form-ItemName">Identificación paciente *</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" formControlName="numero" [class.is-invalid]="pacienteId"
+                  <input (click)="buscarIdentificacion()" type="text" class="form-control" formControlName="numero" [class.is-invalid]="pacienteId"
                     placeholder="Ingrese su cédula" />
 
                   <input type="hidden" formControlName="pacienteId" />
@@ -48,7 +48,7 @@
                   <i class="fa fa-birthday-cake ">
                     {{ pacientes?.fechanac | utcDate: "yyyy-MM-dd" }}
                   </i>
-               
+
                   <i class="bx bx-male-sign "> {{ pacientes?.sexo }}</i>
                 </div>
               </div>
@@ -133,8 +133,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="card-header">
-                  <button  *ngIf="btnVal !='Editar'"  type="button" class="btn btn-default btn-sm btnd" data-toggle="modal"
-                    data-target="#modal-default">
+                  <button *ngIf="btnVal !='Editar'" type="button" class="btn btn-default btn-sm btnd"
+                    data-toggle="modal" data-target="#modal-default">
                     <i class="bx bxs-plus-circle bx-xs"></i>
                   </button>
                   <h6 class="card-title">EXAMENES</h6>
@@ -252,10 +252,10 @@
         </div>
       </div>
     </div>
-<!--     <hr />
+        <hr />
        <pre>
       {{ ingresoForm.value | json }}
-    </pre> -->
+    </pre>
   </form>
 </div>
 
@@ -618,67 +618,67 @@
     <div class="modal-content">
       <div class="card-info">
         <div class="card-header">
-        <h4 class="card-title">+ Cargar pruebas</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <h4 class="card-title">+ Cargar pruebas</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-       
+
       </div>
 
       <div class="modal-">
-    <div class="container-fluid">
-      <div class="row py-4 animated fadeIn fast">
-        <div class="col-9">
-          <div class="container-fluid">
+        <div class="container-fluid">
+          <div class="row py-4 animated fadeIn fast">
+            <div class="col-9">
+              <div class="container-fluid">
 
-            <div class="card-body grid-container">
-  
-  
-              <div class="card" *ngFor="let q of listaquimica">
-                <div class="card-header">
-                  <h6 class="card-title">{{ q.CATEGORIA }}</h6>
-                </div>
-  
-                <div class="card-items">
-                  <div *ngFor="let d of q.CODIGO">
-                    <input type="checkbox" name="checkbox" (change)="onchangePruebas($event, d)"
-                      [checked]="isChecked(d.CODIGO)" />
-                    <label>
-                      {{ d.NOMBRE }}
-                    </label>
+                <div class="card-body grid-container">
+
+
+                  <div class="card" *ngFor="let q of listaquimica">
+                    <div class="card-header">
+                      <h6 class="card-title">{{ q.CATEGORIA }}</h6>
+                    </div>
+
+                    <div class="card-items">
+                      <div *ngFor="let d of q.CODIGO">
+                        <input type="checkbox" name="checkbox" (change)="onchangePruebas($event, d)"
+                          [checked]="isChecked(d.CODIGO)" />
+                        <label>
+                          {{ d.NOMBRE }}
+                        </label>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col-3">
+            <div class="col-3">
 
-       <div class="container-fluid">
-        <div class="card-body  grid-container">
-        <div class="card">
-          <div class="card-header">
-            <h6 class="card-title">Pruebas de Perfiles</h6>
-          </div>
-          <div class="card-items">
-            <div  *ngFor="let perfil of listgrupoperfil">
-              
-              <input type="checkbox" name="checkbox" 
-                (change)="onchangePerfil($event, perfil)"  [checked]="isChecked2(perfil)" />
-              <label>
-                {{ perfil.nombre }}
-              </label>
+              <div class="container-fluid">
+                <div class="card-body  grid-container">
+                  <div class="card">
+                    <div class="card-header">
+                      <h6 class="card-title">Pruebas de Perfiles</h6>
+                    </div>
+                    <div class="card-items">
+                      <div *ngFor="let perfil of listgrupoperfil">
+
+                        <input type="checkbox" name="checkbox" (change)="onchangePerfil($event, perfil)"
+                          [checked]="isChecked2(perfil)" />
+                        <label>
+                          {{ perfil.nombre }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
             </div>
           </div>
         </div>
-        </div>
-       </div>
-
-
-      </div>
-      </div>
-    </div>
       </div>
       <!--     <div class="tab">
                       <input type="radio" name="css-tabs" id="tab-2" class="tab-switch" />
@@ -742,9 +742,9 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th  style="width: 5%;"></th>
-                      <th  style="width: 10%;">Identificacion</th>
-                      <th  style="width: 25%;">Nombres</th>
+                      <th style="width: 5%;"></th>
+                      <th style="width: 10%;">Identificacion</th>
+                      <th style="width: 25%;">Nombres</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -756,7 +756,7 @@
                         {{ paciente.apellidos }}
                         {{ paciente.nombres }}
                       </td>
-                    <!--   <td>
+                      <!--   <td>
                         <i (click)="pacienteseleccionado(paciente)" class="bx bx-check-square bx-sm"></i>
                       </td> -->
                     </tr>
@@ -788,22 +788,22 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th>Identificacion</th>
-                      <th>Nombres</th>
+                      <th style="width: 8%;" ></th>
+                      <th style="width: 27%;">Identificacion</th>
+                      <th >Nombres</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let paciente of listadoctores">
-                      <td><i class="bx bx-user bx-sm"></i></td>
+                      <td><i (click)="doctorseleccionado(paciente)" class="bx bx-user bx-sm"></i></td>
                       <td>{{ paciente.numero }}</td>
                       <td>
                         {{ paciente.apellidos }}
                         {{ paciente.nombres }}
                       </td>
-                      <td>
-                        <i (click)="doctorseleccionado(paciente)" class="bx bx-check-square bx-sm"></i>
-                      </td>
+                      <!-- <td>
+                        <i  class="bx bx-check-square bx-sm"></i>
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -925,9 +925,10 @@
                 <table class="table">
                   <thead>
                     <tr>
+                      <th>Diagnostico</th>
                       <th></th>
 
-                      <th>Diagnostico</th>
+                     
                     </tr>
                   </thead>
                   <tbody>

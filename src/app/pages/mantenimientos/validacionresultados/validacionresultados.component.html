@@ -67,14 +67,17 @@
                           <p> {{ modelo.categoria }}</p>
   
                           <div [ngClass]="{
-                          'generado': modelo.item.estado === 1,
-                          'reportado': modelo.item.estado === 2,
-                          'validado': modelo.item.estado === 3 
+                         'generado': modelo.item.estado === 1,
+                        'reportado': modelo.item.estado === 2,
+                        'validado': modelo.item.estado ===3
                          
                         }" [ngSwitch]="modelo.item.estado">
-                            <p *ngSwitchCase="1">Generado</p>
-                            <p *ngSwitchCase="2">Reportado</p>
-                            <p *ngSwitchDefault>Validado</p>
+                             <p *ngSwitchCase="1">Generado</p>
+                        <p *ngSwitchCase="true">Generado</p>
+
+                        <p *ngSwitchCase="2">Procesado</p>
+                        <p *ngSwitchCase="3">Validado</p>
+                        <p *ngSwitchDefault>Eliminada</p>
                           </div>
                         </div>
   
@@ -83,7 +86,11 @@
                           <!--     <span class="badge badge-info">{{ modelo.item.total }}</span> -->
                           <span>
                             <i (click)="guardarResultados(modelo.item.pruebas)" class="bx bxs-save"></i>
-                            <i (click)="ValidarParcial()" class="bx bxs-check-circle"></i>
+                            <i
+                         *ngIf="validarPruebasValor(modelo.item.pruebas)"
+                            
+                            (click)="ValidarParcial(modelo)"
+                              class="bx bxs-check-circle"></i>
                           </span>
                         </div>
                       </div>
@@ -110,7 +117,7 @@
                           />
                         </div>
                       </td>
-                       <td>{{ prueba.panelprueba?.rango?.rangos }}</td>
+                       <td>{{ prueba.panelprueba?.rango?.rangoMin }} - {{ prueba.panelprueba?.rango?.rangoMax }}</td>
                       <td>
                         {{ prueba.panelprueba?.rango?.unidad.DESCRIPCION }}
                       </td> 

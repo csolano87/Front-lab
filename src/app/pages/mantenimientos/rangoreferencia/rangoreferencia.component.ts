@@ -45,6 +45,18 @@ export class RangoreferenciaComponent implements OnInit {
       this.rangosform?.get('rangos')!.touched
     );
   }
+  get rangoMin() {
+    return (
+      this.rangosform?.get('rangoMin')!.invalid &&
+      this.rangosform?.get('rangoMin')!.touched
+    );
+  }
+  get rangoMax() {
+    return (
+      this.rangosform?.get('rangoMax')!.invalid &&
+      this.rangosform?.get('rangoMax')!.touched
+    );
+  }
 
   get unidadId() {
     return (
@@ -114,7 +126,9 @@ export class RangoreferenciaComponent implements OnInit {
     this.rangosform = this.fb.group({
       //  panelpruebasId:['', [Validators.required]],
       tipofisiologicoId: ['', [Validators.required]],
-      rangos: ['', [Validators.required]],
+      rangos: [''],
+      rangoMin: ['', [Validators.required]],
+      rangoMax: ['', [Validators.required]],
       unidadId: ['', [Validators.required]],
       edadinicial: ['', [Validators.required]],
       edadfinal: ['', [Validators.required]],
@@ -222,7 +236,8 @@ console.log(this.rangoSeleccionadoId)
     this.btnVal = 'Editar';
 
     const { rangos,
-
+rangoMin,
+rangoMax,
       edadinicial,
 
       edadfinal,
@@ -233,6 +248,8 @@ console.log(this.rangoSeleccionadoId)
       unidadedadId } = item;
     this.rangosform.setValue({
       rangos,
+      rangoMin,
+rangoMax,
       edadinicial,
 
       edadfinal,
