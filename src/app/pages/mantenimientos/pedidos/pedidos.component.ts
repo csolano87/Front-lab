@@ -28,6 +28,7 @@ import { event } from 'jquery';
 import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import { Usuario } from 'src/app/models/usuario.module';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { validate } from 'json-schema';
 declare var $: any;
 @Component({
   selector: 'app-pedidos',
@@ -118,6 +119,7 @@ export class PedidosComponent implements OnInit{
       REFERENCIA: ['', [Validators.required]],
       UNIDAD: [''],
       CANTIDAD: ['', [Validators.required]],
+      total:['',[Validators.required]],
       ENTREGADO: [''],
       LOTE: [''],
     });
@@ -202,6 +204,7 @@ export class PedidosComponent implements OnInit{
               REFERENCIA: item['product'].REFERENCIA,
               UNIDAD: item['product'].CATEGORIA,
               CANTIDAD: item['CANTIDAD'],
+              total:item['total_stock'],
               ENTREGADO: null,
               LOTE: null,
             }),

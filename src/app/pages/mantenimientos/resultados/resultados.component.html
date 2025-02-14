@@ -7,25 +7,24 @@
 
             <div class="form-group col-md-12">
               <label for="" class="form-ItemName">Numero orden</label>
-              <input type="text"  class="form-control" placeholder="Numero de orden" #txtorden />
+              <input type="text" class="form-control" placeholder="Numero de orden" #txtorden />
 
             </div>
 
             <div class="form-group col-md-12">
               <label for="" class="form-ItemName">Identificacion del paciente</label>
-              <input type="text"  class="form-control" placeholder="Identificacion del paciente"
-                #txtidentificacion />
+              <input type="text" class="form-control" placeholder="Identificacion del paciente" #txtidentificacion />
 
             </div>
 
             <div class="form-group col-md-6">
               <label for="" class="form-ItemName">Fecha Inicio</label>
-              <input type="date"  class="form-control" #txtfechaIn />
+              <input type="date" class="form-control" #txtfechaIn />
             </div>
 
             <div class="form-group col-md-6">
               <label for="" class="form-ItemName">Fecha final</label>
-              <input type="date"  class="form-control" #txtfechaOut />
+              <input type="date" class="form-control" #txtfechaOut />
             </div>
 
             <div class="form-group col-md-12">
@@ -161,12 +160,12 @@
           <table *ngIf="agrupadas.length >0 " class="table">
             <thead>
               <tr>
-                <th style="width: 30%;">Nombre</th>
+                <th style="width: 35%;">Nombre</th>
                 <th style="width: 20%;">Resultado</th>
 
-                <th style="width: 20%;">Referencia</th>
-                <th style="width: 20%;">Unidad</th>
-                <th style="width: 20%;">Alarma</th>
+                <th style="width: 18%;">Referencia</th>
+                <th style="width: 15%;">Unidad</th>
+                <th style="width: 15%;">Alarma</th>
 
               </tr>
             </thead>
@@ -182,11 +181,11 @@
 
                         <div [ngClass]="{
                         'generado': modelo.item.estado === 1,
-                        'reportado': modelo.item.estado === 2,
-                        'validado': modelo.item.estado ===3
+                        'reportado': modelo.item.estado === 4,
+                        'validado': modelo.item.estado ===5
                       }" [ngSwitch]="modelo.item.estado">
                           <p *ngSwitchCase="1">Generado</p>
-                          <p *ngSwitchCase="2">Reportado</p>
+                          <p *ngSwitchCase="4">Reportado</p>
                           <p *ngSwitchDefault>Validado</p>
                         </div>
                       </div>
@@ -196,10 +195,7 @@
                         <!--     <span class="badge badge-info">{{ modelo.item.total }}</span> -->
                         <span>
                           <i (click)="guardarResultados(modelo.item.pruebas)" class="bx bxs-save"></i>
-                          <i
-                       *ngIf="validarPruebasValor(modelo.item.pruebas)"
-                          
-                          (click)="ValidarParcial(modelo)"
+                          <i *ngIf="validarPruebasValor(modelo.item.pruebas)" (click)="ValidarParcial(modelo)"
                             class="bx bxs-check-circle"></i>
                         </span>
                       </div>
@@ -216,7 +212,7 @@
                     <td>
                       <div>
 
-                        <input  class="form-control" #resultado (keyup)="resultados($event, prueba)" type="text"
+                        <input class="form-control" #resultado (keyup)="resultados($event, prueba)" type="text"[disabled]="!prueba.resultado"
                           [value]="prueba.resultado" autofocus />
                       </div>
                     </td>
@@ -225,7 +221,7 @@
                       {{ prueba.panelprueba?.rango?.unidad?.DESCRIPCION }}
                     </td>
 
-                    <td>
+                    <td >
                       <ng-container [ngSwitch]="validarResultadoConRango(prueba)">
                         <i *ngSwitchCase="'alto'" class="bx bxs-up-arrow bx-sm text-danger"></i>
                         <i *ngSwitchCase="'bajo'" class="bx bxs-down-arrow bx-sm text-warning"></i>

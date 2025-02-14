@@ -143,7 +143,12 @@ export class GruposexamenesComponent implements OnInit {
         );
         this.grupoform.disable();
         this.btnVal='Editar'
-      });
+      }   ,
+      (err)=>{
+        Swal.fire({ icon: 'error',title: 'Error al guardar',text:err.error.msg})
+       
+      }
+    );
 
     } else {
       this.manteniemintoService
@@ -156,7 +161,14 @@ export class GruposexamenesComponent implements OnInit {
           });
           this.router.navigateByUrl('dashboard/panelperfiles');
 
-        });
+        },
+
+        
+              (err)=>{
+                Swal.fire({ icon: 'error',title: 'Error al guardar',text:err.error.msg})
+               
+              }
+      );
     }
   }
 

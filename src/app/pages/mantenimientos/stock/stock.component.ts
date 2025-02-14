@@ -266,20 +266,33 @@ export class StockComponent implements OnInit {
       console.log(this.jsonData);
       if (this.jsonData && this.jsonData.length > 0) {
         this.jsonData.forEach((item) => {
-          if (item['Operaciones/Lote/Fecha caducidad']) {
+          const regex = /^\d{4}\/\d{2}\/\d{2}$/; 
+          const fechaValidada = regex.test(item['Operaciones/Lote/Fecha caducidad'])
+          console.log(fechaValidada)
+
+          if (fechaValidada ==false) {
             const fechaExcel = item['Operaciones/Lote/Fecha caducidad'];
             const fecha = this.convertirAFecha(fechaExcel);
             item['Operaciones/Lote/Fecha caducidad'] = fecha;
           }
+         
+         /*  if (item['Operaciones/Lote/Fecha caducidad']) {
+            const fechaExcel = item['Operaciones/Lote/Fecha caducidad'];
+            const fecha = this.convertirAFecha(fechaExcel);
+            item['Operaciones/Lote/Fecha caducidad'] = fecha;
+          } */
         });
       }
       console.log(this.jsonData);
       this.productos.clear();
       this.stockForm.get('guia').setValue(this.jsonData[0]['Documento origen']);
       this.jsonData.forEach((item) => {
+        const referencia = item['Operaciones/Producto/Referencia Interna'];
+        const referenciaLimpia = referencia?.startsWith('0') ? referencia.substring(1) : referencia;
+        console.log(referenciaLimpia)
         this.productos.push(
           this.fb.group({
-            referencia: item['Operaciones/Producto/Referencia Interna'],
+            referencia: referenciaLimpia,
             descripcion: item['Operaciones/Producto/Nombre'],
             lote: item['Operaciones/Lote/Lote/Nº de serie'],
             caducidad: item['Operaciones/Lote/Fecha caducidad'],

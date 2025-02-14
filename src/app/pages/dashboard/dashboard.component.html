@@ -7,7 +7,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      
+
 
         <div class="row">
           <div class="col-md-12">
@@ -16,19 +16,11 @@
                 <h5 class="card-title">Monthly Recap Report</h5>
 
                 <div class="card-tools">
-                  <button
-                    type="button"
-                    class="btn btn-tool"
-                    data-card-widget="collapse"
-                  >
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
                   <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-tool dropdown-toggle"
-                      data-toggle="dropdown"
-                    >
+                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                       <i class="fas fa-wrench"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
@@ -39,11 +31,7 @@
                       <a href="#" class="dropdown-item">Separated link</a>
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    class="btn btn-tool"
-                    data-card-widget="remove"
-                  >
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
                     <i class="fas fa-times"></i>
                   </button>
                 </div>
@@ -51,54 +39,38 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-5">
-                    <!--  <p class="text-center">
-                      <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                    </p> -->
+                  <div class="col-md-12">
 
-                    <!-- Sales Chart Canvas -->
-                    <ngx-charts-advanced-pie-chart
-                      [view]="viewPastel"
-                      [scheme]="colorScheme"
-                      [results]="conteoPorEstadoArray"
-                      [gradient]="gradient"
-                      (select)="onSelect($event)"
-                      (activate)="onActivate($event)"
-                      (deactivate)="onDeactivate($event)"
-                    >
-                    </ngx-charts-advanced-pie-chart>
+                    <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" navigation="true"
+                      space-between="30" centered-slides="true" autoplay-delay="3500"
+                      autoplay-disable-on-interaction="false">
+                      <swiper-slide> <ngx-charts-line-chart [view]="viewLinear" [scheme]="colorScheme" [legend]="legend"
+                          [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis"
+                          [yAxis]="yAxis" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [timeline]="timeline"
+                          [results]="multi" (select)="onSelect($event)" (activate)="onActivate($event)"
+                          (deactivate)="onDeactivate($event)">
+                        </ngx-charts-line-chart></swiper-slide>
+                      <swiper-slide>
 
-                    <!-- /.chart-responsive -->
+                        <ngx-charts-advanced-pie-chart [view]="viewPastel" [scheme]="colorScheme"
+                          [results]="conteoPorEstadoArray" [gradient]="gradient" (select)="onSelect($event)"
+                          (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                        </ngx-charts-advanced-pie-chart>
+
+                      </swiper-slide>
+                      <!--  <swiper-slide>Slide 3</swiper-slide>
+                      <swiper-slide>Slide 4</swiper-slide>
+                      <swiper-slide>Slide 5</swiper-slide>
+                      <swiper-slide>Slide 6</swiper-slide>
+                      <swiper-slide>Slide 7</swiper-slide>
+                      <swiper-slide>Slide 8</swiper-slide>
+                      <swiper-slide>Slide 9</swiper-slide> -->
+                    </swiper-container>
                   </div>
-                  <!-- /.col -->
-                  <div class="col-md-7">
-                    <p class="text-center">
-                      <strong>Total de pruebas</strong>
-                    </p>
-                    <ngx-charts-bar-vertical
-                      [view]="viewBar"
-                      [scheme]="colorScheme"
-                      [results]="graficaBarras"
-                      [gradient]="gradient"
-                      [xAxis]="showXAxis"
-                      [yAxis]="showYAxis"
-                      [legend]="showLegend"
-                      [showXAxisLabel]="showXAxisLabel"
-                      [showYAxisLabel]="showYAxisLabel"
-                      [xAxisLabel]="xAxisLabel"
-                      [yAxisLabel]="yAxisLabel"
-                      (select)="onSelect($event)"
-                    >
-                    </ngx-charts-bar-vertical>
-
-                    <!-- /.progress-group -->
-                  </div>
-                  <!-- /.col -->
+                  <!-- /.row -->
                 </div>
-                <!-- /.row -->
-              </div>
-              <!-- ./card-body -->
-              <!--   <div class="card-footer">
+                <!-- ./card-body -->
+                <!--   <div class="card-footer">
                 <div class="row">
                   <div class="col-sm-3 col-6">
                     <div class="description-block border-right">
@@ -146,76 +118,58 @@
                 </div>
              
               </div> -->
-              <!-- /.card-footer -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <div class="col-md-8">
-            <!-- MAP & BOX PANE -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">US-Visitors Report</h3>
-
-                <div class="card-tools">
-                  <button
-                    type="button"
-                    class="btn btn-tool"
-                    data-card-widget="collapse"
-                  >
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-tool"
-                    data-card-widget="remove"
-                  >
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
+                <!-- /.card-footer -->
               </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <div class="d-md-flex">
-                  <div class="p-1 flex-fill" style="overflow: hidden">
-                    <ngx-charts-line-chart
-                      [view]="viewLinear"
-                      [scheme]="colorScheme"
-                      [legend]="legend"
-                      [showXAxisLabel]="showXAxisLabel"
-                      [showYAxisLabel]="showYAxisLabel"
-                      [xAxis]="xAxis"
-                      [yAxis]="yAxis"
-                      [xAxisLabel]="xAxisLabel"
-                      [yAxisLabel]="yAxisLabel"
-                      [timeline]="timeline"
-                      [results]="multi"
-                      (select)="onSelect($event)"
-                      (activate)="onActivate($event)"
-                      (deactivate)="onDeactivate($event)"
-                    >
-                    </ngx-charts-line-chart>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+
+          <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+            <div class="col-md-8">
+              <!-- MAP & BOX PANE -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">US-Visitors Report</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
                   </div>
                 </div>
-                <!-- /.d-md-flex -->
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                  <div class="d-md-flex">
+                    <div class="p-1 flex-fill" style="overflow: hidden">
+                      <ngx-charts-line-chart [view]="viewLinear" [scheme]="colorScheme" [legend]="legend"
+                        [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis"
+                        [yAxis]="yAxis" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [timeline]="timeline"
+                        [results]="multi" (select)="onSelect($event)" (activate)="onActivate($event)"
+                        (deactivate)="onDeactivate($event)">
+                      </ngx-charts-line-chart>
+                    </div>
+                  </div>
+                  <!-- /.d-md-flex -->
+                </div>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
             <div class="row">
-            
+
               <!-- /.col -->
             </div>
             <!-- /.row -->
 
             <!-- TABLE: LATEST ORDERS -->
-            <div class="card">
+            <!--  <div class="card">
               <div class="card-header border-transparent">
                 <h3 class="card-title">Latest Orders</h3>
 
@@ -236,7 +190,7 @@
                   </button>
                 </div>
               </div>
-              <!-- /.card-header -->
+             
               <div class="card-body p-0">
                 <div class="table-responsive">
                   <table class="table m-0">
@@ -378,9 +332,9 @@
                     </tbody>
                   </table>
                 </div>
-                <!-- /.table-responsive -->
+             
               </div>
-              <!-- /.card-body -->
+            
               <div class="card-footer clearfix">
                 <a
                   href="javascript:void(0)"
@@ -393,11 +347,37 @@
                   >View All Orders</a
                 >
               </div>
-              <!-- /.card-footer -->
-            </div>
-            <!-- /.card -->
+           
+            </div> -->
+
+            <swiper-container class="mySwiper" pagination="true" pagination-dynamic-bullets="true">
+              <swiper-slide>
+
+
+                <ngx-charts-line-chart [view]="viewLinear" [scheme]="colorScheme" [legend]="legend"
+                  [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis"
+                  [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="multi"
+                  (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                </ngx-charts-line-chart>
+              </swiper-slide>
+              <swiper-slide>
+
+                <ngx-charts-advanced-pie-chart [view]="viewPastel" [scheme]="colorScheme"
+                  [results]="conteoPorEstadoArray" [gradient]="gradient" (select)="onSelect($event)"
+                  (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                </ngx-charts-advanced-pie-chart>
+              </swiper-slide>
+              <!--  <swiper-slide>Slide 3</swiper-slide>
+              <swiper-slide>Slide 4</swiper-slide>
+              <swiper-slide>Slide 5</swiper-slide>
+              <swiper-slide>Slide 6</swiper-slide>
+              <swiper-slide>Slide 7</swiper-slide>
+              <swiper-slide>Slide 8</swiper-slide>
+              <swiper-slide>Slide 9</swiper-slide> -->
+            </swiper-container>
+
           </div>
-          <!-- /.col -->
+
 
           <div class="col-md-4">
             <!-- Info Boxes Style 2 -->
@@ -418,10 +398,10 @@
 
             <!-- /.info-box -->
 
-           
+
 
             <!-- PRODUCT LIST -->
-          
+
             <!-- /.card -->
           </div>
           <!-- /.col -->

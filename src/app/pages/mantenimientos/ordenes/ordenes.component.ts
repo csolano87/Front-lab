@@ -198,7 +198,7 @@ export class OrdenesComponent implements OnInit {
   }
   deleteOrden(orden: Ordene) {
     console.log(orden);
-    if (orden.estado === 1) {
+    if (orden.estado != 1) {
       return;
     }
     console.log(orden.id);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Equipo, Resultado } from 'src/app/interfaces/carga-equipos.interfaces';
 import {
@@ -14,28 +14,33 @@ import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { multi } from './data';
 import { dA } from '@fullcalendar/core/internal-common';
 import { map, Observable } from 'rxjs';
+import { Swiper } from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
+/* import 'swiper/css'; */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  viewPastel: [number, number] = [700, 250];
-  viewBar: [number, number] = [700, 300];
-  viewLinear: [number, number] = [800, 400];
+  viewPastel: [number, number] = [1000, 450]; /* 700,250 */
+  viewBar: [number, number] = [800, 500];
+  viewLinear: [number, number] = [1000, 450];
   gradient: boolean = true;
-  showLegend: boolean = false;
+  showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
   colorScheme: Color = {
-    domain: ['#f5f81e', '#5AA454', '#E44D25'],
+    /* 5AA454  --f5f81e */
+    domain: ['#f5f81e', '#E44D25', '#7bbfef', '#5AA454'],
     group: ScaleType.Ordinal,
     selectable: true,
     name: 'Customer Usage',
   };
 
-  legend: boolean = false;
+  legend: boolean = true;
+  legendTitle: string = 'Tipo Atencion'
   // showLabels: boolean = true;
   showXAxis = true;
   showYAxis = true;
@@ -59,6 +64,7 @@ export class DashboardComponent implements OnInit {
   public listaresultados: Equipo[] = [];
   conteoPorEstadoArray: any[] = [];
   listaday: any[] = [];
+  
   constructor(
     private ordenServicie: OrdenesService,
     private muestraService: MuestrasService,
@@ -66,7 +72,7 @@ export class DashboardComponent implements OnInit {
     private mantenimientoService: MantenimientosService,
     public llenarcomboservice: LlenarCombosService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getGraficaPastel();
@@ -77,6 +83,37 @@ export class DashboardComponent implements OnInit {
       console.log('Resultado procesado:', result);
       this.listaday = result;
       console.log('Resultado procesado:', this.listaday);
+    });
+
+
+    const swiper = new Swiper('.swiper', {
+    
+      // Optional parameters
+      /*  direction: 'vertical', */
+      loop: true,
+      breakpoints: {
+        640: {
+          slidesPerView: 1
+        }
+      },
+      // If we need pagination
+      pagination: {
+        
+        el: '.swiper-pagination',
+
+      },
+
+      // Navigation arrows
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      
+      autoplay: { delay: 2500,disableOnInteraction:false },
+      // And if we need scrollbar
+      scrollbar: {
+        el: '.swiper-scrollbar',
+      },
     });
   }
 
@@ -110,22 +147,22 @@ export class DashboardComponent implements OnInit {
       console.log(ordenes);
       const conteo: { [key: number]: number } = {};
       ordenes.forEach((equipo) => {
-      //  if (equipo.estado) {
-          const estadoNombre = equipo.estado;
-          console.log(estadoNombre);
-          if (conteo[estadoNombre]) {
-            conteo[estadoNombre]++;
-          } else {
-            conteo[estadoNombre] = 1;
-          }
-       // }
+        //  if (equipo.estado) {
+        const estadoNombre = equipo.estado;
+        console.log(estadoNombre);
+        if (conteo[estadoNombre]) {
+          conteo[estadoNombre]++;
+        } else {
+          conteo[estadoNombre] = 1;
+        }
+        // }
       });
 
       console.log(conteo);
 
       const nombresEstado = {
-        true: 'Creada',
-        false:'Eliminada',
+        1: 'Creada',
+        0: 'Eliminada',
         '2': 'Proceso',
         '3': 'Validado',
       };

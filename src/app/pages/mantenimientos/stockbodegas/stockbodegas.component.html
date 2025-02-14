@@ -85,7 +85,7 @@
                         <td>{{ stock.bodega.NOMBRE }}</td>
                         <td>{{ stock.CANTIDAD }}</td>
                         <td>
-                          <input
+                          <input class="form-control"
                             type="number"
                             #numero
                             (keyup.enter)="DescargoStock(stock, numero.value)"

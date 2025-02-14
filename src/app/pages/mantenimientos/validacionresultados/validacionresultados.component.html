@@ -1,11 +1,7 @@
 <div *ngIf="listaordenesid" class="container-fluid rounded shadow">
   <div class="row py-4 animated fadeIn fast">
     <div class="col-md-12">
-      <form
-        id="validarfrom"
-        [formGroup]="validarfrom"
-        (ngSubmit)="GuadarResultados()"
-      >
+      <form id="validarfrom" [formGroup]="validarfrom" (ngSubmit)="GuadarResultados()">
         <div class="demographic-card">
           <h2 class="demographic-title">Datos Demográficos</h2>
           <div class="demographic-content">
@@ -49,12 +45,12 @@
               <thead>
                 <tr>
                   <th style="width: 30%;">Nombre</th>
-                  <th style="width: 20%;">Resultado</th>
+                  <th style="width: 10%;">Resultado</th>
 
                   <th style="width: 20%;">Referencia</th>
                   <th style="width: 20%;">Unidad</th>
                   <th style="width: 20%;">Alarma</th>
-                <!--   <th>Comentario</th> -->
+                  <!--   <th>Comentario</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -65,31 +61,24 @@
                         <!-- Contenido alineado a la izquierda -->
                         <div class="left-content">
                           <p> {{ modelo.categoria }}</p>
-  
-                          <div [ngClass]="{
-                         'generado': modelo.item.estado === 1,
-                        'reportado': modelo.item.estado === 2,
-                        'validado': modelo.item.estado ===3
-                         
-                        }" [ngSwitch]="modelo.item.estado">
-                             <p *ngSwitchCase="1">Generado</p>
-                        <p *ngSwitchCase="true">Generado</p>
 
-                        <p *ngSwitchCase="2">Procesado</p>
-                        <p *ngSwitchCase="3">Validado</p>
-                        <p *ngSwitchDefault>Eliminada</p>
+                          <div [ngClass]="{
+                        'generado': modelo.item.estado === 1,
+                        'reportado': modelo.item.estado === 4,
+                        'validado': modelo.item.estado ===5
+                      }" [ngSwitch]="modelo.item.estado">
+                            <p *ngSwitchCase="1">Generado</p>
+                            <p *ngSwitchCase="4">Reportado</p>
+                            <p *ngSwitchDefault>Validado</p>
                           </div>
                         </div>
-  
+
                         <!-- Contenido alineado a la derecha -->
                         <div class="right-content">
                           <!--     <span class="badge badge-info">{{ modelo.item.total }}</span> -->
                           <span>
                             <i (click)="guardarResultados(modelo.item.pruebas)" class="bx bxs-save"></i>
-                            <i
-                         *ngIf="validarPruebasValor(modelo.item.pruebas)"
-                            
-                            (click)="ValidarParcial(modelo)"
+                            <i *ngIf="validarPruebasValor(modelo.item.pruebas)" (click)="ValidarParcial(modelo)"
                               class="bx bxs-check-circle"></i>
                           </span>
                         </div>
@@ -97,49 +86,29 @@
                     </th>
                   </tr>
 
-                  <ng-container
-                    *ngFor="let prueba of modelo.item.pruebas; let i = index"
-                  >
+                  <ng-container *ngFor="let prueba of modelo.item.pruebas; let i = index">
                     <tr>
-                    
+
                       <td>{{ prueba.panelprueba.NOMBRE }}</td>
 
                       <td>
                         <div>
-                          <input
-                            class="form-control"
-                            #resultado
-                          
-                            type="text"
-                            [value]="prueba.resultado"
-                            (keyup)="resultados($event, prueba)"
-                            autofocus
-                          />
+                          <input class="form-control" #resultado type="text" [value]="prueba.resultado"
+                            (keyup)="resultados($event, prueba)" [disabled]="listaordenesid.estado ===3" autofocus />
                         </div>
                       </td>
-                       <td>{{ prueba.panelprueba?.rango?.rangoMin }} - {{ prueba.panelprueba?.rango?.rangoMax }}</td>
+                      <td>{{ prueba.panelprueba?.rango?.rangoMin }} - {{ prueba.panelprueba?.rango?.rangoMax }}</td>
                       <td>
                         {{ prueba.panelprueba?.rango?.unidad.DESCRIPCION }}
-                      </td> 
+                      </td>
 
                       <td>
-                          <ng-container
-                      [ngSwitch]="validarResultadoConRango(prueba)"
-                    >
-                      <i
-                        *ngSwitchCase="'alto'"
-                        class="bx bxs-up-arrow bx-sm text-danger"
-                      ></i>
-                      <i
-                        *ngSwitchCase="'bajo'"
-                        class="bx bxs-down-arrow bx-sm text-warning"
-                      ></i>
-                      <i
-                        *ngSwitchCase="'normal'"
-                        class="bx bx-check bx-sm text-success"
-                      ></i>
-                    </ng-container> 
-                      </td> 
+                        <ng-container [ngSwitch]="validarResultadoConRango(prueba)">
+                          <i *ngSwitchCase="'alto'" class="bx bxs-up-arrow bx-sm text-danger"></i>
+                          <i *ngSwitchCase="'bajo'" class="bx bxs-down-arrow bx-sm text-warning"></i>
+                          <i *ngSwitchCase="'normal'" class="bx bx-check bx-sm text-success"></i>
+                        </ng-container>
+                      </td>
                       <!-- <td>
                         <i class="bx bx-comment-detail bx-sm"
                         (click)="comments(i)"></i>
@@ -152,7 +121,7 @@
           </div>
         </div>
         <div>
-          <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+          <!--   <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
 
           <button
             class="btn btn-secondary btn-sm"
@@ -161,7 +130,7 @@
             (click)="validarOrden(listaordenesid)"
           >
             Validar
-          </button>
+          </button> -->
         </div>
       </form>
       <!-- <hr />

@@ -72,6 +72,7 @@
 
                   <th>Marca</th>
                   <th>Cantidad ordenada</th>
+                  <th>Total Stock</th>
                   <th *ngIf="usuario.rol != 'OPERADOR'">Entregado</th>
                   <th *ngIf="usuario.rol != 'OPERADOR'">Lote</th>
                 </tr>
@@ -100,7 +101,7 @@
                       formControlName="CANTIDAD"
                     />
                   </td>
-
+<td>{{d.get('total')?.value}}</td>
                   <td *ngIf="usuario.rol != 'OPERADOR'">{{ d.get('ENTREGADO')?.value  }}</td>
                   <td *ngIf="usuario.rol != 'OPERADOR'">
                     {{ d.get('LOTE')?.value  }}

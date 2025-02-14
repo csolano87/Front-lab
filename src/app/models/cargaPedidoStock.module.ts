@@ -8,16 +8,25 @@ export class PedidoStock {
     ) {}
   }
   
-  export interface Item {
-    /* ID_PRODUCTO: number;
-    product: Product; 
-    CANTIDAD: number;
-    ENTREGADO:Number; */
+/*   export interface Item {
+    
     ID_PRODUCTO: number;
     CANTIDAD:    number;
     product:     Product;
     bodega:      Bodega;
-  }
+  } */
+
+
+
+
+      export interface Item {
+        ID_PRODUCTO?: number;
+        CANTIDAD?:    number;
+        product?:     Product;
+        bodega?:      Bodega;
+        referencia?:  string;
+        total_stock?: number;
+    }
   export interface Bodega {
     id:          number;
     NOMBRE:      string;

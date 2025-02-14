@@ -19,11 +19,9 @@ export interface stocksPedido {
     clientes?: Clientes;
     marcas?: Marcas;
   }
-  
+
   export interface Item {
-   /*  ID_PRODUCTO?: number;
-    CANTIDAD?: number;
-    product:     Product; */
+  
     ID_PRODUCTO: number;
     CANTIDAD:    number;
     ENTREGADO:    number;

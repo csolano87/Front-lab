@@ -54,6 +54,8 @@ export class ResultadosComponent implements OnInit {
 
     this.getAtencion();
     this.getCategoria();
+
+ 
   }
 
   crearFormulario() {
@@ -276,10 +278,12 @@ export class ResultadosComponent implements OnInit {
     return matchedRango || null;
   }
   resultados(event: KeyboardEvent, modelo: any) {
+
+   
     const arrPruebas = this.validarfrom.get('pruebas') as FormArray;
     const input = event.target as HTMLInputElement;
     const valor = input.value;
-
+    
     /*  console.log(modelo.panelprueba.id); */
     const valorResultado = valor;
 /*  (valorResultado) ? null : */
@@ -305,6 +309,7 @@ export class ResultadosComponent implements OnInit {
 
   validarResultadoConRango(prueba: any) {
 
+     
     const date1 = new Date();
     date1.setDate(date1.getDate() - 1);
     const date2 = new Date(this.listaordenesid.paciente.fechanac);
@@ -345,25 +350,11 @@ export class ResultadosComponent implements OnInit {
       }
     }
     return '';
-    /*  const rango = this.Validarrangos(prueba);
-    console.log(rango);
-    const resultado = prueba.resultado;
-    if (rango && resultado !== null) {
-      const [rangoMin, rangoMax] = rango.rangos.split('-').map(Number);
-
-      if (resultado < rangoMin) {
-        return 'bajo';
-      } else if (resultado > rangoMax) {
-        return 'alto';
-      } else {
-        return 'normal';
-      }
-    }
-    return ''; */
+   
   }
   guardarResultados(prueba: any) {
-    /*     console.log(prueba); */
-    /*   const id = [...new Set(prueba.map(item => item.ordenId))]; */
+    
+    
     console.log(prueba)
     const [id] = prueba
       .map(item => item.ordenId)
@@ -416,7 +407,7 @@ export class ResultadosComponent implements OnInit {
     const itemId = modelo.item.pruebas.map(item => item.panelpruebaId)
     const data = {
       id: modelo.item.id,
-      estado: 3,
+      estado: 5,
       panelpruebaId: itemId
     }
     console.log(data);
@@ -457,7 +448,7 @@ export class ResultadosComponent implements OnInit {
   validarPruebasValor(pruebas: any) {
     console.log(pruebas);
     return pruebas.some(item =>
-      item.resultado != null && item.estado != 3)
+      item.resultado != null && item.estado != 5)
       ? true
       : null
 

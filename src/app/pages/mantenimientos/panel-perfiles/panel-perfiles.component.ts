@@ -155,7 +155,12 @@ export class PanelPerfilesComponent {
           this.btnVal = 'Editar';
 
           this.router.navigateByUrl('/dashboard/panelPruebas');
-        });
+        },
+      (err)=>{
+        Swal.fire({ icon: 'error',title: 'Error al guardar',text:err.error.msg})
+       
+
+      });
     } else {
       Swal.fire({
         allowOutsideClick: false,
@@ -187,7 +192,7 @@ export class PanelPerfilesComponent {
             console.log('error', err.error.msg);
             Swal.fire({
               icon: 'error',
-              title: 'Error al autenticar',
+              title: 'Error al guardar',
               text: err.error.msg,
             });
           },

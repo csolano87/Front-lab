@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -10,8 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from '../auth/auth.module';
 import { OrdenComponent } from './mantenimientos/orden/orden.component';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OrdenesComponent } from 
-'./mantenimientos/ordenes/ordenes.component';
+import { OrdenesComponent } from
+  './mantenimientos/ordenes/ordenes.component';
 import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
 import { PerfilComponent } from './mantenimientos/perfil/perfil.component';
 import { MuestrasComponent } from './mantenimientos/muestras/muestras.component';
@@ -118,7 +118,7 @@ import { FiltrordenesPipe } from '../pipes/filtrordenes.pipe';
 import { FiltroBodegaPipe } from '../pipes/filtro-bodega.pipe';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { register } from 'swiper/element/bundle';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
@@ -221,7 +221,7 @@ const config: SocketIoConfig = { url: environment.url, options: {} };
     PedidosComponent,
     SolicitudesPedidosComponent,
 
-    
+
     //FilterPipe,
   ],
 
@@ -250,10 +250,13 @@ const config: SocketIoConfig = { url: environment.url, options: {} };
     FullCalendarModule,
     UtcDatePipe,
     NgxChartsModule,
-     BrowserAnimationsModule,
-     ToastrModule.forRoot(),
-    
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+
     SocketIoModule.forRoot(config),
   ],
+  schemas:[
+    CUSTOM_ELEMENTS_SCHEMA,
+  ]
 })
-export class PagesModule {}
+export class PagesModule { }

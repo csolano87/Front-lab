@@ -40,6 +40,8 @@ export class ValidacionresultadosComponent implements OnInit {
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe(({ id }) => this.orden(id));
+  
+
   }
 
   crearFormulario() {
@@ -63,6 +65,7 @@ export class ValidacionresultadosComponent implements OnInit {
     if (id === 'Nuevo') {
       return;
     }
+  
 
     this.manteniminetoService.getIngresoOrdenId(id).subscribe((ordenId) => {
       console.log(ordenId);
@@ -74,11 +77,13 @@ export class ValidacionresultadosComponent implements OnInit {
       const agrupada = this.listaordenesid.prueba.reduce((acc, prueba) => {
         const modeloNombre = prueba.panelprueba.modelo.NOMBRE;
         const estadoNombre = prueba.estado;
+        const id = ordenId.id;
         console.log(modeloNombre);
 
         if (!acc[modeloNombre]) {
           acc[modeloNombre] = {
             total: 0,
+            id: id,
             estado: estadoNombre,
             pruebas: [],
           };
@@ -118,6 +123,7 @@ export class ValidacionresultadosComponent implements OnInit {
               resultado: item.resultado,
             }),
           );
+
         }),
       });
     });
@@ -166,6 +172,22 @@ export class ValidacionresultadosComponent implements OnInit {
     return `${years} año${years == 1 ? '' : 's'}, ${months} mes${months == 1 ? '' : 'es'}, ${days} día${days == 1 ? '' : 's'}`;
   }
 
+  inputDisable() {
+    
+  /*   this.pruebas.controls.forEach(control => {
+      const resultado = control.get('resultado').value; // Obtiene el valor del input
+      console.log(resultado); // Muestra los valores en consola para depuración
+  
+      if (resultado == null || resultado === '') {
+        control.get('resultado').enable(); // Deshabilita el input si está vacío
+      } else {
+        control.get('resultado').disable(); // Habilita el input si tiene valor
+      }
+    }); */
+  }
+  
+
+
   Validarrangos(item) {
     const date1 = new Date(); // Fecha actual
     date1.setDate(date1.getDate() - 1); // Restar un día a la fecha actual
@@ -199,10 +221,10 @@ export class ValidacionresultadosComponent implements OnInit {
     let matchedRango = null;
     if (item.panelprueba.rango) {
       console.log(item.panelprueba.rango);
-    
+
       for (let rango of item.panelprueba.rango) {
         console.log(`Verificando rango:`, rango);
-    
+
         // Si encontramos un tipo fisiológico específico que coincide con sexoTransformado, lo tomamos y terminamos
         if (rango.tipofisiologico.DESCRIPCION !== 'GENERICO' && rango.tipofisiologico.DESCRIPCION === sexoTransformado) {
           if (validarEdad(rango)) {
@@ -210,14 +232,14 @@ export class ValidacionresultadosComponent implements OnInit {
             break; // ¡Nos detenemos aquí porque encontramos el específico!
           }
         }
-    
+
         // Si no hemos encontrado un específico, consideramos GENERAL como opción secundaria
         if (!matchedRango && rango.tipofisiologico.DESCRIPCION === 'GENERICO' && validarEdad(rango)) {
           matchedRango = rango;
         }
       }
     }
-    
+
     /**
      * Función para validar la edad según la unidad del rango.
      */
@@ -232,7 +254,7 @@ export class ValidacionresultadosComponent implements OnInit {
         return years >= rango.edadinicial && years <= rango.edadfinal;
       }
       return false;
-    
+
     }
     console.log(matchedRango);
     return matchedRango || null; // Retorna el rango coincidente o null si no se encuentra ninguno
@@ -241,23 +263,25 @@ export class ValidacionresultadosComponent implements OnInit {
     this.pruebas.push(this.addPruebas());
   }
   GuadarResultados() {
-    console.log(this.validarfrom.value);
+    /*  console.log(this.validarfrom.value);
+ 
+     this.ingresoService
+       .getValidacionOrden(this.validarfrom.value.id, this.validarfrom.value)
+       .subscribe((resp: any) => {
+         console.log(resp);
+         const { msg } = resp;
+         Swal.fire({
+           position: 'top-end',
+           icon: 'success',
+           title: `${msg}`,
+           showConfirmButton: false,
+           timer: 1500,
+         });
+ 
+         this.orden(this.validarfrom.value.id);
+       }); */
 
-    this.ingresoService
-      .getValidacionOrden(this.validarfrom.value.id, this.validarfrom.value)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        const { msg } = resp;
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: `${msg}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
 
-        this.orden(this.validarfrom.value.id);
-      });
   }
   resultados(event: KeyboardEvent, modelo: any) {
     const arrPruebas = this.validarfrom.get('pruebas') as FormArray;
@@ -287,6 +311,14 @@ export class ValidacionresultadosComponent implements OnInit {
     //this.pruebas.patchValue({ resultado: resultadoFinal });
   }
   validarResultadoConRango(prueba: any) {
+    if (!prueba.resultado && prueba.resultado !== 0) {
+      return ''; // No mostrar iconos si el resultado está vacío
+    }
+
+    const controles = this.pruebas.value;
+    console.log(this.pruebas.value.resultado)
+
+
     console.log(prueba);
     const date1 = new Date(); // Fecha actual
     date1.setDate(date1.getDate() - 1); // Restar un día a la fecha actual
@@ -351,7 +383,7 @@ export class ValidacionresultadosComponent implements OnInit {
 
     const data = {
       id: listaordenesid.id,
-      estado: 3,
+      estado: 5,
     };
     this.ingresoService.getValidarIngresoOrden(data).subscribe((resp: any) => {
       const { msg } = resp;
@@ -366,15 +398,53 @@ export class ValidacionresultadosComponent implements OnInit {
     });
   }
 
-  guardarResultados(data: any) {
+  guardarResultados(prueba: any) {
+    /*     console.log(prueba); */
+    /*   const id = [...new Set(prueba.map(item => item.ordenId))]; */
+    console.log(prueba)
+    const [id] = prueba
+      .map(item => item.ordenId)
+      .filter((valor, indice, self) => self.indexOf(valor) === indice);
+    console.log(id)
+    /*    console.log(this.pruebas.value) */
+    const data = this.pruebas.value.filter(
+      (item) => prueba.some(da => da.panelpruebaId === item.ordenId)
+
+    )
     console.log(data)
+    this.ingresoService
+      .getValidacionOrden(id, data)
+      .subscribe((resp: any) => {
+        /*  console.log(resp); */
+        const { msg } = resp;
+
+        this.orden(this.listaordenesid.id.toString());
+        console.log(this.pruebas.value)
+        const inputResultado = this.pruebas.controls.forEach(control => control.value.resultado)
+        if (inputResultado !== null) {
+          this.pruebas.controls.forEach(control => control.get('resultado').disable())
+        }
+
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `${msg}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        /*    this.orden(this.validarfrom.value.id); */
+      });
+
+
   }
   ValidarParcial(modelo: any) {
     console.log(modelo.item.pruebas)
     const itemId = modelo.item.pruebas.map(item => item.panelpruebaId)
     const data = {
       id: modelo.item.id,
-      estado: 3,
+      estado: 5,
       panelpruebaId: itemId
     }
     console.log(data);
@@ -384,7 +454,7 @@ export class ValidacionresultadosComponent implements OnInit {
       /*   this.getOrdenId(this.listaordenesid) */
       console.log(msg);
 
-
+      this.orden(this.listaordenesid.id.toString());
       /*  this.buscarOrden(this.filtroOrden,
          this.filtroIdentificacion,
          this.filtroModeloId,
