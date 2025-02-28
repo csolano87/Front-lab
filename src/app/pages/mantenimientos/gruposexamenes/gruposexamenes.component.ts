@@ -192,14 +192,12 @@ export class GruposexamenesComponent implements OnInit {
           nombre: [prueba.NOMBRE, Validators.required],
         }),
       );
-      console.log(`Prueba agregada con éxito, ${prueba.NOMBRE}`, {
-        timeOut: 3000, positionClass: 'toast-top-center'
-      })
+      this.toastr.success('Prueba  agregada');
      
       console.log(this.toastr.success('Prueba agregada con éxito'))
     }else{
-      this.toastr.success('Prueba ya a sido agegada');
-      console.log(`Prueba ya a sido agegada, ${prueba.NOMBRE}`)
+      this.toastr.error('Prueba ya a sido agregada');
+    
     }
   }
 

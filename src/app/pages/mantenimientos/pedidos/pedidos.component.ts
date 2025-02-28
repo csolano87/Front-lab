@@ -29,13 +29,14 @@ import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import { Usuario } from 'src/app/models/usuario.module';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { validate } from 'json-schema';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.component.html',
   styleUrl: './pedidos.component.css',
 })
-export class PedidosComponent implements OnInit{
+export class PedidosComponent implements OnInit {
   @ViewChild('inputRef') inputRef: ElementRef;
   selectedProductIndex: number | null = null;
   pedidosForm!: FormGroup;
@@ -67,6 +68,7 @@ export class PedidosComponent implements OnInit{
     private manteniemintoService: MantenimientosService,
     private router: Router,
     private usuarioservice: UsuarioService,
+    private toastr: ToastrService,
   ) {
     (this.usuario = usuarioservice.usuario), this.crearFormulario();
   }
@@ -85,7 +87,7 @@ export class PedidosComponent implements OnInit{
       this.listabodega = bodega;
     });
   }
-  get PRODUCTOS():FormArray {
+  get PRODUCTOS(): FormArray {
     return this.importForm.get('PRODUCTOS') as FormArray;
     // return ( this.importForm.get('PRODUCTOS') as FormArray).controls;
   }
@@ -119,16 +121,18 @@ export class PedidosComponent implements OnInit{
       REFERENCIA: ['', [Validators.required]],
       UNIDAD: [''],
       CANTIDAD: ['', [Validators.required]],
-      total:['',[Validators.required]],
+      total: [''],
       ENTREGADO: [''],
       LOTE: [''],
     });
   }
   agregarproductos() {
     const add = this.importForm.get('PRODUCTOS') as FormArray;
+    console.log(add.value);
     this.selectedProductIndex = add.length;
-
+    console.log(this.selectedProductIndex);
     add.push(this.crearItemProducto());
+    this.toastr.success('Prueba  agregada');
   }
 
   actualizarInputs(item: any, index: number | null) {
@@ -146,30 +150,46 @@ export class PedidosComponent implements OnInit{
       const filaSeleccionada = (
         this.importForm.get('PRODUCTOS') as FormArray
       ).at(index);
-      filaSeleccionada.patchValue({
-        ID_PRODUCTO: item.id,
-        REFERENCIA: item.REFERENCIA,
-        NOMBRE: item.NOMBRE,
-        UNIDAD: item.UNIDAD,
-        CANTIDAD: null,
-        ENTREGADO: null,
-        LOTE: null,
-      });
+
+      this.PRODUCTOS.push(
+        this.fb.group({
+          ID_PRODUCTO: item.id,
+          REFERENCIA: item.REFERENCIA,
+          NOMBRE: item.NOMBRE,
+          UNIDAD: item.UNIDAD,
+          CANTIDAD: null,
+          ENTREGADO: null,
+          LOTE: null,
+        }),
+      );
+      /*
+        filaSeleccionada.patchValue({
+          ID_PRODUCTO: item.id,
+          REFERENCIA: item.REFERENCIA,
+          NOMBRE: item.NOMBRE,
+          UNIDAD: item.UNIDAD,
+          CANTIDAD: null,
+          ENTREGADO: null,
+          LOTE: null,
+        }); */
       $('#modal-info').modal('hide');
+      this.toastr.success(`Se agrego el item ${item.NOMBRE} `);
 
       this.inputRef.nativeElement.value = '';
     } else {
+      this.toastr.warning(`El item ${item.NOMBRE} ya esta agregado...`);
     }
   }
 
   onreset() {
-   /*  this.importForm.reset();
-    this.PRODUCTOS.clear(); */
+    /*  this.importForm.reset();
+     this.PRODUCTOS.clear(); */
     this.router.navigateByUrl('/dashboard/solicitud-pedidos');
   }
   borrarProducto(i: number) {
     this.PRODUCTOS.removeAt(i);
-   /*  this.router.navigateByUrl('/dashboard/solicitud-pedidos'); */
+    this.toastr.error('Item ya a sido eliminado...');
+    /*  this.router.navigateByUrl('/dashboard/solicitud-pedidos'); */
   }
   crearStock(id: string) {
     console.log(`ID`, id);
@@ -204,7 +224,7 @@ export class PedidosComponent implements OnInit{
               REFERENCIA: item['product'].REFERENCIA,
               UNIDAD: item['product'].CATEGORIA,
               CANTIDAD: item['CANTIDAD'],
-              total:item['total_stock'],
+              total: item['total_stock'],
               ENTREGADO: null,
               LOTE: null,
             }),
@@ -232,7 +252,7 @@ export class PedidosComponent implements OnInit{
       this.inportService.getUpdateStock(data).subscribe((resp: any) => {
         const { msg } = resp;
         Swal.fire('Actualizado', `${msg}`, 'success');
-        this.router.navigateByUrl('/dashboard/solicitud-pedidos');
+        this.router.navigateByUrl('/dashboard/solicitudes-pedidos');
         this.importForm.disable();
         this.btnVal = 'Editar';
       });
@@ -246,7 +266,7 @@ export class PedidosComponent implements OnInit{
             title: `${msg}`,
             showConfirmButton: false,
           });
-          this.router.navigateByUrl('/dashboard/solicitud-pedidos');
+          this.router.navigateByUrl('/dashboard/solicitudes-pedidos');
           this.importForm.reset();
           this.importForm.disable();
         });
@@ -278,90 +298,90 @@ export class PedidosComponent implements OnInit{
   cambioVlidar() {
     if (this.btnValC == '1') {
     }
-    // this.btnValC = '2';
   }
-  Validar() {}
-  comprobarCantidad(pedido: any) {
-    console.log(this.btnValC);
 
-    if (this.btnValC == '1') {
-      if (this.isChecking) return;
-      this.isChecking = true;
-      console.log(pedido);
+  /*   comprobarCantidad(pedido: any) {
+      console.log(this.btnValC);
 
-      const validarEntregado = pedido.itemstock.forEach(
-        (element) => element.ENTREGADO,
-      );
+      if (this.btnValC == '1') {
+        if (this.isChecking) return;
+        this.isChecking = true;
+        console.log(pedido);
 
-      console.log(validarEntregado);
+        const validarEntregado = pedido.itemstock.forEach(
+          (element) => element.ENTREGADO,
+        );
 
-      const itemstockString = JSON.stringify(pedido);
-      const encodedItemstock = encodeURIComponent(itemstockString);
-      this.inportService
-        .obtenerReservaTotal(encodedItemstock)
-        .subscribe((resp) => {
-          this.isChecking = false;
-          this.pedidoStockseleccionado = resp;
-          console.log(resp);
-          this.btnValC = '2';
-          const productosFormArray = this.importForm.get(
-            'PRODUCTOS',
-          ) as FormArray;
+        console.log(validarEntregado);
 
-          this.pedidoStockseleccionado.cantidadReservada.detalle.forEach(
-            (item) => {
-              console.log(item);
-              const indices = productosFormArray.controls
-                .map((control, index) =>
-                  control.value.ID_PRODUCTO === item.productId ? index : -1,
-                )
-                .filter((index) => index !== -1); // Filtrar para obtener solo los índices válidos
-              console.log(indices);
-              if (indices.length > 0) {
-                // Si se encuentra al menos un índice
-                indices.forEach((index2) => {
-                  const control = productosFormArray.at(index2);
+        const itemstockString = JSON.stringify(pedido);
+        const encodedItemstock = encodeURIComponent(itemstockString);
+        this.inportService
+          .obtenerReservaTotal(encodedItemstock)
+          .subscribe((resp) => {
+            this.isChecking = false;
+            this.pedidoStockseleccionado = resp;
+            console.log(resp);
+            this.btnValC = '2';
+            const productosFormArray = this.importForm.get(
+              'PRODUCTOS',
+            ) as FormArray;
 
-                  // Obtener los valores actuales en el control y concatenarlos con los nuevos valores
-                  const cantidadActual = control.get('ENTREGADO').value;
-                  const loteActual = control.get('LOTE').value;
-                  console.log(cantidadActual);
-                  // Concatenar los nuevos valores de cantidad y lote, separados por coma
-                  const nuevaCantidad = cantidadActual
-                    ? `${cantidadActual}, ${item.cantidadReservada}`
-                    : `${item.cantidadReservada || '0'}`;
-                  const nuevoLote = loteActual
-                    ? `${loteActual}, ${item.lote || '0'}`
-                    : `${item.lote || '0'}`;
+            this.pedidoStockseleccionado.cantidadReservada.detalle.forEach(
+              (item) => {
+                console.log(item);
+                const indices = productosFormArray.controls
+                  .map((control, index) =>
+                    control.value.ID_PRODUCTO === item.productId ? index : -1,
+                  )
+                  .filter((index) => index !== -1); // Filtrar para obtener solo los índices válidos
+                console.log(indices);
+                if (indices.length > 0) {
+                  // Si se encuentra al menos un índice
+                  indices.forEach((index2) => {
+                    const control = productosFormArray.at(index2);
 
-                  // Asignar los valores concatenados al control
-                  control.get('ENTREGADO').patchValue(nuevaCantidad);
-                  control.get('LOTE').patchValue(nuevoLote);
-                });
-              } else {
-              }
-            },
-          );
+                    // Obtener los valores actuales en el control y concatenarlos con los nuevos valores
+                    const cantidadActual = control.get('ENTREGADO').value;
+                    const loteActual = control.get('LOTE').value;
+                    console.log(cantidadActual);
+                    // Concatenar los nuevos valores de cantidad y lote, separados por coma
+                    const nuevaCantidad = cantidadActual
+                      ? `${cantidadActual}, ${item.cantidadReservada}`
+                      : `${item.cantidadReservada || '0'}`;
+                    const nuevoLote = loteActual
+                      ? `${loteActual}, ${item.lote || '0'}`
+                      : `${item.lote || '0'}`;
+
+                    // Asignar los valores concatenados al control
+                    control.get('ENTREGADO').patchValue(nuevaCantidad);
+                    control.get('LOTE').patchValue(nuevoLote);
+                  });
+                } else {
+                }
+              },
+            );
+          });
+      } else {
+        console.log(pedido.id);
+        console.log(`t`, this.importForm.value);
+        const data = {
+          id: pedido.id,
+          ...this.importForm.value,
+        };
+        console.log(data)
+       /*  this.inportService.getvalidarcantidad(data).subscribe((resp: any) => {
+          const { msg } = resp;
+          Swal.fire({
+            icon: 'success',
+            title: `${msg}`,
+            showConfirmButton: false,
+          });
+          this.router.navigateByUrl('/dashboard/solicitud-pedidos');
+          //this.router.navigateByUrl('/dashboard/solicitudes-pedidos/');
         });
-    } else {
-      console.log(pedido.id);
-      console.log(`t`, this.importForm.value);
-      const data = {
-        id: pedido.id,
-        ...this.importForm.value,
-      };
-      this.inportService.getvalidarcantidad(data).subscribe((resp: any) => {
-        const { msg } = resp;
-        Swal.fire({
-          icon: 'success',
-          title: `${msg}`,
-          showConfirmButton: false,
-        });
-        this.router.navigateByUrl('/dashboard/solicitud-pedidos');
-        //this.router.navigateByUrl('/dashboard/solicitudes-pedidos/');
-      });
-    }
-  }
+      }
+    } */
   searchReactivos(value: any): any {
     console.log(value);
     this.isLoading = true;

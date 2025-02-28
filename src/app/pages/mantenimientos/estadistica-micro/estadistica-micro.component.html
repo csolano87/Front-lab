@@ -3,13 +3,9 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <form autocomplete="off" class="form-inline">
-            <div class="form-group">
-              <!-- <input type="text" class="form-control" placeholder="Buscar numero de cedula ..." (keyup)="buscar(txtTermino.value.toUpperCase() )" #txtTermino /> -->
-
-              <!--    <input type="text" class="form-control" placeholder="Buscar estado..." #ESTADO /> -->
-
-              <div class="form-group col-md-4 espacio">
+          <form autocomplete="off">
+            <div class="row">
+              <div class="form-group col-md-3">
                 <label for="text" class="form-ItemName">Fecha desde</label>
 
                 <div class="input-group date" id="reservationdate">
@@ -23,7 +19,7 @@
                 <!--  <input type="text" class="form-control" placeholder="Buscar fecha registro..." #FECHAORDEN /> -->
               </div>
 
-              <div class="form-group col-md-4 espacio">
+              <div class="form-group col-md-3">
                 <label for="text " class="form-ItemName">Fecha hasta</label>
 
                 <div class="input-group date" id="reservationdate">
@@ -36,25 +32,24 @@
                 </div>
                 <!--  <input type="text" class="form-control" placeholder="Buscar fecha registro..." #FECHAORDEN /> -->
               </div>
-            </div>
 
-            <div class="esboton">
-              <button
-                type="submit"
-                class="btn btn-primary"
-                (click)="registroMicro(FECHADESDE.value, FECHAHASTA.value)"
-              >
-                CONSULTAR
-              </button>
-            </div>
+              <div class="col-md-4 btn-botones">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-sm"
+                  (click)="registroMicro(FECHADESDE.value, FECHAHASTA.value)"
+                >
+                  Consultar
+                </button>
 
-            <!--   <button class="btn btn-danger btn-sm mt-3" (click)="imprimirLista()">PDF</button>
-                        &nbsp; -->
-
-            <div class="esboton">
-              <button class="btn btn-info" (click)="exportTable()">
-                Exportar a CSV
-              </button>
+                <button
+                  *ngIf="listaordene.length > 0"
+                  class="btn btn-secondary btn-sm"
+                  (click)="exportTable()"
+                >
+                  Exportar a CSV
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -78,9 +73,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <h6 class="title">REGISTRO MICROBIOLOGIA</h6>
-
-        
+          <!--       <h6 class="title">REGISTRO MICROBIOLOGIA</h6> -->
 
           <!--  <div *ngIf="ordenes.length === 0" class="row py-2">
                         <div class="col-12">
@@ -92,28 +85,29 @@
 
           <div class="table-responsive">
             <table #table class="table">
-
               <thead>
                 <tr>
-                  <th style="width: 20%;"  >Fecha Ingreso</th>
-                  <th style="width: 20%;"  >orden No.</th>
-                  <th style="width: 20%;"  >Origen</th>
-                  <th style="width: 20%;"  >Servicio</th>
-                  <th style="width: 20%;"  >Historia clínica</th>
-                  <th style="width: 20%;"  >Paciente</th>
-                  <th style="width: 20%;"  >Edad</th>
-                  <th style="width: 20%;"  >Sexo</th>
-                  <th style="width: 20%;"  >Tipo de muestra</th>
-                  <th style="width: 20%;"  >Microorganismo</th>
-                  <th style="width: 20%;"  >Tecnica</th>
-                  <th style="width: 20%;"  >Valor</th>
-                  <th style="width: 20%;"  >Antibiotico</th>
-                  <th style="width: 20%;"  >Sensible</th>
-                  <th style="width: 20%;"  >Resistente</th>
-                  <th style="width: 20%;"  >Comentario</th>
-                  <th style="width: 20%;"  >Usuario Validador</th>
-                  <th style="width: 20%;"  >Fecha Validacion</th>
-                  <th style="width: 20%;"  >Orden As400</th>
+                  <th style="width: 20%">Fecha Ingreso</th>
+                  <th style="width: 20%">orden No.</th>
+                  <th style="width: 25%">Origen</th>
+                  <th style="width: 25%">Servicio</th>
+                  <th style="width: 20%">Historia clínica</th>
+                  <th style="width: 20%">Cedula</th>
+                  <th style="width: 30%">Paciente</th>
+                  <th style="width: 25%">Codigo</th>
+                  <th style="width: 20%">Edad</th>
+                  <th style="width: 20%">Sexo</th>
+                  <th style="width: 20%">Tipo de muestra</th>
+                  <th style="width: 20%">Micro organismo</th>
+                  <th style="width: 20%">Tecnica</th>
+                  <th style="width: 20%">Valor</th>
+                  <th style="width: 20%">Antibiotico</th>
+                  <th style="width: 20%">Sensible</th>
+                  <th style="width: 20%">Resistente</th>
+                  <th style="width: 22%">Comentario</th>
+                  <th style="width: 20%">Usuario Validador</th>
+                  <th style="width: 20%">Fecha Validacion</th>
+                  <th style="width: 20%">Orden As400</th>
                 </tr>
               </thead>
 
@@ -127,9 +121,12 @@
                   <td>{{ orden.Fechaingreso }}</td>
                   <td>{{ orden.SampleID }}</td>
                   <td>{{ orden.Origen }}</td>
+
                   <td>{{ orden.Servicio }}</td>
                   <td>{{ orden.Historia }}</td>
+                  <td>{{ orden.cedula }}</td>
                   <td>{{ orden.Paciente }}</td>
+                  <td>{{ generarCodigo(orden) }}</td>
                   <td>{{ orden.Age }}</td>
 
                   <td>{{ orden.Sexo }}</td>
@@ -172,10 +169,10 @@
                       </div>
                     </ng-container>
                   </td>
-                  <td>{{ orden.Comentario }}</td>
-                  <td>{{ orden.Validador }}</td>
-                  <td>{{ orden.Fechavalidacion }}</td>
-                  <td>{{ orden.Orden }}</td>
+                  <td>{{ orden?.Comentario }}</td>
+                  <td>{{ orden?.validador }}</td>
+                  <td>{{ orden?.Fechavalidacion }}</td>
+                  <td>{{ orden?.Orden }}</td>
                 </tr>
               </tbody>
             </table>

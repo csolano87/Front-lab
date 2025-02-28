@@ -7,22 +7,38 @@
             <div class="row">
               <div class="form-group col-md-2">
                 <label for="text " class="form-ItemName">Identificador</label>
-                <input  type="text" class="form-control"
-
-                (keyup)="onSearchOrden(txtsearch.value)"  placeholder="Buscar numero de cédula ..." #txtsearch />
+                <input
+                  type="text"
+                  class="form-control"
+                  (keyup)="onSearchOrden(txtsearch.value)"
+                  placeholder="Numero de cédula ..."
+                  #txtsearch
+                />
               </div>
 
               <div class="form-group col-md-4">
-                <label for="text " class="form-ItemName">Apellidos del paciente</label>
-                <input type="text" class="form-control"
-                (keyup)="onSearchNombre(txtsearchNombre.value)"  placeholder="Buscar por apellidos ..." #txtsearchNombre />
+                <label for="text " class="form-ItemName"
+                  >Apellidos del paciente</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  (keyup)="onSearchNombre(txtsearchNombre.value)"
+                  placeholder="Buscar por apellidos ..."
+                  #txtsearchNombre
+                />
               </div>
-<!-- 
-              <div class="col-4 button_buscar">
-                <button type="submit" class="btn btn-primary btn-md rounded shadow">
-                  Buscar
-                </button>
-              </div> -->
+
+              <div class="form-group col-md-4">
+                <label for="text " class="form-ItemName">Filtro</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [value]="fechaActual"
+                  #txtfecha
+                  (change)="getOrdenes(txtfecha.value)"
+                />
+              </div>
             </div>
           </form>
         </div>
@@ -30,7 +46,10 @@
     </div>
   </div>
 
-  <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
+  <div
+    *ngIf="cargando"
+    class="alert alert-info text-center mt-3 animated fadeIn faster"
+  >
     <h4 class="alert-heading">Cargando</h4>
     <p>
       <i class="fas fa-sync-alt fa-spin fa-2x"></i>
@@ -47,7 +66,10 @@
           <div class="col-md-3 button"></div>
 
           <div class="table-responsive">
-            <table *ngIf="!cargando && listaordenesingresdas.length > 0" class="table">
+            <table
+              *ngIf="!cargando && listaordenesingresdas.length > 0"
+              class="table"
+            >
               <thead>
                 <tr>
                   <th class="title_orden">#. Orden</th>
@@ -55,31 +77,39 @@
                   <!--   <th>Cédula</th> -->
                   <th class="title_paciente">Paciente</th>
 
-
-                  <th style="width: 10%;">Estado</th>
-                  <th style="width: 30%;">Acciones</th>
+                  <th style="width: 10%">Estado</th>
+                  <th style="width: 30%">Acciones</th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr *ngFor="
+                <tr
+                  *ngFor="
                     let orden of listaordenesingresdas
-                    | filtrordenes: search:searchNombre
+                      | filtrordenes: search : searchNombre
                       | paginate: { itemsPerPage: 10, currentPage: page }
-                  " class="table-row">
+                  "
+                  class="table-row"
+                >
                   <td class="table_text">
-                    {{ orden.numeroorden }} <br>
-                    <i [ngClass]="{
+                    {{ orden.numeroorden }} <br />
+                    <i
+                      [ngClass]="{
                         'bx bxs-bell-plus animated-icon bx-xs':
                           orden.tipoatencion.nombre === 'EMERGENCIA'
-                      }">
+                      }"
+                    >
                     </i>
 
-                    <i *ngIf="orden.observaciones" class="bx bxs-first-aid"
-                      title="{{ orden?.observaciones }}"></i>
+                    <i
+                      *ngIf="orden.observaciones"
+                      class="bx bxs-first-aid"
+                      title="{{ orden?.observaciones }}"
+                    ></i>
                   </td>
                   <td>
-                    &nbsp; <i class="bx bxs-calendar"> {{ orden.fechaorden }}</i>
+                    &nbsp;
+                    <i class="bx bxs-calendar"> {{ orden.fechaorden }}</i>
                     <br />
 
                     <i class="bx bxs-time"> {{ orden.horaorden }}</i>
@@ -90,15 +120,21 @@
                     {{ orden.paciente.nombres }} {{ orden.paciente.apellidos }}
                   </td>
 
-
-                  <td data-toggle="modal" data-target="#modal-default" (click)="OrdenId(orden)">
-                    <div [ngClass]="{
-                      'generado': orden.estado === 1,
-                      'pendiente': orden.estado === 2,
-                      'reportado': orden.estado ==3 ,
-                      'validado': orden.estado ==4 ,
-                      'eliminada' :orden.estado ===0
-                    }" [ngSwitch]="orden.estado">
+                  <td
+                    data-toggle="modal"
+                    data-target="#modal-default"
+                    (click)="OrdenId(orden)"
+                  >
+                    <div
+                      [ngClass]="{
+                        generado: orden.estado === 1,
+                        pendiente: orden.estado === 2,
+                        reportado: orden.estado == 3,
+                        validado: orden.estado == 4,
+                        eliminada: orden.estado === 0
+                      }"
+                      [ngSwitch]="orden.estado"
+                    >
                       <div *ngSwitchCase="1">Generado</div>
                       <div *ngSwitchCase="true">Generado</div>
 
@@ -109,29 +145,53 @@
                   </td>
                   <td class="actions">
                     <!-- [ngClass]="{ 'disabled-icon': orden.estado !==1    }" -->
-                    <span [ngClass]="{ 'disabled-icon': orden.estado !=1    }" class="span_edit">
-
-                      <i [routerLink]="[
-                            '/dashboard',
-                            'ingresordenes',
-                            orden.id
-                          ]" data-toggle="tooltip" data-original-title="Editar" class="bx bx-edit-alt"
-                        title="Editar">Editar</i>
-
+                    <span
+                      [ngClass]="{ 'disabled-icon': orden.estado != 1 }"
+                      class="span_edit"
+                    >
+                      <i
+                        [routerLink]="['/dashboard', 'ingresordenes', orden.id]"
+                        data-toggle="tooltip"
+                        data-original-title="Editar"
+                        class="bx bx-edit-alt"
+                        title="Editar"
+                        >Editar</i
+                      >
                     </span>
 
                     <!--    <span class="span_btn" (click)="pdf2(orden)">
                         <i class="bx bxs-file-pdf bx-sm text-danger"></i>
                       </span> -->
 
-                    <span [ngClass]="{ 'disabled-icon': orden.estado !=1   }" class="span_delete">
-                      <i (click)="deleteOrden(orden)" class="bx bxs-trash ">Eliminar</i>
+                    <span
+                      [ngClass]="{ 'disabled-icon': orden.estado != 1 }"
+                      class="span_delete"
+                    >
+                      <i (click)="deleteOrden(orden)" class="bx bxs-trash"
+                        >Eliminar</i
+                      >
                     </span>
-                    <span [ngClass]="{ 'disabled-icon': orden.estado == 0   }" class="span_rangos">
-                      <i [routerLink]="['/dashboard', 'validacion', orden.id]" class="bx bx-bar-chart">Validacion</i>
+                    <span
+                      [ngClass]="{ 'disabled-icon': orden.estado == 0 }"
+                      class="span_rangos"
+                    >
+                      <i
+                        [routerLink]="['/dashboard', 'validacion', orden.id]"
+                        class="bx bx-bar-chart"
+                        >Validacion</i
+                      >
                     </span>
-                    <span [ngClass]="{ 'disabled-icon': orden.estado == 0 || orden.estado == 1  }" class="span_rangos">
-                      <i   (click)="descargarPdf(orden.id)" class="bx bx-bar-chart">Pdf</i>
+                    <span
+                      [ngClass]="{
+                        'disabled-icon': orden.estado == 0 || orden.estado == 1
+                      }"
+                      class="span_rangos"
+                    >
+                      <i
+                        (click)="descargarPdf(orden.id)"
+                        class="bx bx-bar-chart"
+                        >Pdf</i
+                      >
                     </span>
                   </td>
                   <!--   <td>
@@ -156,7 +216,7 @@
 
                       <span class="rounded shadow cursor" (click)="pdf2(orden)">
                       <i class="bx bxs-file-pdf bx-sm text-danger"></i>
-                    </span> 
+                    </span>
                     <span>
                       <i
                         [routerLink]="['/dashboard', 'validacion', orden.id]"
@@ -171,15 +231,23 @@
         </div>
       </div>
     </div>
-    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
-      nextLabel="Siguiente"></pagination-controls>
+    <pagination-controls
+      (pageChange)="page = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+    ></pagination-controls>
   </div>
 
   <div class="modal fade show" id="modal-default">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -236,7 +304,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let prueba of listaOrdenId?.prueba">
-                        <ng-container *ngIf="prueba.panelprueba.ORDEN != '2'">
+                        <ng-container *ngIf="prueba.panelprueba.ORDEN !== 2">
                           <td>
                             {{ prueba.panelprueba.NOMBRE }}
                           </td>
@@ -247,7 +315,6 @@
                               <div *ngSwitchCase="2">Pendiente</div>
                               <div *ngSwitchCase="3">rechazado</div>
                               <div *ngSwitchCase="4">Reportado</div>
-                          
 
                               <div *ngSwitchDefault>Validado</div>
                             </div>
@@ -255,12 +322,17 @@
                           <td>
                             {{ prueba.fechaorden }} <br />{{ prueba.horaorden }}
                           </td>
-                          <td>{{prueba?.reportador?.doctor}}</td>
-                          <td>{{prueba?.fechaordenreportada}} <br> {{prueba?.horaordenreportada}}</td>
+                          <td>{{ prueba?.reportador?.doctor }}</td>
+                          <td>
+                            {{ prueba?.fechaordenreportada }} <br />
+                            {{ prueba?.horaordenreportada }}
+                          </td>
 
-
-                          <td>{{prueba?.validador?.doctor}}</td>
-                          <td>{{prueba?.fechaordenvalidada}} <br> {{prueba?.horaordenvalidada}}</td>
+                          <td>{{ prueba?.validador?.doctor }}</td>
+                          <td>
+                            {{ prueba?.fechaordenvalidada }} <br />
+                            {{ prueba?.horaordenvalidada }}
+                          </td>
                         </ng-container>
                       </tr>
                     </tbody>

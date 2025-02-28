@@ -28,7 +28,7 @@
               (keyup)="onSearchStock(txtSearch.value)"
             /> -->
             <!--  <h6 class="title">Lista Stock Ingresado</h6> -->
-            <a class="btn btn-secondary btn-md" (click)="descargarPDf()">PDF</a>
+            <a class="btn btn-secondary btn-sm" (click)="descargarPDf()">Generar Pdf</a>
             <div class="col-md-3 button"></div>
 
             <div class="table-responsive">
@@ -93,12 +93,12 @@
 
                           <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
-                       
+
                         <div
                           class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
                         >
                           <a href="#" class="dropdown-item">
-                           
+
                             <div
                               class="media"
                               *ngFor="let item of stock.detalles"
@@ -114,32 +114,34 @@
 
                                 <p
                                   class="text-md"
-                                  
+
                                 >
                                   <strong>Fecha de Caducidad:</strong>
                                   {{ item.caducidad | utcDate: "yyyy-MM-dd" }}
 
                                   <i [ngClass]="getAlertClass(item.caducidad)"
                                   class='bx bxs-flag-alt bx-sm'></i>
-                                  
-                                   
+
+
                                 </p>
                                 <div class="dropdown-divider"></div>
                               </div>
                             </div>
-                        
+
                           </a>
                         </div> -->
                           </td>
                         </tr>
                         <ng-container *ngIf="showDetails[i]">
                           <tr>
+
                             <th colspan="1"></th>
                             <!--    <th >Referencia</th> -->
 
                             <th>Lote</th>
                             <th>Cantidad</th>
                             <th>Fecha</th>
+
                           </tr>
                           <ng-container *ngFor="let item of stock.detalles">
                             <tr>
@@ -172,7 +174,7 @@
                       </td> -->
                       <!--    <td>
                           <span   class="cursor">
-  
+
                            <a [ngClass]="{ 'disabled-icon': producto.ESTADO == 2 }"
                            [routerLink]="[
                              '/dashboard',

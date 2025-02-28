@@ -10,7 +10,7 @@
     <div class="col-md-12">
       <div class="card card-info">
         <div class="card-header">
-          <h6 class="card-title">{{ tittle }} a bodega</h6>
+          <h6 class="card-title">Solicitud a bodega</h6>
         </div>
         <div class="card-body">
           <div class="row">
@@ -34,7 +34,7 @@
             <div class="col-md-8">
               <div class="button">
                 <a
-                *ngIf="btnValC ==='1'"
+                  *ngIf="btnValC === '1'"
                   type="submit"
                   class="btn btn-primary btn-sm"
                   (click)="cambioEstado()"
@@ -51,48 +51,41 @@
                   Cancelar
                 </button>
                 &nbsp;
-                <!--  -->
-                <!--    *ngIf=" btnVal !== 'Guardar'  " -->
-                <a
-                  *ngIf="   usuario.rol != 'OPERADOR'  "
-                  type="button"
-                  [class.disabled]="isChecking"
-                  (click)="comprobarCantidad(pedidoseleccionado)"
-                  class="btn btn-secondary btn-sm"
-                >
+
+                <!--    <a *ngIf="   usuario.rol != 'OPERADOR'  " type="button" [class.disabled]="isChecking"
+                  (click)="comprobarCantidad(pedidoseleccionado)" class="btn btn-secondary btn-sm">
                   {{ btnValC == "1" ? "Despachar" : "Validar" }}
-                </a>
+                </a> -->
               </div>
             </div>
 
             <table class="table">
               <thead>
                 <tr>
-                  <th style="width: 30%;">Producto</th>
+                  <th style="width: 30%">Producto</th>
 
                   <th>Marca</th>
                   <th>Cantidad ordenada</th>
-                  <th>Total Stock</th>
-                  <th *ngIf="usuario.rol != 'OPERADOR'">Entregado</th>
-                  <th *ngIf="usuario.rol != 'OPERADOR'">Lote</th>
+                  <!--  <th>Total Stock</th> -->
+                  <th>Actions</th>
+                  <!-- <th *ngIf="usuario.rol != 'OPERADOR'">Entregado</th>
+                  <th *ngIf="usuario.rol != 'OPERADOR'">Lote</th> -->
                 </tr>
               </thead>
               <tbody formArrayName="PRODUCTOS">
                 <!-- *ngFor="let d of importForm.get('PRODUCTOS')?.controls; let i = index" [formGroupName]="i"> -->
                 <tr
-                  *ngFor="
-                    let d of getProductos().controls;
-                    let i = index
-                  "
+                  *ngFor="let d of getProductos().controls; let i = index"
                   [formGroupName]="i"
                 >
                   <td>
-                    {{ d.get('NOMBRE')?.value  }}
-                    <div class="limit-width form-group col-md-12" #asBoxInput>
-                    
-                    </div>
+                    {{ d.get("NOMBRE")?.value }}
+                    <div
+                      class="limit-width form-group col-md-12"
+                      #asBoxInput
+                    ></div>
                   </td>
-                  <td>{{ d.get('UNIDAD')?.value  }}</td>
+                  <td>{{ d.get("UNIDAD")?.value }}</td>
                   <td>
                     <input
                       class="form-control"
@@ -101,16 +94,20 @@
                       formControlName="CANTIDAD"
                     />
                   </td>
-<td>{{d.get('total')?.value}}</td>
-                  <td *ngIf="usuario.rol != 'OPERADOR'">{{ d.get('ENTREGADO')?.value  }}</td>
-                  <td *ngIf="usuario.rol != 'OPERADOR'">
-                    {{ d.get('LOTE')?.value  }}
+                  <!--     <td>{{d.get('total')?.value}}</td> -->
+                  <!-- <td>
+                    <input type="number"  class="form-control" formControlName="ENTREGADO" >
                   </td>
-                  <td>
-                    <i
-                      class="bx bxs-trash bx-sm"
-                      (click)="borrarProducto(i)"
-                    ></i>
+
+                  <td *ngIf="usuario.rol != 'OPERADOR'">
+                    {{ d.get('LOTE')?.value }}
+                  </td> -->
+                  <td class="actions">
+                    <span class="span_delete">
+                      <i class="bx bxs-trash" (click)="borrarProducto(i)">
+                        Eliminar</i
+                      >
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -120,7 +117,6 @@
               class="agregar"
               data-toggle="modal"
               data-target="#modal-info"
-              (click)="agregarproductos()"
               >Agregar producto</a
             >
           </div>

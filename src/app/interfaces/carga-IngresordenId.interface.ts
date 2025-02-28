@@ -123,7 +123,7 @@ export interface Panelprueba {
     CODIGO?:        string;
     ABREV?:string;
     NOMBRE?:        string;
-    ORDEN?:        string;
+    ORDEN?:        number;
     CATEGORIA?:     string;
     TIEMPO?:        number;
     VALOR?:         number;

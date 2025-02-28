@@ -322,7 +322,6 @@ export class IngresordenesComponent implements OnInit {
     }
   }
 
-
   getprovincia() {
     this.manteniminetoService.getProvincia().subscribe((provincia) => {
       this.listprovincia = provincia;
@@ -756,8 +755,6 @@ export class IngresordenesComponent implements OnInit {
             isArray.removeAt(index);
           }
         }
-
-
       }
     }
 
@@ -808,19 +805,17 @@ export class IngresordenesComponent implements OnInit {
         );
       });
 
-      console.log(this.pruebas.value)
+      console.log(this.pruebas.value);
     } else {
-
       const isArray = this.pruebas;
 
-
       console.log(item);
-      const perfilseleccionado = this.listgrupoperfil.find((x) => x.nombre === item.nombre);
-      console.log(perfilseleccionado)
-
+      const perfilseleccionado = this.listgrupoperfil.find(
+        (x) => x.nombre === item.nombre,
+      );
+      console.log(perfilseleccionado);
 
       if (perfilseleccionado) {
-        
         perfilseleccionado.isChecked = false;
         for (let index = isArray.value.length - 1; index >= 0; index--) {
           const prueba = isArray.at(index).value;
@@ -834,15 +829,13 @@ export class IngresordenesComponent implements OnInit {
             isArray.removeAt(index);
           }
         }
-
-
       }
       //this.pruebas.removeAt(index);
     }
   }
   onchangePruebas(e: Event, item: Listaprueba) {
     const isChecked = e.target as HTMLInputElement;
-    console.log(isChecked.checked)
+    console.log(isChecked.checked);
 
     let isCheckedValue = item;
     console.log(item.CODIGO);
@@ -866,15 +859,12 @@ export class IngresordenesComponent implements OnInit {
         }),
       );
     } else {
-
-
       const index = pruebasArray.value.findIndex(
         (x) => x.codigo === item.CODIGO,
       );
-      console.log(index)
+      console.log(index);
       this.pruebas.removeAt(index);
     }
-
   }
   guardarPaciente() {
     this.ingresoService
@@ -938,7 +928,7 @@ export class IngresordenesComponent implements OnInit {
   }
 
   cargaIngresoOrden(id: string) {
-    console.log(this.pruebas.controls.forEach(item => item));
+    console.log(this.pruebas.controls.forEach((item) => item));
     console.log(id);
     if (id === 'Nuevo') {
       this.ingresoForm.reset();
@@ -1004,7 +994,10 @@ export class IngresordenesComponent implements OnInit {
               nomExam: item.panelprueba.NOMBRE,
               tiempo: item.panelprueba.TIEMPO,
               muestra: item.panelprueba.muestra.nombre,
-              etq: item.panelprueba.ORDEN == '2' || item.panelprueba.ORDEN == '3' ? item.panelprueba.ORDEN : '',
+              etq:
+                item.panelprueba.ORDEN == 2 || item.panelprueba.ORDEN == 3
+                  ? item.panelprueba.ORDEN
+                  : '',
 
               estado: item.estado.toString(),
             }),
@@ -1012,36 +1005,32 @@ export class IngresordenesComponent implements OnInit {
         ),
       });
 
-      this.pruebas.controls.forEach((control) => control.get('estado').disable())
-      this.pruebas.controls.forEach((control) => console.log(control))
-      console.log(this.pruebas.controls.forEach((control) => control))
+      this.pruebas.controls.forEach((control) =>
+        control.get('estado').disable(),
+      );
+      this.pruebas.controls.forEach((control) => console.log(control));
+      console.log(this.pruebas.controls.forEach((control) => control));
     });
-
   }
   isChecked(codigo: number): boolean {
     const menuArray = this.pruebas;
 
-    console.log(menuArray.value)
-    return menuArray.value.some(item => item.codigo === codigo)
-
-
+    console.log(menuArray.value);
+    return menuArray.value.some((item) => item.codigo === codigo);
   }
-
-
-
 
   isChecked2(perfil: any): boolean {
     const menuArray = this.pruebas;
-    const perfiles = perfil.itempruebas.filter(item => item.panelprueba.ORDEN == 3);
+    const perfiles = perfil.itempruebas.filter(
+      (item) => item.panelprueba.ORDEN == 3,
+    );
 
-
-    return menuArray.value.some(ite =>
-      perfiles.some(item => item.panelprueba.CODIGO === ite.codigo))
-
+    return menuArray.value.some((ite) =>
+      perfiles.some((item) => item.panelprueba.CODIGO === ite.codigo),
+    );
   }
 
-  buscarIdentificacion(){
-    console.log(this.ingresoForm.value)
+  buscarIdentificacion() {
+    console.log(this.ingresoForm.value);
   }
-
 }

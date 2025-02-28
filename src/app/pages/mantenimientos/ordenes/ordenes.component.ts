@@ -12,14 +12,14 @@ import {
   Ordene,
 } from 'src/app/interfaces/cargaIngresoordenes.interface';
 import { OrdenID } from 'src/app/interfaces/carga-IngresordenId.interface';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-ordenes',
   templateUrl: './ordenes.component.html',
   styleUrls: ['./ordenes.component.css'],
-
 })
 export class OrdenesComponent implements OnInit {
-
+  fechaActual: string = new Date().toISOString().split('T')[0];
   public totalAceptas: number = 0;
   ordenBorrarActivo = 1;
   public totalIngresada: number = 0;
@@ -29,6 +29,7 @@ export class OrdenesComponent implements OnInit {
   public desde: number = 0;
   public page!: number;
   listaOrdenId: OrdenID;
+
   public listaordenesingresdas: Ordene[] = [];
   public search: number = null;
   searchNombre: string = '';
@@ -38,16 +39,18 @@ export class OrdenesComponent implements OnInit {
     public agendamientoService: AgendamientoService,
     private manteniminetoService: MantenimientosService,
     private router: Router,
-  ) { }
+  ) {}
   ngOnInit(): void {
-
+    console.log(this.fechaActual);
     this.cargarOrdenes();
     this.escucharSocket();
-    this.getOrdenes();
+    this.getOrdenes(this.fechaActual);
   }
 
-  getOrdenes() {
-    this.manteniminetoService.getIngresoOrden().subscribe((ordenes) => {
+  getOrdenes(fecha: string) {
+    console.log(fecha);
+
+    this.manteniminetoService.getIngresoOrdenes(fecha).subscribe((ordenes) => {
       console.log(ordenes);
       this.listaordenesingresdas = ordenes;
     });
@@ -132,17 +135,6 @@ export class OrdenesComponent implements OnInit {
     });
   }
 
-  pdf2(orden: any) {
-    /*   this.ordenServicie.getPdf(orden).subscribe((blob: Blob) => {
-      //console.log(resp)
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'archivo.pdf';
-      link.click();
-      window.URL.revokeObjectURL(url);
-    }); */
-  }
   imprimirOrden(orden) {
     console.log(`//////************`, orden.id);
     const storedOption = localStorage.getItem('selectedOption');
@@ -217,7 +209,7 @@ export class OrdenesComponent implements OnInit {
           (resp: any) => {
             const { msg } = resp;
             console.log(msg);
-            this.getOrdenes();
+            //this.getOrdenes();
             Swal.fire('Orden Eliminada', `${msg}`, 'success');
           },
           (err) => {
@@ -235,30 +227,33 @@ export class OrdenesComponent implements OnInit {
   /* searchNombre */
 
   onSearchNombre(searchNombre: any) {
-    console.log(searchNombre)
+    console.log(searchNombre);
     this.searchNombre = searchNombre;
 
-    console.log(this.search)
+    console.log(this.search);
   }
   onSearchOrden(search: any) {
-    console.log(search)
+    console.log(search);
     this.search = search;
 
-    console.log(this.search)
+    console.log(this.search);
   }
-
 
   descargarPdf(id: number) {
     console.log(id);
     this.manteniminetoService.generarPdf(id).subscribe((blob: Blob) => {
-      console.log(blob)
+      console.log(blob);
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.download = 'reporte.pdf';
       link.click();
       window.URL.revokeObjectURL(url);
-    })
-
+    });
   }
+
+  /*   fechaActual():void {
+    this.fecha= formatDate(new Date(), 'yyyy-MM-dd', 'en-US ');
+
+  } */
 }

@@ -1,5 +1,50 @@
+/*  * {
+  outline: 1px solid blue;
+} */
+
+table {
+  width: 100%;
+}
+.table tr {
+  cursor: pointer;
+  border-collapse: collapse;
+}
+
+thead th {
+  /* padding-left: 0px;
+  */
+  text-align: center;
+  font-size: 0.7rem;
+  margin: 0 auto;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+tbody td {
+  word-wrap: break-word;
+
+  font-size: 0.5rem;
+  text-align: center;
+  /* vertical-align: middle; */
+  padding: 10px;
+  white-space: normal;
+}
+
+th,
+td {
+  padding: 2px 0.1px;
+}
+
+.btn-botones{
+  padding: 20px ;
+
+  margin :0 auto;
 
 
-table th{
-  padding:0px   0.1px;
+}
+
+.btn-botones button{
+  margin-top:20px;
+  margin-right: 10px;
+  font-weight: 700;
 }

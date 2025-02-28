@@ -41,8 +41,7 @@ export class BodegaComponent implements OnInit {
       this.bodegaForm?.get('NOMBRE')!.touched
     );
   }
- 
-  
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({ id }) => this.crearbodegas(id));
 
@@ -68,8 +67,8 @@ export class BodegaComponent implements OnInit {
 
       this.bodegaForm.patchValue({
         NOMBRE,
-      })
-      this.listadoselecioandobodega = bodegaId; 
+      });
+      this.listadoselecioandobodega = bodegaId;
     });
   }
 
@@ -94,7 +93,7 @@ export class BodegaComponent implements OnInit {
       return;
     }
     console.log(this.bodegaForm.value);
-
+console.log(this.listadoselecioandobodega);
     if (this.listadoselecioandobodega) {
       const data = {
         ...this.bodegaForm.value,

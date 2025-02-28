@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { event } from 'jquery';
@@ -19,7 +19,7 @@ declare var $: any;
   selector: 'app-menu',
 
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css'
+  styleUrl: './menu.component.css',
 })
 
 
@@ -96,7 +96,7 @@ menuSeleccionado:MenuBYID;
       })
 
   }
- 
+
   getMenu() {
 
 
@@ -157,7 +157,7 @@ if (this.menuSeleccionado) {
     this.router.navigateByUrl('/dashboard/menu');
   })
 }
-  
+
 
   }
 
@@ -193,7 +193,7 @@ this.menuSeleccionado=menu;
   borrarMenu(menu: Menu) {
    const id= menu.id;
 
-      
+
       Swal.fire({
         title: 'Desactivar menu?',
         text: `Esta seguro de desactivar  ${menu.nombre}`,
@@ -214,7 +214,7 @@ this.menuSeleccionado=menu;
           });
         }
       });
-     
+
 
 
   }

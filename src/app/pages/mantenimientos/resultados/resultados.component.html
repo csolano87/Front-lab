@@ -4,17 +4,26 @@
       <div class="card">
         <div class="card-body">
           <div class="row">
-
             <div class="form-group col-md-12">
               <label for="" class="form-ItemName">Numero orden</label>
-              <input type="text" class="form-control" placeholder="Numero de orden" #txtorden />
-
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Numero de orden"
+                #txtorden
+              />
             </div>
 
             <div class="form-group col-md-12">
-              <label for="" class="form-ItemName">Identificacion del paciente</label>
-              <input type="text" class="form-control" placeholder="Identificacion del paciente" #txtidentificacion />
-
+              <label for="" class="form-ItemName"
+                >Identificacion del paciente</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Identificacion del paciente"
+                #txtidentificacion
+              />
             </div>
 
             <div class="form-group col-md-6">
@@ -32,60 +41,78 @@
 
               <select class="form-control" #txtmodeloId>
                 <option value="">--Seleccione--</option>
-                <option #txtmodeloId *ngFor="let categoria of listacategoria" [value]="categoria.id">
+                <option
+                  #txtmodeloId
+                  *ngFor="let categoria of listacategoria"
+                  [value]="categoria.id"
+                >
                   {{ categoria.NOMBRE }}
                 </option>
               </select>
-
             </div>
 
-            <a class="btn btn-primary" (click)="buscarOrden(
-              txtorden.value,
-             txtidentificacion.value,
-             txtmodeloId.value,
-           txtfechaIn.value,
-             txtfechaOut.value
-             )">Buscar</a>
+            <a
+              class="btn btn-primary"
+              (click)="
+                buscarOrden(
+                  txtorden.value,
+                  txtidentificacion.value,
+                  txtmodeloId.value,
+                  txtfechaIn.value,
+                  txtfechaOut.value
+                )
+              "
+              >Buscar</a
+            >
 
+            <a
+              class="btn btn-danger"
+              (click)="
+                borrarFiltros(
+                  txtorden.value,
+                  txtidentificacion.value,
+                  txtmodeloId.value,
+                  txtfechaIn.value,
+                  txtfechaOut.value
+                )
+              "
+              >Borrar filtros</a
+            >
 
-
-            <a class="btn btn-danger" (click)="borrarFiltros(
-                 txtorden.value,
-             txtidentificacion.value,
-             txtmodeloId.value,
-           txtfechaIn.value,
-             txtfechaOut.value
-
- )">Borrar filtros</a>
-
-
-            <!-- 
+            <!--
             <a class="btn btn-primary" (click)="buscarOrden(txtorden.value, txtidentificacion.value)">Buscar</a> -->
-
-
           </div>
           <div class="row">
             <table class="table">
               <thead>
                 <tr>
-                  <th style="width: 20%;">Ordenes {{listaordenesingresdas.length}}</th>
-                  <th style="width: 10%;"></th>
+                  <th style="width: 20%">
+                    Ordenes {{ listaordenesingresdas.length }}
+                  </th>
+                  <th style="width: 10%"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of listaordenesingresdas
-                | paginate: { itemsPerPage: 10, currentPage: page }">
+                <tr
+                  *ngFor="
+                    let item of listaordenesingresdas
+                      | paginate: { itemsPerPage: 10, currentPage: page }
+                  "
+                >
                   <td (click)="getOrdenId(item)">
-                    {{item.numeroorden}} <br>
-                    {{item.paciente.apellidos}}, {{item.paciente.nombres}}</td>
+                    {{ item.numeroorden }} <br />
+                    {{ item.paciente.apellidos }}, {{ item.paciente.nombres }}
+                  </td>
                   <td>
-
                     <div class="left-content2">
-                      <div [ngClass]="{
-                      'generado': item.estado === 1,
-                      'reportado': item.estado === 2,
-                      'validado': item.estado !== 1 && item.estado !== 2
-                    }" [ngSwitch]="item.estado">
+                      <div
+                        [ngClass]="{
+                          generado: item.estado === 1,
+                          reportado: item.estado === 2,
+                          validado: item.estado !== 1 && item.estado !== 2
+                        }"
+                        [ngSwitch]="item.estado"
+                      >
                         <p *ngSwitchCase="1">Generado</p>
                         <p *ngSwitchCase="true">Generado</p>
 
@@ -98,10 +125,13 @@
                 </tr>
               </tbody>
             </table>
-            <pagination-controls (pageChange)="page = $event" previousLabel="" nextLabel=""></pagination-controls>
+            <pagination-controls
+              (pageChange)="page = $event"
+              previousLabel=""
+              nextLabel=""
+            ></pagination-controls>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -145,10 +175,11 @@
         </div>
       </div>
 
-
       <div class="table-responsive">
-
-        <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
+        <div
+          *ngIf="cargando"
+          class="alert alert-info text-center mt-3 animated fadeIn faster"
+        >
           <h4 class="alert-heading">Cargando</h4>
           <p>
             <i class="fas fa-sync-alt fa-spin fa-2x"></i>
@@ -157,16 +188,15 @@
         </div>
 
         <div *ngIf="!cargando" class="table-responsive">
-          <table *ngIf="agrupadas.length >0 " class="table">
+          <table *ngIf="agrupadas.length > 0" class="table">
             <thead>
               <tr>
-                <th style="width: 35%;">Nombre</th>
-                <th style="width: 20%;">Resultado</th>
+                <th style="width: 35%">Nombre</th>
+                <th style="width: 20%">Resultado</th>
 
-                <th style="width: 18%;">Referencia</th>
-                <th style="width: 15%;">Unidad</th>
-                <th style="width: 15%;">Alarma</th>
-
+                <th style="width: 18%">Referencia</th>
+                <th style="width: 15%">Unidad</th>
+                <th style="width: 15%">Alarma</th>
               </tr>
             </thead>
 
@@ -177,13 +207,16 @@
                     <div class="contente-wrapper">
                       <!-- Contenido alineado a la izquierda -->
                       <div class="left-content">
-                        <p> {{ modelo.categoria }}</p>
+                        <p>{{ modelo.categoria }}</p>
 
-                        <div [ngClass]="{
-                        'generado': modelo.item.estado === 1,
-                        'reportado': modelo.item.estado === 4,
-                        'validado': modelo.item.estado ===5
-                      }" [ngSwitch]="modelo.item.estado">
+                        <div
+                          [ngClass]="{
+                            generado: modelo.item.estado === 1,
+                            reportado: modelo.item.estado === 4,
+                            validado: modelo.item.estado === 5
+                          }"
+                          [ngSwitch]="modelo.item.estado"
+                        >
                           <p *ngSwitchCase="1">Generado</p>
                           <p *ngSwitchCase="4">Reportado</p>
                           <p *ngSwitchDefault>Validado</p>
@@ -194,26 +227,38 @@
                       <div class="right-content">
                         <!--     <span class="badge badge-info">{{ modelo.item.total }}</span> -->
                         <span>
-                          <i (click)="guardarResultados(modelo.item.pruebas)" class="bx bxs-save"></i>
-                          <i *ngIf="validarPruebasValor(modelo.item.pruebas)" (click)="ValidarParcial(modelo)"
-                            class="bx bxs-check-circle"></i>
+                          <i
+                            (click)="guardarResultados(modelo.item.pruebas)"
+                            class="bx bxs-save"
+                          ></i>
+                          <i
+                            *ngIf="validarPruebasValor(modelo.item.pruebas)"
+                            (click)="ValidarParcial(modelo)"
+                            class="bx bxs-check-circle"
+                          ></i>
                         </span>
                       </div>
                     </div>
                   </th>
-
                 </tr>
 
-                <ng-container *ngFor="let prueba of modelo.item.pruebas; let i = index">
+                <ng-container
+                  *ngFor="let prueba of modelo.item.pruebas; let i = index"
+                >
                   <tr>
-
                     <td>{{ prueba.panelprueba.NOMBRE }}</td>
 
                     <td>
                       <div>
-
-                        <input class="form-control" #resultado (keyup)="resultados($event, prueba)" type="text"[disabled]="!prueba.resultado"
-                          [value]="prueba.resultado" autofocus />
+                        <input
+                          class="form-control"
+                          #resultado
+                          (keyup)="resultados($event, prueba)"
+                          type="text"
+                          [disabled]="!prueba.resultado"
+                          [value]="prueba.resultado"
+                          autofocus
+                        />
                       </div>
                     </td>
                     <td>{{ prueba.panelprueba?.rango?.rangos }}</td>
@@ -221,14 +266,24 @@
                       {{ prueba.panelprueba?.rango?.unidad?.DESCRIPCION }}
                     </td>
 
-                    <td >
-                      <ng-container [ngSwitch]="validarResultadoConRango(prueba)">
-                        <i *ngSwitchCase="'alto'" class="bx bxs-up-arrow bx-sm text-danger"></i>
-                        <i *ngSwitchCase="'bajo'" class="bx bxs-down-arrow bx-sm text-warning"></i>
-                        <i *ngSwitchCase="'normal'" class="bx bx-check bx-sm text-success"></i>
+                    <td>
+                      <ng-container
+                        [ngSwitch]="validarResultadoConRango(prueba)"
+                      >
+                        <i
+                          *ngSwitchCase="'alto'"
+                          class="bx bxs-up-arrow bx-sm text-danger"
+                        ></i>
+                        <i
+                          *ngSwitchCase="'bajo'"
+                          class="bx bxs-down-arrow bx-sm text-warning"
+                        ></i>
+                        <i
+                          *ngSwitchCase="'normal'"
+                          class="bx bx-check bx-sm text-success"
+                        ></i>
                       </ng-container>
                     </td>
-
                   </tr>
                 </ng-container>
               </ng-container>
@@ -237,11 +292,8 @@
         </div>
         <!-- <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
           nextLabel="Siguiente"></pagination-controls> -->
-
       </div>
-
     </div>
     Validar
-
   </div>
 </div>

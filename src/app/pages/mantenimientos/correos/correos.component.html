@@ -51,17 +51,14 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Empresa</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Correo</th>
-                    <!--  <th>Categoria</th>
-                      <th>correo</th>
-                     
-                      <th>Serie</th> -->
-                    <th>Estado</th>
-
-                    <th>Actions</th>
+                    <th style="width: 20%;" >Empresa</th>
+                    <th style="width: 20%;" >Nombres</th>
+                    <th style="width: 20%;" >Apellidos</th>
+                    <th style="width: 20%;" >Correo</th>
+   
+                    <th style="width: 10%;" >Estado</th>
+ 
+                    <th style="width: 20%;" >Actions</th>
                   </tr>
                 </thead>
 
@@ -101,12 +98,12 @@
                               data-target="#modal-info"
                             ></i> </a
                         ></span> -->
-                    <td>
-                      <span (click)="borrarcorreo()" class="cursor">
-                        <i class="bx bxs-edit bx-sm"></i
+                    <td class="actions">
+                      <span  class="span_edit">
+                        <i (click)="borrarcorreo()"class="bx bxs-edit"> Editar</i
                       ></span>
-                      <span (click)="borrarcorreo()" class="cursor">
-                        <i class="bx bxs-trash bx-sm"></i
+                      <span  class="span_delete">
+                        <i (click)="borrarcorreo()" class="bx bxs-trash "> Eliminar</i
                       ></span>
                     </td>
                   </tr>

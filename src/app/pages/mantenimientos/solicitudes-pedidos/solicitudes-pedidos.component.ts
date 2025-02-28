@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { pedidoStock } from 'src/app/interfaces/pedidos-stocks.interface';
 import { PedidoStock } from 'src/app/models/cargaPedidoStock.module';
+import { Usuario } from 'src/app/models/usuario.module';
 import { StockService } from 'src/app/services/stock.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,8 +17,12 @@ export class SolicitudesPedidosComponent implements OnInit {
   listaPedidoStock: pedidoStock[] = [];
   showPruebasHeader: boolean = false;
   showDetails: boolean[] = [];
+    public usuario: Usuario;
 
-  constructor(private stockService: StockService) {}
+
+  constructor(private stockService: StockService,
+    private usuarioService :UsuarioService
+  ) {this.usuario=usuarioService.usuario}
 
   ngOnInit(): void {
     this.getAllStocks();

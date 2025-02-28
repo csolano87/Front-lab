@@ -1,4 +1,3 @@
-
 table {
   width: 100%;
   table-layout: fixed;
@@ -14,14 +13,16 @@ thead th {
   text-align: center;
   /*   font-size: 1rem; */
 }
+
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
 tbody td {
   font-size: 0.9rem;
   text-align: center;
   vertical-align: middle;
-  padding: 10px; 
+  padding: 10px;
   white-space: nowrap;
 }
 
@@ -30,12 +31,15 @@ td {
   /*  padding: 12px 20px; */
   padding-left: 0;
 }
+
 .bxs-key {
   color: #efb810;
 }
+
 .bxs-file-pdf {
   color: red;
 }
+
 .bxs-trash {
   color: red;
 }
@@ -47,18 +51,22 @@ td {
   font-size: 16px;
   width: 100%;
 }
+
 ul {
   left: 0;
 }
+
 li {
   list-style: none;
   left: 0;
 }
+
 .disabled-link {
   pointer-events: none;
   opacity: 0.6;
   /* Add any other styles to visually indicate that the link is disabled */
 }
+
 .bg-creada {
   display: flex;
   justify-content: center;
@@ -68,6 +76,7 @@ li {
 
   font-weight: 600;
 }
+
 .bg-desactivado {
   /*   background-color: #bcbab4;
   background-position: center;
@@ -79,16 +88,19 @@ li {
   border: 1px solid #bcbab4;
   font-weight: 600;
 }
+
 .title {
   text-align: center;
   font-weight: 700;
 }
+
 .disabled-icon {
   opacity: 0.5;
   /* Opacidad reducida para desactivar visualmente el ícono */
   pointer-events: none;
   /* Evitar eventos de clic en el ícono desactivado */
 }
+
 /* .bg-pen{
   display: flex;
   justify-content: center;
@@ -106,6 +118,7 @@ li {
   background-color: #ff7a33;
   font-weight: 600;
 }
+
 .bg-procesando {
   display: flex;
   justify-content: center;
@@ -115,6 +128,7 @@ li {
   background-color: green;
   font-weight: 600;
 }
+
 .bg-red {
   display: flex;
   justify-content: center;
@@ -129,12 +143,14 @@ li {
   padding: 2px 4px;
   margin: -5px -10px;
 }
+
 .button {
   display: flex;
   justify-content: end;
   gap: 5px;
 }
-/* 
+
+/*
 
 table {
   width: 100%;
@@ -227,15 +243,16 @@ tr:nth-child(even){
   gap: 10px;
   justify-content: center;
   align-items: center;
- 
+
 
 }
 
 .span_edit,
-.span_delete ,
+.span_delete,
 .span_password,
 .span_permisos,
-.span_rangos{
+.span_pdf,
+.span_rangos {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -256,6 +273,16 @@ tr:nth-child(even){
   color: #0056b3;
 }
 
+.span_pdf {
+  color: #dc3545;
+  background-color: #f8d7da;
+}
+
+.span_pdf:hover {
+  background-color: #f5c6cb;
+  color: #a71d2a;
+}
+
 .span_delete {
   color: #dc3545;
   background-color: #f8d7da;
@@ -265,6 +292,7 @@ tr:nth-child(even){
   background-color: #f5c6cb;
   color: #a71d2a;
 }
+
 .span_password {
   color: #cfc694;
   background-color: #ad9d06;
@@ -274,6 +302,7 @@ tr:nth-child(even){
   background-color: #8d7d21;
   color: rgb(141, 140, 84);
 }
+
 .span_permisos {
   color: #181616;
   background-color: #8a8484;
@@ -294,9 +323,10 @@ tr:nth-child(even){
   background-color: #2a09be;
   color: #e4e0ee;
 }
+
 i {
   margin: 0 5px;
-  
+
 }
 
 .disabled-icon {
@@ -311,7 +341,7 @@ i {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px ;
+  padding: 4px;
   margin: 0;
   border-radius: 5px;
   cursor: pointer;
@@ -319,11 +349,35 @@ i {
   background-color: #e8f4fc;
 }
 
+.generado2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 15px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #FFFFFF;
+  background-color: #0b7cc8;
+}
+
+
+.despachado{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #FFFFFF;
+  background-color: #1fb227;
+}
 .reportado {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px ;
+  padding: 4px;
   margin: 0;
   border-radius: 5px;
   cursor: pointer;
@@ -335,7 +389,7 @@ i {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px ;
+  padding: 4px;
   margin: 0;
   border-radius: 5px;
   cursor: pointer;
@@ -347,7 +401,7 @@ i {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px ;
+  padding: 4px;
   margin: 0;
   border-radius: 5px;
   cursor: pointer;
@@ -427,7 +481,8 @@ label {
   background: #007bff;
   border-color: #007bff;
   border-radius: 5px;
-/*   padding: 10px  */;
+  /*   padding: 10px  */
+  ;
   font-size: 1rem;
   font-weight: bold;
 }

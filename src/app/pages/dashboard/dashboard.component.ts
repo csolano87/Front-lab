@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
   };
 
   legend: boolean = true;
-  legendTitle: string = 'Tipo Atencion'
+  legendTitle: string = 'Tipo Atencion';
   // showLabels: boolean = true;
   showXAxis = true;
   showYAxis = true;
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
   public listaresultados: Equipo[] = [];
   conteoPorEstadoArray: any[] = [];
   listaday: any[] = [];
-  
+
   constructor(
     private ordenServicie: OrdenesService,
     private muestraService: MuestrasService,
@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
     private mantenimientoService: MantenimientosService,
     public llenarcomboservice: LlenarCombosService,
     private router: Router,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getGraficaPastel();
@@ -85,22 +85,18 @@ export class DashboardComponent implements OnInit {
       console.log('Resultado procesado:', this.listaday);
     });
 
-
     const swiper = new Swiper('.swiper', {
-    
       // Optional parameters
       /*  direction: 'vertical', */
       loop: true,
       breakpoints: {
         640: {
-          slidesPerView: 1
-        }
+          slidesPerView: 1,
+        },
       },
       // If we need pagination
       pagination: {
-        
         el: '.swiper-pagination',
-
       },
 
       // Navigation arrows
@@ -108,8 +104,8 @@ export class DashboardComponent implements OnInit {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
-      
-      autoplay: { delay: 2500,disableOnInteraction:false },
+
+      autoplay: { delay: 2500, disableOnInteraction: false },
       // And if we need scrollbar
       scrollbar: {
         el: '.swiper-scrollbar',

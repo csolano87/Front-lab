@@ -119,11 +119,14 @@ import { FiltroBodegaPipe } from '../pipes/filtro-bodega.pipe';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { register } from 'swiper/element/bundle';
+import { DespacharComponent } from './mantenimientos/despachar/despachar.component';
+import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/reporte-pruebas.component';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
   declarations: [
-
+    ReportePruebasComponent,
+    DespacharComponent,
     ListadoStockComponent,
     CargaInternaComponent,
     PermisosComponent,
@@ -255,7 +258,7 @@ const config: SocketIoConfig = { url: environment.url, options: {} };
 
     SocketIoModule.forRoot(config),
   ],
-  schemas:[
+  schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
   ]
 })

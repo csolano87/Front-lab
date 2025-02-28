@@ -129,7 +129,7 @@ const baseUrl = environment.url;
   providedIn: 'root',
 })
 export class MantenimientosService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -342,9 +342,11 @@ export class MantenimientosService {
   }
 
   UpdateMuestras(data: Data) {
-    return this.http
-      .put(`${baseUrl}/api/muestras/${data.id}`, data, this.headers)
-
+    return this.http.put(
+      `${baseUrl}/api/muestras/${data.id}`,
+      data,
+      this.headers,
+    );
   }
 
   getBodega(): Observable<Bodega[]> {
@@ -373,7 +375,7 @@ export class MantenimientosService {
       .get<Unidades>(`${baseUrl}/api/unidad`, this.headers)
       .pipe(map(({ unidad }) => unidad));
   }
-  geByIDtUnidad(id:string) {
+  geByIDtUnidad(id: string) {
     return this.http
       .get<UnidadById>(`${baseUrl}/api/unidad/${id}`, this.headers)
       .pipe(map(({ unidadId }) => unidadId));
@@ -382,16 +384,17 @@ export class MantenimientosService {
     return this.http.post(`${baseUrl}/api/unidad`, formData, this.headers);
   }
 
-
   UpdateUnidad(data: UnidadId) {
-    return this.http.put(`${baseUrl}/api/unidad/${data.id}`, data, this.headers);
+    return this.http.put(
+      `${baseUrl}/api/unidad/${data.id}`,
+      data,
+      this.headers,
+    );
   }
 
   getCrearBodega(formData: Marca) {
     return this.http.post(`${baseUrl}/api/bodega`, formData, this.headers);
   }
-
-
 
   getRangosreferencia(): Observable<Rango[]> {
     return this.http
@@ -407,16 +410,13 @@ export class MantenimientosService {
     return this.http.post(`${baseUrl}/api/rangos/`, formData, this.headers);
   }
   getUpdateRangos(id: number, data: FormData) {
-    console.log(id)
+    console.log(id);
     return this.http.put(`${baseUrl}/api/rangos/${id}`, data, this.headers);
   }
 
   getDeleteRangos(id: number) {
-    return this.http
-      .delete(`${baseUrl}/api/rangos/${id}`, this.headers)
-
+    return this.http.delete(`${baseUrl}/api/rangos/${id}`, this.headers);
   }
-
 
   getUpdateBodega(data: EstadoclienteID) {
     return this.http.put(
@@ -623,7 +623,6 @@ export class MantenimientosService {
     );
   }
 
-
   getUpdateServicio(data: EstadoclienteID) {
     return this.http.put(
       `${baseUrl}/api/tiposervicio/${data.id}`,
@@ -632,11 +631,13 @@ export class MantenimientosService {
     );
   }
   getByIdServicio(id: string) {
-    return this.http.get<EstadoByIdcliente>(
-      `${baseUrl}/api/tiposervicio/${id}`,
+    return this.http
+      .get<EstadoByIdcliente>(
+        `${baseUrl}/api/tiposervicio/${id}`,
 
-      this.headers,
-    ).pipe(map(({ estadoclienteId }) => estadoclienteId));
+        this.headers,
+      )
+      .pipe(map(({ estadoclienteId }) => estadoclienteId));
   }
 
   getServicio(): Observable<Tiposervicio[]> {
@@ -660,7 +661,6 @@ export class MantenimientosService {
     );
   }
 
-
   getUpdateAtencion(data: EstadoclienteID) {
     return this.http.put(
       `${baseUrl}/api/tipoatencion/${data.id}`,
@@ -669,18 +669,14 @@ export class MantenimientosService {
     );
   }
   getByIdatencion(id: string) {
-    return this.http.get<EstadoByIdcliente>(
-      `${baseUrl}/api/tipoatencion/${id}`,
+    return this.http
+      .get<EstadoByIdcliente>(
+        `${baseUrl}/api/tipoatencion/${id}`,
 
-      this.headers,
-    ).pipe(map(({ estadoclienteId }) => estadoclienteId));
+        this.headers,
+      )
+      .pipe(map(({ estadoclienteId }) => estadoclienteId));
   }
-
-
-
-
-
-
 
   /*  getTipofisiologico(): Observable<Tipoatencion[]> {
     return this.http
@@ -701,9 +697,6 @@ export class MantenimientosService {
       .get<Tipoatenciones>(`${baseUrl}/api/tipoatencion`, this.headers)
       .pipe(map(({ tipoatencion }) => tipoatencion));
   }
-
-
-
 
   deleteAtencion(atencion: any) {
     return this.http.delete(
@@ -743,7 +736,11 @@ export class MantenimientosService {
     return this.http.post(`${baseUrl}/api/diagnostico`, formData, this.headers);
   }
   UpdateDiagnostico(data: EstadoclienteID) {
-    return this.http.put(`${baseUrl}/api/diagnostico/${data.id}`, data, this.headers);
+    return this.http.put(
+      `${baseUrl}/api/diagnostico/${data.id}`,
+      data,
+      this.headers,
+    );
   }
   getDiagnostico(): Observable<Diagnostico[]> {
     return this.http
@@ -751,19 +748,14 @@ export class MantenimientosService {
       .pipe(map(({ diagnostico }) => diagnostico));
   }
   deleteDiagnosticos(id: number) {
-    return this.http.delete(
-      `${baseUrl}/api/diagnostico/${id}`,
-      this.headers,
-    );
+    return this.http.delete(`${baseUrl}/api/diagnostico/${id}`, this.headers);
   }
 
   getByIDDiagnostico(id: string) {
-    return this.http.get<EstadoByIdcliente>(
-      `${baseUrl}/api/diagnostico/${id}`,
-      this.headers,
-    ).pipe(map(({ estadoclienteId }) => estadoclienteId));
+    return this.http
+      .get<EstadoByIdcliente>(`${baseUrl}/api/diagnostico/${id}`, this.headers)
+      .pipe(map(({ estadoclienteId }) => estadoclienteId));
   }
-
 
   deleteDiagnostico(tubo: Envase) {
     return this.http.delete(
@@ -919,7 +911,11 @@ export class MantenimientosService {
     return this.http.post(`${baseUrl}/api/perfiles`, formData, this.headers);
   }
   getUpdatePerfiles(formData: Perfiles) {
-    return this.http.put(`${baseUrl}/api/perfiles/${formData.id}`, formData, this.headers);
+    return this.http.put(
+      `${baseUrl}/api/perfiles/${formData.id}`,
+      formData,
+      this.headers,
+    );
   }
   getPerfile(): Observable<Listaperfile[]> {
     return this.http
@@ -932,18 +928,30 @@ export class MantenimientosService {
   }
 
   getUpdateIngresoOrden(data: OrdenID) {
-    return this.http.put(`${baseUrl}/api/ingresorden/${data.id}`, data, this.headers);
+    return this.http.put(
+      `${baseUrl}/api/ingresorden/${data.id}`,
+      data,
+      this.headers,
+    );
   }
   getIngresoOrden(): Observable<Ordene[]> {
     return this.http
       .get<Ingresoordenes>(`${baseUrl}/api/ingresorden`, this.headers)
       .pipe(map(({ ordenes }) => ordenes));
   }
-
-  getDeleteIngresoOrden(id: number) {
+  getIngresoOrdenes(data: string): Observable<Ordene[]> {
     return this.http
-      .delete<Ingresoordenes>(`${baseUrl}/api/ingresorden/${id}`, this.headers)
-
+      .get<Ingresoordenes>(
+        `${baseUrl}/api/ingresorden/buscar?fecha=${data}`,
+        this.headers,
+      )
+      .pipe(map(({ ordenes }) => ordenes));
+  }
+  getDeleteIngresoOrden(id: number) {
+    return this.http.delete<Ingresoordenes>(
+      `${baseUrl}/api/ingresorden/${id}`,
+      this.headers,
+    );
   }
 
   getIngresoOrdenId(id: string) {
@@ -953,6 +961,8 @@ export class MantenimientosService {
   }
 
   generarPdf(id: number) {
-    return this.http.get(`${baseUrl}/api/pdf/generarpdf/${id}`, { responseType: 'blob' })
+    return this.http.get(`${baseUrl}/api/pdf/generarpdf/${id}`, {
+      responseType: 'blob',
+    });
   }
 }

@@ -1,7 +1,10 @@
 <div class="container-fluid rounded shadow mt-4 p-4 bg-light">
-
-  <form [formGroup]="grupoform" autocomplete="off" (ngSubmit)="crearGrupo()" id="grupoform">
-
+  <form
+    [formGroup]="grupoform"
+    autocomplete="off"
+    (ngSubmit)="crearGrupo()"
+    id="grupoform"
+  >
     <!--  -->
     <div class="row">
       <div class="col-md-12">
@@ -9,77 +12,110 @@
           <div class="card-header">
             <h6 class="card-title">Gestion de perfiles</h6>
             <div class="button">
-              <button type="button" class="btn btn-primary btn-sm" (click)="cambioestado()">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                (click)="cambioestado()"
+              >
                 {{ btnVal }}
               </button>
-              <a class="btn btn-danger btn-sm" routerLink="/dashboard/panelperfiles">Cancelar</a>
+              <a
+                class="btn btn-danger btn-sm"
+                routerLink="/dashboard/panelperfiles"
+                >Cancelar</a
+              >
             </div>
           </div>
           <div class="card-body">
-            <div class="row ">
+            <div class="row">
               <div class="form-group col-md-4">
                 <label for="codigo">Código</label>
-                <input id="codigo" class="form-control" type="text" formControlName="codigo" [class.is-invalid]="codigo"
-                  placeholder="Ingrese un código" />
+                <input
+                  id="codigo"
+                  class="form-control"
+                  type="text"
+                  formControlName="codigo"
+                  [class.is-invalid]="codigo"
+                  placeholder="Ingrese un código"
+                />
               </div>
 
               <div class="form-group col-md-4">
                 <label for="nombre">Nombre</label>
-                <input id="nombre" class="form-control" type="text" formControlName="nombre" [class.is-invalid]="nombre"
-                  placeholder="Ingrese un nombre de grupo" />
-                <small *ngIf="nombre" class="text-danger">Campo obligatorio</small>
+                <input
+                  id="nombre"
+                  class="form-control"
+                  type="text"
+                  formControlName="nombre"
+                  [class.is-invalid]="nombre"
+                  placeholder="Ingrese un nombre de grupo"
+                />
+                <small *ngIf="nombre" class="text-danger"
+                  >Campo obligatorio</small
+                >
               </div>
 
               <div class="form-group col-md-4">
                 <label for="tipogrupo">Tipo de Grupo</label>
-                <select id="tipogrupo" formControlName="tipogrupoId" class="form-control">
-                  <option *ngFor="let grupo of listatipogrupo" [value]="grupo.id">
+                <select
+                  id="tipogrupo"
+                  formControlName="tipogrupoId"
+                  class="form-control"
+                >
+                  <option
+                    *ngFor="let grupo of listatipogrupo"
+                    [value]="grupo.id"
+                  >
                     {{ grupo.nombre }}
                   </option>
                 </select>
               </div>
             </div>
-
-
-         
-      
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card-header">
-            <a  [ngClass]="{'disabled-icon': btnVal =='Editar'}"  class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-pruebas">
-              <i class="bx bxs-plus-circle"></i> Agregar Pruebas
-            </a>
-           <!--  <h6 class="card-title">Pruebas Asignadas</h6> -->
           </div>
-          <table class="table table-hover">
-            <thead class="table-light">
-              <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody formArrayName="pruebas">
-              <tr *ngFor="let d of pruebas.controls; let i = index" [formGroupName]="i">
-                <td>{{ d.value.codigo }}</td>
-                <td>{{ d.value.nombre }}</td>
-                <td  [ngClass]="{'disabled-icon': btnVal =='Editar'}">
-                  <span   class="span_delete" >
-                    <i (click)="borrarPrueba(i)" class="bx bxs-trash">Eliminar</i> 
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
 
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card-header">
+                <a
+                  [ngClass]="{ 'disabled-icon': btnVal == 'Editar' }"
+                  class="btn btn-success btn-sm"
+                  data-toggle="modal"
+                  data-target="#modal-pruebas"
+                >
+                  <i class="bx bxs-plus-circle"></i> Agregar Pruebas
+                </a>
+                <!--  <h6 class="card-title">Pruebas Asignadas</h6> -->
+              </div>
+              <table class="table table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="pruebas">
+                  <tr
+                    *ngFor="let d of pruebas.controls; let i = index"
+                    [formGroupName]="i"
+                  >
+                    <td>{{ d.value.codigo }}</td>
+                    <td>{{ d.value.nombre }}</td>
+                    <td [ngClass]="{ 'disabled-icon': btnVal == 'Editar' }">
+                      <span class="span_delete">
+                        <i (click)="borrarPrueba(i)" class="bx bxs-trash"
+                          >Eliminar</i
+                        >
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
-  </div>
-</div>
   </form>
 </div>
 <!-- <hr />
@@ -89,10 +125,15 @@
 <div class="modal fade" id="modal-pruebas" tabindex="-1">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-
       <div class="modal-header bg-primary text-white">
         <h4 class="modal-title">Seleccionar Pruebas</h4>
-        <button type="button" class="close" (click)="borrarPruebas()" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          (click)="borrarPruebas()"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -103,8 +144,13 @@
             <form (ngSubmit)="onSubmit()" #form="ngForm">
               <div class="form-group col-md-12">
                 <label for="">Buscar examenes</label>
-                <input type="text" class="form-control" #txtSearch (keyup)="onSearchExam(txtSearch.value)"
-                  placeholder="Buscar examen" />
+                <input
+                  type="text"
+                  class="form-control"
+                  #txtSearch
+                  (keyup)="onSearchExam(txtSearch.value)"
+                  placeholder="Buscar examen"
+                />
               </div>
             </form>
           </div>
@@ -115,43 +161,45 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
-
-
-
-
-
               <table class="table table-striped">
                 <thead>
                   <tr>
-
-                    <th style="width: 15%;">Codigo</th>
-                    <th style="width: 45%;">Nombre</th>
-                    <th style="width: 20%;"></th>
+                    <th style="width: 15%">Codigo</th>
+                    <th style="width: 45%">Nombre</th>
+                    <th style="width: 20%"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="
+                  <tr
+                    *ngFor="
                       let pru of listapruebas
                         | filtroexam: search
                         | paginate
                           : { itemsPerPage: 10, currentPage: pagesPruebas }
-                    " class="table-row-not-expanded">
+                    "
+                    class="table-row-not-expanded"
+                  >
                     <!--    <td><i class="bx bx-test-tube bx-sm"></i></td> -->
                     <td>{{ pru.CODIGO }}</td>
-                    <td>{{ pru.NOMBRE |slice:0:35}}</td>
+                    <td>{{ pru.NOMBRE | slice: 0 : 35 }}</td>
                     <td>
-                      <button class="btn btn-success btn-sm" (click)="pruebaseleccionado(pru)">
+                      <button
+                        class="btn btn-success btn-sm"
+                        (click)="pruebaseleccionado(pru)"
+                      >
                         <i class="bx bx-check"></i> Seleccionar
                       </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
-
             </div>
           </div>
-          <pagination-controls (pageChange)="pagesPruebas = $event" previousLabel="Anterior"
-            nextLabel="Siguiente"></pagination-controls>
+          <pagination-controls
+            (pageChange)="pagesPruebas = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+          ></pagination-controls>
         </div>
       </div>
     </div>

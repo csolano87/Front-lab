@@ -1,0 +1,80 @@
+<div class="container-fluid rounded shadow">
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="">Fecha Inicio</label>
+              <div class="input-group">
+                <input type="date" class="form-control" id="" />
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="">Fecha fin</label>
+              <div class="input-group">
+                <input type="date" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-4 btn-botones">
+              <button type="submit" class="btn btn-primary btn-sm">
+                Consultar
+              </button>
+
+              <button class="btn btn-secondary btn-sm">Generar PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row anikmated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <div class="table">
+              <thead>
+                <tr>
+                  <th style="width: 60%">Pruebas</th>
+                  <th style="width: 20%">Examenes</th>
+                  <th style="width: 20%">Hombres</th>
+                  <th style="width: 20%">Mujeres</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of lista">
+                  <tr>
+                    <th>
+                      {{ item.name }}
+                    </th>
+                    <th>
+                      {{ item.value.total }}
+                    </th>
+
+                    <th>
+                      {{ item | json }}
+                    </th>
+                  </tr>
+
+                  <ng-container *ngFor="let prueba of item.value.pruebas">
+                    <tr>
+                      <td>
+                        {{ prueba | json }}
+                      </td>
+                      <td>
+                        {{ prueba.total }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </tbody>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

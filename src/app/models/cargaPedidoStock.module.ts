@@ -1,6 +1,6 @@
 export class PedidoStock {
     constructor(
-      public AREA: string,
+      public AREA: number,
     
     //  public MARCA: number,
       public itemstock: Item[],

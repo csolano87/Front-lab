@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 /* import { HasElementRef } from '@angular/material/core/common-behaviors/color'; */
 import { OrdenMicro, micro } from 'src/app/interfaces/micro-form.interface';
 import * as XLSX from 'xlsx';
@@ -7,24 +13,29 @@ import { saveAs } from 'file-saver';
 import { Listaordene } from 'src/app/interfaces/orden.interface';
 import { LlenarCombosService } from 'src/app/services/llenar-combos.service';
 import { writeFile, utils } from 'xlsx';
+import { listaordenes } from 'src/app/data';
+
 @Component({
   selector: 'app-estadistica-micro',
   templateUrl: './estadistica-micro.component.html',
   styleUrls: ['./estadistica-micro.component.css'],
 })
-export class EstadisticaMicroComponent implements AfterViewInit {
+export class EstadisticaMicroComponent implements OnInit {
   public listaordene: micro[] = [];
   itemsPerPage: number = 1; // Número de elementos por página
   currentPage: number = 1; // Página actual
   totalPages: number = 1; // Total de páginas
   name = 'ExcelSheet.xlsx';
   cargando = false;
- /*  @ViewChild('table', { static: false }) table: HasElementRef; */
-  
+
+  /*  @ViewChild('table', { static: false }) table: HasElementRef; */
+
   // Obtener referencia a la tabla HTML
   constructor(private ordenService: LlenarCombosService) {}
 
-  ngAfterViewInit() {}
+  ngOnInit() {
+
+  }
 
   registroMicro(FECHADESDE: string, FECHAHASTA: string) {
     this.cargando = true;
@@ -54,38 +65,18 @@ export class EstadisticaMicroComponent implements AfterViewInit {
     return valor.split(','); // Dividir la cadena en una lista usando la coma y el espacio como separadores
   }
   exportTable() {
-    /*  const dataToExport = this.listaordene.map(orden => {
-      return {
-        'Numero orden': orden.SampleID,
-        'Servicio': orden.Servicio,
-        'Tipo paciente': 'Humano',
-        'Sexo': orden.Sexo,
-        'Historia Clinica': orden.Historia,
-        'Tipo muestra': orden.Tipomuestra,
-        'Microorganismo': orden.Microorganismo,
-        'Tecnica': orden.Tecnica,
-        'Valor': this.splitValor(orden.Valor).join(','),
-        'Antibiotico': this.splitAntibiotics(orden.Antibiotico).join(','),
-        'Sensible': this.splitSensible(orden.Sensible).map((sensible) => (sensible.includes('Sensible') ? 'SI' : '-')).join(','),
-        'Resistente': this.splitSensible(orden.Sensible).map((sensible) => (sensible.includes('Resistente') ? 'SI' : '-')).join(','),
-      }
-    });
-    const worksheet = XLSX.utils.json_to_sheet(dataToExport);   
-    const workbook = XLSX.utils.book_new(); 
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Ordenes');
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });  
-    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });  
-    saveAs(blob, 'ordenes.xlsx');  */
     const dataToExport = this.listaordene.map((orden) => {
       return {
         'Fecha ingreso': orden.Fechaingreso,
         'Numero orden': orden.SampleID,
         Origen: orden.Origen,
         Servicio: orden.Servicio,
-'Historia Clinica': orden.Historia,
-Paciente: orden.Paciente,
-        'Tipo paciente': orden.Age,        
-        Sexo: orden.Sexo,        
+        'Historia Clinica': orden.Historia,
+        cedula: orden.cedula,
+        Paciente: orden.Paciente.replace(/[.,]/g, '').trim(),
+        Codigo: this.generarCodigo(orden),
+        Edad: orden.Age,
+        Sexo: orden.Sexo,
         'Tipo muestra': orden.Tipomuestra,
         Microorganismo: orden.Microorganismo,
         Tecnica: orden.Tecnica,
@@ -97,11 +88,11 @@ Paciente: orden.Paciente,
         Resistente: this.splitSensible(orden.Sensible)
           .map((sensible) => (sensible.includes('Resistente') ? 'SI' : '-'))
           .join('\n'),
-          Comentario: orden.Comentario,
-          UsuarioValidador:orden.Validador,
+
+        Comentario: orden.Comentario,
+        UsuarioValidador: orden.validador,
         'Fecha de validación': orden.Fechavalidacion,
-        OrdenAS400:orden.Orden
-       
+        OrdenAS400: orden.Orden,
       };
     });
 
@@ -135,5 +126,24 @@ Paciente: orden.Paciente,
     console.log(count);
     return count;
     console.log(count);
+  }
+
+  generarCodigo(orden: any):string {
+    const nombres = orden.Paciente.replace(/[.,]/g, '').trim().split(' ');
+const cedula=orden.cedula?.slice(-4);
+    const primerApellido = nombres[0].slice(0, 2);
+    const segundoApellido = nombres[1]?.slice(0, 2) || '00';
+    const primerNombre = nombres[2]?.slice(0, 2) || '00';
+    const segundoNombre =  nombres[3]?.slice(0, 2) || '00';
+   
+
+    return  primerApellido +
+
+      segundoApellido +
+
+      primerNombre +
+
+      segundoNombre +
+      cedula;
   }
 }

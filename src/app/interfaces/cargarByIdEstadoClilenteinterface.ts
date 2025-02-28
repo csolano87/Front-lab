@@ -4,9 +4,10 @@ export interface EstadoByIdcliente {
 }
 
 export interface EstadoclienteID {
-    id:        number;
-    nombre:    string;
-    ESTADO:    number;
-    createdAt: Date;
-    updatedAt: Date;
+  id: number;
+  nombre: string;
+  NOMBRE: string;
+  ESTADO: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

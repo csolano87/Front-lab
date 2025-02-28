@@ -10,8 +10,9 @@ export interface micro {
   Servicio?: string;
   Paciente?: string;
   Sexo?: string;
-  Age?:string;
+  Age?: string;
   Historia?: string;
+  cedula?:string;
   Tipomuestra?: string;
   Microorganismo?: string;
   Tecnica?: string;
@@ -21,5 +22,5 @@ export interface micro {
   Fechavalidacion?: string;
   Comentario?: string;
   Orden?: string;
-  Validador?:string;
+  validador?: string;
 }

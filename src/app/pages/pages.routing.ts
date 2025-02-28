@@ -94,6 +94,8 @@ import { MenuComponent } from './mantenimientos/menu/menu.component';
 import { CargaInternaComponent } from './mantenimientos/carga-interna/carga-interna.component';
 import { ListadoStockComponent } from './mantenimientos/listado-stock/listado-stock.component';
 import { PermisosComponent } from './mantenimientos/permisos/permisos.component';
+import { DespacharComponent } from './mantenimientos/despachar/despachar.component';
+import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/reporte-pruebas.component';
 
 const routes: Routes = [
   {
@@ -198,7 +200,6 @@ const routes: Routes = [
         data: { titulo: 'tecnica' },
       },
 
-
       {
         path: 'muestra',
         component: MuestraspruebasComponent,
@@ -209,7 +210,6 @@ const routes: Routes = [
         component: MuestraspruebasComponent,
         data: { titulo: 'muestra' },
       },
-
 
       {
         path: 'cargaInterna',
@@ -251,11 +251,11 @@ const routes: Routes = [
         data: { titulo: 'ordenes' },
       },
 
-      /*  {
-         path: 'ordenes/:id',
-         component: OrdenesComponent,
-         data: { titulo: 'ordenes' },
-       }, */
+      {
+        path: 'reporteTotalPruebas',
+        component: ReportePruebasComponent,
+        data: { titulo: 'reporteTotalPruebas' },
+      },
       {
         path: 'perfil/:id',
         component: PerfilComponent,
@@ -633,6 +633,11 @@ const routes: Routes = [
         path: 'solicitud-pedidos/:id',
         component: PedidosComponent,
         data: { titulo: 'solicitud-pedidos' },
+      },
+      {
+        path: 'despachar/:id',
+        component: DespacharComponent,
+        data: { titulo: 'despachar' },
       },
       {
         path: 'solicitudes-pedidos',

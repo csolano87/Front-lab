@@ -22,11 +22,14 @@ export interface stocksPedido {
 
   export interface Item {
   
-    ID_PRODUCTO: number;
-    CANTIDAD:    number;
-    ENTREGADO:    number;
-    product:     Product;
-    bodega:      Bodega;
+    ID_PRODUCTO?: number;
+    CANTIDAD?:    number;
+    ENTREGADO?:    string;
+    LOTE?: string;
+    product?:     Product;
+    bodega?:      Bodega;
+    referencia?:  string;
+    total_stock?: number;
   }
   export interface Bodega {
     id:          number;
@@ -41,8 +44,20 @@ export interface stocksPedido {
 }
   
   export interface Product {
+    id?:         number;
     REFERENCIA?:string;
     NOMBRE?: string;
+    CATEGORIA?:  string;
+    UNIDAD?:     string;
+    GENERACION?: string;
+    VALOR?:      number;
+    USUARIO_ID?: null;
+    CREATEDBY?:  null;
+    UPDATEDBY?:  null;
+    DELETEDBY?:  null;
+    ESTADO?:     number;
+    createdAt?:  string;
+    updatedAt?:  string;
   }
   export interface Clientes {
     NOMBRE?: string;

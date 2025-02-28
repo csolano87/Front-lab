@@ -76,25 +76,23 @@
                       </div>
                     </td>
 
-                    <td>
-                      <span class="cursor">
-                        <a
-                          [ngClass]="{ 'disabled-icon': bodega.ESTADO != 1 }"
+                    <td class="actions">
+                      <span class="span_edit">
+                       
+                          <i  [ngClass]="{ 'disabled-icon': bodega.ESTADO != 1 }"
                           [routerLink]="['/dashboard', 'bodega', bodega.id]"
-                        >
-                          <i
-                            class="bx bxs-edit bx-sm"
+                            class="bx bxs-edit"
                             data-toggle="modal"
                             data-target="#modal-info"
-                          ></i>
-                        </a>
+                          > Editar</i>
+                        
                       </span>
                       <span
-                        [ngClass]="{ 'disabled-icon': bodega.ESTADO != 1 }"
-                        (click)="borrarbodega(bodega)"
-                        class="cursor"
+                       
+                        class="span_delete"
                       >
-                        <i class="bx bxs-trash bx-sm"></i
+                        <i  [ngClass]="{ 'disabled-icon': bodega.ESTADO != 1 }"
+                        (click)="borrarbodega(bodega)" class="bx bxs-trash"> Eliminar</i
                       ></span>
                     </td>
                   </tr>
