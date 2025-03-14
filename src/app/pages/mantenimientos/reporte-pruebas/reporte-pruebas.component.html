@@ -22,7 +22,9 @@
                 Consultar
               </button>
 
-              <button class="btn btn-secondary btn-sm">Generar PDF</button>
+              <button *ngIf="lista" class="btn btn-secondary btn-sm">
+                Generar PDF
+              </button>
             </div>
           </div>
         </div>
@@ -34,44 +36,61 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <div class="table-responsive">
-            <div class="table">
+          <div *ngIf="cargando" class="text-center mt-3 animated fadeIn faster">
+            <!--  <h4 class="alert-heading">Cargando</h4> -->
+            <p>
+              <!--                   <i class="fas fa-sync-alt fa-spin fa-2x"></i> -->
+              <!-- <i class='bx bx-sync'></i> -->
+              <i class="bx bx-loader-circle bx-burst bx-rotate-90 bx-md"></i>
+            </p>
+            <!--     <p class="mb-0">Espere por favor</p> -->
+          </div>
+          <div *ngIf="!cargando" class="table-responsive">
+            <table class="table">
               <thead>
                 <tr>
-                  <th style="width: 60%">Pruebas</th>
+                  <th style="width: 15%">Codigo</th>
+                  <th style="width: 25%">Pruebas</th>
                   <th style="width: 20%">Examenes</th>
-                  <th style="width: 20%">Hombres</th>
+                  <th style="width: 10%">Hombres</th>
                   <th style="width: 20%">Mujeres</th>
+                  <th style="width: 20%">NN</th>
                 </tr>
               </thead>
               <tbody>
                 <ng-container *ngFor="let item of lista">
                   <tr>
-                    <th>
-                      {{ item.name }}
-                    </th>
-                    <th>
-                      {{ item.value.total }}
-                    </th>
-
-                    <th>
-                      {{ item | json }}
-                    </th>
+                    <td class="title__categoria" colspan="6">
+                      GRUPOS: {{ item.name }}
+                    </td>
                   </tr>
 
-                  <ng-container *ngFor="let prueba of item.value.pruebas">
+                  <ng-container *ngFor="
+                      let pru of item.value.prueba
+                        | paginate
+                          : { itemsPerPage: 5, currentPage: itemsPerPage }
+                    ">
                     <tr>
                       <td>
-                        {{ prueba | json }}
+                        {{ pru.codigo }}
                       </td>
                       <td>
-                        {{ prueba.total }}
+                        {{ pru.nombre }}
                       </td>
+
+                      <td>
+                        {{ pru.cantidad }}
+                      </td>
+                      <td>{{ pru.M }}</td>
+                      <td>{{ pru.F }}</td>
+                      <td>{{ pru.NN }}</td>
                     </tr>
                   </ng-container>
                 </ng-container>
               </tbody>
-            </div>
+            </table>
+            <pagination-controls (pageChange)="itemsPerPage = $event" previousLabel="Anterior"
+              nextLabel="Siguiente"></pagination-controls>
           </div>
         </div>
       </div>

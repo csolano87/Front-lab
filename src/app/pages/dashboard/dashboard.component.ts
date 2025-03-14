@@ -1,4 +1,4 @@
-import { Component, OnInit, viewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Equipo, Resultado } from 'src/app/interfaces/carga-equipos.interfaces';
 import {
@@ -10,27 +10,49 @@ import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import { MuestrasService } from 'src/app/services/muestras.service';
 import { OrdenesService } from 'src/app/services/ordenes.service';
 import { RegistroService } from 'src/app/services/registro.service';
-import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 import { multi } from './data';
 import { dA } from '@fullcalendar/core/internal-common';
-import { map, Observable } from 'rxjs';
+import { map, Observable, filter } from 'rxjs';
 import { Swiper } from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 /* import 'swiper/css'; */
+import { ListaOrdenes } from '../../interfaces/orden.interface';
+import { listaordenes } from 'response';
+import {
+  LabTests,
+  LISLabTest,
+} from '../../interfaces/carga-resultOrders.interface';
+import {
+  Result,
+  ResultOrder,
+} from '../../interfaces/carga-resultOrders.interface';
+import {
+  OrdeneMensual,
+  OrdenMensual,
+} from 'src/app/interfaces/carga-ordenMensual.interface';
+import { subscribe } from 'diagnostics_channel';
+import { getTime } from 'date-fns';
+import { holdReady } from 'jquery';
+import { format, differenceInDays } from 'date-fns';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  viewPastel: [number, number] = [1000, 450]; /* 700,250 */
-  viewBar: [number, number] = [800, 500];
-  viewLinear: [number, number] = [1000, 450];
+  @ViewChild('tableContainer', { static: true })
+  tableContainer!: ElementRef<HTMLElement>;
+  viewPastel: [number, number] = [900, 450]; /* 700,250 */
+  viewBar: [number, number] = [990, 300];
+  viewLinear: [number, number] = [550, 400];
   gradient: boolean = true;
-  showLegend: boolean = true;
-  showLabels: boolean = true;
+  showLegend: boolean = false;
+  showLabels: boolean = false;
   isDoughnut: boolean = false;
-
+  //position:LegendPosition = LegendPosition.Right;
+  legendTitle: string = 'Tipo atención';
+  schemeType: ScaleType.Ordinal;
   colorScheme: Color = {
     /* 5AA454  --f5f81e */
     domain: ['#f5f81e', '#E44D25', '#7bbfef', '#5AA454'],
@@ -38,9 +60,9 @@ export class DashboardComponent implements OnInit {
     selectable: true,
     name: 'Customer Usage',
   };
-
-  legend: boolean = true;
-  legendTitle: string = 'Tipo Atencion';
+  padding: number = 30;
+  //legend: boolean = false;
+  // legendTitle: string = 'Tipo Atencion';
   // showLabels: boolean = true;
   showXAxis = true;
   showYAxis = true;
@@ -49,7 +71,7 @@ export class DashboardComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Meses';
+  xAxisLabel: string = '';
   yAxisLabel: string = '';
   timeline: boolean = true;
   data: any[] = [];
@@ -58,13 +80,16 @@ export class DashboardComponent implements OnInit {
   listaporAporbar: TotalProcesosPorAprobarBI[] = [];
   public totalIngresadaRecahzoTubo: number = 0;
   TotalEmergencia: number = 0;
+  graficaPastel: any[] = [];
   graficaLinear: any[] = [];
   graficaBarras: any[] = [];
   public totalIngresada: number = 0;
   public listaresultados: Equipo[] = [];
   conteoPorEstadoArray: any[] = [];
   listaday: any[] = [];
-
+  listaordene: Result[] = [];
+  listaordenesmensual: OrdeneMensual[] = [];
+  scrollInterval: any;
   constructor(
     private ordenServicie: OrdenesService,
     private muestraService: MuestrasService,
@@ -75,35 +100,39 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    console.log(fecha); // 2025-03-13 10:30:00
+
+    
+      this.getOrdenMensual();
+      this.getResults();
+    
+
     this.getGraficaPastel();
     this.getGraficaLinea();
     this.getGraficaBarra();
-    //this.getOrderRetrasadas();
-    this.getOrderRetrasadas().subscribe((result) => {
-      console.log('Resultado procesado:', result);
-      this.listaday = result;
-      console.log('Resultado procesado:', this.listaday);
-    });
+    this.getOrderRetrasadas();
 
+    this.startAutoScroll();
     const swiper = new Swiper('.swiper', {
       // Optional parameters
       /*  direction: 'vertical', */
       loop: true,
       breakpoints: {
-        640: {
+        768: {
           slidesPerView: 1,
         },
       },
-      // If we need pagination
-      pagination: {
+
+      /*     pagination: {
         el: '.swiper-pagination',
       },
 
-      // Navigation arrows
+
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
-      },
+      }, */
 
       autoplay: { delay: 2500, disableOnInteraction: false },
       // And if we need scrollbar
@@ -114,12 +143,38 @@ export class DashboardComponent implements OnInit {
   }
 
   get single() {
-    console.log(this.conteoPorEstadoArray);
     return this.conteoPorEstadoArray;
+  }
+  startAutoScroll() {
+    const container = this.tableContainer.nativeElement;
+
+    this.scrollInterval = setInterval(() => {
+      if (
+        container.scrollTop + container.clientHeight >=
+        container.scrollHeight
+      ) {
+        container.scrollTop = 0;
+      } else {
+        container.scrollTop += 1;
+      }
+    }, 20);
+  }
+
+  getResults() {
+    this.mantenimientoService.getResultsOrders().subscribe((results) => {
+      this.listaordene = results;
+    });
+  }
+
+  getOrdenMensual() {
+    this.mantenimientoService.getOrdenMensual().subscribe((ordenes) => {
+      this.listaordenesmensual = ordenes.filter(
+        (item) => item.IsOrderValidated == 'false',
+      );
+    });
   }
 
   get singleBarras() {
-    console.log(this.graficaBarras);
     return this.graficaBarras;
   }
   get multi() {
@@ -128,154 +183,171 @@ export class DashboardComponent implements OnInit {
   }
 
   onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
   onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    //console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
   getGraficaPastel() {
-    this.mantenimientoService.getIngresoOrden().subscribe((ordenes) => {
+    const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    console.log(fecha.slice(0, 10)); // 2025-03-13 10:30:00
+
+    const diferencia = differenceInDays(new Date(), new Date(fecha));
+    console.log(`Han pasado ${diferencia} días`);
+
+    this.mantenimientoService.getOrdenMensual().subscribe((ordenes) => {
       console.log(ordenes);
-      const conteo: { [key: number]: number } = {};
-      ordenes.forEach((equipo) => {
-        //  if (equipo.estado) {
-        const estadoNombre = equipo.estado;
-        console.log(estadoNombre);
-        if (conteo[estadoNombre]) {
-          conteo[estadoNombre]++;
-        } else {
-          conteo[estadoNombre] = 1;
-        }
-        // }
-      });
+      const dataPastel = ordenes
+        .filter((item) => item.RegisterDate === fecha.slice(0, 10))
+        .reduce((acc, item) => {
+          const orden = item.IsOrderValidated;
 
-      console.log(conteo);
+          acc[orden] = (acc[orden] || 0) + 1;
 
-      const nombresEstado = {
-        1: 'Creada',
-        0: 'Eliminada',
-        '2': 'Proceso',
-        '3': 'Validado',
-      };
-      const conteoArray = Object.keys(conteo).map((estadoNombre) => ({
-        name: nombresEstado[estadoNombre] || estadoNombre,
-        value: conteo[estadoNombre],
-      }));
+          return acc;
+        }, {});
+      console.log(dataPastel);
 
-      console.log(conteoArray);
-      this.conteoPorEstadoArray = conteoArray.sort((a, b) =>
-        a.name.localeCompare(b.name),
+      const totalOrdenes = Object.values(dataPastel).reduce(
+        (sum, value) => Number(sum) + Number(value) || 0,
       );
-      console.log(this.conteoPorEstadoArray);
+
+      Object.entries(dataPastel).forEach(([key, value]) => {
+        const porcentaje = (
+          (Number(value) / Number(totalOrdenes)) *
+          100
+        ).toFixed(2);
+
+        this.graficaPastel.push({
+          nombre: key === 'true' ? 'Validado' : 'Pendiente',
+          total: value,
+          porcentaje: porcentaje,
+        });
+      });
+      this.graficaPastel.push({
+        nombre: 'Generado',
+        total: totalOrdenes,
+        porcentaje: '100',
+      });
+      this.graficaPastel.sort((a, b) =>
+        a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' }),
+      );
     });
   }
 
   getGraficaLinea() {
-    this.mantenimientoService.getIngresoOrden().subscribe((ordenes) => {
-      this.data = ordenes;
-      console.log(this.data);
-      const datagrafica = this.data.reduce((acc, order) => {
-        const atencion = order.tipoatencion.nombre;
-        const fecha = order.fechaorden;
+    this.mantenimientoService.getResultsOrders().subscribe((results) => {
+      const datagrafica = results.reduce((acc, order) => {
+        results.filter((item) => item.OriginDesc == 'EMERGENCIA');
+        order.LabTests.LISLabTest.forEach((item) => {
+          const nombrePrueba = item.GroupName;
+          const atencion = order.OriginDesc;
+          if (!acc[atencion]) {
+            acc[atencion] = {
+              name: atencion,
+              series: [],
+            };
+          }
 
-        if (!acc[atencion]) {
-          acc[atencion] = {
-            name: atencion,
-            series: [],
-          };
-        }
-        const existingFecha = acc[atencion].series.find(
-          (item) => item.name === fecha,
-        );
-        if (!existingFecha) {
-          acc[atencion].series.push({
-            name: fecha,
-            value: 1,
-          });
-        } else {
-          // Si ya existe la fecha, incrementamos el contador
-          existingFecha.value += 1;
-        }
+          const existingFecha = acc[atencion].series.find(
+            (item) => item.name === nombrePrueba,
+          );
+          if (!existingFecha) {
+            acc[atencion].series.push({
+              name: nombrePrueba,
+              value: 1,
+            });
+          } else {
+            existingFecha.value += 1;
+          }
+        });
+
         return acc;
       }, {});
+
       this.graficaLinear = Object.values(datagrafica);
-      console.log(this.graficaLinear);
     });
   }
 
   getGraficaBarra() {
-    this.mantenimientoService.getIngresoOrden().subscribe((ordenes) => {
-      this.data = ordenes;
-      const agrupados = this.data
-        .flatMap((orden) => orden.prueba)
-        .filter(
-          (prueba) => prueba.panelprueba && prueba.panelprueba.ORDEN !== 2,
-        )
+    this.mantenimientoService.getResultsOrders().subscribe((results) => {
+      // this.data = results;
+      const agrupados = results
+        .flatMap((orden) => orden.LabTests.LISLabTest)
+
         .reduce((acc, prueba) => {
-          const nombre = prueba.panelprueba.NOMBRE;
+          const nombre = prueba.GroupName;
           acc[nombre] = (acc[nombre] || 0) + 1;
           return acc;
         }, {});
 
-      console.log(agrupados);
       this.graficaBarras = Object.keys(agrupados).map((estadoNombre) => ({
         name: estadoNombre,
         value: agrupados[estadoNombre],
       }));
       this.graficaBarras.sort((a, b) => a.name.localeCompare(b.name));
-      console.log(this.graficaBarras);
     });
+
+    /*   const agrupados = listaordenes.reduce((acc, item) => {
+      const origen = item.Origin;
+      acc[origen] = (acc[origen] || 0) + 1;
+
+      return acc;
+    }, {});
+
+    this.graficaBarras = Object.keys(agrupados).map((estadoNombre) => ({
+      name: estadoNombre,
+      value: agrupados[estadoNombre],
+    }));
+    this.graficaBarras.sort((a, b) => a.name.localeCompare(b.name));
+    console.log(this.graficaBarras); */
   }
 
-  getOrderRetrasadas(): Observable<any> {
-    const today = new Date();
-    const oneDayAgo = new Date(today);
-    console.log(oneDayAgo);
-    oneDayAgo.setDate(today.getDate() - 1);
-    const sevenDaysAgo = new Date(today);
-    sevenDaysAgo.setDate(today.getDate() - 7);
-    const fifteenDaysAgo = new Date(today);
-    fifteenDaysAgo.setDate(today.getDate() - 15);
+  getOrderRetrasadas() {
+    const result = {
+      dia: 0,
+      ayer: 0,
+      siete: 0,
+      quince: 0,
+    };
+    const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    console.log(fecha.slice(0, 10)); // 2025-03-13 10:30:00
 
-    return this.mantenimientoService.getIngresoOrden().pipe(
-      map((ordenes) => {
-        const result = {
-          dia: 0,
-          ayer: 0,
-          siete: 0,
-          quince: 0,
-          treinta: 0,
-        };
+    this.mantenimientoService.getOrdenMensual().subscribe((ordenes) => {
+      this.listaordenesmensual = ordenes.filter(
+        (item) => item.IsOrderValidated == 'false',
+      );
 
-        ordenes.forEach((order) => {
-          const orderDate = new Date(order.fechaorden);
+      this.listaordenesmensual.forEach((order) => {
+        const orderDate = order.RegisterDate;
 
-          if (orderDate === today) {
-            result.dia += 1;
-          } else if (orderDate >= oneDayAgo) {
-            result.ayer += 1;
-          } else if (orderDate >= sevenDaysAgo) {
-            result.siete += 1;
-          } else if (orderDate >= fifteenDaysAgo) {
-            result.quince += 1;
-          } else {
-            result.treinta += 1;
-          }
+        /*  const diff2 = today.getTime() - orderDate.getTime();
+        const diff = Math.floor(diff2 / (1000 * 60 * 60 * 24)); */
+        const diff = differenceInDays(new Date(), new Date(orderDate));
+        console.log(`Han pasado ${diff} días`);
+        console.log(`fechaa`, diff);
+        if (diff === 0) {
+          result.dia += 1;
+        }
+        if (diff == 1) {
+          result.ayer += 1;
+        } else if (diff == 7) {
+          result.siete += 1;
+        } else {
+          result.quince += 1;
+        }
+      });
+      Object.entries(result).forEach(([key, value]) => {
+        this.listaday.push({
+          category: key, // Nombre de la categoría
+          total: value, // Valor correspondiente
         });
-
-        return [
-          { category: 'Dia', total: result.dia },
-          { category: 'Ayer', total: result.ayer },
-          { category: '7 dias', total: result.siete },
-          { category: '15 dias', total: result.quince },
-          { category: '30 dias', total: result.treinta },
-        ]; // Retorna el resultado como observable
-      }),
-    );
+      });
+    });
   }
 }

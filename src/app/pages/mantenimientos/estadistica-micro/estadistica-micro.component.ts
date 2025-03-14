@@ -13,7 +13,7 @@ import { saveAs } from 'file-saver';
 import { Listaordene } from 'src/app/interfaces/orden.interface';
 import { LlenarCombosService } from 'src/app/services/llenar-combos.service';
 import { writeFile, utils } from 'xlsx';
-import { listaordenes } from 'src/app/data';
+
 
 @Component({
   selector: 'app-estadistica-micro',
@@ -135,7 +135,7 @@ const cedula=orden.cedula?.slice(-4);
     const segundoApellido = nombres[1]?.slice(0, 2) || '00';
     const primerNombre = nombres[2]?.slice(0, 2) || '00';
     const segundoNombre =  nombres[3]?.slice(0, 2) || '00';
-   
+
 
     return  primerApellido +
 

@@ -119,9 +119,17 @@ import {
 import { Tecnica, Tecnicas } from '../interfaces/cargar-tecnica.interface';
 
 import { Muestra, Muestras } from '../interfaces/carga-muestras.interface';
-import { ListaperfilesID, PerfilId } from '../interfaces/cargar-listaperfilesId.interface';
+import {
+  ListaperfilesID,
+  PerfilId,
+} from '../interfaces/cargar-listaperfilesId.interface';
 import { Data } from '../models/cargaGnerica.module';
-import { UnidadById, UnidadId } from '../interfaces/cargar-unidadById.interface';
+import {
+  UnidadById,
+  UnidadId,
+} from '../interfaces/cargar-unidadById.interface';
+import { Result, ResultOrder } from '../interfaces/carga-resultOrders.interface';
+import { OrdeneMensual, OrdenMensual } from '../interfaces/carga-ordenMensual.interface';
 //import { Pruebas } from '../interfaces/cargaReportPruebas.interfaces';
 
 const baseUrl = environment.url;
@@ -939,6 +947,7 @@ export class MantenimientosService {
       .get<Ingresoordenes>(`${baseUrl}/api/ingresorden`, this.headers)
       .pipe(map(({ ordenes }) => ordenes));
   }
+
   getIngresoOrdenes(data: string): Observable<Ordene[]> {
     return this.http
       .get<Ingresoordenes>(
@@ -964,5 +973,16 @@ export class MantenimientosService {
     return this.http.get(`${baseUrl}/api/pdf/generarpdf/${id}`, {
       responseType: 'blob',
     });
+  }
+
+  getResultsOrders():Observable<Result[]>{
+    return this.http.get<ResultOrder>(`${baseUrl}/api/estadordenes`,this.headers)
+    .pipe(map(({results})=>results))
+  }
+
+  getOrdenMensual():Observable<OrdeneMensual[]>{
+    return this.http.get<OrdenMensual>(`${baseUrl}/api/estadordenes/estadomensual`,this.headers)
+    .pipe(map(({ordenes})=>ordenes))
+
   }
 }

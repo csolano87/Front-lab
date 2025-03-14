@@ -138,20 +138,7 @@ export class DespacharComponent implements OnInit {
                 control.LOTE = loteActual
                   ? `${loteActual}, ${item.lote || '0'}`
                   : `${item.lote || '0'}`;
-                /*    const cantidadActual = control.ENTREGADO;
-                   const loteActual = control.LOTE;
-                   console.log(cantidadActual);
-
-                   const nuevaCantidad = cantidadActual
-                     ? `${cantidadActual}, ${item.cantidadReservada}`
-                     : `${item.cantidadReservada || '0'}`;
-                   const nuevoLote = loteActual
-                     ? `${loteActual}, ${item.lote || '0'}`
-                     : `${item.lote || '0'}`; */
-
-                // Asignar los valores concatenados al control
-                /* control.get('ENTREGADO').patchValue(nuevaCantidad);
-                control.get('LOTE').patchValue(nuevoLote); */
+               
               });
             } else {
             }

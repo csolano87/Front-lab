@@ -1,7 +1,11 @@
 <div *ngIf="listaordenesid" class="container-fluid rounded shadow">
   <div class="row py-4 animated fadeIn fast">
     <div class="col-md-12">
-      <form id="validarfrom" [formGroup]="validarfrom" (ngSubmit)="GuadarResultados()">
+      <form
+        id="validarfrom"
+        [formGroup]="validarfrom"
+        (ngSubmit)="GuadarResultados()"
+      >
         <div class="demographic-card">
           <h2 class="demographic-title">Datos Demográficos</h2>
           <div class="demographic-content">
@@ -39,34 +43,49 @@
               </p>
             </div>
           </div>
+          <div *ngIf="cargando" class="text-center mt-3 animated fadeIn faster">
+            <!--  <h4 class="alert-heading">Cargando</h4> -->
+            <p>
+              <!--                   <i class="fas fa-sync-alt fa-spin fa-2x"></i> -->
+              <!-- <i class='bx bx-sync'></i> -->
+              <i class="bx bx-loader-circle bx-burst bx-rotate-90 bx-md"></i>
+            </p>
+            <!--     <p class="mb-0">Espere por favor</p> -->
+          </div>
 
-          <div class="table-responsible">
+          <div *ngIf="!cargando" class="table-responsible">
             <table class="table">
               <thead>
                 <tr>
-                  <th style="width: 30%;">Nombre</th>
-                  <th style="width: 10%;">Resultado</th>
+                  <th style="width: 5%">Codigo</th>
+                  <th style="width: 25%">Nombre de la prueba</th>
 
-                  <th style="width: 20%;">Referencia</th>
-                  <th style="width: 20%;">Unidad</th>
-                  <th style="width: 20%;">Alarma</th>
-                  <!--   <th>Comentario</th> -->
+                  <th style="width: 10%">Resultado</th>
+                  <th style="width: 10%">Unidad</th>
+                  <th style="width: 10%">Valor Referencia</th>
+
+                  <th style="width: 5%">Alarma</th>
+                  <th style="width: 10%">Comentario</th>
+                  <th style="width: 15%">Ultimo resultado</th>
                 </tr>
               </thead>
               <tbody>
                 <ng-container *ngFor="let modelo of agrupadas">
                   <tr>
-                    <th colspan="7">
+                    <th colspan="8">
                       <div class="contente-wrapper">
                         <!-- Contenido alineado a la izquierda -->
                         <div class="left-content">
-                          <p> {{ modelo.categoria }}</p>
+                          <p>{{ modelo.categoria }}</p>
 
-                          <div [ngClass]="{
-                        'generado': modelo.item.estado === 1,
-                        'reportado': modelo.item.estado === 4,
-                        'validado': modelo.item.estado ===5
-                      }" [ngSwitch]="modelo.item.estado">
+                          <div
+                            [ngClass]="{
+                              generado: modelo.item.estado === 1,
+                              reportado: modelo.item.estado === 4,
+                              validado: modelo.item.estado === 5
+                            }"
+                            [ngSwitch]="modelo.item.estado"
+                          >
                             <p *ngSwitchCase="1">Generado</p>
                             <p *ngSwitchCase="4">Reportado</p>
                             <p *ngSwitchDefault>Validado</p>
@@ -75,44 +94,78 @@
 
                         <!-- Contenido alineado a la derecha -->
                         <div class="right-content">
-                          <!--     <span class="badge badge-info">{{ modelo.item.total }}</span> -->
                           <span>
-                            <i (click)="guardarResultados(modelo.item.pruebas)" class="bx bxs-save"></i>
-                            <i *ngIf="validarPruebasValor(modelo.item.pruebas)" (click)="ValidarParcial(modelo)"
-                              class="bx bxs-check-circle"></i>
+                            <i
+                              (click)="guardarResultados(modelo.item.pruebas)"
+                              class="bx bxs-save"
+                            ></i>
+                            <i
+                              *ngIf="validarPruebasValor(modelo.item.pruebas)"
+                              (click)="ValidarParcial(modelo)"
+                              class="bx bxs-check-circle"
+                            ></i>
                           </span>
                         </div>
                       </div>
                     </th>
                   </tr>
 
-                  <ng-container *ngFor="let prueba of modelo.item.pruebas; let i = index">
+                  <ng-container
+                    *ngFor="let prueba of modelo.item.pruebas; let i = index"
+                  >
                     <tr>
-
+                      <td>{{ prueba.panelprueba.CODIGO }}</td>
                       <td>{{ prueba.panelprueba.NOMBRE }}</td>
 
                       <td>
                         <div>
-                          <input class="form-control" #resultado type="text" [value]="prueba.resultado"
-                            (keyup)="resultados($event, prueba)" [disabled]="listaordenesid.estado ===3" autofocus />
+                          <input
+                            class="form-control"
+                            #resultado
+                            type="text"
+                            [value]="prueba.resultado"
+                            (keyup)="resultados($event, prueba)"
+                            [disabled]="listaordenesid.estado === 3"
+                            autofocus
+                          />
                         </div>
                       </td>
-                      <td>{{ prueba.panelprueba?.rango?.rangoMin }} - {{ prueba.panelprueba?.rango?.rangoMax }}</td>
                       <td>
                         {{ prueba.panelprueba?.rango?.unidad.DESCRIPCION }}
                       </td>
+                      <td>
+                        {{ prueba.panelprueba?.rango?.rangoMin }} -
+                        {{ prueba.panelprueba?.rango?.rangoMax }}
+                      </td>
 
                       <td>
-                        <ng-container [ngSwitch]="validarResultadoConRango(prueba)">
-                          <i *ngSwitchCase="'alto'" class="bx bxs-up-arrow bx-sm text-danger"></i>
-                          <i *ngSwitchCase="'bajo'" class="bx bxs-down-arrow bx-sm text-warning"></i>
-                          <i *ngSwitchCase="'normal'" class="bx bx-check bx-sm text-success"></i>
+                        <ng-container
+                          [ngSwitch]="validarResultadoConRango(prueba)"
+                        >
+                          <i
+                            *ngSwitchCase="'alto'"
+                            class="bx bxs-up-arrow bx-sm text-danger"
+                          ></i>
+                          <i
+                            *ngSwitchCase="'bajo'"
+                            class="bx bxs-down-arrow bx-sm text-warning"
+                          ></i>
+                          <i
+                            *ngSwitchCase="'normal'"
+                            class="bx bx-check bx-sm text-success"
+                          ></i>
                         </ng-container>
                       </td>
-                      <!-- <td>
-                        <i class="bx bx-comment-detail bx-sm"
-                        (click)="comments(i)"></i>
-                      </td> -->
+                      <td>
+                        <i class="bx bxs-message-alt-add bx-rotate-270"></i>
+                      </td>
+                      <td
+                        data-toggle="modal"
+                        data-target="#modal-HistoricoPruebas"
+                        (click)="historicoResultados(prueba)"
+                      >
+                        {{ prueba.historioresultado[0]?.resultado }}
+                      </td>
                     </tr>
                   </ng-container>
                 </ng-container>
@@ -137,6 +190,62 @@
       <pre>
         {{ validarfrom.value | json }}
       </pre> -->
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-HistoricoPruebas">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Historial de examenes</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+
+                    <th class="th_modal_pruebas">Examen</th>
+                    <th class="th_modal_pruebas">Resultado</th>
+                    <th class="th_modal_pruebas">Rangos</th>
+                    <th class="th_modal_pruebas">Unidad</th>
+                    <th class="th_modal_pruebas">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let it of historicoresultados">
+
+                    <td class="td_modal_pruebas">
+                      <i class="bx bx-test-tube bx-tada"> </i>
+                      {{ it.panelprueba.NOMBRE }}
+                    </td>
+
+                    <td class="td_modal_pruebas">{{ it?.resultado }}</td>
+                    <td class="td_modal_pruebas">
+                      {{ it.rango?.rangoMin }} - {{ it.rango?.rangoMax }}
+                    </td>
+                    <td class="td_modal_pruebas">
+                      {{ it.rango?.unidad.DESCRIPCION }}
+                    </td>
+                    <td class="td_modal_pruebas">{{ it.fechaorden }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

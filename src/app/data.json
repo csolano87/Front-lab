@@ -1,0 +1,1100 @@
+[
+  {
+    "SampleID": "2501013010",
+    "RegisterYear": "7528",
+    "RegisterDate": "2025-01-01",
+    "RegisterHour": "02:05:28Z",
+    "Doctor": "13133194",
+    "Service": "1585",
+    "ServiceDesc": "HOSPI HOMBRES",
+    "Motive": "R",
+    "MotiveDesc": "RUTINA",
+    "Origin": "1",
+    "OriginDesc": "HOSPITALIZACION",
+    "Destination": "MORTEGA",
+    "DestinationDesc": "MORTEGA",
+    "Use": "5",
+    "OptionalDemogList": {
+      "LISElementValue": [
+        {
+          "Name": "Orden HIS",
+          "Value": "11113222"
+        },
+        {
+          "Name": "Otros",
+          "Value": "LIBRE"
+        },
+        {
+          "Name": "Codigos",
+          "Value": "TOMA DE MUESTRA"
+        },
+        {
+          "Name": "Sedes",
+          "Value": "IESS MANTA(LABORATORIO)"
+        },
+        {
+          "Name": "Activo",
+          "Value": "NINGUNO"
+        },
+        {
+          "Name": "HIS",
+          "Value": "AS400"
+        },
+        {
+          "Name": "Dependiente",
+          "Value": "NINGUNO"
+        },
+        {
+          "Name": "Llave Orden",
+          "Value": "2501017658"
+        }
+      ]
+    },
+    "MicSpecs": {
+      "LISMicSpec": {
+        "SpecimenName": "MICROBIOLOGICA",
+        "MicTests": {
+          "LISLabTest": [
+            {
+              "TestID": "9004",
+              "TestAbbreviation": "KOH",
+              "TestName": "KOH",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "KLOOR",
+              "CliValName": "LCDA. KARLA",
+              "CliValSurname": "LOOR",
+              "CliValHour": "08:45:05Z",
+              "CliValDate": "2025-01-07",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "08:45:13Z",
+              "InfDate": "2025-01-07",
+              "ResultComments": {
+                "LISComments": {
+                  "Type": "TE",
+                  "DateComment": "2025-01-07T08:45:00Z",
+                  "TextComment": "NEGATIVO\n",
+                  "AddEvent": "1"
+                }
+              },
+              "TestOrdinal": "1",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10841871",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            },
+            {
+              "TestID": "9005",
+              "TestAbbreviation": "GRAM",
+              "TestName": "EXAMEN DE GRAM",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "FMACIAS",
+              "CliValName": "LCDA. FATIMA",
+              "CliValSurname": "MACIAS",
+              "CliValHour": "08:11:43Z",
+              "CliValDate": "2025-01-06",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "08:11:45Z",
+              "InfDate": "2025-01-06",
+              "ResultComments": {
+                "LISComments": {
+                  "Type": "TE",
+                  "DateComment": "2025-01-06T08:11:43Z",
+                  "TextComment": "COCOS GRAM POSITIVOS\n--\nINFORME PRELIMINAR:\nPENDIENTE IDENTIFICACION Y ANTIBIOGRAMA\n \n",
+                  "AddEvent": "1"
+                }
+              },
+              "TestOrdinal": "2",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10841872",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            },
+            {
+              "TestID": "9014",
+              "TestAbbreviation": "HEMOCU 2",
+              "TestName": "HEMOCULTIVO N° 2",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "KLOOR",
+              "CliValName": "LCDA. KARLA",
+              "CliValSurname": "LOOR",
+              "CliValHour": "08:45:05Z",
+              "CliValDate": "2025-01-07",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "08:45:13Z",
+              "InfDate": "2025-01-07",
+              "TestOrdinal": "0",
+              "MicIsolates": {
+                ".LISMicIsolate": {
+                  "IsolatedName": "AISLAMIENTO 1",
+                  "IsolatedOrdinal": "0",
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO",
+                  "ResultValue": "150",
+                  "ResultName": "Staphylococcus aureus",
+                  "MicroorganismCode": "1",
+                  "MicroorganismName": ".",
+                  "AllowReportPrint": "true",
+                  "MicAntibiograms": {
+                    "LISMicAntibiogram": {
+                      "MethodPrinting": "true",
+                      "ResultPrinting": "true",
+                      "AllowReportPrint": "true",
+                      "MethodName": "CMI",
+                      "AntibiogramName": "AST - P663",
+                      "Ordinal": "0",
+                      "MicAntibiotics": {
+                        "LISMicAntibiotic": [
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "1",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Ciprofloxacino",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "<=16",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Nitrofurantoina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "<=10",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Trimetoprim-sulfametoxazol",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "0.25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Clindamicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "0.25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Daptomicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "<=0.25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Eritromicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "0.5",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Levofloxacino",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "2",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Linezolid",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "<=0.25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Oxacilina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "<=0.03",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Rifampicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "<=1",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Tetraciclina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "<=0.5",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Vancomicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "false",
+                            "MethodResult": "0.25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Ceftarolina",
+                            "ValueResultName": "Sensible"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "OrderTestID": "10841870",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            }
+          ]
+        },
+        "SpecOrdinal": "0"
+      }
+    },
+    "HasMicroTests": "false"
+  },
+  {
+    "SampleID": "2501013044",
+    "RegisterYear": "32382",
+    "RegisterDate": "2025-01-01",
+    "RegisterHour": "08:59:42Z",
+    "Doctor": "13073291",
+    "Service": "1107",
+    "ServiceDesc": "PED.GENERAL(HO)",
+    "Motive": "R",
+    "MotiveDesc": "RUTINA",
+    "Origin": "1",
+    "OriginDesc": "HOSPITALIZACION",
+    "Destination": "LCORDOVA",
+    "DestinationDesc": "LCORDOVA",
+    "Use": "5",
+    "OptionalDemogList": {
+      "LISElementValue": [
+        {
+          "Name": "Orden HIS",
+          "Value": "11113341"
+        },
+        {
+          "Name": "Otros",
+          "Value": "LIBRE"
+        },
+        {
+          "Name": "Codigos",
+          "Value": "TOMA DE MUESTRA"
+        },
+        {
+          "Name": "Sedes",
+          "Value": "IESS MANTA(LABORATORIO)"
+        },
+        {
+          "Name": "Activo",
+          "Value": "NINGUNO"
+        },
+        {
+          "Name": "HIS",
+          "Value": "AS400"
+        },
+        {
+          "Name": "Dependiente",
+          "Value": "HIJO Y FAMILIAR"
+        },
+        {
+          "Name": "Llave Orden",
+          "Value": "2501013231"
+        }
+      ]
+    },
+    "MicSpecs": {
+      "LISMicSpec": {
+        "SpecimenName": "MICROBIOLOGICA",
+        "MicTests": {
+          "LISLabTest": [
+            {
+              "TestID": "9004",
+              "TestAbbreviation": "KOH",
+              "TestName": "KOH",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "FMACIAS",
+              "CliValName": "LCDA. FATIMA",
+              "CliValSurname": "MACIAS",
+              "CliValHour": "12:40:47Z",
+              "CliValDate": "2025-01-08",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "12:40:50Z",
+              "InfDate": "2025-01-08",
+              "ResultComments": {
+                "LISComments": {
+                  "Type": "TE",
+                  "DateComment": "2025-01-08T12:40:35Z",
+                  "TextComment": "NEGATIVO\n",
+                  "AddEvent": "1"
+                }
+              },
+              "TestOrdinal": "1",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10843072",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            },
+            {
+              "TestID": "9005",
+              "TestAbbreviation": "GRAM",
+              "TestName": "EXAMEN DE GRAM",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "FMACIAS",
+              "CliValName": "LCDA. FATIMA",
+              "CliValSurname": "MACIAS",
+              "CliValHour": "12:40:47Z",
+              "CliValDate": "2025-01-08",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "12:40:50Z",
+              "InfDate": "2025-01-08",
+              "ResultComments": {
+                "LISComments": {
+                  "Type": "TE",
+                  "DateComment": "2025-01-08T12:40:42Z",
+                  "TextComment": "NO SE OBSERVAN BACTERIAS\n",
+                  "AddEvent": "1"
+                }
+              },
+              "TestOrdinal": "3",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10843074",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            },
+            {
+              "TestID": "9014",
+              "TestAbbreviation": "HEMOCU 2",
+              "TestName": "HEMOCULTIVO N° 2",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "FMACIAS",
+              "CliValName": "LCDA. FATIMA",
+              "CliValSurname": "MACIAS",
+              "CliValHour": "12:40:47Z",
+              "CliValDate": "2025-01-08",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "12:40:50Z",
+              "InfDate": "2025-01-08",
+              "ResultComments": {
+                "LISComments": {
+                  "Type": "TE",
+                  "DateComment": "2025-01-08T12:40:47Z",
+                  "TextComment": "SIN DESARROLLO MICROBIANO DURANTE 7 DIAS.\n(INFORME: DEFINITIVO)\n \n \n",
+                  "AddEvent": "1"
+                }
+              },
+              "TestOrdinal": "0",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10843071",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            },
+            {
+              "TestID": "9024",
+              "TestAbbreviation": "FRESCO",
+              "TestName": "EXAMEN FRESCO",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "FMACIAS",
+              "CliValName": "LCDA. FATIMA",
+              "CliValSurname": "MACIAS",
+              "CliValHour": "11:21:59Z",
+              "CliValDate": "2025-01-06",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "11:22:09Z",
+              "InfDate": "2025-01-06",
+              "ResultComments": {
+                "LISComments": [
+                  {
+                    "Type": "TE",
+                    "DateComment": "2025-01-03T14:31:43Z",
+                    "TextComment": "(1) -------------------------------------------------------------------------\nREPORTE PRELIMINAR: FECHA 3/01/2025 HORA 14H31\nSIN DESARROLLO MICROBIANO DURANTE 48 HORAS\n(OBSERVACION: HEMOCULTIVO EN PROCESO X 7 DIAS)",
+                    "AddEvent": "1"
+                  },
+                  {
+                    "Type": "TE",
+                    "DateComment": "2025-01-06T11:21:59Z",
+                    "TextComment": "(1) -------------------------------------------------------------------------\nREPORTE PRELIMINAR: FECHA 06/01/2025 HORA 11H22\nSIN DESARROLLO MICROBIANO DURANTE 5 DIAS\n(OBSERVACION: HEMOCULTIVO EN PROCESO X 7 DIAS)\n",
+                    "AddEvent": "1"
+                  }
+                ]
+              },
+              "TestOrdinal": "2",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10843073",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            }
+          ]
+        },
+        "SpecOrdinal": "0"
+      }
+    },
+    "HasMicroTests": "false"
+  },
+  {
+    "SampleID": "2501013045",
+    "RegisterYear": "37923",
+    "RegisterDate": "2025-01-01",
+    "RegisterHour": "10:32:03Z",
+    "Doctor": "13163698",
+    "Service": "1585",
+    "ServiceDesc": "HOSPI HOMBRES",
+    "Motive": "R",
+    "MotiveDesc": "RUTINA",
+    "Origin": "1",
+    "OriginDesc": "HOSPITALIZACION",
+    "Destination": "LCORDOVA",
+    "DestinationDesc": "LCORDOVA",
+    "Use": "5",
+    "OptionalDemogList": {
+      "LISElementValue": [
+        {
+          "Name": "Orden HIS",
+          "Value": "11113386"
+        },
+        {
+          "Name": "Otros",
+          "Value": "LIBRE"
+        },
+        {
+          "Name": "Codigos",
+          "Value": "TOMA DE MUESTRA"
+        },
+        {
+          "Name": "Sedes",
+          "Value": "IESS MANTA(LABORATORIO)"
+        },
+        {
+          "Name": "Activo",
+          "Value": "NINGUNO"
+        },
+        {
+          "Name": "HIS",
+          "Value": "AS400"
+        },
+        {
+          "Name": "Dependiente",
+          "Value": "NINGUNO"
+        },
+        {
+          "Name": "Llave Orden",
+          "Value": "2501013296"
+        }
+      ]
+    },
+    "MicSpecs": {
+      "LISMicSpec": {
+        "SpecimenName": "MICROBIOLOGICA",
+        "MicTests": {
+          "LISLabTest": [
+            {
+              "TestID": "9004",
+              "TestAbbreviation": "KOH",
+              "TestName": "KOH",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "KLOOR",
+              "CliValName": "LCDA. KARLA",
+              "CliValSurname": "LOOR",
+              "CliValHour": "08:45:47Z",
+              "CliValDate": "2025-01-07",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "08:45:54Z",
+              "InfDate": "2025-01-07",
+              "ResultComments": {
+                "LISComments": {
+                  "Type": "TE",
+                  "DateComment": "2025-01-07T08:45:38Z",
+                  "TextComment": "NEGATIVO\n",
+                  "AddEvent": "1"
+                }
+              },
+              "TestOrdinal": "1",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10843131",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            },
+            {
+              "TestID": "9005",
+              "TestAbbreviation": "GRAM",
+              "TestName": "EXAMEN DE GRAM",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "FMACIAS",
+              "CliValName": "LCDA. FATIMA",
+              "CliValSurname": "MACIAS",
+              "CliValHour": "08:39:47Z",
+              "CliValDate": "2025-01-06",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "08:39:48Z",
+              "InfDate": "2025-01-06",
+              "ResultComments": {
+                "LISComments": {
+                  "Type": "TE",
+                  "DateComment": "2025-01-06T08:39:47Z",
+                  "TextComment": "COCOS GRAM POSITIVOS\n--\nINFORME PRELIMINAR:\nPENDIENTE IDENTIFICACION Y ANTIBIOGRAMA\n \n",
+                  "AddEvent": "1"
+                }
+              },
+              "TestOrdinal": "3",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10843133",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            },
+            {
+              "TestID": "9014",
+              "TestAbbreviation": "HEMOCU 2",
+              "TestName": "HEMOCULTIVO N° 2",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "KLOOR",
+              "CliValName": "LCDA. KARLA",
+              "CliValSurname": "LOOR",
+              "CliValHour": "08:45:47Z",
+              "CliValDate": "2025-01-07",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "08:45:54Z",
+              "InfDate": "2025-01-07",
+              "TestOrdinal": "0",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "IsolatedName": "AISLAMIENTO 1",
+                  "IsolatedOrdinal": "0",
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO",
+                  "ResultValue": "150",
+                  "ResultName": "Staphylococcus aureus",
+                  "MicroorganismCode": "1",
+                  "MicroorganismName": ".",
+                  "AllowReportPrint": "true",
+                  "MicAntibiograms": {
+                    "LISMicAntibiogram": {
+                      "MethodPrinting": "true",
+                      "ResultPrinting": "true",
+                      "AllowReportPrint": "true",
+                      "MethodName": "CMI",
+                      "AntibiogramName": "AST - P663",
+                      "Ordinal": "0",
+                      "MicAntibiotics": {
+                        "LISMicAntibiotic": [
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "<=0,25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Oxacilina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "0.25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Ceftarolina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "1",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Ciprofloxacino",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "0.5",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Levofloxacino",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "<=0,25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Eritromicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "0.25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Clindamicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "2",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Linezolid",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "0.25",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Daptomicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "<=0,5",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Vancomicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "<=1",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Tetraciclina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "<=16",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Nitrofurantoina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "<=0,03",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "false",
+                            "AntibioticName": "Rifampicina",
+                            "ValueResultName": "Sensible"
+                          },
+                          {
+                            "DiamPrint": "true",
+                            "MethodResult": "<=10",
+                            "MethodPrint": "true",
+                            "ValueResult": "S",
+                            "ResultPrint": "true",
+                            "TotalPrint": "true",
+                            "AntibioticName": "Trimetoprim-sulfametoxazol",
+                            "ValueResultName": "Sensible"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "OrderTestID": "10843130",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            },
+            {
+              "TestID": "9024",
+              "TestAbbreviation": "FRESCO",
+              "TestName": "EXAMEN FRESCO",
+              "DecPrimaryUnit": "2",
+              "TechValStatus": "3",
+              "CliValUser": "KLOOR",
+              "CliValName": "LCDA. KARLA",
+              "CliValSurname": "LOOR",
+              "CliValHour": "08:45:47Z",
+              "CliValDate": "2025-01-07",
+              "CliValStatus": "1",
+              "InfStatus": "1",
+              "InfUser": "SYS_HCA_MIS_ Hos",
+              "InfHour": "08:45:54Z",
+              "InfDate": "2025-01-07",
+              "ResultComments": {
+                "LISComments": {
+                  "Type": "TE",
+                  "DateComment": "2025-01-07T08:45:46Z",
+                  "TextComment": "N/I\n",
+                  "AddEvent": "1"
+                }
+              },
+              "TestOrdinal": "2",
+              "MicIsolates": {
+                "LISMicIsolate": {
+                  "CultureCode": "1",
+                  "CultureOrdinal": "0",
+                  "CultureName": "MEDIO DE CULTIVO"
+                }
+              },
+              "MicResults": {
+                "LISMicResults": {
+                  "ResultValue": "."
+                }
+              },
+              "OrderTestID": "10843132",
+              "TestStatus": "5",
+              "ReportPrint": "true",
+              "VersionComment": {
+                "LISComments": {
+                  "AddEvent": "1"
+                }
+              },
+              "HasOptionals": "false"
+            }
+          ]
+        },
+        "SpecOrdinal": "0"
+      }
+    },
+    "HasMicroTests": "false"
+  },
+  {
+    "SampleID": "2501013047",
+    "RegisterYear": "43943",
+    "RegisterDate": "2025-01-01",
+    "RegisterHour": "12:12:23Z",
+    "Doctor": "13132485",
+    "Service": "1114",
+    "ServiceDesc": "GINECO OBST(HO)",
+    "Motive": "R",
+    "MotiveDesc": "RUTINA",
+    "Origin": "1",
+    "OriginDesc": "HOSPITALIZACION",
+    "Destination": "LCORDOVA",
+    "DestinationDesc": "LCORDOVA",
+    "Use": "5",
+    "OptionalDemogList": {
+      "LISElementValue": [
+        {
+          "Name": "Orden HIS",
+          "Value": "11113429"
+        },
+        {
+          "Name": "Otros",
+          "Value": "LIBRE"
+        },
+        {
+          "Name": "Codigos",
+          "Value": "TOMA DE MUESTRA"
+        },
+        {
+          "Name": "Sedes",
+          "Value": "IESS MANTA(LABORATORIO)"
+        },
+        {
+          "Name": "Activo",
+          "Value": "CALIFICACIÓN VOLUNTARIA"
+        },
+        {
+          "Name": "HIS",
+          "Value": "AS400"
+        },
+        {
+          "Name": "Dependiente",
+          "Value": "NINGUNO"
+        },
+        {
+          "Name": "Llave Orden",
+          "Value": "2501012491"
+        }
+      ]
+    },
+    "MicSpecs": {
+      "LISMicSpec": {
+        "SpecimenName": "MICROBIOLOGICA",
+        "MicTests": {
+          "LISLabTest": {
+            "TestID": "9017",
+            "TestAbbreviation": "UROCULTI",
+            "TestName": "CULTIVO DE ORINA",
+            "DecPrimaryUnit": "2",
+            "TechValStatus": "3",
+            "CliValUser": "KLOOR",
+            "CliValName": "LCDA. KARLA",
+            "CliValSurname": "LOOR",
+            "CliValHour": "09:03:15Z",
+            "CliValDate": "2025-01-06",
+            "CliValStatus": "1",
+            "InfStatus": "1",
+            "InfUser": "SYS_HCA_MIS_ Hos",
+            "InfHour": "09:03:20Z",
+            "InfDate": "2025-01-06",
+            "ResultComments": {
+              "LISComments": {
+                "Type": "TE",
+                "DateComment": "2025-01-06T09:03:15Z",
+                "TextComment": "SIN DESARROLLO MICROBIANO DURANTE 48 HORAS\n",
+                "AddEvent": "1"
+              }
+            },
+            "TestOrdinal": "0",
+            "MicIsolates": {
+              "LISMicIsolate": {
+                "CultureCode": "1",
+                "CultureOrdinal": "0",
+                "CultureName": "MEDIO DE CULTIVO"
+              }
+            },
+            "MicResults": {
+              "LISMicResults": {
+                "ResultValue": "."
+              }
+            },
+            "OrderTestID": "10843242",
+            "TestStatus": "5",
+            "ReportPrint": "true",
+            "VersionComment": {
+              "LISComments": {
+                "AddEvent": "1"
+              }
+            },
+            "HasOptionals": "false"
+          }
+        },
+        "SpecOrdinal": "0"
+      }
+    },
+    "HasMicroTests": "false"
+  }
+]

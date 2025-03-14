@@ -7,6 +7,7 @@ import { IngresoService } from 'src/app/services/ingreso.service';
 import Swal from 'sweetalert2';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormatDateOptions } from 'date-fns';
+import { panelPrueba } from '../../../models/panelPruebas.module';
 
 @Component({
   selector: 'app-validacionresultados',
@@ -16,6 +17,7 @@ import { FormatDateOptions } from 'date-fns';
 })
 export class ValidacionresultadosComponent implements OnInit {
   listaordenesid: OrdenID = {};
+  historicoresultados: any = [];
   showAge;
   validarfrom!: FormGroup;
   agrupadas: any[] = [];
@@ -25,7 +27,7 @@ export class ValidacionresultadosComponent implements OnInit {
   filtroModeloId: string = '';
   filtroFechaIn: string = '';
   filtroFechaOut: string = '';
-
+   cargando:boolean=false;
   get pruebas() {
     return this.validarfrom.get('pruebas') as FormArray;
   }
@@ -40,8 +42,6 @@ export class ValidacionresultadosComponent implements OnInit {
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe(({ id }) => this.orden(id));
-  
-
   }
 
   crearFormulario() {
@@ -61,15 +61,16 @@ export class ValidacionresultadosComponent implements OnInit {
   }
 
   orden(id: string) {
+    this.cargando=true;
     console.log(id);
     if (id === 'Nuevo') {
       return;
     }
-  
 
     this.manteniminetoService.getIngresoOrdenId(id).subscribe((ordenId) => {
       console.log(ordenId);
       this.listaordenesid = ordenId;
+      this.cargando=false;
       this.isResultadoValido = this.listaordenesid.prueba.some(
         (item) => item.resultado === null || item.resultado === '',
       );
@@ -102,7 +103,7 @@ export class ValidacionresultadosComponent implements OnInit {
           item: agrupada[item],
         };
       });
-      console.log(this.listaordenesid);
+      console.log(this.agrupadas);
       const { id, prueba } = this.listaordenesid;
 
       this.validarfrom.patchValue({
@@ -123,10 +124,11 @@ export class ValidacionresultadosComponent implements OnInit {
               resultado: item.resultado,
             }),
           );
-
         }),
       });
+
     });
+
   }
   CalculateAge() {
     const date1 = new Date(); // Fecha actual
@@ -173,11 +175,10 @@ export class ValidacionresultadosComponent implements OnInit {
   }
 
   inputDisable() {
-    
-  /*   this.pruebas.controls.forEach(control => {
+    /*   this.pruebas.controls.forEach(control => {
       const resultado = control.get('resultado').value; // Obtiene el valor del input
       console.log(resultado); // Muestra los valores en consola para depuración
-  
+
       if (resultado == null || resultado === '') {
         control.get('resultado').enable(); // Deshabilita el input si está vacío
       } else {
@@ -185,8 +186,6 @@ export class ValidacionresultadosComponent implements OnInit {
       }
     }); */
   }
-  
-
 
   Validarrangos(item) {
     const date1 = new Date(); // Fecha actual
@@ -194,11 +193,11 @@ export class ValidacionresultadosComponent implements OnInit {
     const date2 = new Date(this.listaordenesid.paciente.fechanac); // Fecha de nacimiento
     const sexo = this.listaordenesid.paciente.sexo;
     const sexoMap: Record<string, string> = {
-      "M": "MASCULINO",
-      "F": "FEMENINO"
-    }
+      M: 'MASCULINO',
+      F: 'FEMENINO',
+    };
     const sexoTransformado = sexoMap[sexo] || sexo;
-    console.log(sexoTransformado)
+    console.log(sexoTransformado);
     // Calculamos años, meses y días
     const years = date1.getFullYear() - date2.getFullYear();
     let months = date1.getMonth() - date2.getMonth();
@@ -217,7 +216,7 @@ export class ValidacionresultadosComponent implements OnInit {
     if (months < 0) {
       months += 12;
     }
-    console.log(`Tiene ${years} anos ,con  ${months} meses y ${days} dias`)
+    console.log(`Tiene ${years} anos ,con  ${months} meses y ${days} dias`);
     let matchedRango = null;
     if (item.panelprueba.rango) {
       console.log(item.panelprueba.rango);
@@ -226,7 +225,10 @@ export class ValidacionresultadosComponent implements OnInit {
         console.log(`Verificando rango:`, rango);
 
         // Si encontramos un tipo fisiológico específico que coincide con sexoTransformado, lo tomamos y terminamos
-        if (rango.tipofisiologico.DESCRIPCION !== 'GENERICO' && rango.tipofisiologico.DESCRIPCION === sexoTransformado) {
+        if (
+          rango.tipofisiologico.DESCRIPCION !== 'GENERICO' &&
+          rango.tipofisiologico.DESCRIPCION === sexoTransformado
+        ) {
           if (validarEdad(rango)) {
             matchedRango = rango;
             break; // ¡Nos detenemos aquí porque encontramos el específico!
@@ -234,7 +236,11 @@ export class ValidacionresultadosComponent implements OnInit {
         }
 
         // Si no hemos encontrado un específico, consideramos GENERAL como opción secundaria
-        if (!matchedRango && rango.tipofisiologico.DESCRIPCION === 'GENERICO' && validarEdad(rango)) {
+        if (
+          !matchedRango &&
+          rango.tipofisiologico.DESCRIPCION === 'GENERICO' &&
+          validarEdad(rango)
+        ) {
           matchedRango = rango;
         }
       }
@@ -244,17 +250,24 @@ export class ValidacionresultadosComponent implements OnInit {
      * Función para validar la edad según la unidad del rango.
      */
     function validarEdad(rango) {
-      if (years === 0 && months === 0 && rango.unidadedad.DESCRIPCION === 'DIAS') {
+      if (
+        years === 0 &&
+        months === 0 &&
+        rango.unidadedad.DESCRIPCION === 'DIAS'
+      ) {
         return years >= rango.edadinicial && years <= rango.edadfinal;
       }
-      if (years === 0 && months > 0 && rango.unidadedad.DESCRIPCION === 'MESES') {
+      if (
+        years === 0 &&
+        months > 0 &&
+        rango.unidadedad.DESCRIPCION === 'MESES'
+      ) {
         return years >= rango.edadinicial && years <= rango.edadfinal;
       }
       if (years > 0 && rango.unidadedad.DESCRIPCION === 'AÑOS') {
         return years >= rango.edadinicial && years <= rango.edadfinal;
       }
       return false;
-
     }
     console.log(matchedRango);
     return matchedRango || null; // Retorna el rango coincidente o null si no se encuentra ninguno
@@ -264,7 +277,7 @@ export class ValidacionresultadosComponent implements OnInit {
   }
   GuadarResultados() {
     /*  console.log(this.validarfrom.value);
- 
+
      this.ingresoService
        .getValidacionOrden(this.validarfrom.value.id, this.validarfrom.value)
        .subscribe((resp: any) => {
@@ -277,11 +290,9 @@ export class ValidacionresultadosComponent implements OnInit {
            showConfirmButton: false,
            timer: 1500,
          });
- 
+
          this.orden(this.validarfrom.value.id);
        }); */
-
-
   }
   resultados(event: KeyboardEvent, modelo: any) {
     const arrPruebas = this.validarfrom.get('pruebas') as FormArray;
@@ -316,8 +327,7 @@ export class ValidacionresultadosComponent implements OnInit {
     }
 
     const controles = this.pruebas.value;
-    console.log(this.pruebas.value.resultado)
-
+    console.log(this.pruebas.value.resultado);
 
     console.log(prueba);
     const date1 = new Date(); // Fecha actual
@@ -377,7 +387,6 @@ export class ValidacionresultadosComponent implements OnInit {
     return ''; */
   }
 
-
   validarOrden(listaordenesid: OrdenID) {
     console.log(listaordenesid.id);
 
@@ -401,52 +410,50 @@ export class ValidacionresultadosComponent implements OnInit {
   guardarResultados(prueba: any) {
     /*     console.log(prueba); */
     /*   const id = [...new Set(prueba.map(item => item.ordenId))]; */
-    console.log(prueba)
+    console.log(prueba);
     const [id] = prueba
-      .map(item => item.ordenId)
+      .map((item) => item.ordenId)
       .filter((valor, indice, self) => self.indexOf(valor) === indice);
-    console.log(id)
+    console.log(id);
     /*    console.log(this.pruebas.value) */
-    const data = this.pruebas.value.filter(
-      (item) => prueba.some(da => da.panelpruebaId === item.ordenId)
+    const data = this.pruebas.value.filter((item) =>
+      prueba.some((da) => da.panelpruebaId === item.ordenId),
+    );
+    console.log(data);
+    this.ingresoService.getValidacionOrden(id, data).subscribe((resp: any) => {
+      /*  console.log(resp); */
+      const { msg } = resp;
 
-    )
-    console.log(data)
-    this.ingresoService
-      .getValidacionOrden(id, data)
-      .subscribe((resp: any) => {
-        /*  console.log(resp); */
-        const { msg } = resp;
+      this.orden(this.listaordenesid.id.toString());
+      console.log(this.pruebas.value);
+      const inputResultado = this.pruebas.controls.forEach(
+        (control) => control.value.resultado,
+      );
+      if (inputResultado !== null) {
+        this.pruebas.controls.forEach((control) =>
+          control.get('resultado').disable(),
+        );
+      }
 
-        this.orden(this.listaordenesid.id.toString());
-        console.log(this.pruebas.value)
-        const inputResultado = this.pruebas.controls.forEach(control => control.value.resultado)
-        if (inputResultado !== null) {
-          this.pruebas.controls.forEach(control => control.get('resultado').disable())
-        }
-
-
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: `${msg}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-
-        /*    this.orden(this.validarfrom.value.id); */
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: `${msg}`,
+        showConfirmButton: false,
+        timer: 1500,
       });
 
-
+      /*    this.orden(this.validarfrom.value.id); */
+    });
   }
   ValidarParcial(modelo: any) {
-    console.log(modelo.item.pruebas)
-    const itemId = modelo.item.pruebas.map(item => item.panelpruebaId)
+    console.log(modelo.item.pruebas);
+    const itemId = modelo.item.pruebas.map((item) => item.panelpruebaId);
     const data = {
       id: modelo.item.id,
       estado: 5,
-      panelpruebaId: itemId
-    }
+      panelpruebaId: itemId,
+    };
     console.log(data);
 
     this.ingresoService.getValidarIngresoOrden(data).subscribe((resp: any) => {
@@ -468,16 +475,28 @@ export class ValidacionresultadosComponent implements OnInit {
         timer: 1500,
       });
     });
-
   }
   validarPruebasValor(pruebas: any) {
     console.log(pruebas);
-    return pruebas.some(item =>
-      item.resultado != null && item.estado != 3)
+    return pruebas.some((item) => item.resultado != null && item.estado != 3)
       ? true
-      : null
+      : null;
+  }
 
+  filtrarHistorico(item: any) {
+    return (
+      item.historioresultado?.filter(
+        (h) => h.panelprueba.CODIGO === item.panelprueba.CODIGO,
+      ) || []
+    );
+  }
 
-
+  trackById(index: number, item: any): number {
+    console.log(item);
+    return item.panelprueba.CODIGO;
+  }
+  historicoResultados(prueba: any) {
+    console.log(prueba.historioresultado);
+    this.historicoresultados = prueba.historioresultado;
   }
 }

@@ -117,8 +117,7 @@
                       </span> -->
 
                       <span
-                          [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
-
+                        [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
                         *ngIf="usuario.role.rol !== 'OPERADOR'"
                         class="span_rangos"
                       >

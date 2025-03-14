@@ -116,7 +116,29 @@ export interface Prueba {
     creador?:             Reportador | null;
     reportador?:          Reportador | null;
     validador?:          Reportador | null;
-}
+    historioresultado?:   Historioresultado[];
+  }
+
+  export interface Historioresultado {
+      id?:                  number;
+      resultado?:           null | string;
+      fechaorden?:          string;
+      horaorden?:           string;
+      fechaordenreportada?: null | string;
+      horaordenreportada?:  null | string;
+      fechaordenvalidada?:  string;
+      horaordenvalidada?:   string;
+      estado?:              number;
+      createdAt?:           string;
+      updatedAt?:           string;
+      creadorId?:           null;
+      reportadaId?:         number | null;
+      validadaId?:          number;
+      ordenId?:             number;
+      panelpruebaId?:       number;
+      rangoId?:             number | null;
+      panelprueba?:         Panelprueba;
+  }
 
 export interface Panelprueba {
     id?:            number;

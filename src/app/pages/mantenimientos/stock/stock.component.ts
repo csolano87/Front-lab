@@ -87,7 +87,7 @@ export class StockComponent implements OnInit {
     private manteniemintoService: MantenimientosService,
     private llenarcomboService: LlenarCombosService,
     private qrcode: NgxScannerQrcodeService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
     this.crearFormulario();
   }
@@ -96,35 +96,32 @@ export class StockComponent implements OnInit {
     // this.focusOnBarcodeInput();
     this.getBodega();
     this.getProveedor();
-    this.activatedRoute.params.subscribe(({ id }) => this.crearStock(id))
+    this.activatedRoute.params.subscribe(({ id }) => this.crearStock(id));
   }
-
 
   crearStock(id: string) {
     this.IDSeleccionado = id;
     console.log(id);
-    console.log(this.IDSeleccionado)
+    console.log(this.IDSeleccionado);
     if (id === 'Nuevo') {
-
-      this.stockForm.enable()
+      this.stockForm.enable();
       this.btnVal = 'Guardar';
       return;
     }
     this.btnVal = 'Editar';
     this.stockForm.disable();
     this.stockService.getByIdBusqueda(id).subscribe((stockId) => {
-      !stockId ? this.router.navigateByUrl("/dashboard/stock")
-        : console.log(stockId)
-      const { guia, stockItem } = stockId
+      !stockId
+        ? this.router.navigateByUrl('/dashboard/stock')
+        : console.log(stockId);
+      const { guia, stockItem, stockItemtemp } = stockId;
       this.listaStockSeleccionado = stockId;
       this.stockForm.patchValue({
-
         guia,
 
-        productos: stockItem.map((item) =>
+        productos: stockItemtemp.map((item) =>
           this.productos.push(
             this.fb.group({
-
               referencia: item.referencia,
               descripcion: item.product.NOMBRE,
               caducidad: item.caducidad.slice(0, 10),
@@ -134,11 +131,11 @@ export class StockComponent implements OnInit {
               fabricante: item.fabricante,
               sanitario: item.sanitario,
               comentario: item.comentario,
-            })
-          ))
-      })
-    })
-
+            }),
+          ),
+        ),
+      });
+    });
   }
 
   getProveedor() {
@@ -233,8 +230,7 @@ export class StockComponent implements OnInit {
       bodegaId: [''],
       proveedor: [''],
       productos: this.fb.array([]),
-    })
-      ;
+    });
     this.changeValidators();
   }
   crearProductos(): FormGroup {
@@ -251,8 +247,6 @@ export class StockComponent implements OnInit {
     });
   }
 
-
-
   onFileSelected(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -266,17 +260,19 @@ export class StockComponent implements OnInit {
       console.log(this.jsonData);
       if (this.jsonData && this.jsonData.length > 0) {
         this.jsonData.forEach((item) => {
-          const regex = /^\d{4}\/\d{2}\/\d{2}$/; 
-          const fechaValidada = regex.test(item['Operaciones/Lote/Fecha caducidad'])
-          console.log(fechaValidada)
+          const regex = /^\d{4}\/\d{2}\/\d{2}$/;
+          const fechaValidada = regex.test(
+            item['Operaciones/Lote/Fecha caducidad'],
+          );
+          console.log(fechaValidada);
 
-          if (fechaValidada ==false) {
+          if (fechaValidada == false) {
             const fechaExcel = item['Operaciones/Lote/Fecha caducidad'];
             const fecha = this.convertirAFecha(fechaExcel);
             item['Operaciones/Lote/Fecha caducidad'] = fecha;
           }
-         
-         /*  if (item['Operaciones/Lote/Fecha caducidad']) {
+
+          /*  if (item['Operaciones/Lote/Fecha caducidad']) {
             const fechaExcel = item['Operaciones/Lote/Fecha caducidad'];
             const fecha = this.convertirAFecha(fechaExcel);
             item['Operaciones/Lote/Fecha caducidad'] = fecha;
@@ -288,8 +284,10 @@ export class StockComponent implements OnInit {
       this.stockForm.get('guia').setValue(this.jsonData[0]['Documento origen']);
       this.jsonData.forEach((item) => {
         const referencia = item['Operaciones/Producto/Referencia Interna'];
-        const referenciaLimpia = referencia?.startsWith('0') ? referencia.substring(1) : referencia;
-        console.log(referenciaLimpia)
+        const referenciaLimpia = referencia?.startsWith('0')
+          ? referencia.substring(1)
+          : referencia;
+        console.log(referenciaLimpia);
         this.productos.push(
           this.fb.group({
             referencia: referenciaLimpia,
@@ -316,20 +314,35 @@ export class StockComponent implements OnInit {
       });
     }
     console.log(this.stockForm.value);
-console.log(this.listaStockSeleccionado)
+    console.log(this.listaStockSeleccionado);
     if (this.listaStockSeleccionado) {
-const data={
-  id:this.listaStockSeleccionado.id,
-  ...this.stockForm.value
-}
+      console.log(this.stockForm.value);
+      console.log(this.listaStockSeleccionado);
+      const data = {
+        id: this.listaStockSeleccionado.id,
+        ...this.stockForm.value,
+      };
       /* UPDATE */
 
-this.stockService.getUpdateStock(data).subscribe((resp:any)=>{
-  const {msg}=resp;
+      this.stockService.getUpdateStock(data).subscribe(
+        (resp: any) => {
+          const { msg } = resp;
+          Swal.fire({
+            icon: 'success',
 
-console.log(msg)})
-
-
+            title: `${msg}`,
+            showConfirmButton: false,
+          });
+        },
+        (err) => {
+          console.log(err.error.msg);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error ',
+            text: err.error.msg,
+          });
+        },
+      );
     } else {
       this.stockService.getCreateStock(this.stockForm.value).subscribe(
         (resp: any) => {
@@ -351,8 +364,6 @@ console.log(msg)})
           });
         },
       );
-
-
     }
   }
   convertirAFecha(fechaExcel: number) {
@@ -368,9 +379,9 @@ console.log(msg)})
   }
 
   borrarStock(): void {
-    this.stockForm.reset()
+    this.stockForm.reset();
     this.productos.clear();
-    this.router.navigateByUrl("/dashboard/stock/Nuevo")
+    this.router.navigateByUrl('/dashboard/stock/Nuevo');
 
     // window.location.reload();
     /* console.log(this.productos.controls); */
@@ -406,11 +417,11 @@ console.log(msg)})
       this.guardar();
       this.stockForm.enable();
     }
-    this.btnVal = 'Guardar'
+    this.btnVal = 'Guardar';
     this.stockForm.enable();
   }
   changeValidators() {
-console.log(this.listaStockSeleccionado)
+    console.log(this.listaStockSeleccionado);
     if (this.listaStockSeleccionado) {
       this.stockForm.controls['bodegaId'].setValidators([Validators.required]);
       this.stockForm.controls['proveedor'].setValidators([Validators.required]);
@@ -419,16 +430,14 @@ console.log(this.listaStockSeleccionado)
     }
   }
 
-   generarCSV() {
-      const url = 'assets/productos.csv'; // Ruta del archivo en 'src/assets'
-      
-      fetch(url)
-        .then(response => response.blob())
-        .then(blob => {
-          saveAs(blob, 'productos.csv'); // Nombre del archivo al descargar
-        })
-        .catch(error => console.error('Error al descargar el archivo:', error));
-    
-    }
-  
+  generarCSV() {
+    const url = 'assets/productos.csv'; // Ruta del archivo en 'src/assets'
+
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        saveAs(blob, 'productos.csv'); // Nombre del archivo al descargar
+      })
+      .catch((error) => console.error('Error al descargar el archivo:', error));
+  }
 }

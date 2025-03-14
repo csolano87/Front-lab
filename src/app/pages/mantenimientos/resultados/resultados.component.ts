@@ -18,6 +18,7 @@ import { Ordene } from 'src/app/interfaces/cargaIngresoordenes.interface';
 })
 export class ResultadosComponent implements OnInit {
   resultadoForm!: FormGroup;
+  historicoresultados: any = [];
   isResultadoValido: boolean = false;
   page;
   listaordenesid: OrdenID = {};
@@ -55,7 +56,7 @@ export class ResultadosComponent implements OnInit {
     this.getAtencion();
     this.getCategoria();
 
- 
+
   }
 
   crearFormulario() {
@@ -118,7 +119,7 @@ export class ResultadosComponent implements OnInit {
   }
 
   getOrdenId(ordenId: OrdenID) {
-    console.log(ordenId);
+    console.log(ordenId.id);
 
     this.pruebas.clear();
     console.log(this.pruebas.value);
@@ -131,8 +132,7 @@ export class ResultadosComponent implements OnInit {
       const modeloNombre = prueba.panelprueba.modelo.NOMBRE;
       const estadoNombre = prueba.estado;
       const id = ordenId.id;
-      /*    console.log(estadoNombre)
-         console.log(id); */
+
 
       if (!acc[modeloNombre]) {
         acc[modeloNombre] = {
@@ -157,7 +157,7 @@ export class ResultadosComponent implements OnInit {
       };
 
     });
-    /*  console.log(this.agrupadas) */
+      console.log(this.agrupadas) 
     const { id, prueba } = this.listaordenesid;
     this.validarfrom.patchValue({
       id,
@@ -279,11 +279,11 @@ export class ResultadosComponent implements OnInit {
   }
   resultados(event: KeyboardEvent, modelo: any) {
 
-   
+
     const arrPruebas = this.validarfrom.get('pruebas') as FormArray;
     const input = event.target as HTMLInputElement;
     const valor = input.value;
-    
+
     /*  console.log(modelo.panelprueba.id); */
     const valorResultado = valor;
 /*  (valorResultado) ? null : */
@@ -309,7 +309,7 @@ export class ResultadosComponent implements OnInit {
 
   validarResultadoConRango(prueba: any) {
 
-     
+
     const date1 = new Date();
     date1.setDate(date1.getDate() - 1);
     const date2 = new Date(this.listaordenesid.paciente.fechanac);
@@ -350,11 +350,11 @@ export class ResultadosComponent implements OnInit {
       }
     }
     return '';
-   
+
   }
   guardarResultados(prueba: any) {
-    
-    
+
+
     console.log(prueba)
     const [id] = prueba
       .map(item => item.ordenId)
@@ -396,7 +396,7 @@ export class ResultadosComponent implements OnInit {
   }
 
   ordenRefrescar(lista: any) {
-
+console.log(lista)
     const itemSeleccioando = lista.find(item => item.id === this.filtradaOrden)
     console.log(itemSeleccioando)
     this.getOrdenId(itemSeleccioando)
@@ -429,7 +429,7 @@ export class ResultadosComponent implements OnInit {
         title: `${msg}`,
         showConfirmButton: false,
         timer: 1500,
-      }); 
+      });
     });
 
   }
@@ -454,5 +454,9 @@ export class ResultadosComponent implements OnInit {
 
 
 
+  }
+  historicoResultados(prueba: any) {
+    console.log(prueba.historioresultado);
+    this.historicoresultados = prueba.historioresultado;
   }
 }

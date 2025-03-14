@@ -104,7 +104,7 @@
                     {{ item.paciente.apellidos }}, {{ item.paciente.nombres }}
                   </td>
                   <td>
-                    <div class="left-content2">
+                    <div class="left-content">
                       <div
                         [ngClass]="{
                           generado: item.estado === 1,
@@ -191,12 +191,16 @@
           <table *ngIf="agrupadas.length > 0" class="table">
             <thead>
               <tr>
-                <th style="width: 35%">Nombre</th>
-                <th style="width: 20%">Resultado</th>
+                <th style="width: 5%">Codigo</th>
+                <th style="width: 25%">Nombre de la prueba</th>
 
-                <th style="width: 18%">Referencia</th>
-                <th style="width: 15%">Unidad</th>
-                <th style="width: 15%">Alarma</th>
+                <th style="width: 10%">Resultado</th>
+                <th style="width: 10%">Unidad</th>
+                <th style="width: 10%">Valor Referencia</th>
+
+                <th style="width: 5%">Alarma</th>
+                <th style="width: 10%">Comentario</th>
+           <!--      <th style="width: 15%">Ultimo resultado</th> -->
               </tr>
             </thead>
 
@@ -208,20 +212,21 @@
                       <!-- Contenido alineado a la izquierda -->
                       <div class="left-content">
                         <p>{{ modelo.categoria }}</p>
+                       <!--  <p>{{ modelo.item.estado }}</p> -->
 
                         <div
-                          [ngClass]="{
-                            generado: modelo.item.estado === 1,
-                            reportado: modelo.item.estado === 4,
-                            validado: modelo.item.estado === 5
-                          }"
-                          [ngSwitch]="modelo.item.estado"
-                        >
-                          <p *ngSwitchCase="1">Generado</p>
-                          <p *ngSwitchCase="4">Reportado</p>
-                          <p *ngSwitchDefault>Validado</p>
-                        </div>
+                        [ngClass]="{
+                          generado: modelo.item.estado === 1,
+                          reportado: modelo.item.estado === 4,
+                          validado: modelo.item.estado === 3
+                        }"
+                        [ngSwitch]="modelo.item.estado"
+                      >
+                        <p *ngSwitchCase="1">Generado</p>
+                        <p *ngSwitchCase="4">Reportado</p>
+                        <p *ngSwitchDefault>Validado</p>
                       </div>
+                    </div>
 
                       <!-- Contenido alineado a la derecha -->
                       <div class="right-content">
@@ -246,8 +251,9 @@
                   *ngFor="let prueba of modelo.item.pruebas; let i = index"
                 >
                   <tr>
+                    <td>{{ prueba.panelprueba.CODIGO }}</td>
                     <td>{{ prueba.panelprueba.NOMBRE }}</td>
-
+                    <!--            [disabled]="!prueba.resultado" -->
                     <td>
                       <div>
                         <input
@@ -255,16 +261,17 @@
                           #resultado
                           (keyup)="resultados($event, prueba)"
                           type="text"
-                          [disabled]="!prueba.resultado"
                           [value]="prueba.resultado"
                           autofocus
                         />
                       </div>
                     </td>
-                    <td>{{ prueba.panelprueba?.rango?.rangos }}</td>
+
                     <td>
                       {{ prueba.panelprueba?.rango?.unidad?.DESCRIPCION }}
                     </td>
+                    <td>{{ prueba.panelprueba?.rango?.rangos }}</td>
+
 
                     <td>
                       <ng-container
@@ -284,6 +291,16 @@
                         ></i>
                       </ng-container>
                     </td>
+                    <td>
+                      <i class="bx bxs-message-alt-add bx-rotate-270"></i>
+                    </td>
+                 <!--    <td
+                    data-toggle="modal"
+                    data-target="#modal-HistoricoPruebas"
+                    (click)="historicoResultados(prueba)"
+                  >
+                    {{ prueba.historioresultado[0]?.resultado }}
+                  </td> -->
                   </tr>
                 </ng-container>
               </ng-container>
@@ -295,5 +312,60 @@
       </div>
     </div>
     Validar
+  </div>
+</div>
+<div class="modal fade" id="modal-HistoricoPruebas">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Historial de examenes</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+
+                    <th class="th_modal_pruebas">Examen</th>
+                    <th class="th_modal_pruebas">Resultado</th>
+                    <th class="th_modal_pruebas">Rangos</th>
+                    <th class="th_modal_pruebas">Unidad</th>
+                    <th class="th_modal_pruebas">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let it of historicoresultados">
+
+                    <td class="td_modal_pruebas">
+                      <i class="bx bx-test-tube bx-tada"> </i>
+                      {{ it.panelprueba.NOMBRE }}
+                    </td>
+
+                    <td class="td_modal_pruebas">{{ it?.resultado }}</td>
+                    <td class="td_modal_pruebas">
+                      {{ it.rango?.rangoMin }} - {{ it.rango?.rangoMax }}
+                    </td>
+                    <td class="td_modal_pruebas">
+                      {{ it.rango?.unidad.DESCRIPCION }}
+                    </td>
+                    <td class="td_modal_pruebas">{{ it.fechaorden }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

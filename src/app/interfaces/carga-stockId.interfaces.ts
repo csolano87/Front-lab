@@ -16,6 +16,8 @@ export interface StockById {
      createdAt?:    string;
      updatedAt?:    string;
      stockItem?:    StockItem[];
+     stockItemtemp?:    StockItem[];
+
  }
  
  export interface StockItem {

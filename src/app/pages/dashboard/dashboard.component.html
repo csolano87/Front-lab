@@ -8,25 +8,34 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-12 col-sm-6 col-md-3" *ngFor="let data of graficaPastel">
+            <div class="info-box">
+              <span class="info-box-icon elevation-1"><i class="fa fa-user-md" aria-hidden="true"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">{{ data.nombre }}</span>
+                <span class="info-box-number">
+                  {{ data.porcentaje }}
+                  <small>%</small>
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Monthly Recap Report</h5>
+                <h5 class="card-title">Reporte tipo de atencion</h5>
 
                 <div class="card-tools">
-                  <button
-                    type="button"
-                    class="btn btn-tool"
-                    data-card-widget="collapse"
-                  >
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
                   <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-tool dropdown-toggle"
-                      data-toggle="dropdown"
-                    >
+                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                       <i class="fas fa-wrench"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
@@ -37,70 +46,94 @@
                       <a href="#" class="dropdown-item">Separated link</a>
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    class="btn btn-tool"
-                    data-card-widget="remove"
-                  >
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
                     <i class="fas fa-times"></i>
                   </button>
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-12">
-                    <swiper-container
-                      class="mySwiper"
-                      pagination="true"
-                      pagination-clickable="true"
-                      navigation="true"
-                      space-between="30"
-                      centered-slides="true"
-                      autoplay-delay="3500"
-                      autoplay-disable-on-interaction="false"
-                    >
-                      <swiper-slide>
-                        <ngx-charts-line-chart
-                          [view]="viewLinear"
-                          [scheme]="colorScheme"
-                          [legend]="legend"
-                          [showXAxisLabel]="showXAxisLabel"
-                          [showYAxisLabel]="showYAxisLabel"
-                          [xAxis]="xAxis"
-                          [yAxis]="yAxis"
-                          [xAxisLabel]="xAxisLabel"
-                          [yAxisLabel]="yAxisLabel"
-                          [timeline]="timeline"
-                          [results]="multi"
-                          (select)="onSelect($event)"
-                          (activate)="onActivate($event)"
-                          (deactivate)="onDeactivate($event)"
-                        >
-                        </ngx-charts-line-chart
-                      ></swiper-slide>
-                      <swiper-slide>
-                        <ngx-charts-advanced-pie-chart
-                          [view]="viewPastel"
-                          [scheme]="colorScheme"
-                          [results]="conteoPorEstadoArray"
-                          [gradient]="gradient"
-                          (select)="onSelect($event)"
-                          (activate)="onActivate($event)"
-                          (deactivate)="onDeactivate($event)"
-                        >
-                        </ngx-charts-advanced-pie-chart>
-                      </swiper-slide>
-                      <!--  <swiper-slide>Slide 3</swiper-slide>
-                      <swiper-slide>Slide 4</swiper-slide>
-                      <swiper-slide>Slide 5</swiper-slide>
-                      <swiper-slide>Slide 6</swiper-slide>
-                      <swiper-slide>Slide 7</swiper-slide>
-                      <swiper-slide>Slide 8</swiper-slide>
-                      <swiper-slide>Slide 9</swiper-slide> -->
-                    </swiper-container>
-                  </div>
-                  <!-- /.row -->
+              <div class="card-body2">
+                <div>
+                  <ngx-charts-bar-vertical-2d [autoScale]="true" [barPadding]="2" [trimYAxisTicks]="true"
+                    [trimXAxisTicks]="true" [wrapTicks]="true" [scheme]="colorScheme" [results]="graficaLinear"
+                    [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+                    [yAxisLabel]="yAxisLabel" [legendTitle]="legendTitle" (select)="onSelect($event)"
+                    (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                  </ngx-charts-bar-vertical-2d>
+                  <!--   <ngx-charts-bar-vertical
+                  [scheme]="colorScheme"
+
+                  [autoScale]="true"
+                  [legendTitle]="legendTitle"
+                  [roundDomains]="true"
+                  [trimXAxisTicks]="true"
+                  [gradient]="gradient"
+                  [showXAxisLabel]="showXAxisLabel"
+                  [showYAxisLabel]="showYAxisLabel"
+                  [xAxis]="xAxis"
+                  [yAxis]="yAxis"
+                  [xAxisLabel]="xAxisLabel"
+                  [yAxisLabel]="yAxisLabel"
+                  [timeline]="timeline"
+                  [results]="graficaLinear"
+                  (select)="onSelect($event)"
+                  (activate)="onActivate($event)"
+                  (deactivate)="onDeactivate($event)"
+                >
+                </ngx-charts-bar-vertical -->
+
+                  <!--  <swiper-container
+                    class="mySwiper"
+                    pagination="true"
+
+                    autoplay-disable-on-interaction="false"
+                  >
+                    <swiper-slide>
+                      <ngx-charts-bar-vertical
+                        [scheme]="colorScheme"
+
+                        [autoScale]="true"
+                        [legendTitle]="legendTitle"
+                        [roundDomains]="true"
+                        [trimXAxisTicks]="true"
+                        [gradient]="gradient"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxis]="xAxis"
+                        [yAxis]="yAxis"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        [timeline]="timeline"
+                        [results]="graficaLinear"
+                        (select)="onSelect($event)"
+                        (activate)="onActivate($event)"
+                        (deactivate)="onDeactivate($event)"
+                      >
+                      </ngx-charts-bar-vertical
+                    ></swiper-slide>
+                    <swiper-slide>
+                      <ngx-charts-bar-vertical
+
+                        [autoScale]="true"
+                        [scheme]="colorScheme"
+                        [results]="graficaBarras"
+                        [roundDomains]="true"
+                        [trimXAxisTicks]="true"
+                        [trimYAxisTicks]="true"
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        (select)="onSelect($event)"
+                      >
+                      </ngx-charts-bar-vertical>
+                    </swiper-slide>
+                  </swiper-container> -->
                 </div>
                 <!-- ./card-body -->
                 <!--   <div class="card-footer">
@@ -157,13 +190,23 @@
             </div>
             <!-- /.col -->
           </div>
+
+          <div class="col-md-2">
+            <div class="info-box mb-3" *ngFor="let data of listaday">
+              <span class="info-box-icon"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">{{ data.category }}</span>
+                <span class="info-box-number">{{ data.total }}</span>
+              </div>
+            </div>
+          </div>
           <!-- /.row -->
 
           <!-- Main row -->
           <div class="row">
-            <!-- Left col -->
-            <div class="col-md-8">
-              <!-- MAP & BOX PANE -->
+            <!--   <div class="col-md-8">
+
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">US-Visitors Report</h3>
@@ -185,109 +228,88 @@
                     </button>
                   </div>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body p-0">
+
+               <div class="card-body p-0">
                   <div class="d-md-flex">
                     <div class="p-1 flex-fill" style="overflow: hidden">
-                      <ngx-charts-line-chart
-                        [view]="viewLinear"
-                        [scheme]="colorScheme"
-                        [legend]="legend"
-                        [showXAxisLabel]="showXAxisLabel"
-                        [showYAxisLabel]="showYAxisLabel"
-                        [xAxis]="xAxis"
-                        [yAxis]="yAxis"
-                        [xAxisLabel]="xAxisLabel"
-                        [yAxisLabel]="yAxisLabel"
-                        [timeline]="timeline"
-                        [results]="multi"
-                        (select)="onSelect($event)"
-                        (activate)="onActivate($event)"
-                        (deactivate)="onDeactivate($event)"
-                      >
-                      </ngx-charts-line-chart>
+                     <div class="col-md-12">
+                      <ngx-charts-bar-vertical
+                      [view]="viewLinear"
+                      [scheme]="colorScheme"
+                      [results]="graficaBarras"
+                      [gradient]="gradient"
+                      [xAxis]="showXAxis"
+                      [yAxis]="showYAxis"
+                      [legend]="showLegend"
+                      [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel"
+                      [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="yAxisLabel"
+                      (select)="onSelect($event)"
+                    >
+                    </ngx-charts-bar-vertical>
+                     </div>
                     </div>
                   </div>
-                  <!-- /.d-md-flex -->
+
                 </div>
               </div>
-              <!-- /.card-body -->
+
             </div>
-            <!-- /.card -->
+
             <div class="row">
-              <!-- /.col -->
-            </div>
 
-            <swiper-container
-              class="mySwiper"
-              pagination="true"
-              pagination-dynamic-bullets="true"
-            >
-              <swiper-slide>
-                <ngx-charts-line-chart
-                  [view]="viewLinear"
-                  [scheme]="colorScheme"
-                  [legend]="legend"
-                  [showXAxisLabel]="showXAxisLabel"
-                  [showYAxisLabel]="showYAxisLabel"
-                  [xAxis]="xAxis"
-                  [yAxis]="yAxis"
-                  [xAxisLabel]="xAxisLabel"
-                  [yAxisLabel]="yAxisLabel"
-                  [timeline]="timeline"
-                  [results]="multi"
-                  (select)="onSelect($event)"
-                  (activate)="onActivate($event)"
-                  (deactivate)="onDeactivate($event)"
-                >
-                </ngx-charts-line-chart>
-              </swiper-slide>
-              <swiper-slide>
-                <ngx-charts-advanced-pie-chart
-                  [view]="viewPastel"
-                  [scheme]="colorScheme"
-                  [results]="conteoPorEstadoArray"
-                  [gradient]="gradient"
-                  (select)="onSelect($event)"
-                  (activate)="onActivate($event)"
-                  (deactivate)="onDeactivate($event)"
-                >
-                </ngx-charts-advanced-pie-chart>
-              </swiper-slide>
-              <!--  <swiper-slide>Slide 3</swiper-slide>
-              <swiper-slide>Slide 4</swiper-slide>
-              <swiper-slide>Slide 5</swiper-slide>
-              <swiper-slide>Slide 6</swiper-slide>
-              <swiper-slide>Slide 7</swiper-slide>
-              <swiper-slide>Slide 8</swiper-slide>
-              <swiper-slide>Slide 9</swiper-slide> -->
-            </swiper-container>
+            </div> -->
           </div>
 
-          <div class="col-md-4">
-            <!-- Info Boxes Style 2 -->
-            <div class="info-box mb-3 bg-warning" *ngFor="let data of listaday">
-              <span class="info-box-icon"><i class="fas fa-tag"></i></span>
+          <div class="card">
+            <div class="card-header border-transparent">
+              <h3 class="card-title">Listado de ordenes</h3>
 
-              <div class="info-box-content">
-                <span class="info-box-text">{{ data.category }}</span>
-                <span class="info-box-number">{{ data.total }}</span>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
               </div>
-              <!-- /.info-box-content -->
             </div>
-            <!-- /.info-box -->
 
-            <!-- /.info-box -->
+            <div class="card-body p-0">
+              <div #tableContainer class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th class="sticky-header" style="width: 10%">Order ID</th>
+                      <th class="sticky-header" style="width: 30%">Origen</th>
+                      <th class="sticky-header" style="width: 10%">Estado</th>
+           
+                      <th class="sticky-header" style="width: 10%">Fecha</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of listaordenesmensual">
+                      <td>{{ data.SampleID }}</td>
+                      <td>{{ data.Origin }}</td>
 
-            <!-- /.info-box -->
-
-            <!-- /.info-box -->
-
-            <!-- PRODUCT LIST -->
-
-            <!-- /.card -->
+                      <td>
+                        <div [ngSwitch]="data.IsOrderValidated">
+                          <div *ngSwitchCase="true">
+                            <span class="badge badge-warning">Generado</span>
+                          </div>
+                          <div *ngSwitchDefault>
+                            <span class="badge badge-warning">Pendiente</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>{{ data.RegisterDate }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          <!-- /.col -->
         </div>
         <!-- /.row -->
       </div>

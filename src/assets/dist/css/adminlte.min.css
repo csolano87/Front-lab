@@ -7186,7 +7186,7 @@ a.disabled.mailbox-attachment-close {
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 1rem;
+  padding: .7rem;
   border-bottom: 1px solid #e9ecef;
   border-top-left-radius: calc(0.3rem - 1px);
   border-top-right-radius: calc(0.3rem - 1px);
@@ -9966,7 +9966,7 @@ button.bg-dark:hover {
 /* coemntar */
 /* .pt-4,
 .py-4 {
-   padding-top: 1.5rem !important 
+   padding-top: 1.5rem !important
 } */
 
 .pr-4,
@@ -15798,7 +15798,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
   display: none;
   list-style: none;
   padding: 0;
- /*  padding-left: 25px; se coemnto el padding para ajustar  */  
+ /*  padding-left: 25px; se coemnto el padding para ajustar  */
   margin: 10px auto;
 }
 

@@ -80,7 +80,7 @@ export class StockService {
     return this.http.post(`${baseUrl}/api/stock`, formData, this.headers);
   }
   getUpdateStock(data: StockId) {
-    return this.http.post(`${baseUrl}/api/stock/${data.id}`, data, this.headers);
+    return this.http.put(`${baseUrl}/api/stock/${data.id}`, data, this.headers);
 
   }
   getCargarinternaCreateStock(formData: StockForm) {
