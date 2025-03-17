@@ -1,0 +1,148 @@
+<div class="container-fluid rounded shadow">
+  <!--   <div class="row py-4 animated fadeIn fast">
+       <div class="col-12">
+         <div class="card">
+           <div class="card-body"></div>
+         </div>
+       </div>
+     </div> -->
+
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-2">
+              <label for="">Fecha Inicio</label>
+              <input
+                type="date"
+                class="form-control"
+               
+                #searchIn
+                (change)="capturarValorFecha()"
+              />
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="">Fecha fin</label>
+              <input
+                type="date"
+                class="form-control"
+                #searchOut
+                (change)="capturarValorFecha()"
+              />
+            </div>
+
+            <div class="form-group col-md-2">
+              <label for="">Bodega</label>
+              <select class="form-control"  (change)="onSearchBodega($event)"  >
+                <option value="">--Seleccione--</option>
+                <option *ngFor="let bodega of listabodega" [value]="bodega.id">
+                  {{ bodega.NOMBRE }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-4 btn-botones">
+              <a
+                type="button"
+                class="btn btn-primary btn-sm"
+                (click)="limpiarFiltros()"
+                >Limpiar filtros</a
+              >
+
+              <a
+                *ngIf="listasotckbodega.length > 0"
+                (click)="getExportPdf()"
+                class="btn btn-secondary btn-sm"
+              >
+                Generar PDF
+              </a>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <form>
+              <div
+                *ngIf="cargando"
+                class="alert alert-info text-center mt-3 animated fadeIn faster"
+              >
+                <h4 class="alert-heading">Cargando</h4>
+                <p>
+                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                </p>
+                <p class="mb-0">Espere por favor</p>
+              </div>
+
+              <div *ngIf="!cargando" class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                         <th style="width: 10%">Fecha</th>
+                      <th style="width: 10%">Bodega</th>
+                      <th style="width: 10%">Referencia</th>
+                      <th style="width: 30%">Nombre</th>
+                      <th style="width: 10%">Lote</th>
+                      <th style="width: 10%">Cantidad solicitidad</th>
+                      <th style="width: 10%">Cantidad entregada</th>
+                      <th style="width: 10%">Fecha descargo</th>
+                      <th style="width: 10%">Usuario descargo</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let stock of listasotckbodega
+                          | filtroDescargoBodega: search : searchInValue : searchOutValue
+                          | paginate: { itemsPerPage: 10, currentPage: page }
+                      "
+                    >
+                    <td>{{ stock.fecha }}</td>
+                      <td>{{ stock.bodega.NOMBRE }}</td>
+                      <td>{{ stock.product.REFERENCIA }}</td>
+                      <td>{{ stock.product.NOMBRE }}</td>
+
+                      <td>{{ stock.lote }}</td>
+                      <td>{{ stock.CANTIDAD }}</td>
+                      <td>{{ stock.ENTREGADO }}</td>
+                      <td>
+                        {{ stock.fechadescargo | utcDate: "YYYY-MM-dd " }}
+                      </td>
+                      <td>{{ stock.descargar?.usuario }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <pagination-controls
+                (pageChange)="page = $event"
+                previousLabel="Anterior"
+                nextLabel="Siguiente"
+              ></pagination-controls>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+</div>

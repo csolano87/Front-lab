@@ -22,6 +22,7 @@ export class ListadoStockComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.getListaStock();
+    
    
   }
 

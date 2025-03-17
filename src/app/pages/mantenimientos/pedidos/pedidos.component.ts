@@ -184,7 +184,7 @@ export class PedidosComponent implements OnInit {
   onreset() {
     /*  this.importForm.reset();
      this.PRODUCTOS.clear(); */
-    this.router.navigateByUrl('/dashboard/solicitud-pedidos');
+    this.router.navigateByUrl('/dashboard/solicitudes-pedidos');
   }
   borrarProducto(i: number) {
     this.PRODUCTOS.removeAt(i);

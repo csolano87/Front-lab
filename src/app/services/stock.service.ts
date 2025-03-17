@@ -16,6 +16,10 @@ import {
 import { StockL, StocksL } from '../interfaces/cargalistadoStock.interface';
 import { StockById } from '../interfaces/carga-stockId.interfaces';
 import { StockId } from '../models/cargaStockId.module';
+import {
+  Stockbodega,
+  Stocksbodega,
+} from '../interfaces/carga_StockDescarga.interface';
 const baseUrl = environment.url;
 @Injectable({
   providedIn: 'root',
@@ -81,7 +85,6 @@ export class StockService {
   }
   getUpdateStock(data: StockId) {
     return this.http.put(`${baseUrl}/api/stock/${data.id}`, data, this.headers);
-
   }
   getCargarinternaCreateStock(formData: StockForm) {
     return this.http.post(
@@ -91,10 +94,10 @@ export class StockService {
     );
   }
 
-  getDeleteStock(id:number) {
+  getDeleteStock(id: number) {
     return this.http.delete(
       `${baseUrl}/api/stock/${id}`,
-      
+
       this.headers,
     );
   }
@@ -119,18 +122,31 @@ export class StockService {
   getdescargoStock(data) {
     return this.http.put(`${baseUrl}/api/pedidos-stock`, data, this.headers);
   }
+
+  //     `${baseUrl}/api/pedidos-stock/bodega/bodegaStock?bodegaId=${bodegaId}fechaIn=${fechaIn}&fechaOut=${fechaOut}`,
+
+  getBodegaDescargo(
+   /*  bodegaId: string,
+    fechaIn: string,
+    fechaOut: string, */
+    
+  ): Observable<Stockbodega[]> {
+    return this.http
+      .get<Stocksbodega>(
+        `${baseUrl}/api/pedidos-stock/bodega/bodegaStock`,this.headers,
+      
+      )
+      .pipe(map(({ stockbodega }) => stockbodega));
+  }
   getreportePdfStock() {
     return this.http.get(`${baseUrl}/api/stock/reporte/pdf`, {
       responseType: 'blob',
     });
   }
 
-
   getByIdBusqueda(id: string) {
     return this.http
       .get<StockById>(`${baseUrl}/api/stock/busqueda/${id}`, this.headers)
-      .pipe(
-        map(({StockId}) => StockId),
-      );
+      .pipe(map(({ StockId }) => StockId));
   }
 }

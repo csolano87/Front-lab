@@ -121,16 +121,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { register } from 'swiper/element/bundle';
 import { DespacharComponent } from './mantenimientos/despachar/despachar.component';
 import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/reporte-pruebas.component';
+import { ReporteBodegaComponent } from './mantenimientos/reporte-bodega/reporte-bodega.component';
+import { FiltroDescargoBodegaPipe } from '../pipes/filtro-descargo-bodega.pipe';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
   declarations: [
+    ReporteBodegaComponent,
     ReportePruebasComponent,
     DespacharComponent,
     ListadoStockComponent,
     CargaInternaComponent,
     PermisosComponent,
     MenuComponent,
+    FiltroDescargoBodegaPipe,
+    FiltroBodegaPipe,
     FiltroexamPipe,
     FiltroBodegaPipe,
     FiltrordenesPipe,

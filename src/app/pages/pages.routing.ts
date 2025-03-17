@@ -96,6 +96,7 @@ import { ListadoStockComponent } from './mantenimientos/listado-stock/listado-st
 import { PermisosComponent } from './mantenimientos/permisos/permisos.component';
 import { DespacharComponent } from './mantenimientos/despachar/despachar.component';
 import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/reporte-pruebas.component';
+import { ReporteBodegaComponent } from './mantenimientos/reporte-bodega/reporte-bodega.component';
 
 const routes: Routes = [
   {
@@ -226,6 +227,11 @@ const routes: Routes = [
         path: 'listadoStock',
         component: ListadoStockComponent,
         data: { titulo: 'listadoStock' },
+      },
+      {
+        path: 'ReporteBodega',
+        component: ReporteBodegaComponent,
+        data: { titulo: 'ReporteBodega' },
       },
       {
         path: 'menu',

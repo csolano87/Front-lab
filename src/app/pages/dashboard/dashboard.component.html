@@ -8,9 +8,14 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-3" *ngFor="let data of graficaPastel">
+          <div
+            class="col-12 col-sm-6 col-md-3"
+            *ngFor="let data of graficaPastel"
+          >
             <div class="info-box">
-              <span class="info-box-icon elevation-1"><i class="fa fa-user-md" aria-hidden="true"></i></span>
+              <span class="info-box-icon elevation-1"
+                ><i class="fa fa-user-md" aria-hidden="true"></i
+              ></span>
 
               <div class="info-box-content">
                 <span class="info-box-text">{{ data.nombre }}</span>
@@ -31,11 +36,19 @@
                 <h5 class="card-title">Reporte tipo de atencion</h5>
 
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <button
+                    type="button"
+                    class="btn btn-tool"
+                    data-card-widget="collapse"
+                  >
                     <i class="fas fa-minus"></i>
                   </button>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                    <button
+                      type="button"
+                      class="btn btn-tool dropdown-toggle"
+                      data-toggle="dropdown"
+                    >
                       <i class="fas fa-wrench"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
@@ -46,7 +59,11 @@
                       <a href="#" class="dropdown-item">Separated link</a>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <button
+                    type="button"
+                    class="btn btn-tool"
+                    data-card-widget="remove"
+                  >
                     <i class="fas fa-times"></i>
                   </button>
                 </div>
@@ -54,12 +71,27 @@
               <!-- /.card-header -->
               <div class="card-body2">
                 <div>
-                  <ngx-charts-bar-vertical-2d [autoScale]="true" [barPadding]="2" [trimYAxisTicks]="true"
-                    [trimXAxisTicks]="true" [wrapTicks]="true" [scheme]="colorScheme" [results]="graficaLinear"
-                    [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
-                    [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
-                    [yAxisLabel]="yAxisLabel" [legendTitle]="legendTitle" (select)="onSelect($event)"
-                    (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                  <ngx-charts-bar-vertical-2d
+                    [autoScale]="true"
+                    [barPadding]="2"
+                    [trimYAxisTicks]="true"
+                    [trimXAxisTicks]="true"
+                    [wrapTicks]="true"
+                    [scheme]="colorScheme"
+                    [results]="graficaLinear"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabel"
+                    [yAxisLabel]="yAxisLabel"
+                    [legendTitle]="legendTitle"
+                    (select)="onSelect($event)"
+                    (activate)="onActivate($event)"
+                    (deactivate)="onDeactivate($event)"
+                  >
                   </ngx-charts-bar-vertical-2d>
                   <!--   <ngx-charts-bar-vertical
                   [scheme]="colorScheme"
@@ -193,7 +225,9 @@
 
           <div class="col-md-2">
             <div class="info-box mb-3" *ngFor="let data of listaday">
-              <span class="info-box-icon"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>
+              <span class="info-box-icon"
+                ><i class="fa fa-heartbeat" aria-hidden="true"></i
+              ></span>
 
               <div class="info-box-content">
                 <span class="info-box-text">{{ data.category }}</span>
@@ -267,10 +301,18 @@
               <h3 class="card-title">Listado de ordenes</h3>
 
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <button
+                  type="button"
+                  class="btn btn-tool"
+                  data-card-widget="collapse"
+                >
                   <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <button
+                  type="button"
+                  class="btn btn-tool"
+                  data-card-widget="remove"
+                >
                   <i class="fas fa-times"></i>
                 </button>
               </div>
@@ -284,7 +326,7 @@
                       <th class="sticky-header" style="width: 10%">Order ID</th>
                       <th class="sticky-header" style="width: 30%">Origen</th>
                       <th class="sticky-header" style="width: 10%">Estado</th>
-           
+
                       <th class="sticky-header" style="width: 10%">Fecha</th>
                     </tr>
                   </thead>

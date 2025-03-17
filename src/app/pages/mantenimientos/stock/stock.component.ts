@@ -67,10 +67,10 @@ export class StockComponent implements OnInit {
       this.stockForm?.get('guia')!.touched
     );
   }
-  get proveedor() {
+  get proveedorId() {
     return (
-      this.stockForm?.get('proveedor')!.invalid &&
-      this.stockForm?.get('proveedor')!.touched
+      this.stockForm?.get('proveedorId')!.invalid &&
+      this.stockForm?.get('proveedorId')!.touched
     );
   }
   get bodegaId() {
@@ -152,7 +152,7 @@ export class StockComponent implements OnInit {
     this.manteniemintoService.getBodega().subscribe((bodega) => {
       console.log(bodega);
 
-      this.listabodega = bodega.filter((item) => item.ESTADO == 1);
+      this.listabodega = bodega.filter((item) => item.ESTADO == 1 && item.id ==1);
     });
   }
   onBarcodeInput(event: Event): void {
@@ -228,7 +228,7 @@ export class StockComponent implements OnInit {
     this.stockForm = this.fb.group({
       guia: ['', [Validators.required]],
       bodegaId: [''],
-      proveedor: [''],
+      proveedorId: [''],
       productos: this.fb.array([]),
     });
     this.changeValidators();
@@ -333,6 +333,7 @@ export class StockComponent implements OnInit {
             title: `${msg}`,
             showConfirmButton: false,
           });
+          this.router.navigateByUrl('/dashboard/stocks');
         },
         (err) => {
           console.log(err.error.msg);
@@ -353,7 +354,7 @@ export class StockComponent implements OnInit {
             title: `${msg}`,
             showConfirmButton: false,
           });
-          this.router.navigateByUrl('/dashboard/stocks');
+          this.router.navigateByUrl('/dashboard/listadoStock');
         },
         (err) => {
           console.log(err.error.msg);

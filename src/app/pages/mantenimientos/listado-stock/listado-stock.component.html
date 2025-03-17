@@ -1,5 +1,5 @@
 <div class="container-fluid rounded shadow">
-<!--   <div class="row py-4 animated fadeIn fast">
+  <!--   <div class="row py-4 animated fadeIn fast">
     <div class="col-12">
       <div class="card">
         <div class="card-body"></div>
@@ -49,7 +49,6 @@
                   </thead>
 
                   <tbody>
-
                     <tr
                       *ngFor="
                         let stock of listastock
@@ -61,24 +60,28 @@
 
                       <td>
                         <div [ngSwitch]="stock.ESTADO">
-                          <div *ngSwitchCase="1">Creado</div>
-                          <div *ngSwitchCase="2">Validado</div>
-                          <div *ngSwitchDefault>Anulado</div>
+                          <div *ngSwitchCase="1">
+                            <span class="badge badge-primary">Generado</span>
+                          </div>
+                          <div *ngSwitchCase="2">
+                            <span class="badge badge-success">Confirmado</span>
+                          </div>
+                          <div *ngSwitchDefault>
+                            <span class="badge badge-danger">Anulado</span>
+                          </div>
                         </div>
                       </td>
 
                       <td class="actions">
                         <span class="span_edit">
-                         
-                            <i    [ngClass]="{
-                              'disabled-icon': ''
+                          <i
+                            [ngClass]="{
+                           'disabled-icon': stock.ESTADO !== 1
                             }"
-                            [routerLink]="[
-                              '/dashboard',
-                              'stock',
-                              stock.id
-                            ]" class="bx bxs-edit ">Editar</i>
-                         
+                            [routerLink]="['/dashboard', 'stock', stock.id]"
+                            class="bx bxs-edit"
+                            >Editar</i
+                          >
                         </span>
                         <span
                           [ngClass]="{
