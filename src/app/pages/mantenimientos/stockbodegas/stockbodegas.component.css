@@ -1,69 +1,71 @@
-.esboton {
-    margin: 0 auto;
-    margin-top: 35px;
-    /*   margin-left: 80px; */
-  }
+
+/* *{
+  outline: 1px solid blue;
+}
+ */
 
 
-  
 
- /* Estilo para el campo de búsqueda */
+/* .esboton {
+  margin: 0 auto;
+  margin-top: 35px;
+}
+
 input[type="text"] {
-  border-radius: 5px; /* Bordes redondeados */
-  padding: 10px; /* Espaciado interno */
-  border: 1px solid #ccc; /* Borde de color gris claro */
-  width: 100%; /* Asegura que ocupe todo el ancho */
-  box-sizing: border-box; /* Incluye el padding dentro del ancho total */
-  font-size: 16px; /* Tamaño de la fuente */
-  transition: all 0.3s ease; /* Transición suave para el foco */
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 
 input[type="text"]:focus {
-  border-color: #007bff; /* Color de borde al hacer foco */
-  outline: none; /* Eliminar el borde azul por defecto en algunos navegadores */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul para foco */
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 input[type="text"]::placeholder {
-  color: #aaa; /* Color del texto del placeholder */
+  color: #aaa;
 }
 
-
-/* Estilo para la tabla */
 .table {
   width: 100%;
-  border-collapse: collapse; /* Eliminar los bordes duplicados */
+  border-collapse: collapse;
   margin-top: 20px;
 }
 
-.table th, .table td {
-  padding: 12px; /* Espaciado interno */
-  text-align: left; /* Alinear el texto a la izquierda */
-  border-bottom: 1px solid #ddd; /* Línea de separación suave entre filas */
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 .table th {
-  background-color: #f4f4f4; /* Fondo gris suave para los encabezados */
+  background-color: #f4f4f4;
   font-weight: bold;
-  color: #333; /* Color de texto más oscuro */
+  color: #333;
 }
 
 .table tr:hover {
-  background-color: #f1f1f1; /* Resaltado suave de la fila al pasar el mouse */
+  background-color: #f1f1f1;
 }
 
 .table td {
-  font-size: 14px; /* Tamaño de fuente más pequeño */
-  color: #555; /* Color de texto */
+  font-size: 14px;
+  color: #555;
 }
 
 .table td span {
-  display: inline-block; /* Permite que los iconos se alineen correctamente */
+  display: inline-block;
   padding: 5px 10px;
 }
 
 .table .btn {
-  background-color: #28a745; /* Color verde para el botón de acción */
+  background-color: #28a745;
   color: white;
   border-radius: 5px;
   padding: 5px 10px;
@@ -71,25 +73,22 @@ input[type="text"]::placeholder {
 }
 
 .table .btn-danger {
-  background-color: #dc3545; /* Color rojo para el botón de eliminar */
+  background-color: #dc3545;
 }
 
 .table .btn:hover {
-  opacity: 0.8; /* Efecto de opacidad al pasar el cursor */
+  opacity: 0.8;
 }
 
-
-
-/* Estilo para el modal */
 .modal-content {
-  border-radius: 8px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
+  border-radius: 8px;
+  padding: 20px;
 }
 
 .modal-header {
-  background-color: #007bff; /* Color de fondo azul */
-  color: white; /* Texto blanco */
-  border-radius: 8px 8px 0 0; /* Bordes redondeados solo en la parte superior */
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px 8px 0 0;
 }
 
 .modal-title {
@@ -128,3 +127,4 @@ input[type="text"]::placeholder {
 .modal-footer .btn-secondary:hover {
   background-color: #5a6268;
 }
+ */

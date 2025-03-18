@@ -1,8 +1,13 @@
 <div class="container-fluid rounded shadow">
   <div class="row py-4 animated fadeIn fast">
-  
-    <div *ngIf="   IDSeleccionado =='Nuevo'   "  class="col-12">
+    <div *ngIf="IDSeleccionado == 'Nuevo'" class="col-12">
       <div class="card">
+
+
+        <div class="card-info">
+          <div class="card-header">
+            <h3 class="card-title">Administracion carga  Stock </h3>
+          </div>
         <div class="card-body">
           <input
             type="file"
@@ -112,8 +117,9 @@
                       <th style="width: 10%">Lote</th>
                       <th style="width: 15%">Fecha caducidad</th>
                       <th style="width: 10%">Cantidad</th>
-                      <th style="width: 10%">Cantidad recibida</th>
-                  <!--     <th style="width: 15%">Fabricante</th>
+                      <th style="width: 15%">Cantidad recibida</th>
+                      <th style="width: 5%"></th>
+                      <!--     <th style="width: 15%">Fabricante</th>
                       <th style="width: 10%">Registro Sanitario</th> -->
                     </tr>
                   </thead>
@@ -134,8 +140,15 @@
                       <td>{{ producto.lote }}</td>
                       <td>{{ producto.caducidad }}</td>
                       <td>{{ producto.cantidad }}</td>
-                      <td>{{ producto.cantidad_recibida }}</td>
-                   <!--    <td>{{ producto.fabricante | slice: 0 : 20 }}</td>
+                      <td>
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="cantidad_recibida"
+                        />
+                        <!--   {{ producto.cantidad_recibida }} -->
+                      </td>
+                      <!--    <td>{{ producto.fabricante | slice: 0 : 20 }}</td>
                       <td>{{ producto.sanitario }}</td> -->
                       <td>
                         <i class="bx bx-comment-detail" (click)="comments(i)">
@@ -144,7 +157,6 @@
                           *ngIf="producto.comentario.length > 0"
                           class="badge badge-danger comment-badge"
                         >
-                          1
                         </span>
                       </td>
                     </tr>

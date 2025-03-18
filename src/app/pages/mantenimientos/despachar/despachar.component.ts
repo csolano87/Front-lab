@@ -3,9 +3,12 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Bodega } from 'src/app/interfaces/cargaBodega.interface';
 import { StockReserva } from 'src/app/interfaces/cargarStockReserva.interface';
 import { pedidoStock } from 'src/app/interfaces/pedidos-stocks.interface';
+import { Usuario } from 'src/app/models/usuario.module';
 import { ImportacionService } from 'src/app/services/importacion.service';
 import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import Swal from 'sweetalert2';
+import { subscribe } from 'diagnostics_channel';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-despachar',
@@ -19,9 +22,13 @@ export class DespacharComponent implements OnInit {
     private inportService: ImportacionService,
     private manteniemintoService: MantenimientosService,
     private router: Router,
+    private usuarioService: UsuarioService,
   ) {}
   botonComprobarDeshabilitado = false;
+
+  usuarioId: string | '';
   botonValidarDeshabilitado = true;
+  public usuarios: Usuario[] = [];
   btnVal: string = 'Comprobar Disponiblidad';
   listabodega: Bodega[] = [];
   Area: string = null;
@@ -29,12 +36,18 @@ export class DespacharComponent implements OnInit {
   pedidoStockseleccionado: StockReserva;
   ngOnInit(): void {
     this.activateRoute.params.subscribe(({ id }) => this.Pedido(id));
-    //  this.getBodega();
+    this.getUsuarios();
     this.getArea();
   }
 
   getArea() {
     this.getBodega();
+  }
+  getUsuarios() {
+    this.usuarioService.GetUsuarios().subscribe(({ usuarios }) => {
+      this.usuarios = usuarios.filter((item) => item.roleId !== 1);
+      console.log(usuarios);
+    });
   }
 
   getBodega() {
@@ -52,41 +65,43 @@ export class DespacharComponent implements OnInit {
   Pedido(id: string) {
     console.log(id);
     this.inportService.obtenerStockById(id).subscribe((pedidoStock) => {
-      console.log(`data BD`, pedidoStock);
-      console.log(pedidoStock.AREA);
       const area = this.listabodega.find((item) => item.id == pedidoStock.AREA);
       console.log(this.listabodega);
 
       this.pedidos = pedidoStock;
     });
   }
-  UpdatePedido(pedido) {
-    console.log(pedido);
-    this.inportService.getvalidarcantidad(pedido).subscribe((resp: any) => {
-      const { msg } = resp;
-      Swal.fire({
-        icon: 'success',
-        title: `${msg}`,
-        showConfirmButton: false,
-      });
-      this.router.navigateByUrl('/dashboard/solicitudes-pedidos');
-      //this.router.navigateByUrl('/dashboard/solicitudes-pedidos/');
-    });
+  onUsuario(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.usuarioId = selectElement.value;
+    console.log(this.usuarioId);
   }
-  guardar() {}
 
-  /*   cambioEstado() {
-      if (this.btnVal != 'Editar') {
-        this.guardar();
-      }
-      this.importForm.enable();
+  UpdatePedido(pedido: any) {
+    console.log(this.usuarioId);
+    console.log(`pedido`, pedido);
+    if (this.usuarioId) {
+      const data2 = {
+        usuarioId: this.usuarioId,
+        ...pedido,
+      };
 
-      this.btnVal = 'Guardar';
+      this.inportService.getvalidarcantidad(data2).subscribe((resp: any) => {
+        const { msg } = resp;
+        Swal.fire({
+          icon: 'success',
+          title: `${msg}`,
+          showConfirmButton: false,
+        });
+        this.router.navigateByUrl('/dashboard/solicitudes-pedidos');
+      });
+    }
+  }
 
+  onreset() {
 
-    } */
-
-  onreset() {}
+    this.router.navigateByUrl('/dashboard/solicitudes-pedidos');
+  }
 
   comprobarCantidad(pedido: any) {
     this.botonComprobarDeshabilitado = true;
@@ -103,13 +118,7 @@ export class DespacharComponent implements OnInit {
     this.inportService
       .obtenerReservaTotal(encodedItemstock)
       .subscribe((resp) => {
-        /*    this.isChecking = false; */
         this.pedidoStockseleccionado = resp;
-        /*    console.log(resp);
-           this.btnValC = '2'; */
-        /*     const productosFormArray = this.importForm.get(
-              'PRODUCTOS',
-            ) as FormArray; */
 
         this.pedidoStockseleccionado.cantidadReservada.detalle.forEach(
           (item) => {
@@ -138,30 +147,11 @@ export class DespacharComponent implements OnInit {
                 control.LOTE = loteActual
                   ? `${loteActual}, ${item.lote || '0'}`
                   : `${item.lote || '0'}`;
-               
               });
             } else {
             }
           },
         );
       });
-    /*    } else {
-         console.log(pedido.id);
-         console.log(`t`, this.importForm.value);
-         const data = {
-           id: pedido.id,
-           ...this.importForm.value,
-         };
-         this.inportService.getvalidarcantidad(data).subscribe((resp: any) => {
-           const { msg } = resp;
-           Swal.fire({
-             icon: 'success',
-             title: `${msg}`,
-             showConfirmButton: false,
-           });
-           this.router.navigateByUrl('/dashboard/solicitud-pedidos');
-           //this.router.navigateByUrl('/dashboard/solicitudes-pedidos/');
-         });
-       } */
   }
 }

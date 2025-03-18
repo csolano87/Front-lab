@@ -11,7 +11,7 @@ export interface Stockbodega {
   fecha: Date;
   fechadescargo: Date | null;
   lote: null | string;
-
+  fechadespachar: Date | null;
   ESTADO: number;
   createdAt: Date;
   updatedAt: Date;
@@ -21,6 +21,7 @@ export interface Stockbodega {
   productId: number;
   product: Product;
   bodega: Bodega;
+  solicitud?: DES | null;
   despachar?: DES | null;
   descargar?: DES | null;
 }
@@ -37,7 +38,7 @@ export interface DES {
   id: number;
   doctor: string;
   codigo_doctor: string;
-  usuario?: string|null;
+  usuario?: string | null;
   password: string;
   rol: string;
 
@@ -61,3 +62,4 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
 }
+

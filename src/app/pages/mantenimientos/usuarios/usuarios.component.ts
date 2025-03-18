@@ -63,6 +63,7 @@ export class UsuariosComponent implements OnInit {
   Getusuarios() {
     this.cargando = true;
     this.usuarioservice.GetUsuarios().subscribe(({ total, usuarios }) => {
+      console.log(usuarios)
       this.totalUsuarios = total;
 
       this.usuarios = usuarios;

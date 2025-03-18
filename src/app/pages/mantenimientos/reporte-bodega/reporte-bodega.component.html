@@ -10,6 +10,10 @@
   <div class="row animated fadeIn fast">
     <div class="col-12">
       <div class="card">
+        <div class="card-info">
+          <div class="card-header">
+            <h3 class="card-title">Administración General carga por departamento</h3>
+          </div>
         <div class="card-body">
           <div class="row">
             <div class="form-group col-md-2">
@@ -17,14 +21,13 @@
               <input
                 type="date"
                 class="form-control"
-               
                 #searchIn
                 (change)="capturarValorFecha()"
               />
             </div>
 
             <div class="form-group col-md-2">
-              <label for="">Fecha fin</label>
+              <label for="">Fecha Fin</label>
               <input
                 type="date"
                 class="form-control"
@@ -34,8 +37,8 @@
             </div>
 
             <div class="form-group col-md-2">
-              <label for="">Bodega</label>
-              <select class="form-control"  (change)="onSearchBodega($event)"  >
+              <label for="">Departamento</label>
+              <select class="form-control" (change)="onSearchBodega($event)">
                 <option value="">--Seleccione--</option>
                 <option *ngFor="let bodega of listabodega" [value]="bodega.id">
                   {{ bodega.NOMBRE }}
@@ -65,28 +68,34 @@
             <form>
               <div
                 *ngIf="cargando"
-                class="alert alert-info text-center mt-3 animated fadeIn faster"
+                class=" text-center mt-3 animated fadeIn faster"
               >
-                <h4 class="alert-heading">Cargando</h4>
+              <i class='bx bx-loader-circle bx-spin bx-flip-vertical bx-md' ></i>
+               <!--  <h4 class="alert-heading">Cargando</h4>
                 <p>
                   <i class="fas fa-sync-alt fa-spin fa-2x"></i>
                 </p>
-                <p class="mb-0">Espere por favor</p>
+                <p class="mb-0">Espere por favor</p> -->
               </div>
 
               <div *ngIf="!cargando" class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
-                         <th style="width: 10%">Fecha</th>
-                      <th style="width: 10%">Bodega</th>
+
+                      <th style="width: 12%">Usr. solic.</th>
+
+                      <th style="width: 12%">Usr. desp.</th>
+
+
+                      <th style="width: 12%">Usr. cargó</th>
+
+                      <th style="width: 15%">Departamento</th>
                       <th style="width: 10%">Referencia</th>
-                      <th style="width: 30%">Nombre</th>
+                      <th style="width: 25%">Nombre</th>
                       <th style="width: 10%">Lote</th>
-                      <th style="width: 10%">Cantidad solicitidad</th>
-                      <th style="width: 10%">Cantidad entregada</th>
-                      <th style="width: 10%">Fecha descargo</th>
-                      <th style="width: 10%">Usuario descargo</th>
+
+                      <th style="width: 10%">Cant.</th>
                     </tr>
                   </thead>
 
@@ -94,22 +103,39 @@
                     <tr
                       *ngFor="
                         let stock of listasotckbodega
-                          | filtroDescargoBodega: search : searchInValue : searchOutValue
+                          | filtroDescargoBodega
+                            : search
+                            : searchInValue
+                            : searchOutValue
                           | paginate: { itemsPerPage: 10, currentPage: page }
                       "
                     >
-                    <td>{{ stock.fecha }}</td>
+                      <td>
+                        {{ stock.solicitud?.usuario }} <br />
+                        {{ stock?.fecha | utcDate: "YYYY-MM-dd " }}
+                        {{ stock?.fecha | date: "HH:mm " }}
+                      </td>
+                      <td>
+                        {{ stock.despachar?.usuario }} <br />
+                        {{ stock?.fechadespachar | utcDate: "YYYY-MM-dd " }}
+
+                        {{ stock?.fechadespachar | date: "HH:mm " }}
+                      </td>
+
+                      <td>
+                        {{ stock.descargar?.usuario }}
+                        <br />
+                        {{ stock?.fechadescargo | utcDate: "YYYY-MM-dd " }}
+
+                        {{ stock?.fechadescargo | date: "HH:mm " }}
+                      </td>
                       <td>{{ stock.bodega.NOMBRE }}</td>
                       <td>{{ stock.product.REFERENCIA }}</td>
                       <td>{{ stock.product.NOMBRE }}</td>
 
                       <td>{{ stock.lote }}</td>
-                      <td>{{ stock.CANTIDAD }}</td>
+
                       <td>{{ stock.ENTREGADO }}</td>
-                      <td>
-                        {{ stock.fechadescargo | utcDate: "YYYY-MM-dd " }}
-                      </td>
-                      <td>{{ stock.descargar?.usuario }}</td>
                     </tr>
                   </tbody>
                 </table>

@@ -9,6 +9,7 @@ import { StockService } from 'src/app/services/stock.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { pedidoStock } from 'src/app/interfaces/pedidos-stocks.interface';
 @Component({
   selector: 'app-reporte-bodega',
 
@@ -24,6 +25,7 @@ export class ReporteBodegaComponent implements OnInit {
   searchOutValue: string = '';
   cargando: boolean = false;
   listasotckbodega: Stockbodega[] = [];
+//listasotckbodega: pedidoStock[] = [];
 
   listabodega: Bodega[] = [];
   page;
@@ -53,16 +55,19 @@ export class ReporteBodegaComponent implements OnInit {
       params.fechaIn = fechaIn;
       params.fechaOut = fechaOut;
     } */
+
+      this.cargando=true;
     this.stockService.getBodegaDescargo().subscribe((stockbodega) => {
       console.log(stockbodega);
 
       //  this.listasotckbodega = stockbodega.filter(item=>item.ESTADO ==2)});
-      this.listasotckbodega = stockbodega;
+      this.listasotckbodega = stockbodega.filter(item=>item.ESTADO ==2);
+      this.cargando=false;
     });
   }
 
   getExportPdf() {
-    const dataToExport = this.listasotckbodega.map((orden) => {
+    /* const dataToExport = this.listasotckbodega.map((orden) => {
       return {
         Referencia: orden.product.REFERENCIA,
 
@@ -84,15 +89,17 @@ export class ReporteBodegaComponent implements OnInit {
     const blob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(blob, 'reporte.xlsx');
+    saveAs(blob, 'reporte.xlsx'); */
   }
   onSearchBodega(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.search = selectElement.value;
+    console.log(this.search)
+
     if (!this.search) {
       this.search = ""; // Restablecer la búsqueda si no se selecciona nada
     }
-  } 
+  }
 
   capturarValorFecha() {
     // Obtener el valor de 'searchIn'
@@ -109,7 +116,7 @@ export class ReporteBodegaComponent implements OnInit {
     this.searchIn.nativeElement.value = ''; // Limpiar input de fecha inicio
     this.searchOut.nativeElement.value = ''; // Limpiar input de fecha fin
 
-    
+
   }
 
-} 
+}

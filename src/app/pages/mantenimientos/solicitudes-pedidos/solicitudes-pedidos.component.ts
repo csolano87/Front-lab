@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/models/usuario.module';
 import { StockService } from 'src/app/services/stock.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
+import { NotificarDespachosService } from '../../../services/notificar-despachos.service';
 
 @Component({
   selector: 'app-solicitudes-pedidos',
@@ -16,16 +17,21 @@ export class SolicitudesPedidosComponent implements OnInit {
   public page!: number;
   listaPedidoStock: pedidoStock[] = [];
   showPruebasHeader: boolean = false;
+  notificarDespacho: any[] = [];
   showDetails: boolean[] = [];
-    public usuario: Usuario;
+  public usuario: Usuario;
 
-
-  constructor(private stockService: StockService,
-    private usuarioService :UsuarioService
-  ) {this.usuario=usuarioService.usuario}
+  constructor(
+    private stockService: StockService,
+    private usuarioService: UsuarioService,
+    private notificarDespachosservice: NotificarDespachosService,
+  ) {
+    this.usuario = usuarioService.usuario;
+  }
 
   ngOnInit(): void {
     this.getAllStocks();
+   // this.escucharSocket();
   }
   toggleDetails(index: number): void {
     this.showDetails[index] = !this.showDetails[index];
@@ -75,8 +81,7 @@ export class SolicitudesPedidosComponent implements OnInit {
   }
   ImprimirPDf(pedido: pedidoStock) {
     console.log(pedido);
-    this.stockService.getPdfPedidoStock(pedido).subscribe(
-      (blob: Blob) => {
+    this.stockService.getPdfPedidoStock(pedido).subscribe((blob: Blob) => {
       const url = window.URL.createObjectURL(blob);
       console.log(url);
       const link = document.createElement('a');
@@ -86,4 +91,6 @@ export class SolicitudesPedidosComponent implements OnInit {
       window.URL.revokeObjectURL(url);
     });
   }
+
+
 }

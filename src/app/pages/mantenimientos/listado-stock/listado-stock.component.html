@@ -10,122 +10,129 @@
   <div class="row animated fadeIn fast">
     <div class="col-12">
       <div class="card">
-        <div class="card-body">
-          <div class="mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Buscar guia..."
-              #txtSearch
-              (keyup)="onSearch(txtSearch.value)"
-            />
+        <div class="card-info">
+          <div class="card-header">
+            <h3 class="card-title">Administracion cargas Stock</h3>
           </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar guia..."
+                #txtSearch
+                (keyup)="onSearch(txtSearch.value)"
+              />
+            </div>
 
-          <div class="col-md-3 button"></div>
+            <div class="col-md-3 button"></div>
 
-          <div class="table-responsive">
-            <form>
-              <div
-                *ngIf="cargando"
-                class="alert alert-info text-center mt-3 animated fadeIn faster"
-              >
-                <h4 class="alert-heading">Cargando</h4>
-                <p>
-                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
-                </p>
-                <p class="mb-0">Espere por favor</p>
-              </div>
+            <div class="table-responsive">
+              <form>
+                <div
+                  *ngIf="cargando"
+                  class="alert alert-info text-center mt-3 animated fadeIn faster"
+                >
+                  <h4 class="alert-heading">Cargando</h4>
+                  <p>
+                    <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                  </p>
+                  <p class="mb-0">Espere por favor</p>
+                </div>
 
-              <div *ngIf="!cargando" class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Fecha ingreso</th>
-                      <th>Guia</th>
+                <div *ngIf="!cargando" class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Fecha ingreso</th>
+                        <th>Guia</th>
 
-                      <th>Estado</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
+                        <th>Estado</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
 
-                  <tbody>
-                    <tr
-                      *ngFor="
-                        let stock of listastock
-                          | paginate: { itemsPerPage: 10, currentPage: page }
-                      "
-                    >
-                      <td>{{ stock.fechaIngreso }}</td>
-                      <td>{{ stock.guia }}</td>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let stock of listastock
+                            | paginate: { itemsPerPage: 10, currentPage: page }
+                        "
+                      >
+                        <td>{{ stock.fechaIngreso }}</td>
+                        <td>{{ stock.guia }}</td>
 
-                      <td>
-                        <div [ngSwitch]="stock.ESTADO">
-                          <div *ngSwitchCase="1">
-                            <span class="badge badge-primary">Generado</span>
+                        <td>
+                          <div [ngSwitch]="stock.ESTADO">
+                            <div *ngSwitchCase="1">
+                              <span class="badge badge-primary">Generado</span>
+                            </div>
+                            <div *ngSwitchCase="2">
+                              <span class="badge badge-success"
+                                >Confirmado</span
+                              >
+                            </div>
+                            <div *ngSwitchDefault>
+                              <span class="badge badge-danger">Anulado</span>
+                            </div>
                           </div>
-                          <div *ngSwitchCase="2">
-                            <span class="badge badge-success">Confirmado</span>
-                          </div>
-                          <div *ngSwitchDefault>
-                            <span class="badge badge-danger">Anulado</span>
-                          </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      <td class="actions">
-                        <span class="span_edit">
-                          <i
+                        <td class="actions">
+                          <span class="span_edit">
+                            <i
+                              [ngClass]="{
+                                'disabled-icon': stock.ESTADO !== 1
+                              }"
+                              [routerLink]="['/dashboard', 'stock', stock.id]"
+                              class="bx bxs-edit"
+                              >Editar</i
+                            >
+                          </span>
+                          <span
                             [ngClass]="{
-                           'disabled-icon': stock.ESTADO !== 1
+                              'disabled-icon': stock.ESTADO !== 1
                             }"
-                            [routerLink]="['/dashboard', 'stock', stock.id]"
-                            class="bx bxs-edit"
-                            >Editar</i
+                            (click)="onDeleteStock(stock)"
+                            class="span_delete"
                           >
-                        </span>
-                        <span
-                          [ngClass]="{
-                            'disabled-icon': stock.ESTADO !== 1
-                          }"
-                          (click)="onDeleteStock(stock)"
-                          class="span_delete"
-                        >
-                          <i class="bx bxs-trash">Eliminar</i>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                            <i class="bx bxs-trash">Eliminar</i>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-              <pagination-controls
-                (pageChange)="page = $event"
-                previousLabel="Anterior"
-                nextLabel="Siguiente"
-              ></pagination-controls>
-            </form>
+                <pagination-controls
+                  (pageChange)="page = $event"
+                  previousLabel="Anterior"
+                  nextLabel="Siguiente"
+                ></pagination-controls>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal fade" id="modal-info">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"></h4>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <div class="modal fade" id="modal-info">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"></div>
       </div>
-      <div class="modal-body"></div>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="container-fluid rounded shadow">
-  <div class="row py-4 animated fadeIn fast">
+<!--   <div class="row py-4 animated fadeIn fast">
     <div class="col-12">
       <div class="card">
         <div class="card-body">
@@ -11,22 +11,27 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div
     *ngIf="cargando"
-    class="alert alert-info text-center mt-3 animated fadeIn faster"
+    class=" text-center mt-3 animated fadeIn faster"
   >
-    <h4 class="alert-heading">Cargando</h4>
+   <!--  <h4 class="alert-heading">Cargando</h4>
     <p>
       <i class="fas fa-sync-alt fa-spin fa-2x"></i>
     </p>
-    <p class="mb-0">Espere por favor</p>
+    <p class="mb-0">Espere por favor</p> -->
+    <i class='bx bx-loader-circle bx-spin bx-flip-vertical bx-lg' ></i>
   </div>
 
   <div class="row animated fadeIn fast" *ngIf="!cargando">
     <div class="col-12">
       <div class="card">
+        <div class="card-info">
+          <div class="card-header">
+            <h3 class="card-title">Administracion Solicitudes</h3>
+          </div>
         <div class="card-body">
           <!--  <h6 class="title">LISTADO DE PEDIDOS GENERADOS</h6> -->
 
@@ -37,8 +42,9 @@
             >
               <thead>
                 <tr>
-                  <th style="width: 10%">FECHA</th>
-                  <th style="width: 20%">RESPONSABLE</th>
+                  <th style="width: 12%">Usr. Solic.</th>
+                  <th style="width: 12%">Usr. Desp.</th>
+                  <th style="width: 12%">Usr. Rec.</th>
                   <th style="width: 10%">Estado</th>
                   <th style="width: 30%">Acciones</th>
                 </tr>
@@ -53,12 +59,46 @@
                   "
                 >
                   <tr>
-                    <td>{{ pedido.createdAt | utcDate: "YYYY-MM-dd "}}
-                      <br>
-                      {{ pedido.createdAt | utcDate: " HH:mm "}}
+                    <td>
+                      {{ pedido.usuario.usuario | uppercase }} <br />
+                      <i class="bx bx-calendar bx-flashing"></i>
+                      {{ pedido.FECHAPEDIDOSTOCK | utcDate: "YYYY-MM-dd " }}
+                      &nbsp;
+                      <i class="bx bx-time bx-tada"></i>
+                      {{ pedido.FECHAPEDIDOSTOCK | date: " HH:mm " }}
                     </td>
 
-                    <td>{{ pedido.usuario.doctor }}</td>
+                    <!--               <td></td> -->
+
+                    <td>
+                      {{ pedido.despachar?.usuario | uppercase }} <br />
+                      <i
+                        *ngIf="pedido.fechaDespacho"
+                        class="bx bx-calendar bx-flashing"
+                      ></i>
+                      {{ pedido?.fechaDespacho | utcDate: "YYYY-MM-dd " }}
+
+                      <i
+                        *ngIf="pedido.fechaDespacho"
+                        class="bx bx-time bx-tada"
+                      ></i>
+                      {{ pedido?.fechaDespacho | date: " HH:mm " }}
+                    </td>
+
+                    <td>
+                      {{ pedido.recibe?.usuario | uppercase }} <br />
+                      <i
+                        *ngIf="pedido.fechaRecibe"
+                        class="bx bx-calendar bx-flashing"
+                      ></i>
+                      {{ pedido?.fechaRecibe | utcDate: "YYYY-MM-dd " }}
+                      &nbsp;
+                      <i
+                        *ngIf="pedido.fechaRecibe"
+                        class="bx bx-time bx-tada"
+                      ></i>
+                      {{ pedido?.fechaRecibe | date: " HH:mm " }}
+                    </td>
                     <td>
                       <div
                         [ngClass]="{
@@ -73,20 +113,6 @@
                         <div *ngSwitchCase="2">Despachado</div>
                         <div *ngSwitchDefault>Eliminada</div>
                       </div>
-                      <!--   <span
-                        *ngIf="pedido.ESTADO == 1"
-                        class="rounded shadow bg-pen"
-                        >Creado</span
-                      >
-
-                      <span
-                        *ngIf="pedido.ESTADO == 2"
-                        class="rounded shadow bg-com"
-                        >Despachado</span
-                      >
-                      <span *ngIf="pedido.ESTADO == 0" class="rounded shadow"
-                        >Anulado</span
-                      > -->
                     </td>
 
                     <td class="actions">
@@ -106,7 +132,9 @@
 
                       <span class="span_delete">
                         <i
-                          [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
+                          [ngClass]="{
+                            'disabled-icon': pedido.ESTADO === 2
+                          }"
                           (click)="borrarPedido(pedido)"
                           class="bx bxs-trash"
                         >

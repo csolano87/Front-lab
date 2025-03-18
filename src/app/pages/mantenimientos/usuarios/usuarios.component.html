@@ -2,149 +2,190 @@
   <div class="row py-4 animated fadeIn fast">
     <div class="col-12">
       <div class="card">
-        <div class=" card-info">
+        <div class="card-info">
           <div class="card-header">
             <h3 class="card-title">Administracion de usuarios</h3>
-          
           </div>
-        <div class="card-body">
-         
-          <input type="text" class="form-control" placeholder="Buscar médico..."
-            (keyup)="buscar(txtTermino.value.toUpperCase())" #txtTermino />
+          <div class="card-body">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar médico..."
+              (keyup)="buscar(txtTermino.value.toUpperCase())"
+              #txtTermino
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
-    <h4 class="alert-heading">Cargando</h4>
-    <p>
-      <i class="fa fa-refresh fa-spin fa-2x"></i>
-    </p>
-    <p class="mb-0">Espere por favor</p>
-  </div>
+    <div
+      *ngIf="cargando"
+      class="alert alert-info text-center mt-3 animated fadeIn faster"
+    >
+      <h4 class="alert-heading">Cargando</h4>
+      <p>
+        <i class="fa fa-refresh fa-spin fa-2x"></i>
+      </p>
+      <p class="mb-0">Espere por favor</p>
+    </div>
 
-  <div class="row animated fadeIn fast" *ngIf="!cargando">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-        
+    <div class="row animated fadeIn fast" *ngIf="!cargando">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-md-3 button"></div>
 
-          <div class="col-md-3 button"></div>
-
-          <div *ngIf="usuarios.length === 0" class="row py-2">
-            <div class="col-12">
-              <div class="alert alert-info" role="alert">
-                <h3 class="text-center">No existe registros</h3>
+            <div *ngIf="usuarios.length === 0" class="row py-2">
+              <div class="col-12">
+                <div class="alert alert-info" role="alert">
+                  <h3 class="text-center">No existe registros</h3>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="table-responsive">
-            <table *ngIf="!cargando && usuarios.length > 0" class="table">
-              <thead>
-                <tr>
-                  <th style="width: 20%;">Usuario</th>
-                  <th style="width: 20%;">Nombres</th>
+            <div class="table-responsive">
+              <table *ngIf="!cargando && usuarios.length > 0" class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%">Usuario</th>
+                    <th style="width: 20%">Nombres</th>
 
-                  <!--   <th class="text-table">Código</th> -->
+                    <!--   <th class="text-table">Código</th> -->
 
-                  <th style="width: 10%;">Rol</th>
-                  <th style="width: 10%;">Estado</th>
+                    <th style="width: 10%">Rol</th>
+                    <th style="width: 10%">Estado</th>
 
-                  <th>Acciones</th>
-                </tr>
-              </thead>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                <tr *ngFor="
-                    let usuario of usuarios
-                      | paginate: { itemsPerPage: 10, currentPage: page }
-                  ">
-                  <td>{{ usuario.usuario }}</td>
-                  <td>{{ usuario.doctor }}</td>
-                  <!--            <td>{{ usuario.codigo_doctor }}</td> -->
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let usuario of usuarios
+                        | paginate: { itemsPerPage: 10, currentPage: page }
+                    "
+                  >
+                    <td>{{ usuario.usuario }}</td>
+                    <td>{{ usuario.doctor }}</td>
+                    <!--            <td>{{ usuario.codigo_doctor }}</td> -->
 
-                  <td>{{ usuario.role.rol }}</td>
+                    <td>{{ usuario.role.rol }}</td>
 
-                  <td>
-                    <div [ngSwitch]="usuario.estado">
-
-                      <div *ngSwitchCase="true">Activo</div>
-                      <div *ngSwitchDefault>Inactivo</div>
-                    </div>
-                    <!--  <span *ngIf="!usuario.estado" class="rounded shadow bg-creada">Inactivo</span>
+                    <td>
+                      <div [ngSwitch]="usuario.estado">
+                        <div *ngSwitchCase="true">Activo</div>
+                        <div *ngSwitchDefault>Inactivo</div>
+                      </div>
+                      <!--  <span *ngIf="!usuario.estado" class="rounded shadow bg-creada">Inactivo</span>
                     <span *ngIf="usuario.estado" class="rounded shadow bg-procesando">Activo</span> -->
-                  </td>
-                  <td class="actions">
-                    <!-- <a [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
+                    </td>
+                    <td class="actions">
+                      <!-- <a [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
                       >
-                     
+
                     </a> -->
-                    <span class="span_edit">
-                      <i class="bx bx-edit-alt" [routerLink]="['/dashboard', 'perfil', usuario.id]"
-                        data-toggle="tooltip" data-original-title="Editar">Editar</i>
-                    </span>
-                    <span (click)="eliminarUsuario(usuario)" class="span_delete">
-                      <i class="bx bx-trash ">Eliminar</i></span>
+                      <span class="span_edit">
+                        <i
+                          class="bx bx-edit-alt"
+                          [routerLink]="['/dashboard', 'perfil', usuario.id]"
+                          data-toggle="tooltip"
+                          data-original-title="Editar"
+                          >Editar</i
+                        >
+                      </span>
+                      <span
+                        (click)="eliminarUsuario(usuario)"
+                        class="span_delete"
+                      >
+                        <i class="bx bx-trash">Eliminar</i></span
+                      >
 
+                      <span
+                        class="span_password"
+                        [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
+                        data-toggle="modal"
+                        data-target="#modal-default"
+                        (click)="actualizarpassword(usuario)"
+                      >
+                        <i class="bx bxs-key" aria-hidden="true">Password</i>
+                      </span>
 
-                    <span class="span_password" 
-                    [ngClass]="{ 'disabled-icon': usuario.estado != '1' }" 
-                    
-                      data-toggle="modal" data-target="#modal-default"
-                      (click)="actualizarpassword(usuario)" >
-                      <i class="bx bxs-key " aria-hidden="true">Password</i>
-                    </span>
+                      <span
+                        class="span_permisos"
+                        [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
+                        [routerLink]="['/dashboard', 'permisos', usuario.id]"
+                      >
+                        <i class="bx bxs-lock">Permisos</i>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-                    <span class="span_permisos" 
-                    [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
-                      [routerLink]="['/dashboard', 'permisos', usuario.id]">
-                      <i class='bx bxs-lock '>Permisos</i>
-                    </span>
-
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div *ngIf="txtTermino.value.length === 0" class="paginacion"></div>
           </div>
-
-          <div *ngIf="txtTermino.value.length === 0" class="paginacion"></div>
         </div>
       </div>
+
+      <pagination-controls
+        (pageChange)="page = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      ></pagination-controls>
     </div>
-
-    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
-      nextLabel="Siguiente"></pagination-controls>
   </div>
-</div>
 
-<div class="modal fade" id="modal-default">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Cambiar Contraseña</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-">
-        <form [formGroup]="passwordforma" (ngSubmit)="(passwordforma)" id="passwordforma">
-          <div class="form-group col-md-12">
-            <label for="text" class="form-label">Contrasena</label>
-            <input type="password" class="form-control" formControlName="password" [class.is-invalid]="password"
-              placeholder="Ingrese una contraseña" />
-            <small *ngIf="password" class="form-text text-danger">Ingrese minimo 8 letras</small>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
-          Close
-        </button>
-        <button type="button" (click)="UpdateP()" data-dismiss="modal" class="btn btn-primary">
-          Guardar
-        </button>
+  <div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Cambiar Contraseña</h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-">
+          <form
+            [formGroup]="passwordforma"
+            (ngSubmit)="(passwordforma)"
+            id="passwordforma"
+          >
+            <div class="form-group col-md-12">
+              <label for="text" class="form-label">Contrasena</label>
+              <input
+                type="password"
+                class="form-control"
+                formControlName="password"
+                [class.is-invalid]="password"
+                placeholder="Ingrese una contraseña"
+              />
+              <small *ngIf="password" class="form-text text-danger"
+                >Ingrese minimo 8 letras</small
+              >
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+          </button>
+          <button
+            type="button"
+            (click)="UpdateP()"
+            data-dismiss="modal"
+            class="btn btn-primary"
+          >
+            Guardar
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -129,12 +129,12 @@ export class StockService {
    /*  bodegaId: string,
     fechaIn: string,
     fechaOut: string, */
-    
+
   ): Observable<Stockbodega[]> {
     return this.http
       .get<Stocksbodega>(
         `${baseUrl}/api/pedidos-stock/bodega/bodegaStock`,this.headers,
-      
+
       )
       .pipe(map(({ stockbodega }) => stockbodega));
   }

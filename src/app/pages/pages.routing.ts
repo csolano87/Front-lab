@@ -231,6 +231,7 @@ const routes: Routes = [
       {
         path: 'ReporteBodega',
         component: ReporteBodegaComponent,
+
         data: { titulo: 'ReporteBodega' },
       },
       {

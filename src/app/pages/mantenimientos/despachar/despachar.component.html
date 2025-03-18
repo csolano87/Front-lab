@@ -1,76 +1,99 @@
 <div class="container-fluid">
-
-     <div class="col-md-12">
-          <div class="card card-info">
-               <div class="card-header">
-                    <h6 class="card-title">Despachar a bodega</h6>
-
-               </div>
-               <div class="card-body">
-                    <div class="row">
-                         <div class="form-group col-md-4">
-                              <label>Departamento solicitante / Area de trabajo</label>
-                              <p class="area">{{pedidos?.itemstock[0].bodega.NOMBRE}}</p>
-
-                         </div>
-
-                         <div class="col-md-8">
-                              <div class="button">
-                                   <button (click)="comprobarCantidad(pedidos)" [disabled]="botonComprobarDeshabilitado" class="btn btn-primary btn-sm">
-                                        Comprobar disponibilidad
-                                   </button>
-                                   &nbsp;
-                                   <button (click)="UpdatePedido(pedidos)" [disabled]="botonValidarDeshabilitado"      class="btn btn-primary btn-sm">
-                                        Validar
-                                   </button>
-                                   &nbsp;
-                                   <button type="reset" (click)="onreset()" class="btn btn-danger btn-sm">
-                                        Cancelar
-                                   </button>
-                          
-                              </div>
-                         </div>
-
-                         <table class="table">
-                              <thead>
-                                   <tr>
-                                        <th style="width: 30%;">Producto</th>
-
-                                        <!--  <th>Marca</th> -->
-                                        <th style="width: 10%;">Cantidad ordenada</th>
-                                        <th style="width: 10%;">Total Stock</th>
-                                        <th style="width: 15%;">Entregado</th>
-                                        <th>Lote</th>
-                                   </tr>
-                              </thead>
-                              <tbody>
-
-                                   <tr *ngFor=" let d of pedidos.itemstock;
-                                        let i = index">
-                                        <td>
-                                             {{d.product.NOMBRE }}
-
-                                        </td>
-                                        <!--  <td>{{ d.product.UNIDAD }}</td> -->
-                                        <td>{{d.CANTIDAD}}
-
-                                        </td>
-                                        <td>{{d.total_stock}}</td>
-                                        <td>
-                                             <input type="number" class="form-control" [value]="d.ENTREGADO">
-                                        </td>
-
-                                        <td>
-                                             {{ d.LOTE }}
-                                        </td>
-
-                                   </tr>
-                              </tbody>
-                         </table>
-
-                    </div>
-               </div>
+  <div class="col-md-12">
+    <div class="card card-info">
+      <div class="card-header">
+        <h6 class="card-title">Despachar a bodega</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Departamento solicitante / Area de trabajo</label>
+            <!--    <p class="area">{{ pedidos?.itemstock[0].bodega.NOMBRE }}</p> -->
+            <input
+              type="text"
+              class="form-control"
+              readonly
+              [value]="pedidos?.itemstock[0].bodega.NOMBRE"
+            />
           </div>
-     </div>
 
+          <div class="form-group col-md-4">
+            <label for="">Usuario recibe</label>
+            <select  class="form-control"
+
+            (change)="onUsuario($event)">
+            >
+              <option value="">--Seleccione--</option>
+              <option *ngFor="let item of usuarios" [value]="item.id">
+                {{ item.usuario }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <div class="button">
+              <button
+                (click)="comprobarCantidad(pedidos)"
+                [disabled]="botonComprobarDeshabilitado"
+                class="btn btn-primary btn-sm"
+              >
+                Comprobar disponibilidad
+              </button>
+              &nbsp;
+              <button
+                (click)="UpdatePedido(pedidos)"
+                [disabled]="botonValidarDeshabilitado"
+                class="btn btn-primary btn-sm"
+              >
+                Validar
+              </button>
+              &nbsp;
+              <button
+                type="reset"
+                (click)="onreset()"
+                class="btn btn-danger btn-sm"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 25%">Producto</th>
+
+                <!--  <th>Marca</th> -->
+                <th style="width: 15%">Cantidad ordenada</th>
+                <th style="width: 10%">Total Stock</th>
+                <th style="width: 10%">Entregado</th>
+                <th style="width: 10%">Lote</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of pedidos.itemstock; let i = index">
+                <td>
+                  {{ d.product.NOMBRE }}
+                </td>
+                <!--  <td>{{ d.product.UNIDAD }}</td> -->
+                <td>{{ d.CANTIDAD }}</td>
+                <td>{{ d.total_stock }}</td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control"
+                    [value]="d.ENTREGADO"
+                  />
+                </td>
+
+                <td>
+                  {{ d.LOTE }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

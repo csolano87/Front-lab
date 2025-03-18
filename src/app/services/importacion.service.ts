@@ -92,15 +92,15 @@ export class ImportacionService {
   UpdateProducto(data: cargaProductos) {
     return this.http
       .put(`${baseUrl}/api/productos/${data.id}`,data, this.headers)
-      
-      
+
+
   }
 
   PostProducto(data: FormData) {
     return this.http
       .post(`${baseUrl}/api/productos/producto`,data, this.headers)
-      
-      
+
+
   }
 
 
@@ -149,10 +149,10 @@ export class ImportacionService {
       .pipe(map((pedidoStock: { ok: boolean; pedidoStock: PedidoStock }) => pedidoStock.pedidoStock));
   }
 
-getvalidarcantidad(data : StockPedido){
+getvalidarcantidad(data : any){
   return this.http
       .put(`${baseUrl}/api/pedidos-stock/validar-cantidad/${data.id}`,data, this.headers)
-     
+
 }
 
   getDeleteImport(pedido: Pedido) {

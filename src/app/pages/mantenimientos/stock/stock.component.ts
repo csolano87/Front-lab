@@ -295,7 +295,7 @@ export class StockComponent implements OnInit {
             lote: item['Operaciones/Lote/Lote/Nº de serie'],
             caducidad: item['Operaciones/Lote/Fecha caducidad'],
             cantidad: item['Operaciones/Cantidad Pedida'],
-            cantidad_recibida: '',
+            cantidad_recibida:item['Operaciones/Realizado'],
             fabricante: item['Operaciones/Producto/Fabricante'],
             sanitario: item['Operaciones/Producto/Registro Sanitario'],
             comentario: '',

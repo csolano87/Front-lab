@@ -1,47 +1,41 @@
 <div class="container-fluid rounded shadow">
-  <div class="row py-4 animated fadeIn fast">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Buscar producto por nombre..."
-            #txtSearch
-            (keyup)="onSearchStock(txtSearch.value)"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="row animated fadeIn fast">
     <div class="col-12">
       <div class="card">
-        <div class="card-body">
-          <div class="mb-3">
-            <!--     <input
-              type="text"
-              class="form-control"
-              placeholder="Buscar productos..."
-              #txtSearch
-              (keyup)="onSearchStock(txtSearch.value)"
-            /> -->
-            <!--  <h6 class="title">Lista Stock Ingresado</h6> -->
-            <a class="btn btn-secondary btn-sm" (click)="descargarPDf()">Generar Pdf</a>
-            <div class="col-md-3 button"></div>
+        <div class="card-info">
+          <div class="card-header">
+            <h3 class="card-title">Administración General de Stock</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="mb-3 col-md-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar productos..."
+                  #txtSearch
+                  (keyup)="onSearchStock(txtSearch.value)"
+                />
+              </div>
+              <div class="col-md-2">
+                <a class="btn btn-secondary btn-sm" (click)="descargarPDf()"
+                  >Generar Pdf</a
+                >
+              </div>
+            </div>
 
             <div class="table-responsive">
               <form>
                 <div
                   *ngIf="cargando"
-                  class="alert alert-info text-center mt-3 animated fadeIn faster"
+                  class="text-center mt-3 animated fadeIn faster"
                 >
-                  <h4 class="alert-heading">Cargando</h4>
+                  <!-- <h4 class="alert-heading">Cargando</h4>
                   <p>
                     <i class="fas fa-sync-alt fa-spin fa-2x"></i>
                   </p>
-                  <p class="mb-0">Espere por favor</p>
+                  <p class="mb-0">Espere por favor</p> -->
+                  <i class="bx bx-loader-circle bx-spin bx-flip-vertical bx-lg"></i>
                 </div>
 
                 <div>
@@ -134,14 +128,12 @@
                         </tr>
                         <ng-container *ngIf="showDetails[i]">
                           <tr>
-
                             <th colspan="1"></th>
                             <!--    <th >Referencia</th> -->
 
                             <th>Lote</th>
                             <th>Cantidad</th>
                             <th>Fecha</th>
-
                           </tr>
                           <ng-container *ngFor="let item of stock.detalles">
                             <tr>
