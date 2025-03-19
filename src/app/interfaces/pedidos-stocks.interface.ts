@@ -24,6 +24,7 @@ export interface pedidoStock {
   user?: Usuario;
   clientes?: Clientes;
   marcas?: Marcas;
+  notificar:        Notificar | null;
 }
 
 export interface Item {
@@ -70,4 +71,14 @@ export interface Clientes {
 
 export interface Marcas {
   NOMBRE?: string;
+}
+export interface Notificar {
+  id:              number;
+  mensaje:         string;
+  estado:          string;
+  fechaExpiracion: string;
+  createdAt:       string;
+  updatedAt:       string;
+  usuarioId:       number;
+  pedidostockId:   number;
 }

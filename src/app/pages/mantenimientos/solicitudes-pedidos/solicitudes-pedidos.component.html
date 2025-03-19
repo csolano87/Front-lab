@@ -1,5 +1,5 @@
 <div class="container-fluid rounded shadow">
-<!--   <div class="row py-4 animated fadeIn fast">
+  <!--   <div class="row py-4 animated fadeIn fast">
     <div class="col-12">
       <div class="card">
         <div class="card-body">
@@ -13,16 +13,13 @@
     </div>
   </div> -->
 
-  <div
-    *ngIf="cargando"
-    class=" text-center mt-3 animated fadeIn faster"
-  >
-   <!--  <h4 class="alert-heading">Cargando</h4>
+  <div *ngIf="cargando" class="text-center mt-3 animated fadeIn faster">
+    <!--  <h4 class="alert-heading">Cargando</h4>
     <p>
       <i class="fas fa-sync-alt fa-spin fa-2x"></i>
     </p>
     <p class="mb-0">Espere por favor</p> -->
-    <i class='bx bx-loader-circle bx-spin bx-flip-vertical bx-lg' ></i>
+    <i class="bx bx-loader-circle bx-spin bx-flip-vertical bx-lg"></i>
   </div>
 
   <div class="row animated fadeIn fast" *ngIf="!cargando">
@@ -32,197 +29,222 @@
           <div class="card-header">
             <h3 class="card-title">Administracion Solicitudes</h3>
           </div>
-        <div class="card-body">
-          <!--  <h6 class="title">LISTADO DE PEDIDOS GENERADOS</h6> -->
+          <div class="card-body">
+            <!--  <h6 class="title">LISTADO DE PEDIDOS GENERADOS</h6> -->
 
-          <div class="table-responsive">
-            <table
-              *ngIf="!cargando && listaPedidoStock.length > 0"
-              class="table"
-            >
-              <thead>
-                <tr>
-                  <th style="width: 12%">Usr. Solic.</th>
-                  <th style="width: 12%">Usr. Desp.</th>
-                  <th style="width: 12%">Usr. Rec.</th>
-                  <th style="width: 10%">Estado</th>
-                  <th style="width: 30%">Acciones</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <ng-container
-                  *ngFor="
-                    let pedido of listaPedidoStock
-                      | paginate: { itemsPerPage: 10, currentPage: page };
-                    let i = index
-                  "
-                >
+            <div class="table-responsive">
+              <table
+                *ngIf="!cargando && listaPedidoStock.length > 0"
+                class="table"
+              >
+                <thead>
                   <tr>
-                    <td>
-                      {{ pedido.usuario.usuario | uppercase }} <br />
-                      <i class="bx bx-calendar bx-flashing"></i>
-                      {{ pedido.FECHAPEDIDOSTOCK | utcDate: "YYYY-MM-dd " }}
-                      &nbsp;
-                      <i class="bx bx-time bx-tada"></i>
-                      {{ pedido.FECHAPEDIDOSTOCK | date: " HH:mm " }}
-                    </td>
+                    <th style="width: 12%">Usr. Solic.</th>
+                    <th style="width: 12%">Usr. Desp.</th>
+                    <th style="width: 12%">Usr. Rec.</th>
+                    <th style="width: 10%">Estado Recep.</th>
+                    <th style="width: 10%">Estado</th>
+                    <th style="width: 30%">Acciones</th>
+                  </tr>
+                </thead>
 
-                    <!--               <td></td> -->
+                <tbody>
+                  <ng-container
+                    *ngFor="
+                      let pedido of listaPedidoStock
+                        | paginate: { itemsPerPage: 10, currentPage: page };
+                      let i = index
+                    "
+                  >
+                    <tr>
+                      <td>
+                        {{ pedido.usuario.usuario | uppercase }} <br />
+                        <i class="bx bx-calendar bx-flashing"></i>
+                        {{ pedido.FECHAPEDIDOSTOCK | utcDate: "YYYY-MM-dd " }}
+                        &nbsp;
+                        <i class="bx bx-time bx-tada"></i>
+                        {{ pedido.FECHAPEDIDOSTOCK | date: " HH:mm " }}
+                      </td>
 
-                    <td>
-                      {{ pedido.despachar?.usuario | uppercase }} <br />
-                      <i
-                        *ngIf="pedido.fechaDespacho"
-                        class="bx bx-calendar bx-flashing"
-                      ></i>
-                      {{ pedido?.fechaDespacho | utcDate: "YYYY-MM-dd " }}
+                      <!--               <td></td> -->
 
-                      <i
-                        *ngIf="pedido.fechaDespacho"
-                        class="bx bx-time bx-tada"
-                      ></i>
-                      {{ pedido?.fechaDespacho | date: " HH:mm " }}
-                    </td>
-
-                    <td>
-                      {{ pedido.recibe?.usuario | uppercase }} <br />
-                      <i
-                        *ngIf="pedido.fechaRecibe"
-                        class="bx bx-calendar bx-flashing"
-                      ></i>
-                      {{ pedido?.fechaRecibe | utcDate: "YYYY-MM-dd " }}
-                      &nbsp;
-                      <i
-                        *ngIf="pedido.fechaRecibe"
-                        class="bx bx-time bx-tada"
-                      ></i>
-                      {{ pedido?.fechaRecibe | date: " HH:mm " }}
-                    </td>
-                    <td>
-                      <div
-                        [ngClass]="{
-                          generado2: pedido.ESTADO === 1,
-                          despachado: pedido.ESTADO === 2,
-
-                          eliminada: pedido.ESTADO === 0
-                        }"
-                        [ngSwitch]="pedido.ESTADO"
-                      >
-                        <div *ngSwitchCase="1">Generado</div>
-                        <div *ngSwitchCase="2">Despachado</div>
-                        <div *ngSwitchDefault>Eliminada</div>
-                      </div>
-                    </td>
-
-                    <td class="actions">
-                      <span class="span_edit">
+                      <td>
+                        {{ pedido.despachar?.usuario | uppercase }} <br />
                         <i
-                          [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
-                          [routerLink]="[
-                            '/dashboard',
-                            'solicitud-pedidos',
-                            pedido.id
-                          ]"
-                          class="bx bx-edit-alt"
-                        >
-                          Editar</i
-                        >
-                      </span>
+                          *ngIf="pedido.fechaDespacho"
+                          class="bx bx-calendar bx-flashing"
+                        ></i>
+                        {{ pedido?.fechaDespacho | utcDate: "YYYY-MM-dd " }}
 
-                      <span class="span_delete">
                         <i
+                          *ngIf="pedido.fechaDespacho"
+                          class="bx bx-time bx-tada"
+                        ></i>
+                        {{ pedido?.fechaDespacho | date: " HH:mm " }}
+                      </td>
+
+                      <td>
+                        {{ pedido.recibe?.usuario | uppercase }} <br />
+                        <i
+                          *ngIf="pedido.fechaRecibe"
+                          class="bx bx-calendar bx-flashing"
+                        ></i>
+                        {{ pedido?.fechaRecibe | utcDate: "YYYY-MM-dd " }}
+                        &nbsp;
+                        <i
+                          *ngIf="pedido.fechaRecibe"
+                          class="bx bx-time bx-tada"
+                        ></i>
+                        {{ pedido?.fechaRecibe | date: " HH:mm " }}
+                      </td>
+                      <!--  <td>{{pedido.notificar?.estado}}</td>
+                      <span class="badge badge-primary">Generado</span> -->
+                      <td>
+                        <div [ngSwitch]="pedido.notificar?.estado">
+                          <div *ngSwitchCase="'pendiente'">
+                            <span class="badge badge-warning">pendiente</span>
+                          </div>
+                          <div *ngSwitchCase="'confirmado'">
+                            <span class="badge badge-primary">confirmado</span>
+                          </div>
+                          <div *ngSwitchCase="'rechazado'">
+                            <span class="badge badge-primary"> Rechazado</span>
+                          </div>
+                          <div *ngSwitchDefault>
+                            <span class="badge badge-danger"></span>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div
                           [ngClass]="{
-                            'disabled-icon': pedido.ESTADO === 2
+                            generado2: pedido.ESTADO === 1,
+                            despachado: pedido.ESTADO === 2,
+
+                            eliminada: pedido.ESTADO === 0
                           }"
-                          (click)="borrarPedido(pedido)"
-                          class="bx bxs-trash"
+                          [ngSwitch]="pedido.ESTADO"
                         >
-                          Eliminar</i
-                        >
-                      </span>
-                      <!--  <span class="span_pdf">
+                          <div *ngSwitchCase="1">Generado</div>
+                          <div *ngSwitchCase="2">Despachado</div>
+                          <div *ngSwitchDefault>Eliminada</div>
+                        </div>
+                      </td>
+
+                      <td class="actions">
+                        <span class="span_edit">
+                          <i
+                            [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
+                            [routerLink]="[
+                              '/dashboard',
+                              'solicitud-pedidos',
+                              pedido.id
+                            ]"
+                            class="bx bx-edit-alt"
+                          >
+                            Editar</i
+                          >
+                        </span>
+
+                        <span class="span_delete">
+                          <i
+                            [ngClass]="{
+                              'disabled-icon': pedido.ESTADO === 2
+                            }"
+                            (click)="borrarPedido(pedido)"
+                            class="bx bxs-trash"
+                          >
+                            Eliminar</i
+                          >
+                        </span>
+                        <!--  <span class="span_pdf">
 
                         <i (click)="ImprimirPDf(pedido)" class="bx bxs-file-pdf "> Pdf</i>
 
                       </span> -->
 
-                      <span
-                        [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
-                        *ngIf="usuario.role.rol !== 'OPERADOR'"
-                        class="span_rangos"
-                      >
-                        <i
-                          [routerLink]="['/dashboard', 'despachar', pedido.id]"
-                          class="bx bxs-truck"
+                        <span
+                          [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
+                          *ngIf="usuario.role.rol !== 'OPERADOR'"
+                          class="span_rangos"
                         >
-                          Despachar</i
-                        >
-                      </span>
+                          <i
+                            [routerLink]="[
+                              '/dashboard',
+                              'despachar',
+                              pedido.id
+                            ]"
+                            class="bx bxs-truck"
+                          >
+                            Despachar</i
+                          >
+                        </span>
 
-                      <span (click)="toggleDetails(i)">
-                        <i
-                          class="bx"
-                          [ngClass]="{
-                            'bxs-down-arrow bx-sm ': showDetails[i],
-                            'bxs-right-arrow bx-sm': !showDetails[i]
-                          }"
-                        ></i>
-                      </span>
-                    </td>
-                  </tr>
-                  <ng-container *ngIf="showDetails[i]">
-                    <tr>
-                      <!--    <th >Referencia</th> -->
-
-                      <th>Bodega destino</th>
-                      <th>Referencia</th>
-                      <th>Producto</th>
-                      <th>Cantidad</th>
+                        <span (click)="toggleDetails(i)">
+                          <i
+                            class="bx"
+                            [ngClass]="{
+                              'bxs-down-arrow bx-sm ': showDetails[i],
+                              'bxs-right-arrow bx-sm': !showDetails[i]
+                            }"
+                          ></i>
+                        </span>
+                      </td>
                     </tr>
-                    <ng-container *ngFor="let item of pedido.itemstock">
+                    <ng-container *ngIf="showDetails[i]">
                       <tr>
-                        <!--   <td>{{ item.ID_PRODUCTO }}</td> -->
-                        <td>{{ item.bodega.NOMBRE }}</td>
-                        <td>{{ item.product.REFERENCIA }}</td>
-                        <td>{{ item.product.NOMBRE }}</td>
-                        <td>{{ item.CANTIDAD }}</td>
+                        <!--    <th >Referencia</th> -->
+
+                        <th>Bodega destino</th>
+                        <th>Referencia</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
                       </tr>
+                      <ng-container *ngFor="let item of pedido.itemstock">
+                        <tr>
+                          <!--   <td>{{ item.ID_PRODUCTO }}</td> -->
+                          <td>{{ item.bodega.NOMBRE }}</td>
+                          <td>{{ item.product.REFERENCIA }}</td>
+                          <td>{{ item.product.NOMBRE }}</td>
+                          <td>{{ item.CANTIDAD }}</td>
+                        </tr>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
-                </ng-container>
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
+      <pagination-controls
+        (pageChange)="page = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      ></pagination-controls>
     </div>
-    <pagination-controls
-      (pageChange)="page = $event"
-      previousLabel="Anterior"
-      nextLabel="Siguiente"
-    ></pagination-controls>
-  </div>
 
-  <div class="modal fade show" id="modal-default">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">+ Cargar pruebas</h4>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            Guardar
-          </button>
+    <div class="modal fade show" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">+ Cargar pruebas</h4>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              Guardar
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="modal-footer justify-content-between">
-        <!--    <button type="button" class="btn btn-default" data-dismiss="modal"></button>
+        <div class="modal-footer justify-content-between">
+          <!--    <button type="button" class="btn btn-default" data-dismiss="modal"></button>
                           <button type="button" data-dismiss="modal" class="btn btn-primary">Guardar</button> -->
+        </div>
       </div>
     </div>
   </div>

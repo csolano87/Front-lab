@@ -34,7 +34,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
-    
+
     AppComponent,
     FiltroPipe,
     FiltroUsuarioPipe,
@@ -50,6 +50,7 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     AuthModule,
     PagesRoutingModule,
+    
     PagesModule,
     //MatSliderModule,
     NgxPaginationModule,
@@ -58,7 +59,7 @@ import { ToastrModule } from 'ngx-toastr';
     RouterModule,
 
     QRCodeModule,
-   
+
     // SocketIoModule.forRoot(config)
   ],
 exports:[],

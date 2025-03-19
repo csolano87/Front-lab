@@ -26,7 +26,7 @@ export class ReporteBodegaComponent implements OnInit {
   cargando: boolean = false;
   listasotckbodega: Stockbodega[] = [];
 //listasotckbodega: pedidoStock[] = [];
-
+private primerElementoMarcado = false;
   listabodega: Bodega[] = [];
   page;
   constructor(
@@ -118,5 +118,7 @@ export class ReporteBodegaComponent implements OnInit {
 
 
   }
-
+  esPrimeraFila(nombre: string, index: number): boolean {
+    return this.listasotckbodega.findIndex(stock => stock.product.REFERENCIA === nombre) === index;
+  }
 }

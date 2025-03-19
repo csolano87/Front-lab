@@ -20,7 +20,9 @@
           <div class="form-group col-md-4">
             <label for="">Usuario recibe</label>
             <select  class="form-control"
-
+            [(ngModel)]="usuarioId"
+            #usuarioRecibe="ngModel"
+            required
             (change)="onUsuario($event)">
             >
               <option value="">--Seleccione--</option>
@@ -28,6 +30,9 @@
                 {{ item.usuario }}
               </option>
             </select>
+            <div *ngIf="mostrarError" class="text-danger">
+              Debe seleccionar un usuario.
+            </div>
           </div>
 
           <div class="col-md-4">
@@ -78,12 +83,12 @@
                 <!--  <td>{{ d.product.UNIDAD }}</td> -->
                 <td>{{ d.CANTIDAD }}</td>
                 <td>{{ d.total_stock }}</td>
-                <td>
-                  <input
+                <td>{{d.ENTREGADO}}
+                <!--   <input
                     type="number"
                     class="form-control"
-                    [value]="d.ENTREGADO"
-                  />
+                    [value]="d.ENTREGADO" -->
+
                 </td>
 
                 <td>

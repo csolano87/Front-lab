@@ -3,22 +3,30 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { Notificar, Notificarcion } from '../interfaces/carga-notificar.interface';
+import {
+  Notificar,
+  Notificarcion,
+} from '../interfaces/carga-notificar.interface';
+import { Mensaje } from '../models/cargaMensaje.module';
 const baseUrl = environment.url;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificarDespachosService {
   socketsStatus = false;
   userToken!: string;
-  constructor(private http: HttpClient,
-      private socket: Socket,) { this.checkStatus(); }
-      get token(): string {
-        return localStorage.getItem('token') || '';
-      }
-      get headers() {
-        return { headers: { 'x-token': this.token } };
-      }
+  constructor(
+    private http: HttpClient,
+    private socket: Socket,
+  ) {
+    this.checkStatus();
+  }
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+  get headers() {
+    return { headers: { 'x-token': this.token } };
+  }
   checkStatus() {
     this.socket.on('connect', () => {
       console.log('Conectado al servidor');
@@ -40,9 +48,16 @@ export class NotificarDespachosService {
     return this.socket.fromEvent(evento);
   }
 
-  getNotificar():Observable<Notificar[]>{
+  getNotificar(id:string): Observable<Notificar[]> {
+    return this.http
+      .get<Notificarcion>(`${baseUrl}/api/notificar/${id}`, this.headers)
+      .pipe(map(({ notificar }) => notificar));
+  }
 
-    return this.http.get<Notificarcion>(`${baseUrl}/api/notificar`,this.headers)
-    .pipe(map(({notificar})=>notificar))
+
+  updateNotificar(data:any) {
+    return this.http
+      .put(`${baseUrl}/api/notificar/${data.id}`,data, this.headers)
+
   }
 }

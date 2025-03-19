@@ -12,163 +12,181 @@
       <div class="card">
         <div class="card-info">
           <div class="card-header">
-            <h3 class="card-title">Administración General carga por departamento</h3>
+            <h3 class="card-title">
+              Administración General carga por departamento
+            </h3>
           </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="form-group col-md-2">
-              <label for="">Fecha Inicio</label>
-              <input
-                type="date"
-                class="form-control"
-                #searchIn
-                (change)="capturarValorFecha()"
-              />
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-2">
+                <label for="">Fecha Inicio</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  #searchIn
+                  (change)="capturarValorFecha()"
+                />
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="">Fecha Fin</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  #searchOut
+                  (change)="capturarValorFecha()"
+                />
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="">Departamento</label>
+                <select class="form-control" (change)="onSearchBodega($event)">
+                  <option value="">--Seleccione--</option>
+                  <option
+                    *ngFor="let bodega of listabodega"
+                    [value]="bodega.id"
+                  >
+                    {{ bodega.NOMBRE }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-4 btn-botones">
+                <a
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                  (click)="limpiarFiltros()"
+                  >Limpiar filtros</a
+                >
+
+                <a
+                  *ngIf="listasotckbodega.length > 0"
+                  (click)="getExportPdf()"
+                  class="btn btn-secondary btn-sm"
+                >
+                  Generar PDF
+                </a>
+              </div>
             </div>
 
-            <div class="form-group col-md-2">
-              <label for="">Fecha Fin</label>
-              <input
-                type="date"
-                class="form-control"
-                #searchOut
-                (change)="capturarValorFecha()"
-              />
-            </div>
-
-            <div class="form-group col-md-2">
-              <label for="">Departamento</label>
-              <select class="form-control" (change)="onSearchBodega($event)">
-                <option value="">--Seleccione--</option>
-                <option *ngFor="let bodega of listabodega" [value]="bodega.id">
-                  {{ bodega.NOMBRE }}
-                </option>
-              </select>
-            </div>
-
-            <div class="col-md-4 btn-botones">
-              <a
-                type="button"
-                class="btn btn-primary btn-sm"
-                (click)="limpiarFiltros()"
-                >Limpiar filtros</a
-              >
-
-              <a
-                *ngIf="listasotckbodega.length > 0"
-                (click)="getExportPdf()"
-                class="btn btn-secondary btn-sm"
-              >
-                Generar PDF
-              </a>
-            </div>
-          </div>
-
-          <div class="table-responsive">
-            <form>
-              <div
-                *ngIf="cargando"
-                class=" text-center mt-3 animated fadeIn faster"
-              >
-              <i class='bx bx-loader-circle bx-spin bx-flip-vertical bx-md' ></i>
-               <!--  <h4 class="alert-heading">Cargando</h4>
+            <div class="table-responsive">
+              <form>
+                <div
+                  *ngIf="cargando"
+                  class="text-center mt-3 animated fadeIn faster"
+                >
+                  <i
+                    class="bx bx-loader-circle bx-spin bx-flip-vertical bx-md"
+                  ></i>
+                  <!--  <h4 class="alert-heading">Cargando</h4>
                 <p>
                   <i class="fas fa-sync-alt fa-spin fa-2x"></i>
                 </p>
                 <p class="mb-0">Espere por favor</p> -->
-              </div>
+                </div>
 
-              <div *ngIf="!cargando" class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
+                <div *ngIf="!cargando" class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th style="width: 12%">Usr. solic.</th>
 
-                      <th style="width: 12%">Usr. solic.</th>
+                        <th style="width: 12%">Usr. desp.</th>
 
-                      <th style="width: 12%">Usr. desp.</th>
+                        <th style="width: 12%">Usr. cargó</th>
 
+                        <th style="width: 15%">Departamento</th>
+                        <th style="width: 10%">Referencia</th>
+                        <th style="width: 25%">Nombre</th>
+                        <th style="width: 10%">Lote</th>
 
-                      <th style="width: 12%">Usr. cargó</th>
+                        <th style="width: 10%">Cant.</th>
+                      </tr>
+                    </thead>
 
-                      <th style="width: 15%">Departamento</th>
-                      <th style="width: 10%">Referencia</th>
-                      <th style="width: 25%">Nombre</th>
-                      <th style="width: 10%">Lote</th>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let stock of listasotckbodega
+                            | filtroDescargoBodega
+                              : search
+                              : searchInValue
+                              : searchOutValue
+                            | paginate: { itemsPerPage: 10, currentPage: page };
+                          let i = index
+                        "
 
-                      <th style="width: 10%">Cant.</th>
-                    </tr>
-                  </thead>
+                      >
+                      <!--    [ngClass]="{
+                          'highlight-row': esPrimeraFila(
+                            stock.product.REFERENCIA,
+                            i
+                          )
+                        }" -->
+                        <td>
+                          {{ stock.solicitud?.usuario }} <br />
+                          {{ stock?.fecha | utcDate: "YYYY-MM-dd " }}
+                          {{ stock?.fecha | date: "HH:mm " }}
+                        </td>
+                        <td>
+                          {{ stock.despachar?.usuario }} <br />
+                          {{ stock?.fechadespachar | utcDate: "YYYY-MM-dd " }}
 
-                  <tbody>
-                    <tr
-                      *ngFor="
-                        let stock of listasotckbodega
-                          | filtroDescargoBodega
-                            : search
-                            : searchInValue
-                            : searchOutValue
-                          | paginate: { itemsPerPage: 10, currentPage: page }
-                      "
-                    >
-                      <td>
-                        {{ stock.solicitud?.usuario }} <br />
-                        {{ stock?.fecha | utcDate: "YYYY-MM-dd " }}
-                        {{ stock?.fecha | date: "HH:mm " }}
-                      </td>
-                      <td>
-                        {{ stock.despachar?.usuario }} <br />
-                        {{ stock?.fechadespachar | utcDate: "YYYY-MM-dd " }}
+                          {{ stock?.fechadespachar | date: "HH:mm " }}
+                        </td>
 
-                        {{ stock?.fechadespachar | date: "HH:mm " }}
-                      </td>
+                        <td>
+                          {{ stock.descargar?.usuario }}
+                          <br />
+                          {{ stock?.fechadescargo | utcDate: "YYYY-MM-dd " }}
 
-                      <td>
-                        {{ stock.descargar?.usuario }}
-                        <br />
-                        {{ stock?.fechadescargo | utcDate: "YYYY-MM-dd " }}
+                          {{ stock?.fechadescargo | date: "HH:mm " }}
+                        </td>
 
-                        {{ stock?.fechadescargo | date: "HH:mm " }}
-                      </td>
-                      <td>{{ stock.bodega.NOMBRE }}</td>
-                      <td>{{ stock.product.REFERENCIA }}</td>
-                      <td>{{ stock.product.NOMBRE }}</td>
+                        <td>{{ stock.bodega.NOMBRE }}</td>
+                        <td>
+                          {{ stock.product.REFERENCIA }}
+                        </td>
+                        <td>{{ stock.product.NOMBRE }}</td>
 
-                      <td>{{ stock.lote }}</td>
+                        <td>{{ stock.lote }}</td>
 
-                      <td>{{ stock.ENTREGADO }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                        <td>{{ stock.ENTREGADO }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-              <pagination-controls
-                (pageChange)="page = $event"
-                previousLabel="Anterior"
-                nextLabel="Siguiente"
-              ></pagination-controls>
-            </form>
+                <pagination-controls
+                  (pageChange)="page = $event"
+                  previousLabel="Anterior"
+                  nextLabel="Siguiente"
+                
+                ></pagination-controls>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal fade" id="modal-info">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"></h4>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <div class="modal fade" id="modal-info">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"></div>
       </div>
-      <div class="modal-body"></div>
     </div>
   </div>
 </div>

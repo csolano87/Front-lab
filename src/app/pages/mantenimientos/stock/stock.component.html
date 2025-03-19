@@ -148,8 +148,14 @@
                         />
                         <!--   {{ producto.cantidad_recibida }} -->
                       </td>
-                      <!--    <td>{{ producto.fabricante | slice: 0 : 20 }}</td>
-                      <td>{{ producto.sanitario }}</td> -->
+                      <!--    <td>{{ producto.fabricante | slice: 0 : 20 }}</td> -->
+                     <!--  <td>
+                        <span class="span_delete">
+                          <i class="bx bxs-trash" (click)="borrarProducto(i)">
+                            Eliminar</i
+                          >
+                        </span>
+                      </td> -->
                       <td>
                         <i class="bx bx-comment-detail" (click)="comments(i)">
                         </i>
@@ -173,10 +179,12 @@
     </div>
   </div>
 </div>
-
-<!--  <pre>
+<!-- <pre>
+  {{stockForm.valid |json}}
+</pre>
+ <pre>
   {{ stockForm.value |json }}
-</pre>  -->
+</pre> -->
 <input
   style="opacity: 0; position: absolute; top: -9999px"
   type="text"

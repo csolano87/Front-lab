@@ -135,6 +135,7 @@ export class StockComponent implements OnInit {
           ),
         ),
       });
+      this.productos.controls.forEach((item) => item.disable());
     });
   }
 
@@ -152,7 +153,9 @@ export class StockComponent implements OnInit {
     this.manteniemintoService.getBodega().subscribe((bodega) => {
       console.log(bodega);
 
-      this.listabodega = bodega.filter((item) => item.ESTADO == 1 && item.id ==1);
+      this.listabodega = bodega.filter(
+        (item) => item.ESTADO == 1 && item.id == 1,
+      );
     });
   }
   onBarcodeInput(event: Event): void {
@@ -295,7 +298,7 @@ export class StockComponent implements OnInit {
             lote: item['Operaciones/Lote/Lote/Nº de serie'],
             caducidad: item['Operaciones/Lote/Fecha caducidad'],
             cantidad: item['Operaciones/Cantidad Pedida'],
-            cantidad_recibida:item['Operaciones/Realizado'],
+            cantidad_recibida: item['Operaciones/Realizado'],
             fabricante: item['Operaciones/Producto/Fabricante'],
             sanitario: item['Operaciones/Producto/Registro Sanitario'],
             comentario: '',
@@ -313,6 +316,7 @@ export class StockComponent implements OnInit {
         control.markAsTouched();
       });
     }
+
     console.log(this.stockForm.value);
     console.log(this.listaStockSeleccionado);
     if (this.listaStockSeleccionado) {
@@ -423,14 +427,16 @@ export class StockComponent implements OnInit {
   }
   changeValidators() {
     console.log(this.listaStockSeleccionado);
-    if (this.listaStockSeleccionado) {
+    if (this.IDSeleccionado !='Nuevo') {
       this.stockForm.controls['bodegaId'].setValidators([Validators.required]);
-      this.stockForm.controls['proveedor'].setValidators([Validators.required]);
-      this.stockForm.controls['bodegaId'].updateValueAndValidity();
-      this.stockForm.controls['proveedor'].updateValueAndValidity();
+      this.stockForm.controls['proveedorId'].setValidators([Validators.required]);
+      this.stockForm.get('bodegaId')?.updateValueAndValidity();
+      this.stockForm.get('proveedorId')?.updateValueAndValidity();
     }
   }
-
+  borrarProducto(i:number){
+ this.productos.removeAt(i)
+  }
   generarCSV() {
     const url = 'assets/productos.csv'; // Ruta del archivo en 'src/assets'
 
@@ -440,5 +446,9 @@ export class StockComponent implements OnInit {
         saveAs(blob, 'productos.csv'); // Nombre del archivo al descargar
       })
       .catch((error) => console.error('Error al descargar el archivo:', error));
+  }
+
+  inputHabilitar(): boolean {
+    return this.IDSeleccionado != 'Nuevo';
   }
 }

@@ -1,55 +1,74 @@
-
 <div class="wrapper">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="#" class="brand-link">
+      <img
+        src="./assets/dist/img/flechas.png"
+        alt="AdminLTE Logo"
+        class="brand-image img-circle elevation-3"
+        style="opacity: 0.8"
+      />
+      <span class="brand-text font-weight-light">LISISLAB</span>
+    </a>
 
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <a href="#" class="brand-link">
-    <img src="./assets/dist/img/flechas.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-      style="opacity: 0.8" />
-    <span class="brand-text font-weight-light">LISISLAB</span>
-  </a>
-
-  <div class="sidebar">
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="./assets/dist/img/PERSONITA.png" class="img-circle elevation-2" alt="User Image">
+    <div class="sidebar">
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img
+            src="./assets/dist/img/PERSONITA.png"
+            class="img-circle elevation-2"
+            alt="User Image"
+          />
+        </div>
+        <div class="info">
+          <a routerLink="#" class="d-block"> {{ usuario.doctor }}</a>
+        </div>
       </div>
-      <div class="info">
 
-        <a routerLink="#" class="d-block"> {{ usuario.doctor }}</a>
-      </div>
+      <nav class="mt-2">
+        <ul
+          class="nav nav-pills nav-sidebar flex-column"
+          data-widget="treeview"
+          role="menu"
+          data-accordion="false"
+        >
+          <li class="nav-item" *ngFor="let menu of groupedMenus">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-circle nav-icon"></i>
+              <p>
+                {{ menu.nombre }}
+
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item" *ngFor="let subMenuItem of menu.items">
+                <a
+                  class="nav-link"
+                  [routerLink]="subMenuItem.ruta"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>{{ subMenuItem.nombre }}</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul class="nav nav-pills nav-sidebar flex-column  logout-link"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false">
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">
+              <i class="nav-icon far fa-circle nav-icon"></i>
+              <p>
+
+                Cerrar sesión</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
-
-    <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item" *ngFor="let menu of groupedMenus">
-
-          <a href="#" class="nav-link">
-            <i class="right fas fa-angle-left"></i>
-            <p>
-              {{ menu.nombre }}
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item" *ngFor="let subMenuItem of menu.items">
-              <a class="nav-link" [routerLink]="subMenuItem.ruta" routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">
-                <i class="far fa-circle nav-icon"></i>
-                <p>{{ subMenuItem.nombre }}</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-
-      <ul class="nav nav-treeview logout-link">
-        <li class="nav-item">
-          <a class="nav-link" (click)="logout()">
-            <!--  <i class="fa fa-power-off"></i> -->
-            <p>Cerrar sesión</p>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</aside>
+  </aside>
 </div>

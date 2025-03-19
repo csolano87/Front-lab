@@ -8,7 +8,7 @@
     </li>
   </ul>
 
-  <ul class="navbar-nav ml-auto">
+  <ul class="navbar-nav ml-auto message">
     <!-- Messages Dropdown Menu -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">
@@ -19,7 +19,7 @@
       </a>
 
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <a href="#" class="dropdown-item">
+        <div  class="dropdown-item">
           <!-- Message Start -->
           <div *ngFor="let item of notificarDespacho" class="media">
             <div class="media-body">
@@ -34,14 +34,24 @@
               </p>
               <p>
                 <span class="float-right text-sm text-danger"
-                  ><i class="bx bx-check" style="color: #61c208">Confirmar</i>
-                  <i class="bx bx-x" style="color: #f72f02">Rechazar</i>
+                  ><i
+                    (click)="updateNotificar(item.id, 'confirmado')"
+                    class="bx bx-check"
+
+                    >Confirmar</i
+                  >
+                  <i
+                    (click)="updateNotificar(item.id, 'rechazado')"
+                    class="bx bx-x"
+
+                    >Rechazar</i
+                  >
                 </span>
               </p>
             </div>
           </div>
           <!-- Message End -->
-        </a>
+        </div>
       </div>
     </li>
   </ul>

@@ -127,14 +127,16 @@
                           </td>
                         </tr>
                         <ng-container *ngIf="showDetails[i]">
+
                           <tr>
                             <th colspan="1"></th>
-                            <!--    <th >Referencia</th> -->
+
 
                             <th>Lote</th>
                             <th>Cantidad</th>
                             <th>Fecha</th>
                           </tr>
+                        
                           <ng-container *ngFor="let item of stock.detalles">
                             <tr>
                               <td colspan="1"></td>

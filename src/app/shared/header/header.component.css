@@ -1,11 +1,24 @@
+/* *{
+  outline: 1px solid blue;
+} */
+
 .ti {
   display: flexbox;
   flex-wrap: wrap;
   margin: 0 auto;
 }
 
-.title-header {
+.bx-check{
+  color: #2ae611;
+  cursor: pointer;
+}
+.bx-x{
+  color: #f72f02;
+  cursor: pointer;
+
+}
+.message{
+  text-align: right;
+  right: 100;
 }
 
-.img {
-}

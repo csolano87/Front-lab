@@ -9,6 +9,7 @@ import { MantenimientosService } from 'src/app/services/mantenimientos.service';
 import Swal from 'sweetalert2';
 import { subscribe } from 'diagnostics_channel';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Detalle } from '../../../interfaces/stock.interface';
 
 @Component({
   selector: 'app-despachar',
@@ -32,6 +33,8 @@ export class DespacharComponent implements OnInit {
   btnVal: string = 'Comprobar Disponiblidad';
   listabodega: Bodega[] = [];
   Area: string = null;
+  mostrarError: boolean = false;
+  usuarioSeleccionado: string = '';
   pedidos: pedidoStock;
   pedidoStockseleccionado: StockReserva;
   ngOnInit(): void {
@@ -45,8 +48,8 @@ export class DespacharComponent implements OnInit {
   }
   getUsuarios() {
     this.usuarioService.GetUsuarios().subscribe(({ usuarios }) => {
-      this.usuarios = usuarios.filter((item) => item.roleId !== 1);
-      console.log(usuarios);
+      this.usuarios = usuarios; /* .filter((item) => item.roleId !== 1);
+      console.log(usuarios); */
     });
   }
 
@@ -78,6 +81,12 @@ export class DespacharComponent implements OnInit {
   }
 
   UpdatePedido(pedido: any) {
+
+    if (!this.usuarioId) {
+      this.mostrarError = true; // Muestra el mensaje de error
+      return;
+    }
+    this.mostrarError = false;
     console.log(this.usuarioId);
     console.log(`pedido`, pedido);
     if (this.usuarioId) {
@@ -99,27 +108,28 @@ export class DespacharComponent implements OnInit {
   }
 
   onreset() {
-
     this.router.navigateByUrl('/dashboard/solicitudes-pedidos');
   }
 
   comprobarCantidad(pedido: any) {
     this.botonComprobarDeshabilitado = true;
     this.botonValidarDeshabilitado = false;
-    console.log(pedido);
+    console.log(`pedido`,pedido);
     const validarEntregado = pedido.itemstock.forEach(
       (element) => element.ENTREGADO,
     );
 
-    console.log(validarEntregado);
+    
 
     const itemstockString = JSON.stringify(pedido);
     const encodedItemstock = encodeURIComponent(itemstockString);
     this.inportService
       .obtenerReservaTotal(encodedItemstock)
       .subscribe((resp) => {
-        this.pedidoStockseleccionado = resp;
 
+        this.pedidoStockseleccionado = resp;
+/* console.log(`pedidoStockseleccionado`,resp.cantidadReservada)
+console.log(`pedidoStockseleccionadoD`,resp.cantidadReservada.detalle) */
         this.pedidoStockseleccionado.cantidadReservada.detalle.forEach(
           (item) => {
             console.log(item);
@@ -127,14 +137,12 @@ export class DespacharComponent implements OnInit {
               .map((control, index) =>
                 control.ID_PRODUCTO === Number(item.productId) ? index : -1,
               )
-              .filter((index) => index !== -1); // Filtrar para obtener solo los índices válidos
+              .filter((index) => index !== -1);
             console.log(indices);
             if (indices.length > 0) {
-              // Si se encuentra al menos un índice
+
               indices.forEach((index2) => {
-                /*  const control = productosFormArray.at(index2);
-                 */ const control = this.pedidos.itemstock[index2];
-                // Obtener los valores actuales en el control y concatenarlos con los nuevos valores
+                const control = this.pedidos.itemstock[index2];
 
                 const cantidadActual = control.ENTREGADO || '';
                 const loteActual = control.LOTE || '';
