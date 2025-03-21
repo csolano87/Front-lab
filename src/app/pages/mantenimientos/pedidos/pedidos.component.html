@@ -64,7 +64,7 @@
                 <tr>
                   <th style="width: 30%">Producto</th>
 
-                  <th>Marca</th>
+                  <th>Proveedor</th>
                   <th>Cantidad ordenada</th>
                   <!--  <th>Total Stock</th> -->
                   <th>Actions</th>
@@ -167,7 +167,7 @@
                       class="li"
                       *ngFor="let item of data$ | async"
                     >
-                      {{ item.NOMBRE }}
+                      {{ item.NOMBRE }}  -  {{ item.UNIDAD }}
                     </li>
                   </ul>
                 </div>

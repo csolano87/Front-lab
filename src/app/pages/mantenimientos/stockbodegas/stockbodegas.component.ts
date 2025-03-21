@@ -12,6 +12,7 @@ import { Subject } from 'rxjs';
 import { FormArray } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+declare var $: any;
 @Component({
   selector: 'app-stockbodegas',
 
@@ -20,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class StockbodegasComponent implements OnInit {
   listaSotck: StockBodega[] = [];
+  historicoresultados: any = [];
   listabodega: Bodega[] = [];
   page;
   dataStore = [];
@@ -107,31 +109,32 @@ export class StockbodegasComponent implements OnInit {
     }); */
   }
   buscar(bodegaId: string) {
-    this.cargando=true;
+    this.cargando = true;
     console.log(bodegaId);
     this.stockService.getFiltroBodegas(bodegaId).subscribe((stock) => {
       console.log(stock);
       this.listaSotck = stock.sort(
         (a, b) => Number(b.ENTREGADO) - Number(a.ENTREGADO),
       );
-      this.cargando=false;
+      this.cargando = false;
     });
   }
 
   DescargoStock(i: any, numero: string) {
     console.log(`i`, i);
 
-    if (i.ENTREGADO === 0 || i.ENTREGADO === null || i.ENTREGADO === '') {
-      this.toastr.warning(`El item seleccionado tiene cantidad ${i.ENTREGADO}`);
-      /*   Swal.fire({
-        title: 'Producto descargado!',
-        text: `El producto ${i.product.NOMBRE} tiene cantidad ${i.ENTREGADO}`,
-        icon: 'success',
-      }); */
+    if (
+      i.cantidad_despachada === 0 ||
+      i.cantidad_despachada === null ||
+      i.cantidad_despachada === ''
+    ) {
+      this.toastr.warning(
+        `El item seleccionado tiene cantidad ${i.cantidad_despachada}`,
+      );
     } else {
       Swal.fire({
         title: 'Descargar producto?',
-        html: `Esta seguro que desea realizar la descargar el producto <strong>${i.product.NOMBRE}</strong>  con  lote #
+        html: `Esta seguro que desea realizar la descargar el producto <strong>${i.productoId}</strong>  con  lote #
         <strong>${i.lote}</strong>  `,
         icon: 'warning',
         showCancelButton: true,
@@ -152,25 +155,20 @@ export class StockbodegasComponent implements OnInit {
               text: `${msg}`,
               icon: 'success',
             });
+            $('#modal-HistoricoPruebas').modal('hide');
           });
         }
       });
     }
-
-    /*
-    console.log(i);
-    const data = {
-      ...i,
-      descargo: numero,
-    }; */
-    /*    console.log(data);
-    this.stockService.getdescargoStock(data).subscribe((msg) => {
-      console.log(msg);
-    }); */
   }
 
   onSearchProducto(search: string) {
     console.log(search);
     this.search = search;
+  }
+
+  historicoResultados(stock: any) {
+    console.log(stock.despachopedido);
+    this.historicoresultados = stock.despachopedido;
   }
 }

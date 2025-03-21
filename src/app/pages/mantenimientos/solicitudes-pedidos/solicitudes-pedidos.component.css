@@ -1,5 +1,13 @@
-/* *{
-     outline: 1px solid blue;
-} */
+.th_modal_pruebas_nombre{
 
-
+  width: 30%;
+  text-overflow: ellipsis;
+}
+tbody td {
+  font-size: .9rem;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

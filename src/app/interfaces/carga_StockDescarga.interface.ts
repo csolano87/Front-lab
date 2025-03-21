@@ -9,9 +9,9 @@ export interface Stockbodega {
   CANTIDAD: number;
   ENTREGADO: number | null;
   fecha: Date;
-  fechadescargo: Date | null;
+  fechadescargo: Date ;
   lote: null | string;
-  fechadespachar: Date | null;
+  fechadespachar: Date ;
   ESTADO: number;
   createdAt: Date;
   updatedAt: Date;
@@ -21,9 +21,19 @@ export interface Stockbodega {
   productId: number;
   product: Product;
   bodega: Bodega;
-  solicitud?: DES | null;
-  despachar?: DES | null;
-  descargar?: DES | null;
+  solicitud?: DES ;
+  despachar?: DES ;
+  descargar?: DES ;
+  despachopedido: Despachopedido[];
+}
+export interface Despachopedido {
+  id:                  number;
+  lote:                string;
+  cantidad_despachada: number;
+  fechadespacho:       string;
+  createdAt:           string;
+  updatedAt:           string;
+  itempedidostockId:   number;
 }
 
 export interface Bodega {

@@ -120,7 +120,8 @@ export class StockService {
   }
 
   getdescargoStock(data) {
-    return this.http.put(`${baseUrl}/api/pedidos-stock`, data, this.headers);
+   /*  return this.http.put(`${baseUrl}/api/pedidos-stock`, data, this.headers); */
+   return this.http.put(`${baseUrl}/api/despachopedido/${data.id}`, data, this.headers);
   }
 
   //     `${baseUrl}/api/pedidos-stock/bodega/bodegaStock?bodegaId=${bodegaId}fechaIn=${fechaIn}&fechaOut=${fechaOut}`,

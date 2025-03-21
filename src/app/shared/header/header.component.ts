@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit {
 
   updateNotificar(id: number, estado: string) {
     console.log(`el id ${id} tiene estado ${estado}`);
-    const data = {
+ const data = {
       id: id,
       estado: estado,
     };
@@ -78,6 +78,6 @@ export class HeaderComponent implements OnInit {
         const { msg } = resp;
         this.getNotificar();
         this.toastr.success(`${msg}`);
-      });
+      }); 
   }
 }

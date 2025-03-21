@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-info">
           <div class="card-header">
-            <h3 class="card-title">Administración General de Stock</h3>
+            <h3 class="card-title">Reporte General de Stock en Laboratorio</h3>
           </div>
           <div class="card-body">
             <div class="row">
@@ -44,6 +44,7 @@
                       <tr>
                         <th>Referencia</th>
                         <th>Nombre</th>
+                        <th>Proveedor</th>
                         <th>Total</th>
                         <th>Actions</th>
                       </tr>
@@ -63,6 +64,7 @@
                         <tr>
                           <td>{{ stock.referencia }}</td>
                           <td>{{ stock.nombre }}</td>
+                           <td>{{ stock?.proveedor }}</td>
                           <td>{{ stock.total_referencia }}</td>
                           <td>
                             <span *ngFor="let item of stock.detalles">
@@ -136,7 +138,7 @@
                             <th>Cantidad</th>
                             <th>Fecha</th>
                           </tr>
-                        
+
                           <ng-container *ngFor="let item of stock.detalles">
                             <tr>
                               <td colspan="1"></td>

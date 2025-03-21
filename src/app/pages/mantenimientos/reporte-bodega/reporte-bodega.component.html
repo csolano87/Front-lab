@@ -98,9 +98,11 @@
                         <th style="width: 15%">Departamento</th>
                         <th style="width: 10%">Referencia</th>
                         <th style="width: 25%">Nombre</th>
-                        <th style="width: 10%">Lote</th>
-
+                       <!--     <th style="width: 20%">Cant.</th> -->
                         <th style="width: 10%">Cant.</th>
+                <!--         <th style="width: 10%">Lote</th>
+
+                        <th style="width: 10%">Cant.</th> -->
                       </tr>
                     </thead>
 
@@ -148,10 +150,12 @@
                           {{ stock.product.REFERENCIA }}
                         </td>
                         <td>{{ stock.product.NOMBRE }}</td>
+                   
+                        <td>{{ sumarCantidades(stock?.despachopedido || []) }}</td>
 
-                        <td>{{ stock.lote }}</td>
+                     <!--    <td>{{ stock.lote }}</td>
 
-                        <td>{{ stock.ENTREGADO }}</td>
+                        <td>{{ stock.ENTREGADO }}</td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -161,7 +165,7 @@
                   (pageChange)="page = $event"
                   previousLabel="Anterior"
                   nextLabel="Siguiente"
-                
+
                 ></pagination-controls>
               </form>
             </div>

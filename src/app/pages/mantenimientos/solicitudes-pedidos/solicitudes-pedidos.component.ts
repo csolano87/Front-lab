@@ -14,6 +14,7 @@ import { NotificarDespachosService } from '../../../services/notificar-despachos
 })
 export class SolicitudesPedidosComponent implements OnInit {
   cargando = false;
+  historicoresultados: any = [];
   public page!: number;
   listaPedidoStock: pedidoStock[] = [];
   showPruebasHeader: boolean = false;
@@ -93,4 +94,8 @@ export class SolicitudesPedidosComponent implements OnInit {
   }
 
 
+  historicoResultados(stock: any) {
+    console.log(stock.despachopedido);
+    this.historicoresultados = stock.itemstock;
+  }
 }

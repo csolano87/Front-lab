@@ -4,143 +4,173 @@
       <div class="card">
         <div class="card-info">
           <div class="card-header">
-            <h3 class="card-title">Administracion Bodega y Carga </h3>
+            <h3 class="card-title">Administracion Bodega y Carga</h3>
           </div>
-        <div class="card-body">
-          <form autocomplete="off">
-            <div class="row">
-              <div class="form-group col-md-4">
-                <label>Departamento de trabajo</label>
+          <div class="card-body">
+            <form autocomplete="off">
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label>Departamento de trabajo</label>
 
-                <select class="form-control" #bodegaId>
-                  <option value="">--Seleccione--</option>
-                  <option *ngFor="let item of listabodega" [value]="item.id">
-                    {{ item.NOMBRE }}
-                  </option>
-                </select>
-              </div>
+                  <select class="form-control" #bodegaId>
+                    <option value="">--Seleccione--</option>
+                    <option *ngFor="let item of listabodega" [value]="item.id">
+                      {{ item.NOMBRE }}
+                    </option>
+                  </select>
+                </div>
 
-              <div class="col-md-4 btn-botones">
-                <button
-                  type="submit"
-                  class="btn btn-primary rounded shadow btn-sm"
-                  (click)="buscar(bodegaId.value)"
-                >
-                  Consultar bodega
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div  *ngIf="listaSotck.length >0"   class="row animated fadeIn fast">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-
-
-          <div *ngIf="listaSotck.length >0" class="mb-3">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Buscar productos..."
-              #txtSearch
-              (keyup)="onSearchProducto(txtSearch.value)"
-            />
-          </div>
-          <div   class="table-responsive">
-            <form>
-              <div
-                *ngIf="cargando"
-                class=" text-center mt-3 animated fadeIn faster"
-              >
-              <i class='bx bx-loader-circle bx-spin bx-flip-vertical bx-md' ></i>
-               <!--  <h4 class="alert-heading">Cargando</h4>
-                <p>
-                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
-                </p>
-                <p class="mb-0">Espere por favor</p> -->
-              </div>
-
-              <div >
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th style="width: 12%">Usr. Solic.</th>
-                      <th style="width: 12%">Usr. Desp.</th>
-                      <th style="width: 10%">Referencia</th>
-                      <th style="width: 20%">Nombre</th>
-                      <th style="width: 10%">Lote</th>
-                      <th style="width: 10%">Bodega</th>
-                      <th style="width: 10%">Entregado</th>
-                      <th style="width: 10%">Descargo</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <ng-container
-                      *ngFor="
-                        let stock of listaSotck
-                          | filtroBodega: search
-                          | paginate: { itemsPerPage: 10, currentPage: page };
-                        let i = index
-                      "
-                      data-widget="expandable-table"
-                      aria-expanded="true"
-                    >
-                      <tr>
-                        <td>
-                          {{ stock.solicitud?.usuario | uppercase }}
-                          <br />
-                          {{ stock.fecha | utcDate: "YYYY-MM-dd " }}
-
-                          {{ stock?.fecha | date: " HH:mm " }}
-                        </td>
-
-                        <td>
-                          {{ stock.despachar?.usuario | uppercase }}
-                          <br />
-                          {{ stock?.fechadespachar | utcDate: "YYYY-MM-dd " }}
-
-                          {{ stock?.fechadespachar | date: " HH:mm " }}
-                        </td>
-                        <td>{{ stock.product.REFERENCIA }}</td>
-                        <td>{{ stock.product.NOMBRE }}</td>
-                        <td>{{ stock.lote }}</td>
-                        <td>{{ stock.bodega.NOMBRE }}</td>
-                        <td>{{ stock.ENTREGADO }}</td>
-                        <td>
-                          <input
-                            class="form-control"
-                            type="number"
-                            #numero
-                            (keyup.enter)="DescargoStock(stock, numero.value)"
-                          />
-                        </td>
-                      </tr>
-                    </ng-container>
-                  </tbody>
-                </table>
-                <pagination-controls
-                  (pageChange)="page = $event"
-                  previousLabel="Anterior"
-                  nextLabel="Siguiente"
-                ></pagination-controls>
+                <div class="col-md-4 btn-botones">
+                  <button
+                    type="submit"
+                    class="btn btn-primary rounded shadow btn-sm"
+                    (click)="buscar(bodegaId.value)"
+                  >
+                    Consultar bodega
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+    <div *ngIf="listaSotck.length > 0" class="row animated fadeIn fast">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div *ngIf="listaSotck.length > 0" class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar productos..."
+                #txtSearch
+                (keyup)="onSearchProducto(txtSearch.value)"
+              />
+            </div>
+            <div class="table-responsive">
+              <form>
+                <div
+                  *ngIf="cargando"
+                  class="text-center mt-3 animated fadeIn faster"
+                >
+                  <i
+                    class="bx bx-loader-circle bx-spin bx-flip-vertical bx-md"
+                  ></i>
+                  <!--  <h4 class="alert-heading">Cargando</h4>
+                <p>
+                  <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                </p>
+                <p class="mb-0">Espere por favor</p> -->
+                </div>
+
+                <div>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th style="width: 12%">Usr. Solic.</th>
+                        <th style="width: 12%">Usr. Desp.</th>
+                        <th style="width: 10%">Referencia</th>
+                        <th style="width: 20%">Nombre</th>
+                        <!--      <th style="width: 10%">Lote</th> -->
+                        <th style="width: 10%">Bodega</th>
+                        <th style="width: 10%">Actions</th>
+
+                        <!--    <th style="width: 10%">Entregado</th> -->
+                        <!--    <th style="width: 10%">Descargo</th> -->
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <ng-container
+                        *ngFor="
+                          let stock of listaSotck
+                            | filtroBodega: search
+                            | paginate: { itemsPerPage: 10, currentPage: page };
+                          let i = index
+                        "
+                        data-widget="expandable-table"
+                        aria-expanded="true"
+                      >
+                        <tr>
+                          <td>
+                            {{ stock.solicitud?.usuario | uppercase }}
+                            <br />
+                            {{ stock.fecha | utcDate: "YYYY-MM-dd " }}
+
+                            {{ stock?.fecha | date: " HH:mm " }}
+                          </td>
+
+                          <td>
+                            {{ stock.despachar?.usuario | uppercase }}
+                            <br />
+                            {{ stock?.fechadespachar | utcDate: "YYYY-MM-dd " }}
+
+                            {{ stock?.fechadespachar | date: " HH:mm " }}
+                          </td>
+                          <td>{{ stock.product.REFERENCIA }}</td>
+                          <td>{{ stock.product.NOMBRE }}</td>
+                          <!--  <td>{{ stock.lote }}</td> -->
+                          <td>{{ stock.bodega.NOMBRE }}</td>
+                          <!--   <td>{{stock.despachopedido |json}}</td> -->
+                          <td
+                            data-toggle="modal"
+                            data-target="#modal-HistoricoPruebas"
+                            (click)="historicoResultados(stock)"
+                          >
+                            <i *ngIf="stock.despachopedido.length >0"  class="bx bx-list-plus bx-md"></i>
+                          </td>
+                          <!--    <td>{{ stock.ENTREGADO }}</td> -->
+                          <!-- <td>
+                          <input
+                            class="form-control"
+                            type="number"
+                            #numero
+                            (keyup.enter)="DescargoStock(stock, numero.value)"
+                          />
+                        </td> -->
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <pagination-controls
+                    (pageChange)="page = $event"
+                    previousLabel="Anterior"
+                    nextLabel="Siguiente"
+                  ></pagination-controls>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-info">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="modal fade" id="modal-info">
-    <div class="modal-dialog">
+  <div class="modal fade" id="modal-HistoricoPruebas">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title"></h4>
+          <h4 class="modal-title">Despacho</h4>
           <button
             type="button"
             class="close"
@@ -150,7 +180,46 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-"></div>
+        <div class="modal-">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="th_modal_pruebas">Lote</th>
+                      <th class="th_modal_pruebas">Cantidad</th>
+                      <th class="th_modal_pruebas">Descargo</th>
+                      <!--   <th class="th_modal_pruebas">Rangos</th>
+                    <th class="th_modal_pruebas">Unidad</th>
+                    <th class="th_modal_pruebas">Fecha</th>
+
+
+                        (keyup.enter)="DescargoStock(stock, numero.value)"-->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let it of historicoresultados">
+                      <td class="td_modal_pruebas">
+                        <i class="bx bx-test-tube bx-tada"> </i>
+                        {{ it.lote }}
+                      </td>
+
+                      <td class="td_modal_pruebas">
+                        {{ it.cantidad_despachada }}
+                      </td>
+                      <td>
+                        <input class="form-control" type="number" #numero
+
+                        (keyup.enter)="DescargoStock(it, numero.value)"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

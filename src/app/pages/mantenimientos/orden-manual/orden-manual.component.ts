@@ -554,7 +554,7 @@ export class OrdenManualComponent implements OnInit {
     return this.OrdenForm.valid;
   }
   guardarOrden() {
-    if (this.OrdenForm.invalid) {
+    if (this.OrdenForm.invalid ) {
       return Object.values(this.OrdenForm.controls).forEach((control) => {
         control.markAsTouched();
       });

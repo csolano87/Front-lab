@@ -5,6 +5,7 @@ export interface Inventario {
 export interface Stock {
   referencia: string;
   nombre: string;
+  proveedor?:string ;
   detalles: Detalle[];
   total_referencia: number;
 }

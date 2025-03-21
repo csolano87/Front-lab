@@ -17,16 +17,15 @@ import { pedidoStock } from 'src/app/interfaces/pedidos-stocks.interface';
   styleUrl: './reporte-bodega.component.css',
 })
 export class ReporteBodegaComponent implements OnInit {
-
   @ViewChild('searchIn') searchIn!: ElementRef;
   @ViewChild('searchOut') searchOut!: ElementRef;
-  search: string = "";
+  search: string = '';
   searchInValue: string = '';
   searchOutValue: string = '';
   cargando: boolean = false;
   listasotckbodega: Stockbodega[] = [];
-//listasotckbodega: pedidoStock[] = [];
-private primerElementoMarcado = false;
+  //listasotckbodega: pedidoStock[] = [];
+  private primerElementoMarcado = false;
   listabodega: Bodega[] = [];
   page;
   constructor(
@@ -56,13 +55,13 @@ private primerElementoMarcado = false;
       params.fechaOut = fechaOut;
     } */
 
-      this.cargando=true;
+    this.cargando = true;
     this.stockService.getBodegaDescargo().subscribe((stockbodega) => {
       console.log(stockbodega);
 
       //  this.listasotckbodega = stockbodega.filter(item=>item.ESTADO ==2)});
-      this.listasotckbodega = stockbodega.filter(item=>item.ESTADO ==2);
-      this.cargando=false;
+      this.listasotckbodega = stockbodega.filter((item) => item.ESTADO == 2);
+      this.cargando = false;
     });
   }
 
@@ -94,10 +93,10 @@ private primerElementoMarcado = false;
   onSearchBodega(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.search = selectElement.value;
-    console.log(this.search)
+    console.log(this.search);
 
     if (!this.search) {
-      this.search = ""; // Restablecer la búsqueda si no se selecciona nada
+      this.search = ''; // Restablecer la búsqueda si no se selecciona nada
     }
   }
 
@@ -107,18 +106,25 @@ private primerElementoMarcado = false;
     this.searchOutValue = this.searchOut.nativeElement.value;
 
     // Aplicar los filtros con el valor capturado
-  //  this.aplicarFiltro();
+    //  this.aplicarFiltro();
   }
   limpiarFiltros() {
     this.searchInValue = '';
     this.searchOutValue = '';
-    this.search = ""; // Resetear el filtro de búsqueda
+    this.search = ''; // Resetear el filtro de búsqueda
     this.searchIn.nativeElement.value = ''; // Limpiar input de fecha inicio
     this.searchOut.nativeElement.value = ''; // Limpiar input de fecha fin
-
-
   }
   esPrimeraFila(nombre: string, index: number): boolean {
-    return this.listasotckbodega.findIndex(stock => stock.product.REFERENCIA === nombre) === index;
+    return (
+      this.listasotckbodega.findIndex(
+        (stock) => stock.product.REFERENCIA === nombre,
+      ) === index
+    );
+  }
+
+  sumarCantidades(despacho: any[]): number {
+    if (!Array.isArray(despacho)) return 0;
+    return despacho.reduce((acc, item) => acc + (item?.cantidad_despachada || 0), 0);
   }
 }

@@ -311,7 +311,9 @@ export class StockComponent implements OnInit {
     reader.readAsArrayBuffer(file);
   }
   guardar() {
-    if (this.stockForm.invalid) {
+
+    this.changeValidators();
+    if (this.stockForm.invalid && this.IDSeleccionado !='Nuevo') {
       return Object.values(this.stockForm.controls).forEach((control) => {
         control.markAsTouched();
       });
@@ -426,13 +428,28 @@ export class StockComponent implements OnInit {
     this.stockForm.enable();
   }
   changeValidators() {
-    console.log(this.listaStockSeleccionado);
+    if (this.listaStockSeleccionado) {
+      // En edición, hacer obligatorios bodega y proveedor
+      this.stockForm.get('bodegaId')?.setValidators(Validators.required);
+      this.stockForm.get('proveedorId')?.setValidators(Validators.required);
+    } else {
+      // En creación, solo es obligatorio 'guia'
+      this.stockForm.get('bodegaId')?.clearValidators();
+      this.stockForm.get('proveedorId')?.clearValidators();
+    }
+    this.stockForm.get('bodegaId')?.updateValueAndValidity();
+    this.stockForm.get('proveedorId')?.updateValueAndValidity();
+   /*  console.log(this.listaStockSeleccionado);
     if (this.IDSeleccionado !='Nuevo') {
       this.stockForm.controls['bodegaId'].setValidators([Validators.required]);
       this.stockForm.controls['proveedorId'].setValidators([Validators.required]);
       this.stockForm.get('bodegaId')?.updateValueAndValidity();
       this.stockForm.get('proveedorId')?.updateValueAndValidity();
-    }
+    } */
+
+
+
+
   }
   borrarProducto(i:number){
  this.productos.removeAt(i)
