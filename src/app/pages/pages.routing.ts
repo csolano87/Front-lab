@@ -97,6 +97,7 @@ import { PermisosComponent } from './mantenimientos/permisos/permisos.component'
 import { DespacharComponent } from './mantenimientos/despachar/despachar.component';
 import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/reporte-pruebas.component';
 import { ReporteBodegaComponent } from './mantenimientos/reporte-bodega/reporte-bodega.component';
+import { ConsultaPruebasEspecialesComponent } from './mantenimientos/consulta-pruebas-especiales/consulta-pruebas-especiales.component';
 
 const routes: Routes = [
   {
@@ -480,6 +481,11 @@ const routes: Routes = [
         path: 'pedido-importacion',
         component: ImportacionComponent,
         data: { titulo: 'pedido-importacion' },
+      },
+      {
+        path: 'PruebasEspeciales',
+        component: ConsultaPruebasEspecialesComponent,
+        data: { titulo: 'PruebasEspeciales' },
       },
       {
         path: 'pedido-importacion/:id',

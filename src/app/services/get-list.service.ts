@@ -10,7 +10,7 @@ const baseUrl = environment.url;
 })
 export class GetListService {
   userToken!: string;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   get token(): string {
     return localStorage.getItem('token') || '';
@@ -38,9 +38,15 @@ export class GetListService {
       `${baseUrl}/api/buscar/${lista.SampleID}`,
       this.headers,
     );
-    // return this.http.get<pdfPacientes>(`${environment.url}/buscar/${lista.SampleID}`)
-    /* .pipe(
-     delay(0)
-   ); */
+  }
+  pdfResultado(lista: string) {
+    return this.http.get<ListaOrdenes>(
+      `${baseUrl}/api/buscar/${lista}`,
+      this.headers,
+    );
+  }
+
+  mailResultado(item: any) {
+    return this.http.post(`${baseUrl}/api/mail`, item, this.headers);
   }
 }

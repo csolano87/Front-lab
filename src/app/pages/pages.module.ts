@@ -123,10 +123,12 @@ import { DespacharComponent } from './mantenimientos/despachar/despachar.compone
 import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/reporte-pruebas.component';
 import { ReporteBodegaComponent } from './mantenimientos/reporte-bodega/reporte-bodega.component';
 import { FiltroDescargoBodegaPipe } from '../pipes/filtro-descargo-bodega.pipe';
+import { ConsultaPruebasEspecialesComponent } from './mantenimientos/consulta-pruebas-especiales/consulta-pruebas-especiales.component';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
   declarations: [
+    ConsultaPruebasEspecialesComponent,
     ReporteBodegaComponent,
     ReportePruebasComponent,
     DespacharComponent,

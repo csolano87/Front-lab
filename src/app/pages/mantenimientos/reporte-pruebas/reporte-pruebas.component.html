@@ -22,7 +22,11 @@
                 Consultar
               </button>
 
-              <button *ngIf="lista" class="btn btn-secondary btn-sm">
+              <button
+                *ngIf="lista"
+
+                class="btn btn-secondary btn-sm"
+              >
                 Generar PDF
               </button>
             </div>
@@ -37,19 +41,18 @@
       <div class="card">
         <div class="card-body">
           <div *ngIf="cargando" class="text-center mt-3 animated fadeIn faster">
-            <!--  <h4 class="alert-heading">Cargando</h4> -->
+
             <p>
-              <!--                   <i class="fas fa-sync-alt fa-spin fa-2x"></i> -->
-              <!-- <i class='bx bx-sync'></i> -->
+
               <i class="bx bx-loader-circle bx-burst bx-rotate-90 bx-md"></i>
             </p>
-            <!--     <p class="mb-0">Espere por favor</p> -->
+           
           </div>
-          <div *ngIf="!cargando" class="table-responsive">
+          <div #contenidoPDF *ngIf="!cargando" class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th style="width: 15%">Codigo</th>
+                  <th style="width: 10%">Codigo</th>
                   <th style="width: 25%">Pruebas</th>
                   <th style="width: 20%">Examenes</th>
                   <th style="width: 10%">Hombres</th>
@@ -65,17 +68,17 @@
                     </td>
                   </tr>
 
-                  <ng-container *ngFor="
+                  <ng-container
+                    *ngFor="
                       let pru of item.value.prueba
-                        | paginate
-                          : { itemsPerPage: 5, currentPage: itemsPerPage }
-                    ">
+
+                    "
+                  >
                     <tr>
                       <td>
-                        {{ pru.codigo }}
-                      </td>
-                      <td>
-                        {{ pru.nombre }}
+                        {{pru.codigo }}
+</td>
+<td>                  {{ pru.nombre }}
                       </td>
 
                       <td>
@@ -86,11 +89,39 @@
                       <td>{{ pru.NN }}</td>
                     </tr>
                   </ng-container>
+                 <tr class="borde-subtotal">
+                    <td   colspan="2"><strong>
+                      Subtotal:
+                    </strong></td>
+                    <td>{{ CalcularTotal(item.value.prueba) }}</td>
+                    <td>
+                      {{ CalcularSubtotalgrupoHombre(item.value.prueba) }}
+                    </td>
+                    <td>{{ CalcularSubtotalgrupoMujer(item.value.prueba) }}</td>
+                    <td>{{ CalcularSubtotalgrupoNN(item.value.prueba) }}</td>
+                  </tr>
                 </ng-container>
               </tbody>
+               <tfoot>
+                <tr>
+                  <td colspan="2"><strong>Total Examenes:</strong></td>
+                  <td>{{ CalcularTotalGeneral(lista) }}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Total Hombres</strong></td>
+                  <td>{{ CalcularTotalGeneralM(lista) }}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"> <strong>Total Mujeres</strong></td>
+                  <td>{{ CalcularTotalGeneralF(lista) }}</td>
+                </tr>
+              </tfoot>
             </table>
-            <pagination-controls (pageChange)="itemsPerPage = $event" previousLabel="Anterior"
-              nextLabel="Siguiente"></pagination-controls>
+            <pagination-controls
+              (pageChange)="itemsPerPage = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
           </div>
         </div>
       </div>

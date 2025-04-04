@@ -1,0 +1,138 @@
+<div class="container-fluid rounded shadow">
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="">Fecha Inicio</label>
+              <div class="input-group">
+                <input
+                  type="date"
+                  class="form-control"
+                  #fechaIn
+                  [value]="fechaActual"
+                  (change)="getResults(fechaIn.value)"
+                />
+              </div>
+            </div>
+
+            <!--    <div class="form-group col-md-3">
+              <label for="">Fecha Fin</label>
+              <div class="input-group">
+                <input type="date" class="form-control" #fechaOut />
+              </div>
+            </div> -->
+
+            <!--   <div class="col-md-4 btn-botones">
+              <button
+                type="submit"
+                class="btn btn-primary btn-sm"
+
+              >
+                Consultar
+              </button>
+            </div> -->
+
+            <div class="row animated fadeIn fast">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div
+                      *ngIf="cargando"
+                      class="text-center mt-3 animated fadeIn faster"
+                    >
+                      <p>
+                        <i
+                          class="bx bx-loader-circle bx-burst bx-rotate-90 bx-md"
+                        ></i>
+                      </p>
+                    </div>
+
+                    <div *ngIf="!cargando" class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th style="width: 10%"># de orden</th>
+                            <th style="width: 20%">Nombre de paciente</th>
+                            <th style="width: 20%">Prueba</th>
+                            <th style="width: 10%">origen</th>
+                            <th style="width: 10%">Convenio</th>
+
+                            <th style="width: 10%">Estado</th>
+                            <th style="width: 15%">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let item of listaresultado
+                                | paginate
+                                  : { itemsPerPage: 10, currentPage: page }
+                            "
+                          >
+                            <td>{{ item.numeroroden }}</td>
+                            <td>{{ item.nombres }}</td>
+                            <td>
+                              <ul>
+                                <li
+                                  class="lista_prueba"
+                                  *ngFor="let prueba of item.prueba"
+                                >
+                                  {{ prueba.TestName }} ({{ prueba.TestID }})
+                                </li>
+                              </ul>
+                            </td>
+                            <td>{{ item.origenResult }}</td>
+                            <td>{{ item.origenOrden }}</td>
+
+                            <td>
+                              <div [ngSwitch]="item.validator">
+                                <div *ngSwitchCase="'false'">
+                                  <span class="badge badge-warning"
+                                    >Pendiente</span
+                                  >
+                                </div>
+                                <div *ngSwitchDefault>
+                                  <span class="badge badge-primary"
+                                    >Validado</span
+                                  >
+                                </div>
+                              </div>
+                            </td>
+                            <td class="actions">
+                              <span class="span_edit">
+                                <i
+                                  (click)="mailResultado(item)"
+                                  class="bx bx-envelope"
+                                  >Mail</i
+                                >
+                              </span>
+
+                              <span class="span_delete"
+                                ><i
+                                  (click)="pdfResultado(item.numeroroden)"
+                                  class="bx bxs-file-pdf"
+                                  >Pdf</i
+                                ></span
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <pagination-controls
+                        (pageChange)="page = $event"
+                        previousLabel="Anterior"
+                        nextLabel="Siguiente"
+                      ></pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

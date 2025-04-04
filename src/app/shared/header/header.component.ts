@@ -37,12 +37,12 @@ export class HeaderComponent implements OnInit {
     }); */
     this.getNotificar();
     this.escucharSocket();
-    this.activatedRoute.params.subscribe((params) =>
+   /*  this.activatedRoute.params.subscribe((params) =>
       console.log('params id', params['id']),
-    );
+    ); */
   }
   buscarHeroe(id: string) {
-    console.log(id);
+
     //[routerLink]="['/dashboard','orden', HIS.value ]
     this.router.navigate(['/dashborad', 'orden', id]);
   }
@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
     this.notificarDespachosservice
       .getNotificar(this.usuario.id)
       .subscribe((notificar) => {
-        console.log(notificar);
+
         this.notificarDespacho = notificar.filter((item) =>
           item.estado.includes('pendiente')
         );
@@ -60,13 +60,13 @@ export class HeaderComponent implements OnInit {
     this.notificarDespachosservice
       .listen('notificardespacho')
       .subscribe((notificardespacho: any) => {
-        console.log(`notificardespacho`, notificardespacho);
+
         this.mensaje = notificardespacho;
       });
   }
 
   updateNotificar(id: number, estado: string) {
-    console.log(`el id ${id} tiene estado ${estado}`);
+
  const data = {
       id: id,
       estado: estado,
@@ -78,6 +78,6 @@ export class HeaderComponent implements OnInit {
         const { msg } = resp;
         this.getNotificar();
         this.toastr.success(`${msg}`);
-      }); 
+      });
   }
 }

@@ -14,9 +14,9 @@ thead th {
     /*  font-size: 0.9rem; */
 }
 
-tr:nth-child(even) {
+/* tr:nth-child(even) {
   background-color: #dddddd;
-}
+} */
 
 tbody td {
   font-size: .9rem;

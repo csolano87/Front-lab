@@ -130,6 +130,9 @@ import {
 } from '../interfaces/cargar-unidadById.interface';
 import { Result, ResultOrder } from '../interfaces/carga-resultOrders.interface';
 import { OrdeneMensual, OrdenMensual } from '../interfaces/carga-ordenMensual.interface';
+import { Results, ResultTotalPrueba } from '../interfaces/cargaPruebatotalInfinity.interface';
+import { PruebasEspeciales,PruebaEspecial } from '../interfaces/cargarPruebasEspeciales.interface';
+
 //import { Pruebas } from '../interfaces/cargaReportPruebas.interfaces';
 
 const baseUrl = environment.url;
@@ -948,6 +951,22 @@ export class MantenimientosService {
       .pipe(map(({ ordenes }) => ordenes));
   }
 
+  getReporteTotalprueba():Observable<Results[]>{ ///estado/resultsOrders
+
+    return this.http.get<ResultTotalPrueba>(`${baseUrl}/api/estadordenes`,this.headers)
+    .pipe(map(({results})=>results))
+  }
+  getPruebaEspeciales(fechaIn:string ):Observable<PruebaEspecial[]>{ ///estado/resultsOrders
+
+    return this.http.get<PruebasEspeciales>(`${baseUrl}/api/estadordenes/estadomensual?fechaIn=${fechaIn}`,this.headers)
+    .pipe(map(({pruebaEspecial})=>pruebaEspecial))
+  }
+
+  getReporteTotal():Observable<Result[]>{ ///estado/resultsOrders
+
+    return this.http.get<ResultOrder>(`${baseUrl}/api/estadordenes/estado/resultsOrders`,this.headers)
+    .pipe(map(({results})=>results))
+  }
   getIngresoOrdenes(data: string): Observable<Ordene[]> {
     return this.http
       .get<Ingresoordenes>(

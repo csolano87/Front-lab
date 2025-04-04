@@ -18,10 +18,10 @@ export class SidebarComponent implements OnInit {
     private sidebarService: SidebarService,
     private usuarioservice: UsuarioService,
   ) {
-    (this.usuario = usuarioservice.usuario),
+    (this.usuario = usuarioservice.usuario)
       //this.menuItems = sidebarService.getMenuItems();
 
-      console.log(this.usuario);
+
     //this.menuItems=sidebarService.menu
 
     // this.menuItems = this.sidebarService.getMenuWithPermissions();
@@ -33,8 +33,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.getMenuSiber();
 
-    console.log($('[data-widget="treeview"]').Treeview('init'))
- /*   $('[data-widget="treeview"]').Treeview('init'); */
+   $('[data-widget="treeview"]').Treeview('init');
   }
 
   logout() {
@@ -48,12 +47,12 @@ export class SidebarComponent implements OnInit {
 
   getMenuSiber() {
     const menu = this.usuario.role.menu;
-    console.log(menu)
+
   /*   this.sidebarService.getMenu().subscribe((menu) => {
       console.log(menu) */
-      console.log(this.usuario.role.menu.filter(menu => menu.padreid ))
+
       const parentMenus = this.usuario.role.menu.filter(item => item.padreid === null);
-      console.log(parentMenus)
+
       this.groupedMenus = parentMenus.map(parent => {
         const children = this.usuario.role.menu.filter(menu => menu.padreid === parent.id);
         return {
@@ -62,7 +61,7 @@ export class SidebarComponent implements OnInit {
           items: [ ...children],
         };
       })
-console.log(this.groupedMenus)
+
    // })
   }
 

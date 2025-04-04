@@ -27,9 +27,9 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
                 "node_modules/ngx-toastr/toastr.css",
-              
+
               "src/styles.css"
-             
+
             ],
             "scripts": []
           },
@@ -38,8 +38,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "8mb",
-                  "maximumError": "8mb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",

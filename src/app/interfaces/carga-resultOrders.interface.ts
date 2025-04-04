@@ -5,6 +5,7 @@ export interface ResultOrder {
 
 export interface Result {
   SampleID:          string;
+  genero:string;
   RegisterYear:      string;
   RegisterDate:      string;
   RegisterHour:      string;

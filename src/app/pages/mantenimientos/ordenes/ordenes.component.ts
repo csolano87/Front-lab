@@ -46,8 +46,7 @@ export class OrdenesComponent implements OnInit {
     this.escucharSocket();
     this.getOrdenes(this.fechaActual);
   }
-
-  getOrdenes(fecha: string) {
+getOrdenes(fecha: string) {
     console.log(fecha);
 
     this.manteniminetoService.getIngresoOrdenes(fecha).subscribe((ordenes) => {

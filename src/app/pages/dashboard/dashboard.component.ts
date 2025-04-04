@@ -103,10 +103,8 @@ export class DashboardComponent implements OnInit {
     const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
     console.log(fecha); // 2025-03-13 10:30:00
 
-    
-      this.getOrdenMensual();
-      this.getResults();
-    
+    this.getOrdenMensual();
+    this.getResults();
 
     this.getGraficaPastel();
     this.getGraficaLinea();
@@ -161,8 +159,37 @@ export class DashboardComponent implements OnInit {
   }
 
   getResults() {
-    this.mantenimientoService.getResultsOrders().subscribe((results) => {
-      this.listaordene = results;
+    //this.mantenimientoService.getReporteTotal().subscribe((results) => {
+   /*  this.mantenimientoService.getReporteTotalprueba().subscribe((results) => {
+      //this.listaordene = results;
+
+      const ok = results.forEach((item) => {
+        const labTests = Array.isArray(item.prueba.LabTests.LISLabTest)
+          ? item.prueba.LabTests.LISLabTest
+          : [item.prueba.LabTests.LISLabTest];
+
+        const resultado = labTests.filter((item) => {
+          // Si el GroupID no es '115', lo devuelves
+          if (item.TestID == '2047') {
+            return true;
+          }
+          return 0;
+        });
+      });
+      console.log(`xxx=>`, ok);
+    }); */
+    this.mantenimientoService.getReporteTotalprueba().subscribe((results) => {
+      const ok = results.map((item) => {
+        const numero= item.prueba.SampleID;
+        const labTests = Array.isArray(item.prueba.LabTests.LISLabTest)
+          ? item.prueba.LabTests.LISLabTest
+          : [item.prueba.LabTests.LISLabTest];
+
+        // Filtrar los elementos cuyo TestID sea '2047'
+        return labTests.filter(test => test.TestID === '2047');
+      }).flat(); // Aplanamos el array para evitar arrays anidados
+
+      console.log(`xxx=>`, ok);
     });
   }
 
@@ -195,15 +222,12 @@ export class DashboardComponent implements OnInit {
   }
   getGraficaPastel() {
     const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
-    console.log(fecha.slice(0, 10)); // 2025-03-13 10:30:00
 
     const diferencia = differenceInDays(new Date(), new Date(fecha));
-    console.log(`Han pasado ${diferencia} días`);
 
     this.mantenimientoService.getOrdenMensual().subscribe((ordenes) => {
-      console.log(ordenes);
       const dataPastel = ordenes
-        .filter((item) => item.RegisterDate === fecha.slice(0, 10))
+        /*  .filter((item) => item.RegisterDate === fecha.slice(0, 10)) */
         .reduce((acc, item) => {
           const orden = item.IsOrderValidated;
 
@@ -211,7 +235,7 @@ export class DashboardComponent implements OnInit {
 
           return acc;
         }, {});
-      console.log(dataPastel);
+      console.log(`dataPastel`, dataPastel);
 
       const totalOrdenes = Object.values(dataPastel).reduce(
         (sum, value) => Number(sum) + Number(value) || 0,
@@ -241,12 +265,14 @@ export class DashboardComponent implements OnInit {
   }
 
   getGraficaLinea() {
-    this.mantenimientoService.getResultsOrders().subscribe((results) => {
+    this.mantenimientoService.getReporteTotal().subscribe((results) => {
       const datagrafica = results.reduce((acc, order) => {
         results.filter((item) => item.OriginDesc == 'EMERGENCIA');
         order.LabTests.LISLabTest.forEach((item) => {
           const nombrePrueba = item.GroupName;
+          console.log(`nombrePrueba`, nombrePrueba);
           const atencion = order.OriginDesc;
+
           if (!acc[atencion]) {
             acc[atencion] = {
               name: atencion,
@@ -275,8 +301,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getGraficaBarra() {
-    this.mantenimientoService.getResultsOrders().subscribe((results) => {
-      // this.data = results;
+    this.mantenimientoService.getReporteTotal().subscribe((results) => {
       const agrupados = results
         .flatMap((orden) => orden.LabTests.LISLabTest)
 
@@ -292,20 +317,6 @@ export class DashboardComponent implements OnInit {
       }));
       this.graficaBarras.sort((a, b) => a.name.localeCompare(b.name));
     });
-
-    /*   const agrupados = listaordenes.reduce((acc, item) => {
-      const origen = item.Origin;
-      acc[origen] = (acc[origen] || 0) + 1;
-
-      return acc;
-    }, {});
-
-    this.graficaBarras = Object.keys(agrupados).map((estadoNombre) => ({
-      name: estadoNombre,
-      value: agrupados[estadoNombre],
-    }));
-    this.graficaBarras.sort((a, b) => a.name.localeCompare(b.name));
-    console.log(this.graficaBarras); */
   }
 
   getOrderRetrasadas() {
@@ -316,7 +327,6 @@ export class DashboardComponent implements OnInit {
       quince: 0,
     };
     const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
-    console.log(fecha.slice(0, 10)); // 2025-03-13 10:30:00
 
     this.mantenimientoService.getOrdenMensual().subscribe((ordenes) => {
       this.listaordenesmensual = ordenes.filter(
@@ -329,8 +339,7 @@ export class DashboardComponent implements OnInit {
         /*  const diff2 = today.getTime() - orderDate.getTime();
         const diff = Math.floor(diff2 / (1000 * 60 * 60 * 24)); */
         const diff = differenceInDays(new Date(), new Date(orderDate));
-        console.log(`Han pasado ${diff} días`);
-        console.log(`fechaa`, diff);
+
         if (diff === 0) {
           result.dia += 1;
         }

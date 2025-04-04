@@ -1,0 +1,8 @@
+/* * {
+  outline: 1px solid blue;
+} */
+.lista_prueba {
+  list-style: none;
+  padding:5px  8px;
+  left: 0;
+}

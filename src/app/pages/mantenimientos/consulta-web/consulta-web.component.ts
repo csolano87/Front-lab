@@ -125,31 +125,14 @@ export class ConsultaWebComponent {
 
     this.listagetlist.pdf2(lista).subscribe((resp: any) => {
       const url = resp.pdf;
-      /* console.log(url.length)
-        if (url === 1 || url.length <= 1) {
-          Swal.fire(
-            {
 
-              title:"Oops",
-              titleText:"Tus resultados no se encuentran disponibles",
-              icon:"warning",
-             // iconColor:"#353535",
-              confirmButtonColor: "#353535",
-            }
-            
-          
-           
-           );
-
-
-        } else { */
 
       const tempLink = document.createElement('a');
       tempLink.href = url;
       tempLink.setAttribute('target', '_blank');
       tempLink.click();
 
-      // }
+   
     });
   }
   cambinarPaginaOrden(valor: number) {
