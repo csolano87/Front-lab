@@ -153,7 +153,7 @@
                       <span class="span_delete">
                         <i
                           [ngClass]="{
-                            'disabled-icon': pedido.ESTADO === 2
+                            'disabled-icon': pedido.ESTADO !== 1 
                           }"
                           (click)="borrarPedido(pedido)"
                           class="bx bxs-trash"
@@ -163,7 +163,7 @@
                       </span>
 
                       <span
-                        [ngClass]="{ 'disabled-icon': pedido.ESTADO != 1 }"
+                        [ngClass]="{ 'disabled-icon': pedido.ESTADO !== 1 }"
                         *ngIf="usuario.roleId === 1"
                         class="span_rangos"
                       >

@@ -98,6 +98,7 @@ import { DespacharComponent } from './mantenimientos/despachar/despachar.compone
 import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/reporte-pruebas.component';
 import { ReporteBodegaComponent } from './mantenimientos/reporte-bodega/reporte-bodega.component';
 import { ConsultaPruebasEspecialesComponent } from './mantenimientos/consulta-pruebas-especiales/consulta-pruebas-especiales.component';
+import { DescargaOrdenesInfinityComponent } from './mantenimientos/descarga-ordenes-infinity/descarga-ordenes-infinity.component';
 
 const routes: Routes = [
   {
@@ -745,6 +746,12 @@ const routes: Routes = [
         path: 'tubos',
         component: TubosComponent,
         data: { titulo: 'tubos' },
+      },
+
+      {
+        path: 'Ordenes-Infnity',
+        component: DescargaOrdenesInfinityComponent,
+        data: { titulo: 'Ordenes-Infnity' },
       },
     ],
   },

@@ -31,10 +31,11 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { GroupByPipe } from './pipes/group-by.pipe';
 import { ToastrModule } from 'ngx-toastr';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './interceptors/interceptor.service';
 
 @NgModule({
   declarations: [
-
     AppComponent,
     FiltroPipe,
     FiltroUsuarioPipe,
@@ -50,7 +51,7 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     AuthModule,
     PagesRoutingModule,
-    
+
     PagesModule,
     //MatSliderModule,
     NgxPaginationModule,
@@ -62,8 +63,13 @@ import { ToastrModule } from 'ngx-toastr';
 
     // SocketIoModule.forRoot(config)
   ],
-exports:[],
-  providers: [provideCharts(withDefaultRegisterables())],
+  exports: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService,
+      multi:true
+     },
+    provideCharts(withDefaultRegisterables()),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

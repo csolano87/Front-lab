@@ -57,7 +57,7 @@ export class UsuarioService {
             doctor,
             usuario,
             password,
-          
+
             rol,
             USUARIO_ID,
             CREATEDBY,
@@ -65,9 +65,9 @@ export class UsuarioService {
             DELETEDBY,
             estado,
             roleId,
-           
+
             role
-            
+
           } = resp.user;
           console.log(resp.user)
           this.usuario = new Usuario(
@@ -76,7 +76,7 @@ export class UsuarioService {
             doctor,
             usuario,
             password,
-           
+
             rol,
             USUARIO_ID,
             CREATEDBY,
@@ -104,7 +104,7 @@ export class UsuarioService {
   }
 
   cargarUsuarios(formData: RegisterFrom) {
-    return this.http.post(`${baseUrl}/api/usuarios`, formData, this.headers);
+    return this.http.post(`${baseUrl}/api/usuarios`, formData);
   }
 
   private guardarToken(idToken: string) {
@@ -129,7 +129,7 @@ this.usuario = null
   GetUsuarios() {
     return this.http.get<CargarUsuario>(
       `${baseUrl}/api/usuarios`,
-      this.headers,
+    
     );
   }
   GetUsuarioById(id: string) {

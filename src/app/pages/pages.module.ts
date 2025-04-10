@@ -124,10 +124,12 @@ import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/report
 import { ReporteBodegaComponent } from './mantenimientos/reporte-bodega/reporte-bodega.component';
 import { FiltroDescargoBodegaPipe } from '../pipes/filtro-descargo-bodega.pipe';
 import { ConsultaPruebasEspecialesComponent } from './mantenimientos/consulta-pruebas-especiales/consulta-pruebas-especiales.component';
+import { DescargaOrdenesInfinityComponent } from './mantenimientos/descarga-ordenes-infinity/descarga-ordenes-infinity.component';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
   declarations: [
+    DescargaOrdenesInfinityComponent,
     ConsultaPruebasEspecialesComponent,
     ReporteBodegaComponent,
     ReportePruebasComponent,
