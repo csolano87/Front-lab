@@ -132,6 +132,7 @@ import { Result, ResultOrder } from '../interfaces/carga-resultOrders.interface'
 import { OrdeneMensual, OrdenMensual } from '../interfaces/carga-ordenMensual.interface';
 import { Results, ResultTotalPrueba } from '../interfaces/cargaPruebatotalInfinity.interface';
 import { PruebasEspeciales,PruebaEspecial } from '../interfaces/cargarPruebasEspeciales.interface';
+import { ListaInfinity, OrdenInfinity } from '../interfaces/carga_ordeneInfinity.interface';
 
 //import { Pruebas } from '../interfaces/cargaReportPruebas.interfaces';
 
@@ -956,6 +957,15 @@ export class MantenimientosService {
     return this.http.get<ResultTotalPrueba>(`${baseUrl}/api/estadordenes`,this.headers)
     .pipe(map(({results})=>results))
   }
+
+
+  getOrdenesInfinty():Observable<OrdenInfinity[]>{ ///estado/resultsOrders
+
+    return this.http.get<ListaInfinity>(`${baseUrl}/api/estadordenes/ordenesInfinity`,this.headers)
+    .pipe(map(({ordenInfinity})=>ordenInfinity))
+  }
+
+
   getPruebaEspeciales(fechaIn:string ):Observable<PruebaEspecial[]>{ ///estado/resultsOrders
 
     return this.http.get<PruebasEspeciales>(`${baseUrl}/api/estadordenes/estadomensual?fechaIn=${fechaIn}`,this.headers)

@@ -47,6 +47,6 @@ export class GetListService {
   }
 
   mailResultado(item: any) {
-    return this.http.post(`${baseUrl}/api/mail`, item, this.headers);
+    return this.http.post(`${baseUrl}/api/buscar`, item, this.headers);
   }
 }

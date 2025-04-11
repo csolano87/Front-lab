@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+   /*  const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
     console.log(fecha); // 2025-03-13 10:30:00
 
     this.getOrdenMensual();
@@ -113,8 +113,7 @@ export class DashboardComponent implements OnInit {
 
     this.startAutoScroll();
     const swiper = new Swiper('.swiper', {
-      // Optional parameters
-      /*  direction: 'vertical', */
+
       loop: true,
       breakpoints: {
         768: {
@@ -122,22 +121,14 @@ export class DashboardComponent implements OnInit {
         },
       },
 
-      /*     pagination: {
-        el: '.swiper-pagination',
-      },
 
-
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      }, */
 
       autoplay: { delay: 2500, disableOnInteraction: false },
       // And if we need scrollbar
       scrollbar: {
         el: '.swiper-scrollbar',
       },
-    });
+    }); */
   }
 
   get single() {

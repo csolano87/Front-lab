@@ -125,10 +125,14 @@ import { ReporteBodegaComponent } from './mantenimientos/reporte-bodega/reporte-
 import { FiltroDescargoBodegaPipe } from '../pipes/filtro-descargo-bodega.pipe';
 import { ConsultaPruebasEspecialesComponent } from './mantenimientos/consulta-pruebas-especiales/consulta-pruebas-especiales.component';
 import { DescargaOrdenesInfinityComponent } from './mantenimientos/descarga-ordenes-infinity/descarga-ordenes-infinity.component';
+import { ListaordenesImportadasComponent } from './mantenimientos/listaordenes-importadas/listaordenes-importadas.component';
+import { ListaordenesexportarComponent } from './mantenimientos/listaordenesexportar/listaordenesexportar.component';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
   declarations: [
+    ListaordenesImportadasComponent,
+    ListaordenesexportarComponent,
     DescargaOrdenesInfinityComponent,
     ConsultaPruebasEspecialesComponent,
     ReporteBodegaComponent,

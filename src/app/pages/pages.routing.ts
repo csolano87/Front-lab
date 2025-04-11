@@ -99,6 +99,8 @@ import { ReportePruebasComponent } from './mantenimientos/reporte-pruebas/report
 import { ReporteBodegaComponent } from './mantenimientos/reporte-bodega/reporte-bodega.component';
 import { ConsultaPruebasEspecialesComponent } from './mantenimientos/consulta-pruebas-especiales/consulta-pruebas-especiales.component';
 import { DescargaOrdenesInfinityComponent } from './mantenimientos/descarga-ordenes-infinity/descarga-ordenes-infinity.component';
+import { ListaordenesImportadasComponent } from './mantenimientos/listaordenes-importadas/listaordenes-importadas.component';
+import { ListaordenesexportarComponent } from './mantenimientos/listaordenesexportar/listaordenesexportar.component';
 
 const routes: Routes = [
   {
@@ -749,9 +751,23 @@ const routes: Routes = [
       },
 
       {
-        path: 'Ordenes-Infnity',
+        path: 'OrdenesInfinity',
         component: DescargaOrdenesInfinityComponent,
-        data: { titulo: 'Ordenes-Infnity' },
+        data: { titulo: 'OrdenesInfinity' },
+      },
+
+
+      {
+        path: 'ImportarOrdenes',
+        component: ListaordenesImportadasComponent,
+        data: { titulo: 'ImportarOrdenes' },
+      },
+
+
+      {
+        path: 'ExportarOrdenes',
+        component: ListaordenesexportarComponent,
+        data: { titulo: 'ExportarOrdenes' },
       },
     ],
   },

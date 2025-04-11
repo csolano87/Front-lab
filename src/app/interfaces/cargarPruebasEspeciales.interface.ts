@@ -11,8 +11,17 @@ export interface PruebaEspecial {
   numeroResults: string;
   prueba:        Prueba[];
   validator:     string;
+  estadoMail?:    EstadoMail ;
 }
 
+export interface EstadoMail {
+    id:         number;
+    numero:     string;
+    fechaorden: string;
+    estado:     boolean;
+    createdAt:  string;
+    updatedAt:  string;
+}
 export interface Prueba {
   TestID:   string;
   TestName: string;

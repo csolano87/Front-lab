@@ -6,7 +6,6 @@ import { GetListService } from 'src/app/services/get-list.service';
 import Swal from 'sweetalert2';
 import { PruebaEspecial } from 'src/app/interfaces/cargarPruebasEspeciales.interface';
 
-
 @Component({
   selector: 'app-consulta-pruebas-especiales',
 
@@ -23,16 +22,15 @@ export class ConsultaPruebasEspecialesComponent implements OnInit {
     private listagetlist: GetListService,
   ) {}
   ngOnInit(): void {
-   this.getResults(this.fechaActual);
+   // this.getResults(this.fechaActual);
   }
-  getResults(fechaIn:string ) {
+  getResults(fechaIn: string) {
     this.cargando = true;
 
     this.mantenimientoService
       .getPruebaEspeciales(fechaIn)
       .subscribe((pruebaEspecial) => {
         this.listaresultado = pruebaEspecial;
-
 
         this.cargando = false;
       });
@@ -68,13 +66,25 @@ export class ConsultaPruebasEspecialesComponent implements OnInit {
           ...item,
           correo: result.value,
         };
-        this.listagetlist.mailResultado(data).subscribe((resp: any) => {
-          console.log(resp);
-        });
-        /* Swal.fire({
-          title: `${result.value.login}'s avatar`,
-          imageUrl: result.value.avatar_url
-        }); */
+        this.listagetlist.mailResultado(data).subscribe(
+          (resp: any) => {
+            console.log(resp);
+            const { msg } = resp;
+            Swal.fire({
+              title: 'Correo Enviado!',
+              text: msg,
+              icon: 'success',
+            });
+          },
+          (err) => {
+            console.log('error', err.error.msg);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error en el envio de correo',
+              text: err.error.msg,
+            });
+          },
+        );
       }
       /* console.log(`correo electronico`,result)
 

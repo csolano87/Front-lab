@@ -41,8 +41,8 @@
                             <th style="width: 20%">Prueba</th>
                             <th style="width: 10%">Origen</th>
                             <th style="width: 10%">Convenio</th>
-
                             <th style="width: 10%">Estado</th>
+                            <th style="width: 10%">ResultadoEnvioCorreo</th>
                             <th style="width: 15%">Actions</th>
                           </tr>
                         </thead>
@@ -82,6 +82,19 @@
                                   >
                                 </div>
                               </div>
+                            </td>
+                            <td>
+                              <div [ngSwitch]="item.estadoMail?.estado">
+                                <div *ngSwitchCase="true">
+                                  <span class="badge badge-primary"
+                                  >Enviado</span
+                                >
+                                </div>
+                                <div *ngSwitchDefault>
+
+                                </div>
+                              </div>
+
                             </td>
                             <td class="actions">
                               <span class="span_edit">
