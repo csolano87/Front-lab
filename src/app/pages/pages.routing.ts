@@ -101,6 +101,7 @@ import { ConsultaPruebasEspecialesComponent } from './mantenimientos/consulta-pr
 import { DescargaOrdenesInfinityComponent } from './mantenimientos/descarga-ordenes-infinity/descarga-ordenes-infinity.component';
 import { ListaordenesImportadasComponent } from './mantenimientos/listaordenes-importadas/listaordenes-importadas.component';
 import { ListaordenesexportarComponent } from './mantenimientos/listaordenesexportar/listaordenesexportar.component';
+import { TransmitirResultadosComponent } from './mantenimientos/transmitir-resultados/transmitir-resultados.component';
 
 const routes: Routes = [
   {
@@ -768,6 +769,12 @@ const routes: Routes = [
         path: 'ExportarOrdenes',
         component: ListaordenesexportarComponent,
         data: { titulo: 'ExportarOrdenes' },
+      },
+
+      {
+        path: 'TrasmitirResultados',
+        component: TransmitirResultadosComponent,
+        data: { titulo: 'TrasmitirResultados' },
       },
     ],
   },

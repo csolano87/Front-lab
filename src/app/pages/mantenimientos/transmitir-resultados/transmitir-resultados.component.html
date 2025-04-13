@@ -1,0 +1,21 @@
+<div class="container-fluid rounded shadow">
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <fieldset class="filtro-container">
+            <p class="filtro-titulo">Sube tu archivo</p>
+            <div class="row">
+              <input #fileInput type="file" class="input-file"
+              (click)="onfileInput($event)"
+              accept=".json" />
+            </div>
+          </fieldset>
+          <div class="buton_trasmitir">
+            <button class="btn btn-primary">Trasmitir resultados</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

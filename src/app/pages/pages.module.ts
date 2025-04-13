@@ -102,6 +102,7 @@ import { StockbodegasComponent } from './mantenimientos/stockbodegas/stockbodega
 import { DescargarbodegaComponent } from './mantenimientos/descargarbodega/descargarbodega.component';
 import { TipofisiologicoComponent } from './mantenimientos/tipofisiologico/tipofisiologico.component';
 import { UnidadComponent } from './mantenimientos/unidad/unidad.component';
+
 import { UnidadedadComponent } from './mantenimientos/unidadedad/unidadedad.component';
 import { ValidacionresultadosComponent } from './mantenimientos/validacionresultados/validacionresultados.component';
 import { TecnicaComponent } from './mantenimientos/tecnica/tecnica.component';
@@ -127,12 +128,15 @@ import { ConsultaPruebasEspecialesComponent } from './mantenimientos/consulta-pr
 import { DescargaOrdenesInfinityComponent } from './mantenimientos/descarga-ordenes-infinity/descarga-ordenes-infinity.component';
 import { ListaordenesImportadasComponent } from './mantenimientos/listaordenes-importadas/listaordenes-importadas.component';
 import { ListaordenesexportarComponent } from './mantenimientos/listaordenesexportar/listaordenesexportar.component';
+import { TransmitirResultadosComponent } from './mantenimientos/transmitir-resultados/transmitir-resultados.component';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
   declarations: [
+    TransmitirResultadosComponent,
     ListaordenesImportadasComponent,
     ListaordenesexportarComponent,
+
     DescargaOrdenesInfinityComponent,
     ConsultaPruebasEspecialesComponent,
     ReporteBodegaComponent,

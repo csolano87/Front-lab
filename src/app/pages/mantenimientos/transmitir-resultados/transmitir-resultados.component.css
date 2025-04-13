@@ -1,0 +1,9 @@
+/* * {
+  outline: 1px solid blue;
+} */
+.buton_trasmitir {
+  display: flex;
+  justify-content: center;
+
+  padding: 20px;
+}

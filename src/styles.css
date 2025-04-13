@@ -444,3 +444,28 @@ select.form-control {
     max-width: 90%;
   }
 }
+/* caja de filtro */
+
+.filtro-container {
+  border: 2px solid #dee2e6;
+  padding: 20px 15px 15px 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.filtro-titulo {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 12px;
+
+  border-radius: 5px;
+  display: inline-block;
+  position: absolute;
+  top: -14px;
+}
+.text_ordenes{
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+}

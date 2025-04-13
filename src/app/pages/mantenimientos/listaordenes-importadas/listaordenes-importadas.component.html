@@ -1,1 +1,122 @@
-<p>listaordenes-importadas works!</p>
+<div class="container-fluid rounded shadow">
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-info">
+          <div class="card-header">
+            <h3 class="card-title">Administracion</h3>
+          </div>
+
+          <div class="card-body">
+            <fieldset class="filtro-container">
+              <p class="filtro-titulo">Sube el archivo</p>
+              <div class="row">
+                <input
+                  #fileInput
+                  type="file"
+                  (change)="onFileSelected($event)"
+                  class="input-file"
+                  accept=".json"
+                />
+              </div>
+            </fieldset>
+            <div
+              *ngIf="listaordenes.length > 0"
+              class="row animated fadeIn fast"
+            >
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <div class="col-md-3">
+                        <button
+                          (click)="guardar()"
+                          class="btn btn-primary btn-sm"
+                        >
+                          Guardar
+                        </button>
+                        &nbsp;
+                        <button
+                          (click)="cancelar()"
+                          class="btn btn-danger btn-sm"
+                        >
+                          Cancelar
+                        </button>
+                      </div>
+
+                      <div
+                        *ngIf="cargando"
+                        class="alert alert-info text-center mt-3 animated fadeIn faster"
+                      >
+                        <h4 class="alert-heading">Cargando</h4>
+                        <p>
+                          <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+                        </p>
+                        <p class="mb-0">Espere por favor</p>
+                      </div>
+
+                      <div *ngIf="!cargando" class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th style="width: 20%">#Orden</th>
+                              <th style="width: 30%">Nombres</th>
+                              <th style="width: 15%">Origen</th>
+                              <th style="width: 20%">Doctor</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            <tr
+                              *ngFor="
+                                let orden of listaordenes
+                                  | paginate
+                                    : {
+                                        itemsPerPage: count,
+                                        currentPage: page
+                                      };
+                                let i = index
+                              "
+                            >
+                              <!--   <td>{{ page }}</td> -->
+                              <td>{{ orden.numeroroden }}</td>
+                              <td>{{ orden.nombres }}</td>
+                              <td>{{ orden.origenOrden }}</td>
+                              <td>{{ orden.doctor }}</td>
+                              <!--           <td>{{ producto.caducidad }}</td>
+                        <td>{{ producto.cantidad }}</td>
+                        <td>
+                          <input
+                            type="number"
+                            class="form-control"
+                            formControlName="cantidad_recibida"
+                          />
+
+                        </td> -->
+
+                              <td>
+                                <i
+                                  class="bx bxs-trash"
+                                  style="color: #f30909"
+                                  (click)="borrarItem(i)"
+                                ></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <pagination-controls
+                          (pageChange)="page = $event"
+                        ></pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
