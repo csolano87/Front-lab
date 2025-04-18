@@ -1,4 +1,4 @@
-table {
+/* table {
   width: 100%;
 }
 
@@ -56,19 +56,7 @@ tr:hover {
   background-color: #6ec0e3;
 }
 
-/*  .mat-row .mat-cell {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
-    cursor: pointer;
-  }
-  
-  .mat-row:hover .mat-cell {
-    border-color: currentColor;
-  }
-  
-  .demo-row-is-clicked {
-    font-weight: bold;
-  } */
+
 button {
   background-color: #002f85;
   margin-top: 20px;
@@ -99,7 +87,7 @@ button {
   margin-top: 50px;
   margin: 0px auto;
 
-  /*   margin-left: 80px; */
+
 }
 
 .card {
@@ -136,4 +124,9 @@ button {
 
 .fadeIn {
   animation-name: fadeIn;
+}
+ */
+ .spinner-border {
+  width: 3rem;
+  height: 3rem;
 }

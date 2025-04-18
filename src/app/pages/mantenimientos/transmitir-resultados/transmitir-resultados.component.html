@@ -6,13 +6,19 @@
           <fieldset class="filtro-container">
             <p class="filtro-titulo">Sube tu archivo</p>
             <div class="row">
-              <input #fileInput type="file" class="input-file"
-              (click)="onfileInput($event)"
-              accept=".json" />
+              <input
+                
+                type="file"
+                class="input-file"
+                (change)="onfileInput($event)"
+                accept=".json"
+              />
             </div>
           </fieldset>
           <div class="buton_trasmitir">
-            <button class="btn btn-primary">Trasmitir resultados</button>
+            <button (click)="guardar()" class="btn btn-primary">
+              Trasmitir resultados
+            </button>
           </div>
         </div>
       </div>

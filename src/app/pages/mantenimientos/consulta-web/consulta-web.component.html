@@ -1,146 +1,163 @@
 <div class="container-fluid rounded shadow">
-  <div class="row py-4 animated fadeIn fast">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <form autocomplete="off" class="form-inline">
-
-            <div class="form-group col-md-3">
-              <label for="" class="form-ItemName">#. ORDEN INFINITY</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Ingrese orden"
-                #SampleID
-              />
-            </div>
-
-            <div class="form-group col-md-3">
-              <label for="" class="form-ItemName">#. HISTORIA CLINICA</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Ingrese historia"
-                #PatientID1
-              />
-            </div>
-
-            <div class="form-group col-md-3">
-              <label for="" class="form-ItemName">APELLIDOS DEL PACIENTE</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Ingrese un apellido"
-                #apellido
-              />
-            </div>
-
-            <div class="esboton">
-              <button
-                (click)="
-                  buscar(SampleID.value, PatientID1.value, apellido.value)
-                "
-                type="submit"
-                class="btn btn-primary btn-md rounded shadow"
-              >
-                <i class="fa fa-search" aria-hidden="true"></i> Buscar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="row animated fadeIn fast">
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <h6 class="title">Listado de Resultados</h6>
+          <fieldset class="filtro-container">
+            <p class="filtro-titulo">Filtros de busqueda</p>
+            <div class="row">
+              <div class="form-group col-md-2">
+                <label for="" class="form-ItemName">N. Orden </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Ingrese orden"
+                  #SampleID
+                />
+              </div>
 
-          <div class="col-md-3 button"></div>
+              <div class="form-group col-md-2">
+                <label for="" class="form-ItemName">Cédula</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Ingrese cédula"
+                  #PatientID1
+                />
+              </div>
 
-          <!--      <div *ngIf="ordenes.length === 0" class="row py-2">
-                        <div class="col-12">
-                            <div class="alert alert-info" role="alert">
-                                <h3 class="text-center"> No existe registros  </h3>
-                            </div>
-                        </div>
-                    </div> -->
-
-          <div
-            *ngIf="cargando"
-            class="alert alert-info text-center mt-3 animated fadeIn faster"
-          >
-            <h4 class="alert-heading">Cargando</h4>
-            <p>
-              <i class="fas fa-sync-alt fa-spin fa-2x"></i>
-            </p>
-            <p class="mb-0">Espere por favor</p>
-          </div>
-
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Historia</th>
-                  <th>Paciente</th>
-
-                  <th># INFINITY</th>
-                  <th>Origen</th>
-                  <th>Servicio</th>
-                  <th>F. Registro</th>
-                 
-                  <th>Estado</th>
-
-                  <th>PDF</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr
-                  *ngFor="
-                    let lista of listaordene
-                      | paginate: { itemsPerPage: 8, currentPage: page };
-                    e
-                  "
+              <div class="form-group col-md-3">
+                <label for="" class="form-ItemName"
+                  >Apellidos del paciente</label
                 >
-                  <td class="text-table">{{ lista.PatientID1 }}</td>
-                  <td class="text-table22">{{ lista.SurNameAndName }}</td>
-                  <td class="text-table">{{ lista.SampleID }}</td>
-                  <td class="text-table2">{{ lista.Origin }}</td>
-                  <td class="text-table2">{{ lista.Service }}</td>
-                  <td class="text-table3">
-                    {{ lista.RegisterDate }} {{ lista.RegisterHour }}
-                  </td>
-                  <td class="text-table2">
-                    <span
-                      *ngIf="lista.IsOrderValidated != 'true'"
-                      class="rounded shadow bg-pen"
-                      >Pendiente validar</span
-                    >
-                    <span
-                      *ngIf="lista.IsOrderValidated == 'true'"
-                      class="rounded shadow bg-com"
-                      >Validado</span
-                    >
-                  </td>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Ingrese un apellido"
+                  #apellido
+                />
+              </div>
 
-                  <td>
-                    <span class="rounded shadow cursor" (click)="pdf2(lista)">
-                      <i class="bx bxs-file-pdf bx-md"></i
-                    ></span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <pagination-controls
-              (pageChange)="page = $event"
-              previousLabel="Anterior"
-              nextLabel="Siguiente"
-            ></pagination-controls>
+              <div class="col-md-4 btn-botones">
+                <button
+                  (click)="
+                    buscar(SampleID.value, PatientID1.value, apellido.value)
+                  "
+                  class="btn btn-primary btn-sm"
+                >
+                  <!--   <i class="fa fa-search" aria-hidden="true"></i> -->
+                  Buscar
+                </button>
+              </div>
+            </div>
+          </fieldset>
 
-           
+          <div class="row animated fadeIn fast">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <!--  <h6 class="title">Listado de Resultados</h6>
+ -->
+
+                  <div
+                    *ngIf="cargando"
+                    class="text-center mt-3 animated fadeIn faster"
+                  >
+                    <i
+                      class="bx bx-loader-circle bx-spin bx-flip-vertical bx-lg"
+                    ></i>
+                  </div>
+                  <div *ngIf="descargando" class="text-center my-3">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="sr-only">Descargando...</span>
+                    </div>
+                    <p>Descargando reporte PDF...</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th style="width: 10%;" >F. Registro</th>
+                          <th style="width: 10%;" >N.- Orden</th>
+                          <th style="width: 10%;" >Cédula</th>
+                          <th style="width: 25%;" >Paciente</th>
+                          <th style="width: 20%;" >Doctor</th>
+                          <th style="width: 15%;" >Origen</th>
+                          <!--  <th>Servicio</th> -->
+
+                          <th style="width: 10%;">Estado</th>
+
+                          <th style="width: 10%;">Actions</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let lista of listaordene
+                              | paginate
+                                : { itemsPerPage: 10, currentPage: page };
+                            e
+                          "
+                        >
+                          <td>
+                            {{ lista.RegisterDate }} {{ lista.RegisterHour }}
+                          </td>
+                          <td>{{ lista.SampleID }}</td>
+                          <td>{{ lista.PatientID1 }}</td>
+                          <td>
+                            {{ lista.SurNameAndName }}
+                          </td>
+
+                          <td>{{ lista.Origin }}</td>
+                          <td>{{ lista.Doctor }}</td>
+
+                          <td>
+                            <div [ngSwitch]="lista.IsOrderValidated">
+                              <div *ngSwitchCase="true">
+                                <span class="badge badge-primary"
+                                  >Validado</span
+                                >
+                              </div>
+
+                              <div *ngSwitchDefault>
+                                <span class="badge badge-warning"
+                                  >pendiente</span
+                                >
+                              </div>
+                            </div>
+                            <!-- <span
+                              *ngIf="lista.IsOrderValidated != 'true'"
+                              class="rounded shadow bg-pen"
+                              >Pendiente validar</span
+                            >
+                            <span
+                              *ngIf="lista.IsOrderValidated == 'true'"
+                              class="rounded shadow bg-com"
+                              >Validado</span
+                            > -->
+                          </td>
+
+                          <td>
+                            <span
+                              class="rounded shadow cursor"
+                              (click)="pdf2(lista)"
+                            >
+                              <i class="bx bxs-file-pdf bx-md"></i
+                            ></span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <pagination-controls
+                      (pageChange)="page = $event"
+                      previousLabel="Anterior"
+                      nextLabel="Siguiente"
+                    ></pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

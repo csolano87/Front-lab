@@ -59,10 +59,11 @@
                         <table class="table">
                           <thead>
                             <tr>
-                              <th style="width: 20%">#Orden</th>
-                              <th style="width: 30%">Nombres</th>
+                              <th style="width: 15%">#Orden</th>
+                              <th style="width: 25%">Nombres</th>
                               <th style="width: 15%">Origen</th>
-                              <th style="width: 20%">Doctor</th>
+                              <th style="width: 15%">Doctor</th>
+                              <th style="width: 15%">Pruebas</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -84,16 +85,13 @@
                               <td>{{ orden.nombres }}</td>
                               <td>{{ orden.origenOrden }}</td>
                               <td>{{ orden.doctor }}</td>
-                              <!--           <td>{{ producto.caducidad }}</td>
-                        <td>{{ producto.cantidad }}</td>
-                        <td>
-                          <input
-                            type="number"
-                            class="form-control"
-                            formControlName="cantidad_recibida"
-                          />
-
-                        </td> -->
+                              <td>
+                                <ul>
+                                  <li *ngFor="let prueba of orden.prueba">
+                                    {{ prueba.TestName }} {{ prueba.testID }}
+                                  </li>
+                                </ul>
+                              </td>
 
                               <td>
                                 <i

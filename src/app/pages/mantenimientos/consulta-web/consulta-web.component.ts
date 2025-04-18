@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Listaordene } from 'src/app/interfaces/orden.interface';
 import { List } from 'src/app/models/listagetlist.module';
@@ -12,6 +16,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./consulta-web.component.css'],
 })
 export class ConsultaWebComponent {
+  fechaActual = new Date().toISOString().split('T');
   public listaordene: Listaordene[] = [];
   public desde: number = 0;
   public page!: number;
@@ -120,19 +125,23 @@ export class ConsultaWebComponent {
   }
 
   pdf2(lista: List) {
-    console.log(lista);
     this.descargando = true;
 
-    this.listagetlist.pdf2(lista).subscribe((resp: any) => {
-      const url = resp.pdf;
+    this.listagetlist.pdf2(lista).subscribe({
+      next: (blob) => {
+        const downloadURL = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = `reporte_${this.fechaActual}.pdf`;
+        link.click();
 
-
-      const tempLink = document.createElement('a');
-      tempLink.href = url;
-      tempLink.setAttribute('target', '_blank');
-      tempLink.click();
-
-   
+        window.URL.revokeObjectURL(downloadURL);
+        this.descargando = false;
+      },
+      error: (err) => {
+        console.error("Error al descargar el PDF:", err);
+        this.descargando = false;
+      }
     });
   }
   cambinarPaginaOrden(valor: number) {

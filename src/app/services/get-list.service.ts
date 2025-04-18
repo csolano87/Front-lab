@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { List } from '../models/listagetlist.module';
 import { ListaOrdenes } from '../interfaces/orden.interface';
-import { delay } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
+import { blob } from 'stream/consumers';
 const baseUrl = environment.url;
 @Injectable({
   providedIn: 'root',
@@ -32,11 +33,10 @@ export class GetListService {
       .pipe(delay(1500));
   }
 
-  pdf2(lista: List) {
+  pdf2(lista: List): Observable<Blob> {
     console.log('estoy en el servicio.', lista);
-    return this.http.get<ListaOrdenes>(
-      `${baseUrl}/api/buscar/${lista.SampleID}`,
-      this.headers,
+    return this.http.get(
+      `${baseUrl}/api/buscar/${lista.SampleID}`,{responseType:'blob'}
     );
   }
   pdfResultado(lista: string) {

@@ -68,9 +68,6 @@ export class OrdenesService {
     );
   }
 
-
-  
-
   buscarFiltroOrdenes(
     IDENTIFICADOR: string,
     ESTADO: string,
@@ -96,7 +93,7 @@ export class OrdenesService {
   }
   getPdf(orden: Orden) {
     return this.http.get(`${baseUrl}/api/pdf/${orden.id}`, {
-      responseType: 'blob',
+      responseType: 'blob'
     });
   }
 

@@ -959,9 +959,9 @@ export class MantenimientosService {
   }
 
 
-  getOrdenesInfinty():Observable<OrdenInfinity[]>{ ///estado/resultsOrders
+  getOrdenesInfinty(fechaIn:string,fechaOut:string ):Observable<OrdenInfinity[]>{ ///estado/resultsOrders
 
-    return this.http.get<ListaInfinity>(`${baseUrl}/api/estadordenes/ordenesInfinity`,this.headers)
+    return this.http.get<ListaInfinity>(`${baseUrl}/api/estadordenes/ordenesInfinity?fechaIn=${fechaIn}&fechaOut=${fechaOut}`)
     .pipe(map(({ordenInfinity})=>ordenInfinity))
   }
 

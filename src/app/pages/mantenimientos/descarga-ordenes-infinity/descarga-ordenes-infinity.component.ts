@@ -18,13 +18,13 @@ export class DescargaOrdenesInfinityComponent implements OnInit {
   public page!: number;
 
   ngOnInit(): void {
-    this.getResults();
+  //  this.getResults();
   }
 
-  getResults() {
+  getResults(fechaIn:string,fechaOut:string) {
     this.cargando = true;
 
-    this.mantenimientoService.getOrdenesInfinty().subscribe((ordenInfinity) => {
+    this.mantenimientoService.getOrdenesInfinty(fechaIn,fechaOut).subscribe((ordenInfinity) => {
       this.listainfinity = ordenInfinity;
 
       this.cargando = false;

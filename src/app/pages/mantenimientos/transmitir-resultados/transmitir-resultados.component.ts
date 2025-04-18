@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { event } from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 import { WorkListOrdenService } from 'src/app/services/work-list-orden.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-transmitir-resultados',
@@ -11,32 +13,30 @@ import { WorkListOrdenService } from 'src/app/services/work-list-orden.service';
 })
 export class TransmitirResultadosComponent {
   @ViewChild('fileInput') fileInput: any;
+  listaordenes: any[] = [];
   constructor(
     private worklistordenService: WorkListOrdenService,
     private toastSerivice: ToastrService,
+    private router:Router
   ) {}
-  onfileInput(event: any) {
+  onfileInput(event: any): void {
     const file: File = event.target.files[0];
 
-    if (file && file.type === 'application/json') {
+    if (file) {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
         try {
           const fileContent = e.target.result;
           const jsonData = JSON.parse(fileContent);
+
+          this.listaordenes = jsonData;
           this.resetInput();
-          this.worklistordenService
-            .getTrasmitirresultados(jsonData)
-            .subscribe((resp: any) => {});
         } catch (err) {
           console.error('Error al parsear el JSON:', err);
         }
       };
       reader.readAsText(file);
-    } else {
-      this.toastSerivice.error('Por favor, seleccione un archivo JSON válido.');
-      this.resetInput();
     }
   }
 
@@ -44,5 +44,14 @@ export class TransmitirResultadosComponent {
     if (this.fileInput) {
       this.fileInput.nativeElement.value = '';
     }
+  }
+  guardar() {
+    this.worklistordenService
+      .getTrasmitirresultados(this.listaordenes)
+      .subscribe((resp: any) => {
+
+        Swal.fire('success','Se envio el archivo correctamente','success');
+       this.router.navigateByUrl('/dashboard/TrasmitirResultados')
+      });
   }
 }

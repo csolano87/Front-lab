@@ -30,7 +30,9 @@
               </div>
 
               <div class="form-group col-md-4">
-                <label for="text " class="form-ItemName">Filtrar por fecha</label>
+                <label for="text " class="form-ItemName"
+                  >Filtrar por fecha</label
+                >
                 <input
                   type="date"
                   class="form-control"
@@ -41,16 +43,13 @@
               </div>
 
               <div class="col-md-4 btn-botones">
-
-
                 <button
-(click)="exportarData()"
+                  (click)="exportarData()"
                   class="btn btn-secondary btn-sm"
                 >
                   Exportar data
                 </button>
               </div>
-
             </div>
           </fieldset>
 
@@ -80,7 +79,8 @@
 
                           <th class="title_paciente">Paciente</th>
                           <th>Origen</th>
-
+                          <th>Pruebas</th>
+                          <th>Resultado</th>
                           <th style="width: 10%">Estado</th>
                         </tr>
                       </thead>
@@ -102,8 +102,23 @@
                             {{ orden?.origen }}
                           </td>
                           <td>
+                            <ul>
+                              <li *ngFor="let prueba of orden.pruebaImport">
+                                {{ prueba.testID }} {{ prueba.testNAME }}
+                              </li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul>
+                              <li *ngFor="let prueba of orden.pruebaImport">
+                                {{ prueba.resultado }}
+                              </li>
+                            </ul>
+                          </td>
+                          <td>
                             <div [ngSwitch]="orden.estado">
                               <div *ngSwitchCase="true">Generado</div>
+
                               <div *ngSwitchDefault>Procesado</div>
                             </div>
                           </td>

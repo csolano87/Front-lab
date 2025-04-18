@@ -16,12 +16,12 @@
               <div class="form-group col-md-4">
                 <label for="">Fecha Fin</label>
                 <div class="input-group">
-                  <input type="date" class="form-control" #fechaIn />
+                  <input type="date" class="form-control" #fechaOut />
                 </div>
               </div>
 
               <div class="col-md-4 btn-botones">
-                <button type="submit" class="btn btn-primary btn-sm">
+                <button (click)="getResults(fechaIn.value,fechaOut.value)" type="submit" class="btn btn-primary btn-sm">
                   Consultar
                 </button>
 
@@ -104,7 +104,7 @@
           </div>
 
 
-          
+
         </div>
       </div>
     </div>

@@ -30,7 +30,7 @@ export class ListaordenesImportadasComponent implements OnInit {
     return this.ordenImportForm.get('pruebas') as FormArray;
   }
   ngOnInit(): void {
-    
+
     console.log(this.fechaActual)
   }
   resetInput(): void {
@@ -67,7 +67,7 @@ export class ListaordenesImportadasComponent implements OnInit {
           const jsonData = JSON.parse(fileContent);
 
           this.listaordenes = jsonData;
-          this.resetInput();
+         // this.resetInput();
         } catch (err) {
           console.error('Error al parsear el JSON:', err);
         }
