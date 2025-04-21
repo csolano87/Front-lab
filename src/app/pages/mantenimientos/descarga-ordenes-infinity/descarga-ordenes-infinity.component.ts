@@ -40,7 +40,7 @@ export class DescargaOrdenesInfinityComponent implements OnInit {
     const link = document.createElement('a');
     link.href = url;
 
-    const resultado = format(this.fechaActual, 'yyyy-MM-dd HH:mm:ss');
+    const resultado = 'ImportarOrdenes'+''+format(this.fechaActual, 'yyyy-MM-dd HH:mm:ss');
 
     link.download = `${resultado}.json`;
     link.click();

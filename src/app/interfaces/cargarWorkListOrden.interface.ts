@@ -6,7 +6,7 @@ export interface WorkListOrden {
 export interface Ordene {
   id: number;
   cedula: null;
-  numeroorden: null;
+  numeroorden: string;
   nombres: null | string;
   fechanac: null;
   sexo: null;

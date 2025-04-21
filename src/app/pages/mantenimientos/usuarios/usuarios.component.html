@@ -1,5 +1,5 @@
 <div class="container-fluid rounded shadow">
-  <div class="row py-4 animated fadeIn fast">
+  <div class="row  animated fadeIn fast">
     <div class="col-12">
       <div class="card">
         <div class="card-info">
@@ -10,24 +10,13 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Buscar médico..."
+              placeholder="Buscar usuario..."
               (keyup)="buscar(txtTermino.value.toUpperCase())"
               #txtTermino
             />
-          </div>
+
         </div>
       </div>
-    </div>
-
-    <div
-      *ngIf="cargando"
-      class="alert alert-info text-center mt-3 animated fadeIn faster"
-    >
-      <h4 class="alert-heading">Cargando</h4>
-      <p>
-        <i class="fa fa-refresh fa-spin fa-2x"></i>
-      </p>
-      <p class="mb-0">Espere por favor</p>
     </div>
 
     <div class="row animated fadeIn fast" *ngIf="!cargando">
@@ -43,7 +32,14 @@
                 </div>
               </div>
             </div>
-
+            <div
+            *ngIf="cargando"
+            class="text-center mt-3 animated fadeIn faster"
+          >
+            <i
+              class="bx bx-loader-circle bx-spin bx-flip-vertical bx-lg"
+            ></i>
+          </div>
             <div class="table-responsive">
               <table *ngIf="!cargando && usuarios.length > 0" class="table">
                 <thead>
@@ -75,17 +71,15 @@
 
                     <td>
                       <div [ngSwitch]="usuario.estado">
-                        <div *ngSwitchCase="true">Activo</div>
-                        <div *ngSwitchDefault>Inactivo</div>
+                        <div *ngSwitchCase="true">
+                          <span class="badge badge-primary">Activo</span>
+                        </div>
+                        <div *ngSwitchDefault>
+                          <span class="badge badge-warning">Inactivo</span>
+                        </div>
                       </div>
-                      <!--  <span *ngIf="!usuario.estado" class="rounded shadow bg-creada">Inactivo</span>
-                    <span *ngIf="usuario.estado" class="rounded shadow bg-procesando">Activo</span> -->
                     </td>
                     <td class="actions">
-                      <!-- <a [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
-                      >
-
-                    </a> -->
                       <span class="span_edit">
                         <i
                           class="bx bx-edit-alt"
@@ -123,18 +117,19 @@
                   </tr>
                 </tbody>
               </table>
+              <pagination-controls
+              (pageChange)="page = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
             </div>
 
-            <div *ngIf="txtTermino.value.length === 0" class="paginacion"></div>
+
           </div>
         </div>
       </div>
 
-      <pagination-controls
-        (pageChange)="page = $event"
-        previousLabel="Anterior"
-        nextLabel="Siguiente"
-      ></pagination-controls>
+    </div>
     </div>
   </div>
 

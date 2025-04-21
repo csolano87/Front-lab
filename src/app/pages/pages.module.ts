@@ -37,6 +37,7 @@ import { environment } from 'src/environments/environment.prod';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { AgendadosComponent } from './mantenimientos/agendados/agendados.component';
 import { AgendamientoManualComponent } from './mantenimientos/agendamiento-manual/agendamiento-manual.component';
+
 import { OrdenManualComponent } from './mantenimientos/orden-manual/orden-manual.component';
 import { EstadisticaMicroComponent } from './mantenimientos/estadistica-micro/estadistica-micro.component';
 import { ComprasComponent } from './mantenimientos/compras/compras.component';
@@ -129,6 +130,7 @@ import { DescargaOrdenesInfinityComponent } from './mantenimientos/descarga-orde
 import { ListaordenesImportadasComponent } from './mantenimientos/listaordenes-importadas/listaordenes-importadas.component';
 import { ListaordenesexportarComponent } from './mantenimientos/listaordenesexportar/listaordenesexportar.component';
 import { TransmitirResultadosComponent } from './mantenimientos/transmitir-resultados/transmitir-resultados.component';
+import { FiltroExportPipe } from '../pipes/filtro-export.pipe';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
@@ -146,6 +148,7 @@ const config: SocketIoConfig = { url: environment.url, options: {} };
     CargaInternaComponent,
     PermisosComponent,
     MenuComponent,
+    FiltroExportPipe,
     FiltroDescargoBodegaPipe,
     FiltroBodegaPipe,
     FiltroexamPipe,

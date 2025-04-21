@@ -16,8 +16,32 @@
   position: absolute;
   top: -14px;
 }
-.text_ordenes{
+.text_ordenes {
   text-align: center;
   font-size: 1rem;
   font-weight: 700;
 }
+/* * {
+  outline: 1px solid blue;
+} */
+
+.centered-cell {
+  /* centra el contenido inline */
+  vertical-align: middle; /* centra verticalmente si lo necesitas */
+}
+
+.item_pruebas {
+  display: inline-block;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  white-space: nowrap;        /* No permite saltos de línea */
+  overflow: hidden;           /* Oculta el texto que desborda */
+  text-overflow: ellipsis;    /* Muestra los "..." */
+  max-width: 200px;           /* Ajusta según el ancho deseado */
+  display: block;             /* Asegura que funcione con block o inline-block */
+}
+
