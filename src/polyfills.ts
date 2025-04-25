@@ -48,8 +48,8 @@
 import 'zone.js'; // Included with Angular CLI.
 //import 'zone.js/dist/zone';
 import 'moment-timezone';
-
-
+import 'classlist.js' ;
+import 'web-animations-js'
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */

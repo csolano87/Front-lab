@@ -102,6 +102,7 @@ import { DescargaOrdenesInfinityComponent } from './mantenimientos/descarga-orde
 import { ListaordenesImportadasComponent } from './mantenimientos/listaordenes-importadas/listaordenes-importadas.component';
 import { ListaordenesexportarComponent } from './mantenimientos/listaordenesexportar/listaordenesexportar.component';
 import { TransmitirResultadosComponent } from './mantenimientos/transmitir-resultados/transmitir-resultados.component';
+import { GenerarExcelProcedenciaComponent } from './mantenimientos/generar-excel-procedencia/generar-excel-procedencia.component';
 
 const routes: Routes = [
   {
@@ -495,6 +496,11 @@ const routes: Routes = [
         path: 'pedido-importacion/:id',
         component: ImportacionComponent,
         data: { titulo: 'pedido-importacion' },
+      },
+      {
+        path: 'procedencia',
+        component: GenerarExcelProcedenciaComponent,
+        data: { titulo: 'procedencia' },
       },
       {
         path: 'pedidos',

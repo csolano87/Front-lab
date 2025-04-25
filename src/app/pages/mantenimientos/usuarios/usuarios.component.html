@@ -1,5 +1,5 @@
 <div class="container-fluid rounded shadow">
-  <div class="row  animated fadeIn fast">
+  <div class="row animated fadeIn fast">
     <div class="col-12">
       <div class="card">
         <div class="card-info">
@@ -14,122 +14,118 @@
               (keyup)="buscar(txtTermino.value.toUpperCase())"
               #txtTermino
             />
-
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="row animated fadeIn fast" *ngIf="!cargando">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <div class="col-md-3 button"></div>
+      <div class="row animated fadeIn fast" *ngIf="!cargando">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="col-md-3 button"></div>
 
-            <div *ngIf="usuarios.length === 0" class="row py-2">
-              <div class="col-12">
-                <div class="alert alert-info" role="alert">
-                  <h3 class="text-center">No existe registros</h3>
+              <div *ngIf="usuarios.length === 0" class="row py-2">
+                <div class="col-12">
+                  <div class="alert alert-info" role="alert">
+                    <h3 class="text-center">No existe registros</h3>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-            *ngIf="cargando"
-            class="text-center mt-3 animated fadeIn faster"
-          >
-            <i
-              class="bx bx-loader-circle bx-spin bx-flip-vertical bx-lg"
-            ></i>
-          </div>
-            <div class="table-responsive">
-              <table *ngIf="!cargando && usuarios.length > 0" class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%">Usuario</th>
-                    <th style="width: 20%">Nombres</th>
+              <div
+                *ngIf="cargando"
+                class="text-center mt-3 animated fadeIn faster"
+              >
+                <i
+                  class="bx bx-loader-circle bx-spin bx-flip-vertical bx-lg"
+                ></i>
+              </div>
+              <div class="table-responsive">
+                <table *ngIf="!cargando && usuarios.length > 0" class="table">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%">Usuario</th>
+                      <th style="width: 20%">Nombres</th>
 
-                    <!--   <th class="text-table">Código</th> -->
+                      <!--   <th class="text-table">Código</th> -->
 
-                    <th style="width: 10%">Rol</th>
-                    <th style="width: 10%">Estado</th>
+                      <th style="width: 10%">Rol</th>
+                      <th style="width: 10%">Estado</th>
 
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
+                      <th style="width: 40%" >Acciones</th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  <tr
-                    *ngFor="
-                      let usuario of usuarios
-                        | paginate: { itemsPerPage: 10, currentPage: page }
-                    "
-                  >
-                    <td>{{ usuario.usuario }}</td>
-                    <td>{{ usuario.doctor }}</td>
-                    <!--            <td>{{ usuario.codigo_doctor }}</td> -->
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let usuario of usuarios
+                          | paginate: { itemsPerPage: 10, currentPage: page }
+                      "
+                    >
+                      <td>{{ usuario.usuario }}</td>
+                      <td>{{ usuario.doctor }}</td>
+                      <!--            <td>{{ usuario.codigo_doctor }}</td> -->
 
-                    <td>{{ usuario.role.rol }}</td>
+                      <td>{{ usuario.role.rol }}</td>
 
-                    <td>
-                      <div [ngSwitch]="usuario.estado">
-                        <div *ngSwitchCase="true">
-                          <span class="badge badge-primary">Activo</span>
+                      <td>
+                        <div [ngSwitch]="usuario.estado">
+                          <div *ngSwitchCase="true">
+                            <span class="badge badge-primary">Activo</span>
+                          </div>
+                          <div *ngSwitchDefault>
+                            <span class="badge badge-warning">Inactivo</span>
+                          </div>
                         </div>
-                        <div *ngSwitchDefault>
-                          <span class="badge badge-warning">Inactivo</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="actions">
-                      <span class="span_edit">
-                        <i
-                          class="bx bx-edit-alt"
-                          [routerLink]="['/dashboard', 'perfil', usuario.id]"
-                          data-toggle="tooltip"
-                          data-original-title="Editar"
-                          >Editar</i
+                      </td>
+                      <td class="actions">
+                        <span class="span_edit">
+                          <i
+                            class="bx bx-edit-alt"
+                            [routerLink]="['/dashboard', 'perfil', usuario.id]"
+                            data-toggle="tooltip"
+                            data-original-title="Editar"
+                            >Editar</i
+                          >
+                        </span>
+                        <span
+                          (click)="eliminarUsuario(usuario)"
+                          class="span_delete"
                         >
-                      </span>
-                      <span
-                        (click)="eliminarUsuario(usuario)"
-                        class="span_delete"
-                      >
-                        <i class="bx bx-trash">Eliminar</i></span
-                      >
+                          <i class="bx bx-trash">Eliminar</i></span
+                        >
 
-                      <span
-                        class="span_password"
-                        [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
-                        data-toggle="modal"
-                        data-target="#modal-default"
-                        (click)="actualizarpassword(usuario)"
-                      >
-                        <i class="bx bxs-key" aria-hidden="true">Password</i>
-                      </span>
+                        <span
+                          class="span_password"
+                          [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
+                          data-toggle="modal"
+                          data-target="#modal-default"
+                          (click)="actualizarpassword(usuario)"
+                        >
+                          <i class="bx bxs-key" aria-hidden="true">Password</i>
+                        </span>
 
-                      <span
-                        class="span_permisos"
-                        [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
-                        [routerLink]="['/dashboard', 'permisos', usuario.id]"
-                      >
-                        <i class="bx bxs-lock">Permisos</i>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <pagination-controls
-              (pageChange)="page = $event"
-              previousLabel="Anterior"
-              nextLabel="Siguiente"
-            ></pagination-controls>
+                        <span
+                          class="span_permisos"
+                          [ngClass]="{ 'disabled-icon': usuario.estado != '1' }"
+                          [routerLink]="['/dashboard', 'permisos', usuario.id]"
+                        >
+                          <i class="bx bxs-lock">Permisos</i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <pagination-controls
+                  (pageChange)="page = $event"
+                  previousLabel="Anterior"
+                  nextLabel="Siguiente"
+                ></pagination-controls>
+              </div>
             </div>
-
-
           </div>
         </div>
       </div>
-
-    </div>
     </div>
   </div>
 

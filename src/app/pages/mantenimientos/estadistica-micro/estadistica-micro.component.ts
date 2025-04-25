@@ -22,11 +22,12 @@ import { writeFile, utils } from 'xlsx';
 })
 export class EstadisticaMicroComponent implements OnInit {
   public listaordene: micro[] = [];
+  listaMicroResultados:[]=[];
   itemsPerPage: number = 1; // Número de elementos por página
   currentPage: number = 1; // Página actual
   totalPages: number = 1; // Total de páginas
   name = 'ExcelSheet.xlsx';
-  cargando = false;
+  cargando:boolean = false;
 
   /*  @ViewChild('table', { static: false }) table: HasElementRef; */
 
@@ -42,32 +43,41 @@ export class EstadisticaMicroComponent implements OnInit {
     this.ordenService
       .getMicro(FECHADESDE, FECHAHASTA)
       .subscribe(({ listaordenes }) => {
+        this.cargando = false;
         this.listaordene = listaordenes;
 
         console.log(this.listaordene);
 
-        this.cargando = false;
+
       });
   }
 
   splitAntibiotics(antibioticos: string) {
-    /*  if (antibioticos.split('+')) {
-       console.log(`anti`,antibioticos)
-     } */
-    return antibioticos.split(','); // Dividir la cadena en una lista usando la coma y el espacio como separadores
+    if (antibioticos) {
+      return antibioticos.split(',');
+     }
+    return null; // Dividir la cadena en una lista usando la coma y el espacio como separadores
   }
 
   splitSensible(sensible: string) {
-    return sensible.split(','); // Dividir la cadena en una lista usando la coma y el espacio como separadores
+   if (sensible) {
+    return sensible.split(',');
+   }
+   return null; // Dividir la cadena en una lista usando la coma y el espacio como separadores
   }
 
   splitValor(valor: string) {
-    return valor.split(','); // Dividir la cadena en una lista usando la coma y el espacio como separadores
-  }
+
+    if (valor) {
+      return valor.split(','); // Dividir la cadena en una lista usando la coma y el espacio como separadores
+    }
+    return null
+    }
+
   exportTable() {
     const dataToExport = this.listaordene.map((orden) => {
       return {
-        'Fecha ingreso': orden.Fechaingreso,
+        'Fecha ingreso': orden.FechaIngreso,
         'Numero orden': orden.SampleID,
         Origen: orden.Origen,
         Servicio: orden.Servicio,
@@ -75,7 +85,7 @@ export class EstadisticaMicroComponent implements OnInit {
         cedula: orden.cedula,
         Paciente: orden.Paciente.replace(/[.,]/g, '').trim(),
         Codigo: this.generarCodigo(orden),
-        Edad: orden.Age,
+        Edad: orden.Edad,
         Sexo: orden.Sexo,
         'Tipo muestra': orden.Tipomuestra,
         Microorganismo: orden.Microorganismo,
@@ -90,9 +100,9 @@ export class EstadisticaMicroComponent implements OnInit {
           .join('\n'),
 
         Comentario: orden.Comentario,
-        UsuarioValidador: orden.validador,
-        'Fecha de validación': orden.Fechavalidacion,
-        OrdenAS400: orden.Orden,
+        UsuarioValidador: orden.Validador,
+        'Fecha de validación': orden.FechaValidacion,
+        OrdenAS400: orden.OrdenAS400,
       };
     });
 
@@ -146,4 +156,28 @@ const cedula=orden.cedula?.slice(-4);
       segundoNombre +
       cedula;
   }
+
+  /* getMicroResultados(orden:any){
+
+    this.listaMicroResultados= orden
+  } */
+
+    buildTableRows(orden: any): { antibiotico: string; valor: string; sensible: string }[] {
+      const antibioticos = orden.Antibiotico?.split(',') || [];
+      const valores = orden.Valor?.split(',') || [];
+      const sensibles = orden.Sensible?.split(',') || [];
+
+      const maxLength = Math.max(antibioticos.length, valores.length, sensibles.length);
+      const rows = [];
+
+      for (let i = 0; i < maxLength; i++) {
+        rows.push({
+          antibiotico: antibioticos[i] || '',
+          valor: valores[i] || '',
+          sensible: sensibles[i] || ''
+        });
+      }
+
+      return rows;
+    }
 }

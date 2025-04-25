@@ -28,18 +28,23 @@
                 />
               </div>
 
-              <!--   <div class="form-group col-md-4">
+                <div class="form-group col-md-4">
                 <label for="text " class="form-ItemName"
-                  >Filtrar por fecha</label
+                  >Filtrar por estado</label
                 >
-                <input
+                <select class="form-control" (change)="onsearchEstado($event)">
+                  <option value="">--Seleccione --</option>
+                  <option value="true">Generado</option>
+                  <option value="false">Procesado</option>
+                </select>
+               <!--  <input
                   type="date"
                   class="form-control"
                   [value]="fechaActual"
-                  #txtfecha
-                  (change)="getOrdenes(txtfecha.value)"
-                />
-              </div> -->
+                  #txtestado
+                  (click)="onsearchEstado(txtestado.value)"
+                /> -->
+              </div>
 
               <div class="col-md-4 btn-botones">
                 <button
@@ -88,7 +93,7 @@
                         <tr
                           *ngFor="
                             let orden of listaordenes
-                              | filtroExport: searchorden
+                              | filtroExport: searchorden:searchEstado
                               | paginate
                                 : { itemsPerPage: 10, currentPage: page }
                           "

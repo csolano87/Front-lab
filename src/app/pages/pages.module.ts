@@ -131,6 +131,7 @@ import { ListaordenesImportadasComponent } from './mantenimientos/listaordenes-i
 import { ListaordenesexportarComponent } from './mantenimientos/listaordenesexportar/listaordenesexportar.component';
 import { TransmitirResultadosComponent } from './mantenimientos/transmitir-resultados/transmitir-resultados.component';
 import { FiltroExportPipe } from '../pipes/filtro-export.pipe';
+import { GenerarExcelProcedenciaComponent } from './mantenimientos/generar-excel-procedencia/generar-excel-procedencia.component';
 const config: SocketIoConfig = { url: environment.url, options: {} };
 
 @NgModule({
@@ -138,7 +139,7 @@ const config: SocketIoConfig = { url: environment.url, options: {} };
     TransmitirResultadosComponent,
     ListaordenesImportadasComponent,
     ListaordenesexportarComponent,
-
+GenerarExcelProcedenciaComponent,
     DescargaOrdenesInfinityComponent,
     ConsultaPruebasEspecialesComponent,
     ReporteBodegaComponent,

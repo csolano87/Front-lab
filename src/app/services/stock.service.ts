@@ -20,6 +20,7 @@ import {
   Stockbodega,
   Stocksbodega,
 } from '../interfaces/carga_StockDescarga.interface';
+import { descargoExcel, ExcelOrdenes } from '../interfaces/cargar_exceOrdenes.interface';
 const baseUrl = environment.url;
 @Injectable({
   providedIn: 'root',
@@ -149,5 +150,11 @@ export class StockService {
     return this.http
       .get<StockById>(`${baseUrl}/api/stock/busqueda/${id}`, this.headers)
       .pipe(map(({ StockId }) => StockId));
+  }
+
+  getDescargoExcelInfinity():Observable<descargoExcel[]>{
+
+    return this.http.get<ExcelOrdenes>(`${baseUrl}/api/estadordenes/ordenes`)
+    .pipe(map(({descargoExcel})=>descargoExcel))
   }
 }

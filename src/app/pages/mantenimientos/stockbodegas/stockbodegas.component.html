@@ -118,7 +118,10 @@
                             data-target="#modal-HistoricoPruebas"
                             (click)="historicoResultados(stock)"
                           >
-                            <i *ngIf="stock.despachopedido.length >0"  class="bx bx-list-plus bx-md"></i>
+                            <i
+                              *ngIf="stock.despachopedido.length > 0"
+                              class="bx bx-list-plus bx-md"
+                            ></i>
                           </td>
                           <!--    <td>{{ stock.ENTREGADO }}</td> -->
                           <!-- <td>
@@ -209,9 +212,12 @@
                         {{ it.cantidad_despachada }}
                       </td>
                       <td>
-                        <input class="form-control" type="number" #numero
-
-                        (keyup.enter)="DescargoStock(it, numero.value)"/>
+                        <input
+                          class="form-control"
+                          type="number"
+                          #numero
+                          (keyup.enter)="DescargoStock(it, numero.value)"
+                        />
                       </td>
                     </tr>
                   </tbody>

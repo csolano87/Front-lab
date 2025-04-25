@@ -17,7 +17,7 @@
               </div>
 
               <div class="form-group col-md-2">
-                <label for="" class="form-ItemName">Cédula</label>
+                <label for="" class="form-ItemName">N.- Historia</label>
                 <input
                   type="text"
                   class="form-control"
@@ -38,16 +38,16 @@
                 />
               </div>
 
-              <div class="col-md-4 btn-botones">
-                <button
+              <div class="col-md-4 buton_trasmitir">
+                <a
                   (click)="
                     buscar(SampleID.value, PatientID1.value, apellido.value)
                   "
-                  class="btn btn-primary btn-sm"
+                  class="btn-boton"
                 >
                   <!--   <i class="fa fa-search" aria-hidden="true"></i> -->
                   Buscar
-                </button>
+                </a>
               </div>
             </div>
           </fieldset>
@@ -55,33 +55,32 @@
           <div class="row animated fadeIn fast">
             <div class="col-12">
               <div class="card">
-                <div class="card-body">
+                <div *ngIf="listaordene.length > 0" class="card-body">
                   <!--  <h6 class="title">Listado de Resultados</h6>
  -->
 
-                  <div
-                    *ngIf="cargando"
-                    class="text-center mt-3 animated fadeIn faster"
-                  >
-                    <i
-                      class="bx bx-loader-circle bx-spin bx-flip-vertical bx-lg"
-                    ></i>
-                  </div>
-                  <div *ngIf="descargando" class="text-center my-3">
+                  <div *ngIf="descargando" class="descargando-overlay">
                     <div class="spinner-border text-primary" role="status">
                       <span class="sr-only">Descargando...</span>
                     </div>
-                    <p>Descargando reporte PDF...</p>
+                    <p class="text-white mt-2">Descargando reporte PDF...</p>
+                  </div>
+
+                  <div *ngIf="cargando" class="descargando-overlay">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="sr-only">Descargando...</span>
+                    </div>
+                    <p class="text-white mt-2">Descargando ordenes...</p>
                   </div>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
                         <tr>
-                          <th style="width: 10%">F. Registro</th>
+                          <th style="width: 15%">F. Registro</th>
                           <th style="width: 10%">N.- Orden</th>
-                          <th style="width: 10%">Cédula</th>
+                          <th style="width: 10%">N.- Historia</th>
                           <th style="width: 25%">Paciente</th>
-                          <th style="width: 20%">Doctor</th>
+                          <!--  <th style="width: 25%;" >Doctor</th> -->
                           <th style="width: 15%">Origen</th>
                           <!--  <th>Servicio</th> -->
 
@@ -96,7 +95,11 @@
                           *ngFor="
                             let lista of listaordene
                               | paginate
-                                : { itemsPerPage: 10, currentPage: page };
+                                : {
+                                    itemsPerPage: 10,
+                                    currentPage: page,
+                                    totalItems: listaordene.length
+                                  };
                             e
                           "
                         >
@@ -110,11 +113,11 @@
                           </td>
 
                           <td>{{ lista.Origin }}</td>
-                          <td>{{ lista.Doctor }}</td>
+                          <!--   <td>{{lista.IsOrderValidated}}</td> -->
 
                           <td>
                             <div [ngSwitch]="lista.IsOrderValidated">
-                              <div *ngSwitchCase="true">
+                              <div *ngSwitchCase="'true'">
                                 <span class="badge badge-primary"
                                   >Validado</span
                                 >
@@ -126,33 +129,25 @@
                                 >
                               </div>
                             </div>
-                            <!-- <span
-                              *ngIf="lista.IsOrderValidated != 'true'"
-                              class="rounded shadow bg-pen"
-                              >Pendiente validar</span
-                            >
-                            <span
-                              *ngIf="lista.IsOrderValidated == 'true'"
-                              class="rounded shadow bg-com"
-                              >Validado</span
-                            > -->
                           </td>
 
-                          <td>
+                          <td class="actions">
                             <span
-                              class="rounded shadow cursor"
-                              (click)="pdf2(lista)"
+                              class="span_delete"
+                              (click)="pdf2(lista.SampleID)"
                             >
-                              <i class="bx bxs-file-pdf bx-md"></i
-                            ></span>
+                              <i class="bx bxs-file-pdf">Pdf</i></span
+                            >
                           </td>
                         </tr>
                       </tbody>
                     </table>
                     <pagination-controls
                       (pageChange)="page = $event"
+
                       previousLabel="Anterior"
                       nextLabel="Siguiente"
+
                     ></pagination-controls>
                   </div>
                 </div>

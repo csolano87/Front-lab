@@ -4,23 +4,23 @@ export interface OrdenMicro {
 }
 
 export interface micro {
-  Fechaingreso?: string;
-  SampleID?: string;
-  Origen?: string;
-  Servicio?: string;
-  Paciente?: string;
-  Sexo?: string;
-  Age?: string;
-  Historia?: string;
-  cedula?:string;
-  Tipomuestra?: string;
+  FechaIngreso:    string;
+  SampleID:        string;
+  Origen:          string;
+  cedula?:          string;
+  Servicio?:       string;
+  Historia:        string;
+  Paciente:        string;
+  Edad:            string;
+  Sexo:            string;
+  Tipomuestra?:     string;
+  Comentario?:      string;
+  Validador?:       string;
+  FechaValidacion?: string;
+  OrdenAS400?:      string;
   Microorganismo?: string;
-  Tecnica?: string;
-  Antibiotico?: string;
-  Sensible?: string;
-  Valor?: string;
-  Fechavalidacion?: string;
-  Comentario?: string;
-  Orden?: string;
-  validador?: string;
+  Tecnica?:        string;
+  Valor?:          string;
+  Antibiotico?:    string;
+  Sensible?:       string;
 }

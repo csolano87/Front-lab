@@ -1,857 +1,786 @@
 <div class="container-fluid scroll">
-  <!--   <h1 class="title_index">Registros de procesos</h1> -->
-  <form
-    action=""
-    autocomplete="off"
-    [formGroup]="RegistroForm"
-    novalidate
-    (ngSubmit)="guardarRegistro()"
-    id="RegistroForm"
-  >
-    <div class="col-md-12">
+  <div class="row animated fadeIn fast">
+    <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="">INSTITUCION</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="institucion"
-                  [class.is-invalid]="institucion"
-                  placeholder="Ingrese nombre de la institucion"
-                  appUppercase
-                />
-                <small *ngIf="institucion" class="text-danger"
-                  >Campo obligatorio
-                </small>
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="">CODIGO DE PROCESO</label>
-
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese codigos de procesos"
-                  formControlName="codigo"
-                  [class.is-invalid]="codigo"
-                />
-                <small *ngIf="codigo" class="text-danger"
-                  >Campo obligatorio
-                </small>
-              </div>
-            </div>
-
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="">LINK DE PROCESO</label>
-
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese el link de proceso"
-                  formControlName="linkproceso"
-                  [class.is-invalid]="linkproceso"
-                />
-                <small *ngIf="codigo" class="text-danger"
-                  >Campo obligatorio
-                </small>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="">TIEMPO DE CONSUMO</label>
-
-                <input
-                  type="number"
-                  class="form-control"
-                  placeholder="Ingrese tiempo de consumo"
-                  formControlName="tiempoconsumo"
-                  [class.is-invalid]="tiempoconsumo"
-                />
-                <small *ngIf="codigo" class="text-danger"
-                  >Campo obligatorio
-                </small>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="">DETER. EFECTIVAS</label>
-
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese determinaciones "
-                  formControlName="determinacion"
-                  [class.is-invalid]="determinacion"
-                  appUppercase
-                />
-                <small *ngIf="codigo" class="text-danger"
-                  >Campo obligatorio
-                </small>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="">PRESUPUESTO</label>
-
-                <input
-                  type="number"
-                  class="form-control"
-                  placeholder="Ingrese presupuesto "
-                  formControlName="presupuesto"
-                  [class.is-invalid]="presupuesto"
-                />
-                <small *ngIf="codigo" class="text-danger"
-                  >Campo obligatorio
-                </small>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="">ENTREGA CARPETA</label>
-
-                <input
-                  type="date"
-                  class="form-control"
-                  placeholder="Ingrese  carpeta "
-                  formControlName="entregacarpeta"
-                  [class.is-invalid]="entregacarpeta"
-                />
-                <small *ngIf="codigo" class="text-danger"
-                  >Campo obligatorio
-                </small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">AREAS:</h3>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div
-              class="col-md-3"
-              formArrayName="areas"
-              *ngFor="let equi of areas.controls; let i = index"
-            >
-              <label>
-                <input
-                  class="check_item"
-                  [formControlName]="i"
-                  type="checkbox"
-                />
-                {{ equipos[i].ItemName }}</label
-              >
-            </div>
-          </div>
-
-          <small
-            class="text-danger"
-            *ngIf="
-              RegistroForm.hasError('noPruebas') &&
-              (RegistroForm.get('areas')?.dirty ||
-                RegistroForm.get('areas')?.touched)
-            "
+          <form
+            action=""
+            autocomplete="off"
+            [formGroup]="RegistroForm"
+            novalidate
+            (ngSubmit)="guardarRegistro()"
+            id="RegistroForm"
           >
-            Debe escoger al menos una area.
-          </small>
-        </div>
-      </div>
+            <fieldset class="filtro-container">
+              <p class="filtro-titulo">Datos de la Institucion</p>
 
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">TERCERA OPINION</h3>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <input
-                  type="radio"
-                  value="si"
-                  formControlName="terceraopcion"
-                  [class.is-invalid]="terceraopcion"
-                />
-                <label class="labelcheck" for="">Si</label>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="">Institucion</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="institucion"
+                    [class.is-invalid]="institucion"
+                    placeholder="Ingrese nombre de la institucion"
+                    appUppercase
+                  />
+                  <small *ngIf="institucion" class="text-danger"
+                    >Campo obligatorio
+                  </small>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="">Codigo proceso</label>
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Ingrese codigos de procesos"
+                    formControlName="codigo"
+                    [class.is-invalid]="codigo"
+                  />
+                  <small *ngIf="codigo" class="text-danger"
+                    >Campo obligatorio
+                  </small>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <label for="">Link proceso</label>
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Ingrese el link de proceso"
+                    formControlName="linkproceso"
+                    [class.is-invalid]="linkproceso"
+                  />
+                  <small *ngIf="codigo" class="text-danger"
+                    >Campo obligatorio
+                  </small>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="">Tiempo consumo</label>
+
+                  <input
+                    type="number"
+                    class="form-control"
+                    placeholder="Ingrese tiempo de consumo"
+                    formControlName="tiempoconsumo"
+                    [class.is-invalid]="tiempoconsumo"
+                  />
+                  <small *ngIf="codigo" class="text-danger"
+                    >Campo obligatorio
+                  </small>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="">Deter. efectivas</label>
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Ingrese determinaciones "
+                    formControlName="determinacion"
+                    [class.is-invalid]="determinacion"
+                    appUppercase
+                  />
+                  <small *ngIf="codigo" class="text-danger"
+                    >Campo obligatorio
+                  </small>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="">Presupuesto</label>
+
+                  <input
+                    type="number"
+                    class="form-control"
+                    placeholder="Ingrese presupuesto "
+                    formControlName="presupuesto"
+                    [class.is-invalid]="presupuesto"
+                  />
+                  <small *ngIf="codigo" class="text-danger"
+                    >Campo obligatorio
+                  </small>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="">Entrega carpeta</label>
+
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="Ingrese  carpeta "
+                    formControlName="entregacarpeta"
+                    [class.is-invalid]="entregacarpeta"
+                  />
+                  <small *ngIf="codigo" class="text-danger"
+                    >Campo obligatorio
+                  </small>
+                </div>
               </div>
-            </div>
+            </fieldset>
 
-            <div class="col-md-4">
-              <div class="form-group">
-                <input
-                  type="radio"
-                  value="no"
-                  formControlName="terceraopcion"
-                  [class.is-invalid]="terceraopcion"
-                />
-                <label class="labelcheck" for="">No</label>
-              </div>
-            </div>
+            <fieldset class="filtro-container">
+              <p class="filtro-titulo">Areas</p>
 
-            <!-- <div class="col-md-4">
-              <div class="form-group">
-                <select
-                  class="custom-select"
-                  formControlName="ASIGNADO"
-                  [class.is-invalid]="ASIGNADO"
+              <div class="row">
+                <div
+                  class="col-md-3"
+                  formArrayName="areas"
+                  *ngFor="let equi of areas.controls; let i = index"
                 >
-                  <option value="">--Seleccione--</option>
-                  <option>NO APLICA</option>
-                  <option *ngFor="let usu of usuarios" [value]="usu.id">
-                    {{ usu.doctor }}
-                  </option>
-                </select>
-              </div>
-            </div>
-
-            <small  class="text-danger"
-              >Campo obligatorio
-            </small> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">ESCOJA LA OPCION DEL SISTEMAS</h3>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <input
-                  type="radio"
-                  value="Infinty"
-                  formControlName="sistema"
-                  [class.is-invalid]="sistema"
-                />
-                <label class="labelcheck" for="">Infinty</label>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <input
-                  type="radio"
-                  value="Siglab"
-                  formControlName="sistema"
-                  [class.is-invalid]="sistema"
-                />
-                <label class="labelcheck" for="">Siglab</label>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <input
-                  type="radio"
-                  value="Orión"
-                  formControlName="sistema"
-                  [class.is-invalid]="sistema"
-                />
-                <label class="labelcheck" for="">Orión</label>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <input
-                  type="radio"
-                  value="Interfaz de equipo"
-                  formControlName="sistema"
-                  [class.is-invalid]="sistema"
-                />
-                <label class="labelcheck" for="">Interfaz de equipo</label>
-              </div>
-            </div>
-
-            <small *ngIf="sistema" class="text-danger">campo obligatorio</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="card card-row">
-        <!--           <div class="card-header card-row"> -->
-        <div class="card-header">
-          <h3 class="card-title text_text1">EQUIPOS</h3>
-          <h3 class="card-title text_text">PRINCIPAL</h3>
-          <h3 class="card-title text_text">BACKUP</h3>
-        </div>
-        <div class="card-body">
-          <!--card-row2 -->
-          <div class="row">
-            <div class="col-md-4">
-              <ul class="lista">
-                <li class="lista_item">QUIMICA</li>
-                <li class="lista_item">INMUNOLOGIA</li>
-                <li class="lista_item">HEMATOLOGIA</li>
-                <li class="lista_item">COAGULACION</li>
-                <li class="lista_item">GASOMETRIA</li>
-                <li class="lista_item">ELECTROLITOS</li>
-                <li class="lista_item">UROANALISIS</li>
-                <li class="lista_item">MICROBIOLOGIA</li>
-                <li class="lista_item">POC</li>
-              </ul>
-            </div>
-
-            <div class="col-md-4" formGroupName="equipoprincipal">
-              <div class="marco_text">
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="eqquimica"
-                        [class.is-invalid]="quimica"
-                      >
-                        <option value="">--Seleccione--</option>
-                        <option>NO APLICA</option>
-                        <option
-                          *ngFor="let quimica of listaequiposquimica"
-                          [value]="quimica.NOMBRE"
-                        >
-                          {{ quimica.NOMBRE }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
+                  <label>
                     <input
-                      type="text"
-                      class="form-control"
-                      formControlName="valquimica"
+                      class="check_item"
+                      [formControlName]="i"
+                      type="checkbox"
                     />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="eqinmunologia"
-                        [class.is-invalid]="inmunologia"
-                      >
-                        <option value="">--Seleccione--</option>
-                        <option
-                          *ngFor="let inmu of listaequiposinmunologia"
-                          [value]="inmu.NOMBRE"
-                        >
-                          {{ inmu.NOMBRE }}
-                        </option>
-                        <option>NO APLICA</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input
-                      type="number"
-                      class="form-control"
-                      formControlName="valinmunologia"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="eqhematologia"
-                        [class.is-invalid]="hematologia"
-                      >
-                        <option value="">--Seleccione--</option>
-                        <option>NO APLICA</option>
-                        <option
-                          *ngFor="let hema of listaequiposhematologia"
-                          [value]="hema.NOMBRE"
-                        >
-                          {{ hema.NOMBRE }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input
-                      type=""
-                      class="form-control"
-                      formControlName="valhematologia"
-                    />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="eqcoagulacion"
-                        [class.is-invalid]="coagulacion"
-                      >
-                        <option value="">--Seleccione--</option>
-                        <option>NO APLICA</option>
-                        <option
-                          *ngFor="let coagu of listaequiposcoagulacion"
-                          [value]="coagu.NOMBRE"
-                        >
-                          {{ coagu.NOMBRE }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input
-                      type="number"
-                      class="form-control"
-                      formControlName="valcoagulacion"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="eqgasometria"
-                        [class.is-invalid]="gasometria"
-                      >
-                        <option value="">--Seleccione--</option>
-                        <option>NO APLICA</option>
-                        <option
-                          *ngFor="let gasometria of listaequiposgasometria"
-                          [value]="gasometria.NOMBRE"
-                        >
-                          {{ gasometria.NOMBRE }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input
-                      type="number"
-                      class="form-control"
-                      formControlName="valgasometria"
-                    />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="eqelectrolitros"
-                        [class.is-invalid]="electrolitros"
-                      >
-                        <option value="">--Seleccione--</option>
-                        <option>NO APLICA</option>
-                        <option
-                          *ngFor="let electro of listaequiposelectrolitros"
-                          [value]="electro.NOMBRE"
-                        >
-                          {{ electro.NOMBRE }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input
-                      type="number"
-                      class="form-control"
-                      formControlName="valelectrolitros"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="equroanalisis"
-                        [class.is-invalid]="uroanalisis"
-                      >
-                        <option value="">--Seleccione--</option>
-                        <option>NO APLICA</option>
-                        <option
-                          *ngFor="let uro of listaequiposuroanalisis"
-                          [value]="uro.NOMBRE"
-                        >
-                          {{ uro.NOMBRE }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input
-                      type="number"
-                      class="form-control"
-                      formControlName="valuroanalisis"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="eqmicrobiologia"
-                        [class.is-invalid]="microbiologia"
-                      >
-                        <option value="">--Seleccione--</option>
-                        <option>NO APLICA</option>
-                        <option
-                          *ngFor="let micro of listaequiposmicrobiologia"
-                          [value]="micro.NOMBRE"
-                        >
-                          {{ micro.NOMBRE }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input
-                      type="number"
-                      class="form-control"
-                      formControlName="valmicrobiologia"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <select
-                        class="custom-select"
-                        formControlName="eqpoc"
-                        [class.is-invalid]="poc"
-                      >
-                        <option value="">--Seleccione--</option>
-
-                        <option
-                          *ngFor="let poc of listaequiposrapidas"
-                          [value]="poc.NOMBRE"
-                        >
-                          {{ poc.NOMBRE }}
-                        </option>
-                        <option>NO APLICA</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <input
-                      type="number"
-                      class="form-control"
-                      formControlName="valpoc"
-                    />
-                  </div>
-                </div>
-
-                <div></div>
-              </div>
-            </div>
-            <div class="col-md-4" formGroupName="equipobackup">
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <select
-                      class="custom-select"
-                      formControlName="bkquimica"
-                      [class.is-invalid]="bkquimica"
-                    >
-                      <option value="">--Seleccione--</option>
-                      <option>NO APLICA</option>
-                      <option
-                        *ngFor="let quimica of listaequiposquimica"
-                        [value]="quimica.NOMBRE"
-                      >
-                        {{ quimica.NOMBRE }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="valbkquimica"
-                  />
+                    {{ equipos[i].ItemName }}</label
+                  >
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <select
-                      class="custom-select"
-                      formControlName="bkinmunologia"
-                      [class.is-invalid]="bkinmunologia"
-                    >
-                      <option value="">--Seleccione--</option>
-                      <option>NO APLICA</option>
-                      <option
-                        *ngFor="let inmu of listaequiposinmunologia"
-                        [value]="inmu.NOMBRE"
-                      >
-                        {{ inmu.NOMBRE }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="valbkinmunologia"
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <select
-                      class="custom-select"
-                      formControlName="bkhematologia"
-                      [class.is-invalid]="bkhematologia"
-                    >
-                      <option value="">--Seleccione--</option>
-                      <option>NO APLICA</option>
-                      <option
-                        *ngFor="let hema of listaequiposhematologia"
-                        [value]="hema.NOMBRE"
-                      >
-                        {{ hema.NOMBRE }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="valbkhematologia"
-                  />
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <select
-                      class="custom-select"
-                      formControlName="bkcoagulacion"
-                      [class.is-invalid]="bkcoagulacion"
-                    >
-                      <option value="">--Seleccione--</option>
-                      <option>NO APLICA</option>
-                      <option
-                        *ngFor="let coagu of listaequiposcoagulacion"
-                        [value]="coagu.NOMBRE"
-                      >
-                        {{ coagu.NOMBRE }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="valbkcoagulacion"
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <select
-                      class="custom-select"
-                      formControlName="bkgasometria"
-                      [class.is-invalid]="bkgasometria"
-                    >
-                      <option value="">--Seleccione--</option>
-                      <option>NO APLICA</option>
-                      <option
-                        *ngFor="let gasometria of listaequiposgasometria"
-                        [value]="gasometria.NOMBRE"
-                      >
-                        {{ gasometria.NOMBRE }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="valbkgasometria"
-                  />
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <select
-                      class="custom-select"
-                      formControlName="bkelectrolitros"
-                      [class.is-invalid]="bkelectrolitros"
-                    >
-                      <option value="">--Seleccione--</option>
-                      <option>NO APLICA</option>
-                      <option
-                        *ngFor="let electro of listaequiposelectrolitros"
-                        [value]="electro.NOMBRE"
-                      >
-                        {{ electro.NOMBRE }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="valbkelectrolitros"
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <select
-                      class="custom-select"
-                      formControlName="bkuroanalisis"
-                      [class.is-invalid]="bkuroanalisis"
-                    >
-                      <option value="">--Seleccione--</option>
-                      <option>NO APLICA</option>
-                      <option
-                        *ngFor="let uro of listaequiposuroanalisis"
-                        [value]="uro.NOMBRE"
-                      >
-                        {{ uro.NOMBRE }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="valbkuroanalisis"
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <select
-                      class="custom-select"
-                      formControlName="bkmicrobiologia"
-                      [class.is-invalid]="bkmicrobiologia"
-                    >
-                      <option value="">--Seleccione--</option>
-                      <option>NO APLICA</option>
-                      <option
-                        *ngFor="let micro of listaequiposmicrobiologia"
-                        [value]="micro.NOMBRE"
-                      >
-                        {{ micro.NOMBRE }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <input
-                    type="number"
-                    class="form-control"
-                    formControlName="valbkmicrobiologia"
-                  />
-                </div>
-
-                <div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="card"
-        *ngIf="
-          RegistroForm.get('equipoprincipal.eqhematologia')?.value !==
-            'NO APLICA' ||
-          RegistroForm.get('equipoprincipal.eqhematologia')?.value == ''
-        "
-      >
-        <div class="card-header">
-          <h3 class="card-title">ELIGE LA LICENCIA EQUIPO HEMATOLOGICO</h3>
-        </div>
-
-        <div class="card-body">
-          <div class="row">
-            <div
-              class="col-md-4"
-              formArrayName="licenciaEquiposHematologicos"
-              *ngFor="
-                let lic of licenciaEquiposHematologicos.controls;
-                let i = index
-              "
-            >
-              <label class="">
-                <input
-                  type="checkbox"
-                  class="check_item"
-                  [formControlName]="i"
-                  [class.is-invalid]="licenciaEquiposHematologico"
-                />
-                {{ licencia[i].value }}</label
+              <small
+                class="text-danger"
+                *ngIf="
+                  RegistroForm.hasError('noPruebas') &&
+                  (RegistroForm.get('areas')?.dirty ||
+                    RegistroForm.get('areas')?.touched)
+                "
               >
-            </div>
-            <small *ngIf="licenciaEquiposHematologico" class="text-danger"
-              >campo obligatorio</small
-            >
-          </div>
-        </div>
-      </div>
+                Debe escoger al menos una area.
+              </small>
+            </fieldset>
 
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title" for="">Observaciones</h3>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
+            <fieldset class="filtro-container">
+              <p class="filtro-titulo">TERCERA OPINION</p>
+              <div class="row">
+                <div class="col-md-6">
+                  <input
+                    type="radio"
+                    value="si"
+                    formControlName="terceraopcion"
+                    [class.is-invalid]="terceraopcion"
+                  />
+                  <label class="labelcheck" for="">Si</label>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <input
+                    type="radio"
+                    value="no"
+                    formControlName="terceraopcion"
+                    [class.is-invalid]="terceraopcion"
+                  />
+                  <label class="labelcheck" for="">No</label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="filtro-container">
+              <p class="filtro-titulo">Seleccione el sistema</p>
+              <div class="row">
+                <div class="form-group col-md-3">
+                  <input
+                    type="radio"
+                    value="Infinty"
+                    formControlName="sistema"
+                    [class.is-invalid]="sistema"
+                  />
+                  <label class="labelcheck" for="">Infinty</label>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <input
+                    type="radio"
+                    value="Siglab"
+                    formControlName="sistema"
+                    [class.is-invalid]="sistema"
+                  />
+                  <label class="labelcheck" for="">Siglab</label>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <input
+                    type="radio"
+                    value="Orión"
+                    formControlName="sistema"
+                    [class.is-invalid]="sistema"
+                  />
+                  <label class="labelcheck" for="">Orión</label>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <input
+                    type="radio"
+                    value="Interfaz de equipo"
+                    formControlName="sistema"
+                    [class.is-invalid]="sistema"
+                  />
+                  <label class="labelcheck" for="">Interfaz de equipo</label>
+                </div>
+
+                <small *ngIf="sistema" class="text-danger"
+                  >campo obligatorio</small
+                >
+              </div>
+            </fieldset>
+
+            <fieldset class="filtro-container">
+              <p class="filtro-titulo">Seleccione equipos</p>
+              <div class="row font-weight-bold text-center py-2 bg-light border rounded">
+                <div class="col-md-4">EQUIPOS</div>
+                <div class="col-md-4">PRINCIPAL</div>
+                <div class="col-md-4">BACKUP</div>
+              </div>
+
+              <div class="row equipo-row" *ngFor="let area of equipos">
+                  <!-- Área nombre -->
+                  <div class="col-md-4 d-flex align-items-center py-2">
+                    {{ area.ItemName }}
+                  </div>
+
+
+
+                <div class="col-md-4" formGroupName="equipoprincipal">
+                  <div class="marco_text">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="eqquimica"
+                            [class.is-invalid]="quimica"
+                          >
+                            <option value="">--Seleccione--</option>
+                            <option>NO APLICA</option>
+                            <option
+                              *ngFor="let quimica of listaequiposquimica"
+                              [value]="quimica.NOMBRE"
+                            >
+                              {{ quimica.NOMBRE }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="valquimica"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="eqinmunologia"
+                            [class.is-invalid]="inmunologia"
+                          >
+                            <option value="">--Seleccione--</option>
+                            <option
+                              *ngFor="let inmu of listaequiposinmunologia"
+                              [value]="inmu.NOMBRE"
+                            >
+                              {{ inmu.NOMBRE }}
+                            </option>
+                            <option>NO APLICA</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="valinmunologia"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="eqhematologia"
+                            [class.is-invalid]="hematologia"
+                          >
+                            <option value="">--Seleccione--</option>
+                            <option>NO APLICA</option>
+                            <option
+                              *ngFor="let hema of listaequiposhematologia"
+                              [value]="hema.NOMBRE"
+                            >
+                              {{ hema.NOMBRE }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type=""
+                          class="form-control"
+                          formControlName="valhematologia"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="eqcoagulacion"
+                            [class.is-invalid]="coagulacion"
+                          >
+                            <option value="">--Seleccione--</option>
+                            <option>NO APLICA</option>
+                            <option
+                              *ngFor="let coagu of listaequiposcoagulacion"
+                              [value]="coagu.NOMBRE"
+                            >
+                              {{ coagu.NOMBRE }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="valcoagulacion"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="eqgasometria"
+                            [class.is-invalid]="gasometria"
+                          >
+                            <option value="">--Seleccione--</option>
+                            <option>NO APLICA</option>
+                            <option
+                              *ngFor="let gasometria of listaequiposgasometria"
+                              [value]="gasometria.NOMBRE"
+                            >
+                              {{ gasometria.NOMBRE }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="valgasometria"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="eqelectrolitros"
+                            [class.is-invalid]="electrolitros"
+                          >
+                            <option value="">--Seleccione--</option>
+                            <option>NO APLICA</option>
+                            <option
+                              *ngFor="let electro of listaequiposelectrolitros"
+                              [value]="electro.NOMBRE"
+                            >
+                              {{ electro.NOMBRE }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="valelectrolitros"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="equroanalisis"
+                            [class.is-invalid]="uroanalisis"
+                          >
+                            <option value="">--Seleccione--</option>
+                            <option>NO APLICA</option>
+                            <option
+                              *ngFor="let uro of listaequiposuroanalisis"
+                              [value]="uro.NOMBRE"
+                            >
+                              {{ uro.NOMBRE }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="valuroanalisis"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="eqmicrobiologia"
+                            [class.is-invalid]="microbiologia"
+                          >
+                            <option value="">--Seleccione--</option>
+                            <option>NO APLICA</option>
+                            <option
+                              *ngFor="let micro of listaequiposmicrobiologia"
+                              [value]="micro.NOMBRE"
+                            >
+                              {{ micro.NOMBRE }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="valmicrobiologia"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <select
+                            class="custom-select"
+                            formControlName="eqpoc"
+                            [class.is-invalid]="poc"
+                          >
+                            <option value="">--Seleccione--</option>
+
+                            <option
+                              *ngFor="let poc of listaequiposrapidas"
+                              [value]="poc.NOMBRE"
+                            >
+                              {{ poc.NOMBRE }}
+                            </option>
+                            <option>NO APLICA</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <input
+                          type="number"
+                          class="form-control"
+                          formControlName="valpoc"
+                        />
+                      </div>
+                    </div>
+
+                    <div></div>
+                  </div>
+                </div>
+                <div class="col-md-4" formGroupName="equipobackup">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <select
+                          class="custom-select"
+                          formControlName="bkquimica"
+                          [class.is-invalid]="bkquimica"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option>NO APLICA</option>
+                          <option
+                            *ngFor="let quimica of listaequiposquimica"
+                            [value]="quimica.NOMBRE"
+                          >
+                            {{ quimica.NOMBRE }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="valbkquimica"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <select
+                          class="custom-select"
+                          formControlName="bkinmunologia"
+                          [class.is-invalid]="bkinmunologia"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option>NO APLICA</option>
+                          <option
+                            *ngFor="let inmu of listaequiposinmunologia"
+                            [value]="inmu.NOMBRE"
+                          >
+                            {{ inmu.NOMBRE }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="valbkinmunologia"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <select
+                          class="custom-select"
+                          formControlName="bkhematologia"
+                          [class.is-invalid]="bkhematologia"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option>NO APLICA</option>
+                          <option
+                            *ngFor="let hema of listaequiposhematologia"
+                            [value]="hema.NOMBRE"
+                          >
+                            {{ hema.NOMBRE }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="valbkhematologia"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <select
+                          class="custom-select"
+                          formControlName="bkcoagulacion"
+                          [class.is-invalid]="bkcoagulacion"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option>NO APLICA</option>
+                          <option
+                            *ngFor="let coagu of listaequiposcoagulacion"
+                            [value]="coagu.NOMBRE"
+                          >
+                            {{ coagu.NOMBRE }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="valbkcoagulacion"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <select
+                          class="custom-select"
+                          formControlName="bkgasometria"
+                          [class.is-invalid]="bkgasometria"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option>NO APLICA</option>
+                          <option
+                            *ngFor="let gasometria of listaequiposgasometria"
+                            [value]="gasometria.NOMBRE"
+                          >
+                            {{ gasometria.NOMBRE }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="valbkgasometria"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <select
+                          class="custom-select"
+                          formControlName="bkelectrolitros"
+                          [class.is-invalid]="bkelectrolitros"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option>NO APLICA</option>
+                          <option
+                            *ngFor="let electro of listaequiposelectrolitros"
+                            [value]="electro.NOMBRE"
+                          >
+                            {{ electro.NOMBRE }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="valbkelectrolitros"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <select
+                          class="custom-select"
+                          formControlName="bkuroanalisis"
+                          [class.is-invalid]="bkuroanalisis"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option>NO APLICA</option>
+                          <option
+                            *ngFor="let uro of listaequiposuroanalisis"
+                            [value]="uro.NOMBRE"
+                          >
+                            {{ uro.NOMBRE }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="valbkuroanalisis"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <select
+                          class="custom-select"
+                          formControlName="bkmicrobiologia"
+                          [class.is-invalid]="bkmicrobiologia"
+                        >
+                          <option value="">--Seleccione--</option>
+                          <option>NO APLICA</option>
+                          <option
+                            *ngFor="let micro of listaequiposmicrobiologia"
+                            [value]="micro.NOMBRE"
+                          >
+                            {{ micro.NOMBRE }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="valbkmicrobiologia"
+                      />
+                    </div>
+
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset
+              *ngIf="
+                RegistroForm.get('equipoprincipal.eqhematologia')?.value !==
+                  'NO APLICA' ||
+                RegistroForm.get('equipoprincipal.eqhematologia')?.value == ''
+              "
+              class="filtro-container"
+            >
+              <p class="filtro-titulo">
+                Seleccione licencia equipo hematologico
+              </p>
+
+              <div class="row">
+                <div
+                  class="col-md-4"
+                  formArrayName="licenciaEquiposHematologicos"
+                  *ngFor="
+                    let lic of licenciaEquiposHematologicos.controls;
+                    let i = index
+                  "
+                >
+                  <label class="">
+                    <input
+                      type="checkbox"
+                      class="check_item"
+                      [formControlName]="i"
+                      [class.is-invalid]="licenciaEquiposHematologico"
+                    />
+                    {{ licencia[i].value }}</label
+                  >
+                </div>
+              </div>
+              <small *ngIf="licenciaEquiposHematologico" class="text-danger"
+                >campo obligatorio</small
+              >
+            </fieldset>
+
+            <fieldset class="filtro-container">
+              <p class="filtro-titulo">Observaciones</p>
+              <div class="form-group col-md-12">
                 <textarea
                   class="form-control textarea-mod"
                   rows="10"
@@ -859,33 +788,20 @@
                   placeholder="Enter ..."
                 ></textarea>
               </div>
+            </fieldset>
+
+            <div class="input-group-append">
+              <a type="submit" (click)="cambioEstado()" class="btn btn-primary">
+                {{ btnVal }}</a
+              >
+              &nbsp;
+              <button type="reset" onclick="onreset()" class="btn btn-danger">
+                Cancelar
+              </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-
-      <div class="input-group-append">
-        <a type="submit" (click)="cambioEstado()" class="btn btn-primary">
-          {{ btnVal }}</a
-        >
-        &nbsp;
-        <button type="reset" onclick="onreset()" class="btn btn-danger">
-          Cancelar
-        </button>
-      </div>
     </div>
-  </form>
+  </div>
 </div>
-<!-- <hr />
-<pre>
-      Estado del formulario: {{ RegistroForm.valid }}
-      <br>
-      Status: {{ RegistroForm.status }}
-      </pre>
-
-<pre>
-  
-      {{ RegistroForm.value | json }}
-  
-      </pre
-> -->

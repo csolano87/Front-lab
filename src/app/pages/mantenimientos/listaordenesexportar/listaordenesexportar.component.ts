@@ -13,6 +13,7 @@ import { WorkListOrdenService } from 'src/app/services/work-list-orden.service';
 })
 export class ListaordenesexportarComponent implements OnInit {
   searchorden: string = '';
+  searchEstado: boolean = null;
   fechaActual = new Date();
   listaordenes: Ordene[] = [];
   cargando = false;
@@ -44,7 +45,10 @@ export class ListaordenesexportarComponent implements OnInit {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    const fileName ='ExportarResultados'+'_'+ format(this.fechaActual, 'yyyy-MM-dd HH:mm:ss');
+    const fileName =
+      'ExportarResultados' +
+      '_' +
+      format(this.fechaActual, 'yyyy-MM-dd HH:mm:ss');
     link.download = `${fileName}.json`;
     link.click();
     window.URL.revokeObjectURL(url);
@@ -53,5 +57,23 @@ export class ListaordenesexportarComponent implements OnInit {
   onSearchOrden(search: string) {
     console.log(`.search`, search);
     this.searchorden = search;
+  }
+  onsearchEstado(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const value = selectElement.value?.toLowerCase();
+
+    if (value === 'true') {
+      this.searchEstado = true;
+    } else if (value === 'false') {
+      this.searchEstado = false;
+    } else {
+      this.searchEstado = null;
+    }
+    console.log(`Obteniendo valor del select 1 `, selectElement.value);
+    console.log(`Obteniendo valor del select 2`, this.searchEstado);
+
+    if (!this.searchEstado) {
+      this.searchEstado = null; // Restablecer la búsqueda si no se selecciona nada
+    }
   }
 }
