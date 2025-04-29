@@ -1,0 +1,14 @@
+/* * {
+  outline: 1px solid blue;
+} */
+.table_flex {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.table_text{
+
+  margin: 10px;
+}

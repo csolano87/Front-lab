@@ -152,9 +152,15 @@ export class StockService {
       .pipe(map(({ StockId }) => StockId));
   }
 
-  getDescargoExcelInfinity():Observable<descargoExcel[]>{
+/*   getDescargoExcelInfinity(data:any):Observable<descargoExcel[]>{
 
     return this.http.get<ExcelOrdenes>(`${baseUrl}/api/estadordenes/ordenes`)
     .pipe(map(({descargoExcel})=>descargoExcel))
+  }
+} */
+  getDescargoExcelInfinity(formData: FormData){
+
+    return this.http.post(`${baseUrl}/api/estadordenes/ordenes`,formData)
+
   }
 }

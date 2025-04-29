@@ -3,125 +3,95 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label for="">Fecha Inicio</label>
-              <div class="input-group">
-                <input type="date" class="form-control" #fechaIn />
+          <fieldset class="filtro-container">
+            <p class="filtro-titulo">Sube el archivo</p>
+            <div class="row">
+              <div class="col-md-8">
+                <input
+                  type="file"
+                  class="form-control"
+                  (change)="OnCargarArchivo($event)"
+                  accept=".xls"
+                />
+              </div>
+
+              <div class="col-md-4 ">
+                <button
+                  class="btn btn-secondary btn-sm"
+                  (click)="exportTable()"
+                >
+                  Exportar a CSV
+                </button>
               </div>
             </div>
+          </fieldset>
+          <!--    </div>
+            </div> -->
 
-            <div class="col-md-4 btn-botones">
-             <!--  <button
-                type="submit"
-                class="btn btn-primary btn-sm"
-                (click)="registroMicro(FECHADESDE.value, FECHAHASTA.value)"
-              >
-                Consultar
-              </button>-->
+          <div *ngIf="cargando" class="text-center mt-3 animated fadeIn faster">
+            <p>
+              <i class="bx bx-loader-circle bx-burst bx-rotate-90 bx-md"></i>
+            </p>
+          </div>
 
-              <button
-                *ngIf="listaOrdenes.length > 0"
-                class="btn btn-secondary btn-sm"
-                (click)="exportTable()"
-              >
-                Exportar a CSV
-              </button>
-            </div>
+          <div *ngIf="!cargando && listaOrdenes.length >0" class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width: 10%">F. Registro</th>
+                  <th style="width: 10%"># Orden</th>
+                  <th style="width: 10%">Cédula</th>
+                  <th style="width: 20%">Nombre de paciente</th>
+                  <th style="width: 10%">Sexo</th>
+                  <th style="width: 40%" class="table_flex">
+                    <div class="table_text">Pruebas</div>
+                    <div class="table_text">Resultados</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let item of listaOrdenes
+                      | paginate: { itemsPerPage: 10, currentPage: page }
+                  "
+                >
+                  <td>{{ item.register }}</td>
+                  <td>{{ item.numeroroden }}</td>
+                  <td>{{ item.cedula }}</td>
+                  <td>{{ item.nombres }}</td>
+                  <td>{{ item.sexo }}</td>
 
-            <div
-              *ngIf="cargando"
-              class="text-center mt-3 animated fadeIn faster"
-            >
-              <p>
-                <i class="bx bx-loader-circle bx-burst bx-rotate-90 bx-md"></i>
-              </p>
-            </div>
-
-            <div *ngIf="!cargando" class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 10%">F. Registro</th>
-                    <th style="width: 10%"># Orden</th>
-                    <th style="width: 10%">Cédula</th>
-                    <th style="width: 20%">Nombre de paciente</th>
-                    <th style="width: 10%">Sexo</th>
-                    <th style="width: 40%">Pruebas</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    *ngFor="
-                      let item of listaOrdenes
-                        | paginate: { itemsPerPage: 10, currentPage: page }
-                    "
-                  >
-                    <td>{{ item.register }}</td>
-                    <td>{{ item.numeroroden }}</td>
-                    <td>{{ item.cedula }}</td>
-                    <td>{{ item.nombres }}</td>
-                    <td>{{ item.sexo }}</td>
-
-                    <td>
-                      <table class="table">
-                        <!--   <thead>
+                  <td>
+                    <table class="table">
+                      <!--   <thead>
                           <tr>
                             <th>Codigo</th>
                             <th>nombre</th>
                             <th>Valor</th>
                           </tr>
                         </thead> -->
-                        <tbody>
-                          <tr *ngFor="let prueba of item.tests">
-                            <td style="width: 15%">{{ prueba.TestID }}</td>
-                            <td>{{ prueba.TestName }}</td>
-                            <td style="width: 20%">{{ prueba.Resultado }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <!-- <ul>
-                        <li
-                          class="lista_prueba"
-                          *ngFor="let prueba of item.tests"
-                        >
-                        {{ prueba.TestName }}
-                        </li>
-                      </ul> -->
-                    </td>
-
-                    <!--
-                    <td>
-                      <div [ngSwitch]="item.validator">
-                        <div *ngSwitchCase="'false'">
-                          <span class="badge badge-warning">Pendiente</span>
-                        </div>
-                        <div *ngSwitchDefault>
-                          <span class="badge badge-primary">Validado</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div [ngSwitch]="item.estadoMail?.estado">
-                        <div *ngSwitchCase="true">
-                          <span class="badge badge-primary">Enviado</span>
-                        </div>
-                        <div *ngSwitchDefault></div>
-                      </div>
-                    </td> -->
-                    <td class="actions"></td>
-                  </tr>
-                </tbody>
-              </table>
-              <pagination-controls
-                (pageChange)="page = $event"
-                previousLabel="Anterior"
-                nextLabel="Siguiente"
-              ></pagination-controls>
-            </div>
+                      <tbody>
+                        <tr *ngFor="let prueba of item.tests">
+                          <!--            <td style="width: 15%">{{ prueba.TestID }}</td> -->
+                          <td style="width: 70%">{{ prueba.TestName }}</td>
+                          <td style="width: 30%">{{ prueba.Resultado }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              (pageChange)="page = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- </div> -->
