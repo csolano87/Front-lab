@@ -13,7 +13,7 @@ import { WorkListOrdenService } from 'src/app/services/work-list-orden.service';
 })
 export class ListaordenesexportarComponent implements OnInit {
   searchorden: string = '';
-  searchEstado: boolean = null;
+  searchEstado:number=null;
   fechaActual = new Date();
   listaordenes: Ordene[] = [];
   cargando = false;
@@ -61,8 +61,8 @@ export class ListaordenesexportarComponent implements OnInit {
   onsearchEstado(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const value = selectElement.value?.toLowerCase();
-
-    if (value === 'true') {
+    this.searchEstado=Number( value)
+  /*   if (value === 'true') {
       this.searchEstado = true;
     } else if (value === 'false') {
       this.searchEstado = false;
@@ -70,8 +70,8 @@ export class ListaordenesexportarComponent implements OnInit {
       this.searchEstado = null;
     }
     console.log(`Obteniendo valor del select 1 `, selectElement.value);
-    console.log(`Obteniendo valor del select 2`, this.searchEstado);
-
+    console.log(`Obteniendo valor variable  global 2`, this.searchEstado);
+ */
     if (!this.searchEstado) {
       this.searchEstado = null; // Restablecer la búsqueda si no se selecciona nada
     }

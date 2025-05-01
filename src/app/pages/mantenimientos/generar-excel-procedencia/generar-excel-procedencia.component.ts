@@ -15,6 +15,7 @@ import { event } from 'jquery';
 export class GenerarExcelProcedenciaComponent implements OnInit {
   page;
   cargando: boolean = false;
+  descargando: boolean = false;
   listaOrdenes: descargoExcel[] = [];
   constructor(private sotckService: StockService) {}
 
@@ -28,6 +29,7 @@ export class GenerarExcelProcedenciaComponent implements OnInit {
   }
 
   OnCargarArchivo(event: any) {
+    this.cargando = true;
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append('file', file);
@@ -37,6 +39,7 @@ export class GenerarExcelProcedenciaComponent implements OnInit {
         // console.log(`Datos de Infinity`, resp);
         const { descargoExcel } = resp;
         this.listaOrdenes = descargoExcel;
+        this.cargando = false;
       });
 
     /*   const file: File = event.target.files[0];
@@ -58,6 +61,7 @@ export class GenerarExcelProcedenciaComponent implements OnInit {
     } */
   }
   exportTable() {
+    this.descargando = true;
     const dataToExport = this.listaOrdenes.flatMap((orden) => {
       return orden.tests.map((test) => ({
         Fecha: orden.register,
@@ -83,5 +87,6 @@ export class GenerarExcelProcedenciaComponent implements OnInit {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
     saveAs(blob, 'ResultadosExcelUees.xlsx');
+    this.descargando = false;
   }
 }

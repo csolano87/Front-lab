@@ -11,20 +11,28 @@ export class FiltroExportPipe implements PipeTransform {
   transform(
     listaordenes: Ordene[],
     search: string = '',
-    searchEstado: boolean = null,
+    searchEstado: number=null ,
   ): Ordene[] {
-    console.log(`Obtener el valor del campo selectedd`, searchEstado);
+    console.log(`Valor Obteniedo en el Filtro`, searchEstado);
+    console.log(`Valor Obteniedo input en el Filtro`, search);
     if (search.length == 0 && searchEstado == null) {
       return listaordenes;
     }
 
-    const listaFiltrada = listaordenes.filter((item) =>
-      item.numeroorden.startsWith(search)
-    &&
-    (searchEstado  ? item.estado == searchEstado : null)
+    const listaFiltrada = listaordenes.filter((item) => {
+      console.log(`Obteniendo el estado del areray `,item.estado)
+      const coincideNumero = search ? item.numeroorden.startsWith(search) : true;
+      let coincideEstado = true;
+      if (searchEstado === 1) {
+        coincideEstado = item.estado === true;
+      } else if (searchEstado === 2) {
+        coincideEstado = item.estado === false;
+      }
 
-    );
+    return coincideNumero && coincideEstado;
+    });
     console.log(listaFiltrada);
     return listaFiltrada;
   }
+   //return listaFiltrada;
 }
