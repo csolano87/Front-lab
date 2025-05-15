@@ -71,7 +71,9 @@ export class GenerarExcelProcedenciaComponent implements OnInit {
         Servicio: orden.sexo,
         /*    codigo: test.TestID || '', */
         examen: test.TestName || '',
-        resultado: test.Resultado || '', // Ajusta si tu campo de resultado es diferente
+        resultado: test.Resultado || '',
+        unidad: test.Unidad || '',
+        // Ajusta si tu campo de resultado es diferente
       }));
     });
 

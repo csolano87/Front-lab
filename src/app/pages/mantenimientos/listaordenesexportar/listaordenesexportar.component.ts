@@ -13,10 +13,10 @@ import { WorkListOrdenService } from 'src/app/services/work-list-orden.service';
 })
 export class ListaordenesexportarComponent implements OnInit {
   searchorden: string = '';
-  searchEstado:number=null;
+  searchEstado: number = null;
   fechaActual = new Date();
   listaordenes: Ordene[] = [];
-  cargando = false;
+  cargando: boolean = false;
   page: number = 1;
   count: number = 10;
 
@@ -25,12 +25,16 @@ export class ListaordenesexportarComponent implements OnInit {
     private filtroOrdenPipe: FiltroExportPipe,
   ) {}
   ngOnInit(): void {
-    this.getOrdenes(this.fechaActual[0]);
+  //  this.getOrdenes(this.fechaActual[0]);
+  this.getOrdenes(this.fechaActual[0]);
   }
   getOrdenes(fecha: string) {
+    this.cargando=true;
     this.worklistOrdenService.getOrdenInfinity(fecha).subscribe((ordenes) => {
       this.listaordenes = ordenes;
+      this.cargando=false;
     });
+
   }
   borrarItem(i: number) {}
   cancelar() {}
@@ -61,17 +65,8 @@ export class ListaordenesexportarComponent implements OnInit {
   onsearchEstado(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const value = selectElement.value?.toLowerCase();
-    this.searchEstado=Number( value)
-  /*   if (value === 'true') {
-      this.searchEstado = true;
-    } else if (value === 'false') {
-      this.searchEstado = false;
-    } else {
-      this.searchEstado = null;
-    }
-    console.log(`Obteniendo valor del select 1 `, selectElement.value);
-    console.log(`Obteniendo valor variable  global 2`, this.searchEstado);
- */
+    this.searchEstado = Number(value);
+
     if (!this.searchEstado) {
       this.searchEstado = null; // Restablecer la búsqueda si no se selecciona nada
     }

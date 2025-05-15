@@ -118,18 +118,19 @@ export class StockComponent implements OnInit {
       this.listaStockSeleccionado = stockId;
       this.stockForm.patchValue({
         guia,
-
+//caducidad
         productos: stockItemtemp.map((item) =>
-          this.productos.push(
+        //  console.log(`fecha`,item.caducidad)
+         this.productos.push(
             this.fb.group({
               referencia: item.referencia,
               descripcion: item.product.NOMBRE,
-              caducidad: item.caducidad.slice(0, 10),
+
               lote: item.lote,
+              caducidad: item.caducidad.slice(0, 10),
               cantidad: item.cantidad,
               cantidad_recibida: item.cantidad_recibida,
-              fabricante: item.fabricante,
-              sanitario: item.sanitario,
+
               comentario: item.comentario,
             }),
           ),
@@ -294,26 +295,29 @@ export class StockComponent implements OnInit {
         this.productos.push(
           this.fb.group({
             referencia: referenciaLimpia,
-            descripcion: item['Operaciones/Producto/Nombre'],
+            //    descripcion: item['Operaciones/Producto/Nombre'],
             lote: item['Operaciones/Lote/Lote/Nº de serie'],
             caducidad: item['Operaciones/Lote/Fecha caducidad'],
             cantidad: item['Operaciones/Cantidad Pedida'],
             cantidad_recibida: item['Operaciones/Realizado'],
-            fabricante: item['Operaciones/Producto/Fabricante'],
-            sanitario: item['Operaciones/Producto/Registro Sanitario'],
+
             comentario: '',
-            //bodegaId:'',
           }),
         );
+        /*  this.productos.controls.forEach((group, index) => {
+          group.get('cantidad_recibida')?.valueChanges.subscribe(value => {
+            console.log(`Nuevo valor en el índice ${index}:`, value);
+            // lógica adicional aquí
+          });
+        }); */
       });
       this.focusOnBarcodeInput();
     };
     reader.readAsArrayBuffer(file);
   }
   guardar() {
-
     this.changeValidators();
-    if (this.stockForm.invalid && this.IDSeleccionado !='Nuevo') {
+    if (this.stockForm.invalid && this.IDSeleccionado != 'Nuevo') {
       return Object.values(this.stockForm.controls).forEach((control) => {
         control.markAsTouched();
       });
@@ -439,20 +443,16 @@ export class StockComponent implements OnInit {
     }
     this.stockForm.get('bodegaId')?.updateValueAndValidity();
     this.stockForm.get('proveedorId')?.updateValueAndValidity();
-   /*  console.log(this.listaStockSeleccionado);
+    /*  console.log(this.listaStockSeleccionado);
     if (this.IDSeleccionado !='Nuevo') {
       this.stockForm.controls['bodegaId'].setValidators([Validators.required]);
       this.stockForm.controls['proveedorId'].setValidators([Validators.required]);
       this.stockForm.get('bodegaId')?.updateValueAndValidity();
       this.stockForm.get('proveedorId')?.updateValueAndValidity();
     } */
-
-
-
-
   }
-  borrarProducto(i:number){
- this.productos.removeAt(i)
+  borrarProducto(i: number) {
+    this.productos.removeAt(i);
   }
   generarCSV() {
     const url = 'assets/productos.csv'; // Ruta del archivo en 'src/assets'

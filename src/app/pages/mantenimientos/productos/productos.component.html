@@ -3,16 +3,21 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <input type="file" (change)="onFileSelected($event)" class="input-file" />
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            class="input-file"
+          />
           &nbsp;
           <button (click)="enviarArchivo()" class="btn btn-primary btn-sm">
             Subir archivo
           </button>
 
           &nbsp;
-         
-<button class="btn btn-success" (click)="generarCSV()">Descargar Excel</button>
 
+          <button class="btn btn-success" (click)="generarCSV()">
+            Descargar Excel
+          </button>
         </div>
       </div>
     </div>
@@ -26,42 +31,57 @@
 
           <!-- Campo de búsqueda de productos -->
           <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Buscar productos..." #txtSearch
-              (keyup)="onSearchProducto(txtSearch.value)" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar productos..."
+              #txtSearch
+              (keyup)="onSearchProducto(txtSearch.value)"
+            />
           </div>
 
           <div class="col-md-3 button"></div>
 
           <div class="table-responsive">
             <form [formGroup]="productoForm">
-              <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
+          <!--     <div
+                *ngIf="cargando"
+                class="alert alert-info text-center mt-3 animated fadeIn faster"
+              >
                 <h4 class="alert-heading">Cargando</h4>
                 <p>
                   <i class="fas fa-sync-alt fa-spin fa-2x"></i>
                 </p>
                 <p class="mb-0">Espere por favor</p>
+              </div> -->
+              <div *ngIf="cargando" class="descargando-overlay">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only">Descargando...</span>
+                </div>
+                <p class="text-white mt-2">Descargando ordenes...</p>
               </div>
-
               <div *ngIf="!cargando" class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th style="width: 8%;">Referencia</th>
-                      <th style="width: 40%;">Descripcion</th>
-                      <th  style="width: 8%;">Categoria</th>
-                      <th  style="width: 8%;">Unidad</th>
-                      <th  style="width: 8%;">Generacion</th>
-                      <th  style="width: 8%;">Estado</th>
-                      <th style="width: 18%;">Actions</th>
+                      <th style="width: 8%">Referencia</th>
+                      <th style="width: 40%">Descripcion</th>
+                      <th style="width: 8%">Categoria</th>
+                      <th style="width: 8%">Unidad</th>
+                      <th style="width: 8%">Generacion</th>
+                      <th style="width: 8%">Estado</th>
+                      <th style="width: 18%">Actions</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    <tr *ngFor="
+                    <tr
+                      *ngFor="
                         let producto of listaproductos
                           | filtroProducto: search
                           | paginate: { itemsPerPage: 10, currentPage: page }
-                      ">
+                      "
+                    >
                       <td>{{ producto.REFERENCIA }}</td>
                       <td>{{ producto.NOMBRE }}</td>
 
@@ -83,19 +103,26 @@
                       </td>
                       <td class="actions">
                         <span class="span_edit">
-                         
-                            <i [ngClass]="{
+                          <i
+                            [ngClass]="{
                               'disabled-icon': producto.ESTADO == 0
-                            }" [routerLink]="[
+                            }"
+                            [routerLink]="[
                               '/dashboard',
                               'producto',
                               producto.id
-                            ]" class="bx bxs-edit ">Editar</i>
-                          
+                            ]"
+                            class="bx bxs-edit"
+                            >Editar</i
+                          >
                         </span>
-                        <span [ngClass]="{
+                        <span
+                          [ngClass]="{
                             'disabled-icon': producto.ESTADO == 0
-                          }" (click)="borrarProducto(producto)" class="span_delete">
+                          }"
+                          (click)="borrarProducto(producto)"
+                          class="span_delete"
+                        >
                           <i class="bx bxs-trash">Eliminar</i>
                         </span>
                       </td>
@@ -104,8 +131,11 @@
                 </table>
               </div>
 
-              <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
-                nextLabel="Siguiente"></pagination-controls>
+              <pagination-controls
+                (pageChange)="page = $event"
+                previousLabel="Anterior"
+                nextLabel="Siguiente"
+              ></pagination-controls>
             </form>
           </div>
         </div>
@@ -119,7 +149,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title"></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

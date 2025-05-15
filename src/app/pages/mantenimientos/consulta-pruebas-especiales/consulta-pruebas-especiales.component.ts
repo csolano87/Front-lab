@@ -15,6 +15,7 @@ import { PruebaEspecial } from 'src/app/interfaces/cargarPruebasEspeciales.inter
 export class ConsultaPruebasEspecialesComponent implements OnInit {
   fechaActual: string = new Date().toISOString().split('T')[0];
   cargando: boolean = false;
+  descargando: boolean = false;
   listaresultado: PruebaEspecial[] = [];
   public page!: number;
   constructor(
@@ -22,7 +23,7 @@ export class ConsultaPruebasEspecialesComponent implements OnInit {
     private listagetlist: GetListService,
   ) {}
   ngOnInit(): void {
-   // this.getResults(this.fechaActual);
+    this.getResults(this.fechaActual);
   }
   getResults(fechaIn: string) {
     this.cargando = true;
@@ -30,13 +31,20 @@ export class ConsultaPruebasEspecialesComponent implements OnInit {
     this.mantenimientoService
       .getPruebaEspeciales(fechaIn)
       .subscribe((pruebaEspecial) => {
-        this.listaresultado = pruebaEspecial;
+        console.log(`pruebaEspecial`,pruebaEspecial)
+        if (pruebaEspecial !==undefined) {
+          this.listaresultado = pruebaEspecial;
 
+          this.cargando = false;
+        }
+        Swal.fire({title:'info',text:"No se encontraron ordenes ",timer:2000})
         this.cargando = false;
       });
+    //  this.cargando = false;
   }
 
   pdfResultado(sampleId: string) {
+    this.descargando = true;
     this.listagetlist.pdfResultado(sampleId).subscribe((resp: any) => {
       const url = resp.pdf;
 
@@ -45,6 +53,7 @@ export class ConsultaPruebasEspecialesComponent implements OnInit {
       tempLink.setAttribute('target', '_blank');
       tempLink.click();
     });
+    this.descargando = false;
   }
   mailResultado(item: any) {
     console.log(`item`, item);

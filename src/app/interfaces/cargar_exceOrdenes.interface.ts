@@ -15,6 +15,7 @@ export interface Test {
   TestID: string;
   TestName: string;
   Resultado?: string;
+  Unidad?:    string;
 }
 /* export interface ExcelOrdenes {
     ok:            boolean;

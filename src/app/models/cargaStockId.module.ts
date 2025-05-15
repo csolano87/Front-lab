@@ -27,7 +27,7 @@ export class StockItem {
           public referencia?: string,
           public descripcion?: null,
           public lote?: string,
-          public caducidad?: string,
+          public caducidad?: string,//caducidad
           public cantidad?: number,
           public cantidad_recibida?: number,
           public fabricante?: string,

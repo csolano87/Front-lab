@@ -21,12 +21,16 @@
               </div>
 
               <div class="col-md-4 btn-botones">
-                <button (click)="getResults(fechaIn.value,fechaOut.value)" type="submit" class="btn btn-primary btn-sm">
+                <button
+                  (click)="getResults(fechaIn.value, fechaOut.value)"
+                  type="submit"
+                  class="btn btn-primary btn-sm"
+                >
                   Consultar
                 </button>
 
                 <button
-                  *ngIf="listainfinity"
+                  *ngIf="listainfinity.length > 0"
                   (click)="generarJson()"
                   class="btn btn-secondary btn-sm"
                 >
@@ -39,19 +43,14 @@
           <div class="row animated fadeIn fast">
             <div class="col-12">
               <div class="card">
-                <div class="card-body">
-                  <div
-                    *ngIf="cargando"
-                    class="text-center mt-3 animated fadeIn faster"
-                  >
-                    <p>
-                      <i
-                        class="bx bx-loader-circle bx-burst bx-rotate-90 bx-md"
-                      ></i>
-                    </p>
+                <div *ngIf="cargando" class="descargando-overlay">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Descargando...</span>
                   </div>
-
-                  <div *ngIf="!cargando" class="table-responsive">
+                  <p class="text-white mt-2">Descargando ordenes...</p>
+                </div>
+                <div *ngIf="listainfinity.length > 0" class="card-body">
+                  <div class="table-responsive">
                     <p class="text_ordenes">
                       Ordenes encontradas: {{ listainfinity.length }}
                     </p>
@@ -102,9 +101,6 @@
               </div>
             </div>
           </div>
-
-
-
         </div>
       </div>
     </div>

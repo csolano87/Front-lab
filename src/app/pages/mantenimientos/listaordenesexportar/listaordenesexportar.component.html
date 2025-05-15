@@ -28,7 +28,7 @@
                 />
               </div>
 
-                <div class="form-group col-md-4">
+              <div class="form-group col-md-4">
                 <label for="text " class="form-ItemName"
                   >Filtrar por estado</label
                 >
@@ -37,7 +37,7 @@
                   <option value="1">Generado</option>
                   <option value="2">Procesado</option>
                 </select>
-               <!--  <input
+                <!--  <input
                   type="date"
                   class="form-control"
                   [value]="fechaActual"
@@ -46,7 +46,7 @@
                 /> -->
               </div>
 
-              <div class="col-md-4 btn-botones">
+              <div *ngIf="listaordenes.length > 0" class="col-md-4 btn-botones">
                 <button
                   (click)="exportarData()"
                   class="btn btn-secondary btn-sm"
@@ -57,15 +57,11 @@
             </div>
           </fieldset>
 
-          <div
-            *ngIf="cargando"
-            class="alert alert-info text-center mt-3 animated fadeIn faster"
-          >
-            <h4 class="alert-heading">Cargando</h4>
-            <p>
-              <i class="fas fa-sync-alt fa-spin fa-2x"></i>
-            </p>
-            <p class="mb-0">Espere por favor</p>
+          <div *ngIf="cargando" class="descargando-overlay">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Descargando...</span>
+            </div>
+            <p class="text-white mt-2">Descargando ordenes...</p>
           </div>
 
           <div class="row animated fadeIn fast" *ngIf="!cargando">
@@ -93,7 +89,7 @@
                         <tr
                           *ngFor="
                             let orden of listaordenes
-                              | filtroExport: searchorden:searchEstado
+                              | filtroExport: searchorden : searchEstado
                               | paginate
                                 : { itemsPerPage: 10, currentPage: page }
                           "
@@ -122,7 +118,7 @@
                                 class="item"
                                 *ngFor="let prueba of orden.pruebaImport"
                               >
-                               <strong> {{ prueba.resultado || '-' }}</strong>
+                                <strong> {{ prueba.resultado || "-" }}</strong>
                               </li>
                             </ul>
                           </td>
@@ -137,7 +133,8 @@
                               <div *ngSwitchDefault>
                                 <span class="badge badge-success"
                                   >Procesado</span
-                                ></div>
+                                >
+                              </div>
                             </div>
                           </td>
                         </tr>

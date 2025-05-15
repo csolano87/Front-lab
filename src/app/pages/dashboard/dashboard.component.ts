@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-   /*  const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    /*  const fecha = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
     console.log(fecha); // 2025-03-13 10:30:00
 
     this.getOrdenMensual();
@@ -151,7 +151,7 @@ export class DashboardComponent implements OnInit {
 
   getResults() {
     //this.mantenimientoService.getReporteTotal().subscribe((results) => {
-   /*  this.mantenimientoService.getReporteTotalprueba().subscribe((results) => {
+    /*  this.mantenimientoService.getReporteTotalprueba().subscribe((results) => {
       //this.listaordene = results;
 
       const ok = results.forEach((item) => {
@@ -170,15 +170,17 @@ export class DashboardComponent implements OnInit {
       console.log(`xxx=>`, ok);
     }); */
     this.mantenimientoService.getReporteTotalprueba().subscribe((results) => {
-      const ok = results.map((item) => {
-        const numero= item.prueba.SampleID;
-        const labTests = Array.isArray(item.prueba.LabTests.LISLabTest)
-          ? item.prueba.LabTests.LISLabTest
-          : [item.prueba.LabTests.LISLabTest];
+      const ok = results
+        .map((item) => {
+          const numero = item.prueba.SampleID;
+          const labTests = Array.isArray(item.prueba.LabTests.LISLabTest)
+            ? item.prueba.LabTests.LISLabTest
+            : [item.prueba.LabTests.LISLabTest];
 
-        // Filtrar los elementos cuyo TestID sea '2047'
-        return labTests.filter(test => test.TestID === '2047');
-      }).flat(); // Aplanamos el array para evitar arrays anidados
+          // Filtrar los elementos cuyo TestID sea '2047'
+          return labTests.filter((test) => test.TestID === '2047');
+        })
+        .flat(); // Aplanamos el array para evitar arrays anidados
 
       console.log(`xxx=>`, ok);
     });

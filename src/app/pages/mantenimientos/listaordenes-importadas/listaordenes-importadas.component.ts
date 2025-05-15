@@ -57,7 +57,7 @@ export class ListaordenesImportadasComponent implements OnInit {
   cancelar() {
     this.listaordenes=[];
   }
-  onFileSelected(event: any): void {
+  onFileSelected(event: any): void {this.cargando=true;
     const file: File = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -67,6 +67,7 @@ export class ListaordenesImportadasComponent implements OnInit {
           const jsonData = JSON.parse(fileContent);
 
           this.listaordenes = jsonData;
+          this.cargando=false;
          // this.resetInput();
         } catch (err) {
           console.error('Error al parsear el JSON:', err);

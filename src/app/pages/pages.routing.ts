@@ -763,13 +763,11 @@ const routes: Routes = [
         data: { titulo: 'OrdenesInfinity' },
       },
 
-
       {
         path: 'ImportarOrdenes',
         component: ListaordenesImportadasComponent,
         data: { titulo: 'ImportarOrdenes' },
       },
-
 
       {
         path: 'ExportarOrdenes',
@@ -790,4 +788,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}

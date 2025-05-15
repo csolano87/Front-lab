@@ -1,6 +1,6 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { delay, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import {
   Ordene,
@@ -19,11 +19,10 @@ export class WorkListOrdenService {
   getOrdenInfinity(fecha: string): Observable<Ordene[]> {
     return this.http
       .get<WorkListOrden>(`${baseUrl}/api/derivarordenes?fecha=${fecha}`)
-      .pipe(map(({ ordenes }) => ordenes));
+      .pipe(delay(2000), map(({ ordenes }) => ordenes));
   }
 
-  getTrasmitirresultados(data:any){
-
-    return this.http.post(`${baseUrl}/api/trasmitirordenes`,data)
+  getTrasmitirresultados(data: any) {
+    return this.http.post(`${baseUrl}/api/trasmitirordenes`, data);
   }
 }

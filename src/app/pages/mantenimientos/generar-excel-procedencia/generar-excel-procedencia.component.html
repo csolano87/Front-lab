@@ -53,6 +53,7 @@
                   <th class="table_flex">
                     <div class="table_text">Pruebas</div>
                     <div class="table_text">Resultados</div>
+                    <div class="table_text">Unidad</div>
                   </th>
                 </tr>
               </thead>
@@ -81,8 +82,9 @@
                       <tbody>
                         <tr *ngFor="let prueba of item.tests">
                           <!--            <td style="width: 15%">{{ prueba.TestID }}</td> -->
-                          <td style="width: 70%">{{ prueba.TestName }}</td>
-                          <td style="width: 30%">{{ prueba.Resultado }}</td>
+                          <td style="width: 60%">{{ prueba.TestName }}</td>
+                          <td style="width: 20%">{{ prueba.Resultado }}</td>
+                          <td style="width: 20%">{{ prueba.Unidad }}</td>
                         </tr>
                       </tbody>
                     </table>
